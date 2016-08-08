@@ -38,7 +38,6 @@ class AdminController extends Controller
      */
 	public function getLogin()
 	{
-		dd(config('admin.auth'));
 		if(Auth::guard('system-admin')->check()) {
 
 			return redirect('administration');
