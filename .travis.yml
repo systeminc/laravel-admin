@@ -14,4 +14,3 @@ before_script:
   - travis_retry composer install --dev --no-interaction
 
 script:
-  - phpunit
