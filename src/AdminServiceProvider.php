@@ -15,8 +15,6 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        require __DIR__ . '/../vendor/autoload.php';
-
         if (! $this->app->routesAreCached()) {
             require __DIR__.'/Http/routes.php';
         }
