@@ -1,0 +1,28 @@
+{
+    "name": "systeminc/laravel-admin",
+    "description": "Administration panel for Laravel framework",
+    "homepage": "https://bitbucket.org/system-inc/laravel-admin",
+    "keywords": ["Admin", "laravel"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mladen Janjetovic",
+            "email": "mladen@system-inc.com"
+        },
+        {
+            "name": "Nemanja Maric",
+            "email": "nemanja@system-inc.com"
+        }
+    ],
+
+    "autoload": {
+        "psr-4": {
+            "SystemInc\\LaravelAdmin\\": "src/"
+        }
+    },
+
+    "require": {
+        "php": ">=5.5.9"
+    }
+}
