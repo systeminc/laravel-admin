@@ -4,24 +4,24 @@ return [
 
     'guards' => [
         'system-admin' => [
-            'driver' => 'session',
+            'driver'   => 'session',
             'provider' => 'system-admins',
-        ],      
+        ],
     ],
 
-    'providers' => [       
+    'providers' => [
         'system-admins' => [
             'driver' => 'eloquent',
-            'model' => SystemInc\LaravelAdmin\Admin::class,
+            'model'  => SystemInc\LaravelAdmin\Admin::class,
         ],
     ],
 
     'passwords' => [
         'system-admins' => [
             'provider' => 'admins',
-            'email' => 'auth.emails.password',
-            'table' => 'password_resets',
-            'expire' => 60,
+            'email'    => 'auth.emails.password',
+            'table'    => 'password_resets',
+            'expire'   => 60,
         ],
     ],
 

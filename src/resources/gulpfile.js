@@ -13,9 +13,8 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.less('login.less');
-
-
     mix.less('admin.less');
+
     mix.scripts(['jquery-1.12.4.js', 'jquery-ui.js','vue.js', 'tinymce/tinymce.min.js', 'tinymce-init.js', 'global.js','admin.js'], 'public/js/admin.js');
 
    	mix.version(['css/admin.css', 'css/login.css', 'js/admin.js']);

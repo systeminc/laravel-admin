@@ -4,7 +4,6 @@ namespace SystemInc\LaravelAdmin;
 
 use Auth;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Auth\Guard;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -15,48 +14,43 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (! $this->app->routesAreCached()) {
+        if (!$this->app->routesAreCached()) {
             require __DIR__.'/Http/routes.php';
         }
 
-        $this->mergeConfigFrom(__DIR__.'/config/auth.php', 'admin.auth');
+        // Merge auth configurations
+        $auth_config = array_merge_recursive($this->app['config']['auth'], require __DIR__.'/config/auth.php');
+        $this->app['config']->set('auth', $auth_config);
 
-        Auth::extend('system-admin', function($app, $name, array $config) {
-            // Return an instance of Illuminate\Contracts\Auth\Guard...
-            return new Guard(Auth::createUserProvider($config['admin.auth']));
-        });
-
-        $this->loadViewsFrom(__DIR__.'/resources/views/admin', 'admin');
-
-        //IMAGES
+        //Gracefull push
         $this->publishes([
+            //IMAGES
             __DIR__.'/resources/images/' => public_path('images'),
-        ], 'images');         
-
-        //VIEWS
-        $this->publishes([
+            //VIEWS
             __DIR__.'/resources/views/' => resource_path('views'),
-        ], 'views');        
-
-        //STYLES AND JS
-        $this->publishes([
+            //STYLES AND JS
             __DIR__.'/resources/assets/' => resource_path('assets'),
-        ], 'assets');
+            //MIGRATIONS
+            __DIR__.'/database/migrations/' => database_path('migrations'),
+            //SEEDS
+            __DIR__.'/database/seeds/' => database_path('seeds'),
+        ], 'laravel-admin');
 
-        //GULP JS
+        //Force push
         $this->publishes([
-            __DIR__.'/resources/gulpfile.js' => base_path('gulpfile.js')
-        ], 'gulp');
-
-        //MIGRATIONS
-        $this->publishes([
-            __DIR__.'/database/migrations/' => database_path('migrations')
-        ], 'migrations');        
-
-        //SEEDS
-        $this->publishes([
-            __DIR__.'/database/seeds/' => database_path('seeds')
-        ], 'seeds');
+            //IMAGES
+            __DIR__.'/resources/images/' => public_path('images'),
+            //VIEWS
+            __DIR__.'/resources/views/' => resource_path('views'),
+            //STYLES AND JS
+            __DIR__.'/resources/assets/' => resource_path('assets'),
+            //MIGRATIONS
+            __DIR__.'/database/migrations/' => database_path('migrations'),
+            //SEEDS
+            __DIR__.'/database/seeds/' => database_path('seeds'),
+            //GULP JS
+            __DIR__.'/resources/gulpfile.js' => base_path('gulpfile.js'),
+        ], 'laravel-admin-force');
     }
 
     /**
