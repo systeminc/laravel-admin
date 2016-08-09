@@ -2,9 +2,7 @@
 
 namespace SystemInc\LaravelAdmin;
 
-use Auth;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Auth\Guard;
 
 class AdminServiceProvider extends ServiceProvider
 {
