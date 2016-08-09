@@ -3,8 +3,8 @@
 namespace SystemInc\LaravelAdmin;
 
 use Auth;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\ServiceProvider;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -15,15 +15,15 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        require __DIR__ . '/../vendor/autoload.php';
+        require __DIR__.'/../vendor/autoload.php';
 
-        if (! $this->app->routesAreCached()) {
+        if (!$this->app->routesAreCached()) {
             require __DIR__.'/Http/routes.php';
         }
 
         $this->mergeConfigFrom(__DIR__.'/config/auth.php', 'admin.auth');
 
-        Auth::extend('system-admin', function($app, $name, array $config) {
+        Auth::extend('system-admin', function ($app, $name, array $config) {
             // Return an instance of Illuminate\Contracts\Auth\Guard...
             return new Guard(Auth::createUserProvider($config['admin.auth']));
         });
@@ -33,12 +33,12 @@ class AdminServiceProvider extends ServiceProvider
         //IMAGES
         $this->publishes([
             __DIR__.'/resources/images/' => public_path('images'),
-        ], 'images');         
+        ], 'images');
 
         //VIEWS
         $this->publishes([
             __DIR__.'/resources/views/' => resource_path('views'),
-        ], 'views');        
+        ], 'views');
 
         //STYLES AND JS
         $this->publishes([
@@ -47,17 +47,17 @@ class AdminServiceProvider extends ServiceProvider
 
         //GULP JS
         $this->publishes([
-            __DIR__.'/resources/gulpfile.js' => base_path('gulpfile.js')
+            __DIR__.'/resources/gulpfile.js' => base_path('gulpfile.js'),
         ], 'gulp');
 
         //MIGRATIONS
         $this->publishes([
-            __DIR__.'/database/migrations/' => database_path('migrations')
-        ], 'migrations');        
+            __DIR__.'/database/migrations/' => database_path('migrations'),
+        ], 'migrations');
 
         //SEEDS
         $this->publishes([
-            __DIR__.'/database/seeds/' => database_path('seeds')
+            __DIR__.'/database/seeds/' => database_path('seeds'),
         ], 'seeds');
     }
 
