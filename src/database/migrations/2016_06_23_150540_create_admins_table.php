@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateAdminsTable extends Migration
 {
@@ -17,7 +17,7 @@ class CreateAdminsTable extends Migration
             $table->string('name', 30);
             $table->string('email', 50)->unique();
             $table->string('password');
-            
+
             $table->rememberToken();
             $table->timestamps();
         });
