@@ -4,7 +4,6 @@ namespace SystemInc\LaravelAdmin;
 
 use Auth;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Auth\Guard;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -15,7 +14,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (! $this->app->routesAreCached()) {
+        if (!$this->app->routesAreCached()) {
             require __DIR__.'/Http/routes.php';
         }
 
@@ -35,7 +34,7 @@ class AdminServiceProvider extends ServiceProvider
             __DIR__.'/database/migrations/' => database_path('migrations'),
             //SEEDS
             __DIR__.'/database/seeds/' => database_path('seeds'),
-        ], 'laravel-admin');         
+        ], 'laravel-admin');
 
         //Force push
         $this->publishes([
@@ -52,7 +51,6 @@ class AdminServiceProvider extends ServiceProvider
             //GULP JS
             __DIR__.'/resources/gulpfile.js' => base_path('gulpfile.js'),
         ], 'laravel-admin-force');
-
     }
 
     /**
