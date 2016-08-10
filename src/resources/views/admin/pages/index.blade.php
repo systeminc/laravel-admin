@@ -4,4 +4,6 @@
 
 	<h1>Pages</h1>
 
+	<a href="administration/pages/create">Create Page</a>
+
 @stop

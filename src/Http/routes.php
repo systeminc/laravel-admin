@@ -9,6 +9,8 @@ Route::group(['middleware' => ['web'], 'prefix' => 'administration', 'namespace'
 
     // actions with credentials
     Route::group(['middleware' => [SystemInc\LaravelAdmin\Http\Middleware\AuthenticateAdmin::class]], function () {
+        Route::controller('ajax', 'AjaxController');
+        Route::controller('layouts', 'LayoutsController');
         Route::controller('pages', 'PagesController');
         Route::controller('', 'AdminController');
     });

@@ -3,6 +3,7 @@
 @section('styles')
 	@parent
 	<link rel="stylesheet" href="{{ trim(elixir('css/admin.css'), '/') }}">
+	<link rel="stylesheet" href="{{ trim(elixir('css/codemirror.css'), '/') }}">
 @append
 
 @section('scripts')
@@ -21,6 +22,7 @@
 		<div class="header-menu cf">
 			<ul class="cf">
 				<li><a href="{{Request::segment(1)}}/pages">Pages</a></li>
+				<li><a href="{{Request::segment(1)}}/layouts">Layouts</a></li>
 			</ul>
 			<ul class="account cf">
 				<li><a href="{{Request::segment(1)}}/change-password">Change password</a></li>

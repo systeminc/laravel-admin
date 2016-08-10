@@ -4,6 +4,7 @@ namespace SystemInc\LaravelAdmin\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Storage;
 use View;
 
 class PagesController extends Controller
@@ -47,5 +48,10 @@ class PagesController extends Controller
      */
     public function postSave(Request $request)
     {
+        if (empty($request->title)) {
+            return back()->withErrors(['message' => 'Title is required']);
+        }
+
+        Storage::disk('system')->put('/system/' . $request->title . '.blade.php', 'test');
     }
 }

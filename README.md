@@ -41,9 +41,14 @@ elixir(function(mix) {
     mix.less('login.less');
     mix.less('admin.less');
 
-    mix.scripts(['jquery-1.12.4.js', 'jquery-ui.js','vue.js', 'tinymce/tinymce.min.js', 'tinymce-init.js', 'global.js','admin.js'], 'public/js/admin.js');
+    mix.scripts(['jquery-1.12.4.js', 'jquery-ui.js','vue.js', 'tinymce/tinymce.min.js', 'tinymce-init.js', 'global.js','admin.js'], 'public/js/admin.js');    
+	mix.scripts(['codemirror.js','php.js', 'xml.js','css.js', 'javascript.js', 'htmlmixed.js', 'clike.js', 'overlay.js'], 'public/js/editor.js');
 
-   	mix.version(['css/admin.css', 'css/login.css', 'js/admin.js']);
+    mix.copy('resources/assets/less/codemirror.css', 'public/css/codemirror.css');
+    mix.copy('resources/assets/js/tinymce/skins', 'public/build/js/skins');
+    mix.copy('resources/assets/js/ZeroClipboard.swf', 'public/build/js/ZeroClipboard.swf');
+
+   	mix.version(['css/admin.css', 'css/login.css', 'css/codemirror.css', 'js/admin.js', 'js/editor.js']);
 });
 ```
 
