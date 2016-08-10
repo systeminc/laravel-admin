@@ -5,13 +5,13 @@ return [
     'disks' => [
 
         'system' => [
-            'driver' => 'local',
-            'root' => resource_path('views'),
+            'driver'     => 'local',
+            'root'       => resource_path('views'),
             'visibility' => 'public',
-        ],        
+        ],
         'system-images' => [
-            'driver' => 'local',
-            'root' => public_path('images'),
+            'driver'     => 'local',
+            'root'       => public_path('images'),
             'visibility' => 'public',
         ],
 

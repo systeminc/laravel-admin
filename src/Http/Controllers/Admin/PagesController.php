@@ -52,6 +52,6 @@ class PagesController extends Controller
             return back()->withErrors(['message' => 'Title is required']);
         }
 
-        Storage::disk('system')->put('/system/' . $request->title . '.blade.php', 'test');
+        Storage::disk('system')->put('/system/'.$request->title.'.blade.php', 'test');
     }
 }
