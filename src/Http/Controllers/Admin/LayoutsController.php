@@ -4,8 +4,8 @@ namespace SystemInc\LaravelAdmin\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use File;
-use Image;
 use Illuminate\Http\Request;
+use Image;
 use Storage;
 use View;
 
