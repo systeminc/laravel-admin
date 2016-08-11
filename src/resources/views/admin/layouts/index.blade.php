@@ -11,7 +11,7 @@
 	<div>
 		@foreach ($templates as $key => $template)
 			<a href="administration/layouts/edit/{{ $key }}">
-				<img src="/images/{{ $template }}">
+				<img style="border: 1px solid #000;" src="/images/{{ $template }}" width="400">
 			</a>
 		@endforeach
 	</div>

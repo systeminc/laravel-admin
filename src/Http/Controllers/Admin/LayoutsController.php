@@ -39,7 +39,9 @@ class LayoutsController extends Controller
      */
     public function getCreate()
     {
-        return view('admin.layouts.create');
+        $snippet = Storage::disk('system')->get('/snippet/snippet.blade.php');
+
+        return view('admin.layouts.create', compact('snippet'));
     }
 
     /**
@@ -55,7 +57,7 @@ class LayoutsController extends Controller
             return back()->withErrors(['message' => 'Title is required']);
         }
 
-        Storage::disk('system')->put('/layouts/'.$request->title.'.blade.php', 'test');
+        Storage::disk('system')->put('/layouts/'.$request->title.'.blade.php', $request->html_layout);
     }
 
     public function getEdit($template_id)
