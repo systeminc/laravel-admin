@@ -3,8 +3,6 @@
 namespace SystemInc\LaravelAdmin\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Storage;
 use View;
 
 class AjaxController extends Controller
