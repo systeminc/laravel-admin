@@ -3,6 +3,7 @@
 namespace SystemInc\LaravelAdmin;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,10 @@ class AdminServiceProvider extends ServiceProvider
         // Merge auth configurations
         $auth_config = array_merge_recursive($this->app['config']['auth'], require __DIR__.'/config/auth.php');
         $this->app['config']->set('auth', $auth_config);
+
+        // Merge filesystems configurations
+        $filesystems_config = array_merge_recursive($this->app['config']['filesystems'], require __DIR__.'/config/filesystems.php');
+        $this->app['config']->set('filesystems', $filesystems_config);
 
         //Gracefull push
         $this->publishes([
@@ -59,6 +64,9 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->register(\Intervention\Image\ImageServiceProvider::class);
+
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Image', \Intervention\Image\Facades\Image::class);
     }
 }

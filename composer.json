@@ -23,6 +23,7 @@
     },
 
     "require": {
+        "intervention/image": "^2.3",
         "php": ">=5.5.9"
     }
 }

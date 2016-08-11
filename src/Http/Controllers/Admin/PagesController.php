@@ -4,6 +4,7 @@ namespace SystemInc\LaravelAdmin\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Storage;
 use View;
 
 class PagesController extends Controller
@@ -25,7 +26,9 @@ class PagesController extends Controller
      */
     public function getIndex()
     {
-        return view('admin.pages.index');
+        $pages = Storage::disk('system')->allFiles('system');
+
+        return view('admin.pages.index', compact('pages'));
     }
 
     /**
@@ -35,7 +38,9 @@ class PagesController extends Controller
      */
     public function getCreate()
     {
-        return view('admin.pages.create');
+        $templates = Storage::disk('system-images')->allFiles('templates');
+
+        return view('admin.pages.create', compact('templates'));
     }
 
     /**
@@ -47,5 +52,20 @@ class PagesController extends Controller
      */
     public function postSave(Request $request)
     {
+        if (empty($request->title)) {
+            return back()->withErrors(['message' => 'Title is required']);
+        }
+
+        $extend_layout = "@extends('layouts.$request->template')\xA@section('content')\xA\xAYour code goes here\xA\xA@stop";
+        Storage::disk('system')->put('/system/'.$request->title.'.blade.php', $extend_layout);
+
+        return redirect('administration/pages/edit/'.$request->title);
+    }
+
+    public function getEdit($filename)
+    {
+        $snippet = Storage::disk('system')->get('/system/'.$filename.'.blade.php');
+
+        return view('admin.pages.edit', compact('snippet', 'filename'));
     }
 }
