@@ -13,13 +13,17 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (! $this->app->routesAreCached()) {
+        if (!$this->app->routesAreCached()) {
             require __DIR__.'/Http/routes.php';
         }
 
         // Merge auth configurations
         $auth_config = array_merge_recursive($this->app['config']['auth'], require __DIR__.'/config/auth.php');
         $this->app['config']->set('auth', $auth_config);
+
+        // Merge filesystems configurations
+        $filesystems_config = array_merge_recursive($this->app['config']['filesystems'], require __DIR__.'/config/filesystems.php');
+        $this->app['config']->set('filesystems', $filesystems_config);
 
         //Gracefull push
         $this->publishes([
@@ -33,7 +37,7 @@ class AdminServiceProvider extends ServiceProvider
             __DIR__.'/database/migrations/' => database_path('migrations'),
             //SEEDS
             __DIR__.'/database/seeds/' => database_path('seeds'),
-        ], 'laravel-admin');         
+        ], 'laravel-admin');
 
         //Force push
         $this->publishes([
@@ -50,7 +54,6 @@ class AdminServiceProvider extends ServiceProvider
             //GULP JS
             __DIR__.'/resources/gulpfile.js' => base_path('gulpfile.js'),
         ], 'laravel-admin-force');
-
     }
 
     /**
