@@ -22,9 +22,11 @@ class AjaxController extends Controller
     }
 
     /**
-     * Change gallery order
-     * @param Request $request 
-     * @param string $type 
+     * Change gallery order.
+     *
+     * @param Request $request
+     * @param string  $type
+     *
      * @return \Illuminate\Http\Response
      */
     public function postChangeGalleryOrder(Request $request, $type)
@@ -38,14 +40,17 @@ class AjaxController extends Controller
 
             $image->save();
         }
-        return "Success";
+
+        return 'Success';
     }
 
     /**
-     * Delete gallery image
-     * @param Request $request 
-     * @param string $type 
-     * @param int $id 
+     * Delete gallery image.
+     *
+     * @param Request $request
+     * @param string  $type
+     * @param int     $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function postDeleteGalleryImages(Request $request, $type, $id)
@@ -56,6 +61,6 @@ class AjaxController extends Controller
 
         $image->delete();
 
-        return "Success";
+        return 'Success';
     }
 }
