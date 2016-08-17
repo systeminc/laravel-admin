@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Storage;
 use View;
-use Image;
 
 class PagesController extends Controller
 {
@@ -63,8 +62,10 @@ class PagesController extends Controller
     }
 
     /**
-     * Edit page
-     * @param string $filename 
+     * Edit page.
+     *
+     * @param string $filename
+     *
      * @return \Illuminate\Http\Response
      */
     public function getEdit($filename)
@@ -75,9 +76,11 @@ class PagesController extends Controller
     }
 
     /**
-     * Update page
-     * @param Request $request 
-     * @param string $filename 
+     * Update page.
+     *
+     * @param Request $request
+     * @param string  $filename
+     *
      * @return \Illuminate\Http\Response
      */
     public function postUpdate(Request $request, $filename)
@@ -86,33 +89,37 @@ class PagesController extends Controller
         if ($filename !== $request->title) {
             Storage::disk('system')
                     ->move('/system/'.$filename.'.blade.php', '/system/'.$request->title.'.blade.php');
-        }    
+        }
         Storage::disk('system')->put('/system/'.$request->title.'.blade.php', $request->html_layout);
 
         return redirect('administration/pages/edit/'.$request->title);
     }
 
     /**
-     * Preview page
-     * @param string $filename 
+     * Preview page.
+     *
+     * @param string $filename
+     *
      * @return \Illuminate\Http\Response
      */
     public function getPreview($filename)
     {
         $snippet = Storage::disk('system')->get('/system/'.$filename.'.blade.php');
 
-        return view('admin.pages.preview', compact('snippet', 'filename'));    
+        return view('admin.pages.preview', compact('snippet', 'filename'));
     }
 
     /**
-     * Delete page
-     * @param string $filename 
+     * Delete page.
+     *
+     * @param string $filename
+     *
      * @return \Illuminate\Http\Response
      */
     public function getDelete($filename)
     {
         Storage::disk('system')->delete('/system/'.$filename.'.blade.php');
-        
+
         return redirect('administration/pages');
     }
 }

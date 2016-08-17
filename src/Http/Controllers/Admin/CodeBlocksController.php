@@ -61,8 +61,10 @@ class CodeBlocksController extends Controller
     }
 
     /**
-     * Edit layout
-     * @param string $template_name 
+     * Edit layout.
+     *
+     * @param string $template_name
+     *
      * @return \Illuminate\Http\Response
      */
     public function getEdit($template_name)
@@ -73,9 +75,11 @@ class CodeBlocksController extends Controller
     }
 
     /**
-     * Update layout
-     * @param Request $request 
-     * @param string $template_name 
+     * Update layout.
+     *
+     * @param Request $request
+     * @param string  $template_name
+     *
      * @return \Illuminate\Http\Response
      */
     public function postUpdate(Request $request, $template_name)
@@ -91,20 +95,24 @@ class CodeBlocksController extends Controller
     }
 
     /**
-     * Preview layout
-     * @param string $template_name 
+     * Preview layout.
+     *
+     * @param string $template_name
+     *
      * @return \Illuminate\Http\Response
      */
     public function getPreview($template_name)
     {
         $snippet = Storage::disk('system')->get('/code-blocks/'.$template_name.'.blade.php');
 
-        return view('admin.code-blocks.preview', compact('snippet', 'template_name'));    
+        return view('admin.code-blocks.preview', compact('snippet', 'template_name'));
     }
 
     /**
-     * Delete layout
-     * @param string $template_name 
+     * Delete layout.
+     *
+     * @param string $template_name
+     *
      * @return \Illuminate\Http\Response
      */
     public function getDelete($template_name)

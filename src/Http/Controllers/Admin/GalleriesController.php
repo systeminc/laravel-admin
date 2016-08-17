@@ -24,83 +24,92 @@ class GalleriesController extends Controller
     }
 
     /**
-     * Show all galleries
+     * Show all galleries.
+     *
      * @return \Illuminate\Http\Response
      */
     public function getIndex()
     {
-    	$galleries = Gallery::all();
+        $galleries = Gallery::all();
 
-    	return view('admin.galleries.index', compact('galleries'));
+        return view('admin.galleries.index', compact('galleries'));
     }
 
     /**
-     * Create gallery
+     * Create gallery.
+     *
      * @return \Illuminate\Http\Response
      */
     public function getCreate()
     {
-    	return view('admin.galleries.create');
+        return view('admin.galleries.create');
     }
 
     /**
-     * Save gallery
-     * @param Request $request 
+     * Save gallery.
+     *
+     * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function postSave(Request $request)
     {
-    	if (!empty($request->title) || $request->hasFile('images')) {
-    		$gallery = Gallery::create([
-    			'title' => $request->title,
-    		]);
-	    	$this->Images($request->file('images'), $gallery->id);
+        if (!empty($request->title) || $request->hasFile('images')) {
+            $gallery = Gallery::create([
+                'title' => $request->title,
+            ]);
+            $this->Images($request->file('images'), $gallery->id);
 
-	    	return redirect('administration/galleries');
-    	}
-    	else {
-    		return back();
-    	}
+            return redirect('administration/galleries');
+        } else {
+            return back();
+        }
     }
 
     /**
-     * Edit gallery
-     * @param string $gallery_title 
+     * Edit gallery.
+     *
+     * @param string $gallery_title
+     *
      * @return \Illuminate\Http\Response
      */
     public function getEdit($gallery_title)
     {
-    	$gallery = Gallery::whereTitle($gallery_title)->first();
-    	$images = $gallery->images;
+        $gallery = Gallery::whereTitle($gallery_title)->first();
+        $images = $gallery->images;
 
-    	return view('admin.galleries.edit', compact('gallery', 'images'));
+        return view('admin.galleries.edit', compact('gallery', 'images'));
     }
 
     /**
-     * Update gallery
-     * @param Request $request 
-     * @param string $gallery_title 
+     * Update gallery.
+     *
+     * @param Request $request
+     * @param string  $gallery_title
+     *
      * @return \Illuminate\Http\Response
      */
     public function postUpdate(Request $request, $gallery_title)
     {
-    	$gallery = Gallery::whereTitle($gallery_title)->first();
-    	
-    	if ($request->title == $gallery_title) {
-        	$this->Images($request->file('images'), $gallery->id);
-    	}
-    	else if (!empty($request->title)) {
-	    	$gallery->title = $request->title;
-	    	$gallery->save();
+        $gallery = Gallery::whereTitle($gallery_title)->first();
 
-        	$this->Images($request->file('images'), $gallery->id);
+        if ($request->title == $gallery_title) {
+            $this->Images($request->file('images'), $gallery->id);
+        } elseif (!empty($request->title)) {
+            $gallery->title = $request->title;
+            $gallery->save();
+
+            $this->Images($request->file('images'), $gallery->id);
         }
+
         return back();
     }
 
     /**
-     * Delete gallery and all image
-     * @param string $gallery_title 
+     * Delete gallery and all image.
+     *
+     * @param string $gallery_title
+     *
      * @return \Illuminate\Http\Response
      */
     public function getDelete($gallery_title)
@@ -113,38 +122,38 @@ class GalleriesController extends Controller
             $image->delete();
         }
         $gallery->delete();
-        
-    	return redirect('administration/galleries');
+
+        return redirect('administration/galleries');
     }
 
     /**
      * Store a created images in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public static function Images($images, $gallery_id)
     {
-        if(is_array($images)) {
-
+        if (is_array($images)) {
             foreach (array_filter($images) as $image) {
                 if ($image->isValid()) {
                     $image_name = str_random(5);
 
-                    $original = '/' .  $gallery_id . '-' . $image_name . '.' . $image->getClientOriginalExtension();
-                    $thumb = '/thumb/' .  $gallery_id . '-' .  $image_name . '.' . $image->getClientOriginalExtension();
-                    $mobile = '/mobile/' .  $gallery_id . '-' .  $image_name . '.' . $image->getClientOriginalExtension();
-                    
-                    $original_url = 'images/galleries' . $original;
-                    $thumb_url = 'images/galleries' . $thumb;
-                    $mobile_url = 'images/galleries' . $mobile;
+                    $original = '/'.$gallery_id.'-'.$image_name.'.'.$image->getClientOriginalExtension();
+                    $thumb = '/thumb/'.$gallery_id.'-'.$image_name.'.'.$image->getClientOriginalExtension();
+                    $mobile = '/mobile/'.$gallery_id.'-'.$image_name.'.'.$image->getClientOriginalExtension();
+
+                    $original_url = 'images/galleries'.$original;
+                    $thumb_url = 'images/galleries'.$thumb;
+                    $mobile_url = 'images/galleries'.$mobile;
 
                     if (!File::isDirectory('images/galleries/thumb')) {
-                    	File::makeDirectory('images/galleries/thumb', 493, true);
-                    }      
+                        File::makeDirectory('images/galleries/thumb', 493, true);
+                    }
 
                     if (!File::isDirectory('images/galleries/mobile')) {
-                    	File::makeDirectory('images/galleries/mobile', 493, true);
+                        File::makeDirectory('images/galleries/mobile', 493, true);
                     }
 
                     $original_path = public_path($original_url);
@@ -174,6 +183,7 @@ class GalleriesController extends Controller
                     'mobile_source'     => $mobile_url,
                 ]);
             }
+
             return true;
         }
     }
