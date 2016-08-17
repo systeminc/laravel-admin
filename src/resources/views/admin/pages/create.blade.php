@@ -8,7 +8,7 @@
 		{{ csrf_field() }}
 
 		@if ($errors->has('message'))
-			<span>{{ $errors->first('message') }}</span>
+			<span class="alert alert-error">{{ $errors->first('message') }}</span>
 		@endif
 
 		<label for="title">Title:</label>
@@ -16,7 +16,7 @@
 
 		<select style="width: 100%" name="template">
 			@foreach ($templates as $key => $template)
-				<option value="{{ File::name($template) }}">{{ File::name($template) }}</option>
+				<option value="{{ str_replace(".blade", "", \File::name($template)) }}">{{ str_replace(".blade", "", \File::name($template)) }}</option>
 			@endforeach
 		</select>
 

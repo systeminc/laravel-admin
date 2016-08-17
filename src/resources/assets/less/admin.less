@@ -4,10 +4,40 @@
 @successColor: rgba(126, 211, 33, 0.3);
 @errorColor: rgba(242, 68, 27, 0.3);
 @defaultTextColor: #555;
+@red: #E91A40;
 
 body{
 	font-size: 12px;
 	font-family: "HelveticaNeue", Arial, sans-serif;
+}
+
+.right{
+	float: right;
+}
+
+.left{
+	float: left;
+}
+
+.button-right{
+	border: none;
+	border-radius: 5px;
+	padding: 10px;
+	color: @defaultTextColor;
+	background: #ddd;
+	cursor: pointer;
+	min-width: 100px;
+    margin-top: -50px;
+	float: right;
+
+	&.remove-item{
+		background-color: @errorColor;
+	}
+
+	&:hover{
+		color: white;
+		background: @defaultTextColor;
+	}
 }
 
 .input-box-defaults{
@@ -55,6 +85,8 @@ input{
 	&[type='submit']
 	{
 		.button;
+		margin-left: 0px;
+		margin-right: 0px;
 	}
 
 	&:hover,
@@ -270,7 +302,7 @@ header{
 
 	.gallery-wrap{
 		background: #ddd;
-		padding: 20px;
+		padding: 10px;
 		margin-bottom: 30px;
 
 		label{
@@ -283,7 +315,54 @@ header{
 			margin-bottom: auto;
 			margin-top: 10px;
 		}
-		
+
+		.image-list{
+		   	position: relative;
+
+			img{
+				display: block;
+			    width: 100%;
+			}
+
+		    li{
+		    	margin: 6px;
+			    width: 174px;
+			    float: left;
+			    // height: 100px;
+			    overflow: hidden;
+			    padding: 1px;
+		        position: relative;
+		    }
+
+			.buttons{
+			    position: absolute;
+			    top: 0;
+			    z-index: 1;
+			    width: 100%;
+
+			    .remove-image{
+		    	    margin: 5px;
+			        background: rgba(102, 102, 102, 0.8);
+				    padding: 5px 8px;
+				    float: left;
+				    line-height: 1em;
+				    cursor: pointer;
+				    display: inline-block;
+				    font-size: 10px;
+				    color: white;
+				    border: none;
+				    font-weight: bold;
+				    border-radius: 4px;
+				    text-transform: uppercase;
+				    min-width: auto;
+
+				    &:hover{
+				    	background: @red;
+				    }
+			    }
+			}
+		}
+
 		.gallery-images{
 			a{
 				display: inline-block;
@@ -293,6 +372,11 @@ header{
 				height: 80px;
 				margin: 5px; 
 			}
+		}
+
+		.alert{
+			display: block;
+			margin: 20px 0 0 0;
 		}
 	}
 
@@ -318,6 +402,10 @@ header{
   				&:hover{
   					color: red;
   				}
+			}
+
+			&.items-order{
+				transition: none;
 			}
 
 			&:hover{

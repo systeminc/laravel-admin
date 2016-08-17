@@ -6,7 +6,7 @@
 
 @section('admin-content')
 
-	<h1>Update Layout</h1>
+	<h1>Update {{ $filename }}</h1>
 
 	<form style="max-width: 100%;" class="form" action="administration/pages/update/{{ $filename }}" method="post">
 		{{ csrf_field() }}
@@ -25,9 +25,19 @@
 			<textarea name="html_layout" id="code">{{ $snippet }}</textarea>
 		</div>
 
-		<a href="">Preview</a>
 		<input type="submit" value="Save">
 	</form>
+	
+	<div class="cf">
+		<a class="button left" href="administration/pages/preview/{{ $filename }}" target="_blank">Preview</a>
+		<a class="button right" href="administration/pages/delete/{{ $filename }}">Delete page</a>
+	</div>
+
+	<div class="cf">
+		<h1>Magic method</h1>
+		<p class="">To preview <b>variable</b> use keyword <b>"or"</b> then the string that while represented your variable.</p>
+	</div>
+
 <script>
 	var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
 		lineNumbers: true,

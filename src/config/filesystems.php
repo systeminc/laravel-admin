@@ -9,11 +9,6 @@ return [
             'root'       => resource_path('views'),
             'visibility' => 'public',
         ],
-        'system-images' => [
-            'driver'     => 'local',
-            'root'       => public_path('images'),
-            'visibility' => 'public',
-        ],
         'system-app' => [
             'driver'     => 'local',
             'root'       => base_path('app'),

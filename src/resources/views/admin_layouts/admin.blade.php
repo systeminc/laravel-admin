@@ -22,7 +22,8 @@
 		<div class="header-menu cf">
 			<ul class="cf">
 				<li><a href="{{Request::segment(1)}}/pages">Pages</a></li>
-				<li><a href="{{Request::segment(1)}}/layouts">Layouts</a></li>
+				<li><a href="{{Request::segment(1)}}/code-blocks">Code blocks</a></li>
+				<li><a href="{{Request::segment(1)}}/galleries">Galleries</a></li>
 			</ul>
 			<ul class="account cf">
 				<li><a href="{{Request::segment(1)}}/change-password">Change password</a></li>

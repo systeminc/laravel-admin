@@ -41,8 +41,8 @@ elixir(function(mix) {
     mix.less('login.less');
     mix.less('admin.less');
 
-    mix.scripts(['jquery-1.12.4.js', 'jquery-ui.js','vue.js', 'tinymce/tinymce.min.js', 'tinymce-init.js', 'global.js','admin.js'], 'public/js/admin.js');    
-	mix.scripts(['codemirror.js','php.js', 'xml.js','css.js', 'javascript.js', 'htmlmixed.js', 'clike.js', 'overlay.js'], 'public/js/editor.js');
+    mix.scripts(['jquery-1.12.4.js', 'jquery-ui.js', 'tinymce/tinymce.min.js', 'tinymce-init.js', 'global.js','admin.js'], 'public/js/admin.js');    
+	mix.scripts(['codemirror.js','php.js', 'xml.js', 'vue.js', 'css.js', 'javascript.js', 'htmlmixed.js', 'clike.js', 'overlay.js'], 'public/js/editor.js');
 
     mix.copy('resources/assets/less/codemirror.css', 'public/css/codemirror.css');
     mix.copy('resources/assets/js/tinymce/skins', 'public/build/js/skins');
