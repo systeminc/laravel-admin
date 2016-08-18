@@ -8,14 +8,19 @@
 		{{ csrf_field() }}
 
 		@if ($errors->has('message'))
-			<span>{{ $errors->first('message') }}</span>
+			<span class="alert alert-error">{{ $errors->first('message') }}</span>
 		@endif
 
 		<label for="title">Title:</label>
 		<input type="text" name="title" placeholder="Title">
 
+		<select style="width: 100%" name="template">
+			@foreach ($templates as $key => $template)
+				<option value="{{ str_replace(".blade", "", \File::name($template)) }}">{{ str_replace(".blade", "", \File::name($template)) }}</option>
+			@endforeach
+		</select>
+
 		<input type="submit" value="Create">
 	</form>
-
 
 @stop

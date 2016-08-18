@@ -22,21 +22,25 @@ class PagesController extends Controller
     /**
      * Pages controller index page.
      *
-     * @return type
+     * @return \Illuminate\Http\Response
      */
     public function getIndex()
     {
-        return view('admin.pages.index');
+        $pages = Storage::disk('system')->allFiles('system');
+
+        return view('admin.pages.index', compact('pages'));
     }
 
     /**
      * Create new pages.
      *
-     * @return type
+     * @return \Illuminate\Http\Response
      */
     public function getCreate()
     {
-        return view('admin.pages.create');
+        $templates = Storage::disk('system')->allFiles('layouts');
+
+        return view('admin.pages.create', compact('templates'));
     }
 
     /**
@@ -44,14 +48,78 @@ class PagesController extends Controller
      *
      * @param Request $request
      *
-     * @return type
+     * @return \Illuminate\Http\Response
      */
     public function postSave(Request $request)
     {
         if (empty($request->title)) {
             return back()->withErrors(['message' => 'Title is required']);
         }
+        $extend_layout = "@extends('layouts.$request->template')\xA@section('content')\xA\xAYour code goes here\xA\xA@stop";
+        Storage::disk('system')->put('/system/'.$request->title.'.blade.php', $extend_layout);
 
-        Storage::disk('system')->put('/system/'.$request->title.'.blade.php', 'test');
+        return redirect('administration/pages/edit/'.$request->title);
+    }
+
+    /**
+     * Edit page.
+     *
+     * @param string $filename
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getEdit($filename)
+    {
+        $snippet = Storage::disk('system')->get('/system/'.$filename.'.blade.php');
+
+        return view('admin.pages.edit', compact('snippet', 'filename'));
+    }
+
+    /**
+     * Update page.
+     *
+     * @param Request $request
+     * @param string  $filename
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function postUpdate(Request $request, $filename)
+    {
+        //RENAME FILE
+        if ($filename !== $request->title) {
+            Storage::disk('system')
+                    ->move('/system/'.$filename.'.blade.php', '/system/'.$request->title.'.blade.php');
+        }
+        Storage::disk('system')->put('/system/'.$request->title.'.blade.php', $request->html_layout);
+
+        return redirect('administration/pages/edit/'.$request->title);
+    }
+
+    /**
+     * Preview page.
+     *
+     * @param string $filename
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPreview($filename)
+    {
+        $snippet = Storage::disk('system')->get('/system/'.$filename.'.blade.php');
+
+        return view('admin.pages.preview', compact('snippet', 'filename'));
+    }
+
+    /**
+     * Delete page.
+     *
+     * @param string $filename
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDelete($filename)
+    {
+        Storage::disk('system')->delete('/system/'.$filename.'.blade.php');
+
+        return redirect('administration/pages');
     }
 }

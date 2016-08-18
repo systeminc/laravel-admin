@@ -21,8 +21,16 @@
 
 		<div class="header-menu cf">
 			<ul class="cf">
+				<li><a href="{{Request::segment(1)}}/blog">Blog</a></li>
+				<li><a href="{{Request::segment(1)}}/blog-comments">Blog Comments</a></li>
+				<li><a href="{{Request::segment(1)}}/categories">Categories</a></li>
+				<li><a href="{{Request::segment(1)}}/code-blocks">Code blocks</a></li>
+				<li><a href="{{Request::segment(1)}}/galleries">Galleries</a></li>
+				<li><a href="{{Request::segment(1)}}/orders">Orders</a></li>
 				<li><a href="{{Request::segment(1)}}/pages">Pages</a></li>
-				<li><a href="{{Request::segment(1)}}/layouts">Layouts</a></li>
+				<li><a href="{{Request::segment(1)}}/products">Products</a></li>
+				<li><a href="{{Request::segment(1)}}/products-comments">Products Comments</a></li>
+				<li><a href="{{Request::segment(1)}}/stock">Stock</a></li>
 			</ul>
 			<ul class="account cf">
 				<li><a href="{{Request::segment(1)}}/change-password">Change password</a></li>
@@ -32,13 +40,10 @@
 	</header>
 
 	<script>
-		$(".header-menu a").each(function(index, el) {
-			if('{{Request::path()}}'.search($(this).attr('href')) != -1){
-				$(this).parent().addClass('active');
-			}
-		});
+		$(".header-menu a[href^='{{Request::path()}}']").parent().addClass('active');
+		$(".header-menu a[href^='{{Request::path()}}-']").parent().removeClass('active');
 	</script>
-
+	
 	<div class="admin-content cf">
 		@yield('admin-content')
 	</div>

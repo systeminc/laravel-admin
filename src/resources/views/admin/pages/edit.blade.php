@@ -6,9 +6,9 @@
 
 @section('admin-content')
 
-	<h1>Update Layout</h1>
+	<h1>Update {{ $filename }}</h1>
 
-	<form style="max-width: 100%;" action="administration/layouts/update/{{ $filename }}" method="post">
+	<form style="max-width: 100%;" class="form" action="administration/pages/update/{{ $filename }}" method="post">
 		{{ csrf_field() }}
 
 		@if ($errors->has('message'))
@@ -17,6 +17,7 @@
 
 		<label for="title">Title:</label>
 		<input type="text" name="title" placeholder="Title" value="{{ $filename }}">
+		<input type="hidden" name="file" value="{{ $filename }}">
 
 
 		<div>
@@ -24,15 +25,20 @@
 			<textarea name="html_layout" id="code">{{ $snippet }}</textarea>
 		</div>
 
-		<div>
-			<label>Preview:</label>
-			<input type="hidden" name="image" value="{{ $template }}">
-			<iframe id='preview' style="width: 100%;float: left;height: 300px;border: 1px solid black;border-left: 0px;"></iframe>
-		</div>
 		<input type="submit" value="Save">
 	</form>
+	
+	<div class="cf">
+		<a class="button left" href="administration/pages/preview/{{ $filename }}" target="_blank">Preview</a>
+		<a class="button right" href="administration/pages/delete/{{ $filename }}">Delete page</a>
+	</div>
+
+	<div class="cf">
+		<h1>Magic method</h1>
+		<p class="">To preview <b>variable</b> use keyword <b>"or"</b> then the string that while represented your variable.</p>
+	</div>
+
 <script>
-	var delay;
 	var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
 		lineNumbers: true,
 		matchBrackets: true,
@@ -40,18 +46,5 @@
 		indentUnit: 4,
 		indentWithTabs: true
 	});
-	editor.on("change", function() {
-		clearTimeout(delay);
-		delay = setTimeout(updatePreview, 300);
-	});
-
-	function updatePreview() {
-		var previewFrame = document.getElementById('preview');
-		var preview =  previewFrame.contentDocument ||  previewFrame.contentWindow.document;
-		preview.open();
-		preview.write(editor.getValue());
-		preview.close();
-	}
-	setTimeout(updatePreview, 300);
 </script>
 @stop
