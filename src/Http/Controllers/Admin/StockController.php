@@ -11,27 +11,27 @@ class StockController extends Controller
 {
     public function getIndex()
     {
-        $tools = Product::orderBy('title')->get();
+        $products = Product::orderBy('title')->get();
         
-        foreach ($tools as &$tool) {
-        	$tool->ordered = DB::table('orders')
+        foreach ($products as &$product) {
+        	$product->ordered = DB::table('orders')
 		        ->leftJoin('order_items', 'order_items.order_id', '=', 'orders.id')
-		        ->where('tool_id', $tool->id)
+		        ->where('product_id', $product->id)
 		        ->whereIn('orders.order_status_id', [1,2,3])
 		        ->sum('order_items.quantity');
-        	$tool->ordered = $tool->ordered < 0 ? 0 : $tool->ordered;
+        	$product->ordered = $product->ordered < 0 ? 0 : $product->ordered;
 
-        	$tool->sold = DB::table('orders')
+        	$product->sold = DB::table('orders')
 		        ->leftJoin('order_items', 'order_items.order_id', '=', 'orders.id')
-		        ->where('tool_id', $tool->id)
+		        ->where('product_id', $product->id)
 		        ->whereIn('orders.order_status_id', [4,5])
 		        ->sum('order_items.quantity');
-        	$tool->sold = $tool->sold < 0 ? 0 : $tool->sold;
+        	$product->sold = $product->sold < 0 ? 0 : $product->sold;
 
-        	$tool->need = $tool->ordered - $tool->stock;
-        	$tool->need = $tool->need < 0 ? 0 : $tool->need;
+        	$product->need = $product->ordered - $product->stock;
+        	$product->need = $product->need < 0 ? 0 : $product->need;
         }
 
-        return view('admin.stock', compact('tools'));
+        return view('admin.stock.index', compact('products'));
     }
 }

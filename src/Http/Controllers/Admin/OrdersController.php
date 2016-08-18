@@ -2,15 +2,13 @@
 
 namespace SystemInc\LaravelAdmin\Http\Controllers\Admin;
 
-use Alert;
 use App\Http\Controllers\Controller;
 use SystemInc\LaravelAdmin\Product;
 use SystemInc\LaravelAdmin\Order;
 use SystemInc\LaravelAdmin\OrderStatus;
 use SystemInc\LaravelAdmin\OrderItem;
-use SystemInc\LaravelAdmin\UnprotectedOrder;
+use SystemInc\LaravelAdmin\Validations\UpdatedOrderValidation;
 use Illuminate\Http\Request;
-use File;
 use Mail;
 use PDF;
 use Validator;
@@ -25,7 +23,8 @@ class OrdersController extends Controller
     public function getIndex()
     {
         $orders = Order::orderBy('created_at', 'desc')->paginate(15);
-        return view('admin.orders', compact('orders'));
+
+        return view('admin.orders.orders', compact('orders'));
     }
 
     /**
@@ -38,9 +37,13 @@ class OrdersController extends Controller
     {
         $order = Order::find($id);
 
+        $statuses = OrderStatus::all();
+
+        $products = Product::all();
+
         $max_invoice_number = (int) Order::whereRaw('YEAR(created_at)='.date("Y"))->max('invoice_number');
 
-        return view('admin.order', compact('order', 'max_invoice_number'));
+        return view('admin.orders.order', compact('order', 'max_invoice_number', 'statuses', 'products'));
     }
 
     /**
@@ -51,20 +54,17 @@ class OrdersController extends Controller
      */
     public function postSave(Request $request)
     {
-        $validation = Validator::make($request->all(), UnprotectedOrder::rules());
+        // validation
+        $validation = Validator::make($request->all(), UpdatedOrderValidation::rules(), UpdatedOrderValidation::messages());
 
         if ($validation->fails()) 
         {
-            foreach ($validation->errors()->all() as $error) {
-                Alert::set('error', $error);
-            }
-            
-            return redirect()->back()->withInput();
+            return back()->withInput()->withErrors($validation);
         }
 
         $id = $request->segment(4);
 
-        $order = UnprotectedOrder::find($id);
+        $order = Order::find($id);
         $old_order_status_id = $order->order_status_id;
 
         if($request->input('invoice_number')){
@@ -75,8 +75,7 @@ class OrdersController extends Controller
 
             if ($order_with_same_invoice_number) 
             {
-                Alert::set('error', 'Invoice number already taken by Order ' . $order_with_same_invoice_number->id);
-                return redirect()->back();
+                return back()->with('error', 'Invoice number already taken by Order ' . $order_with_same_invoice_number->id);
             }
         }
 
@@ -93,27 +92,25 @@ class OrdersController extends Controller
         $order->recalculateTotalPrice();
         $order->save();
 
-        // deduct delivered tools from stock
+        // deduct delivered products from stock
         if ($order->order_status_id == 5 && $order->order_status_id != $old_order_status_id) 
         {
             foreach ($order->items as $item) {
-                $item->tool->stock--;
-                $item->tool->save();
+                $item->product->stock--;
+                $item->product->save();
             }
         }        
 
-        Alert::set('success', "Saved successfully");
-
-        return redirect()->back();
+        return back()->with('success', "Saved successfully");
     }
 
     public function postAddItem($order_id, Request $request){
         $order = Order::find($order_id);
-        $tool = Tool::find($request->input('tool_id'));
+        $product = Product::find($request->input('product_id'));
 
         $item = OrderItem::create([
             'order_id' => $order->id,
-            'tool_id' => $tool->id,
+            'product_id' => $product->id,
             ]);
 
         $item->save();
@@ -122,20 +119,16 @@ class OrdersController extends Controller
         $order->recalculateTotalPrice();
         $order->save();
 
-        Alert::set('success', $tool->title . " added");
-
-        return redirect()->back();
+        return back()->with('success', $product->title . " added");
     }
 
     public function getDeleteItem($item_id, Request $request){
         $item = OrderItem::find($item_id);
-        $tool = $item->tool;
+        $product = $item->product;
 
         $item->delete();
 
-        Alert::set('success', $tool->title . " deleted");
-
-        return redirect()->back();
+        return back()->with('success', $product->title . " deleted");
     }
 
     public function postEditItem($item_id, Request $request){
@@ -150,23 +143,21 @@ class OrdersController extends Controller
         $item->order->recalculateTotalPrice();
         $item->order->save();
         
-        Alert::set('success', $item->tool->title . " edited");
-
-        return redirect()->back();
+        return back()->with('success', $item->product->title . " edited");
     }
 
     public function getPreviewProforma($order_id, Request $request){
         $order = Order::find($order_id);
         $type = 'proforma';
 
-        return PDF::loadView('pdf.invoice', compact('order','type'))->download('invoice.pdf');
+        return PDF::loadView('admin.pdf.invoice', compact('order','type'))->download('invoice.pdf');
     }
 
     public function getPreviewInvoice($order_id, Request $request){
         $order = Order::find($order_id);
         $type = 'invoice';
 
-        return PDF::loadView('pdf.invoice', compact('order','type'))->download('invoice.pdf');
+        return PDF::loadView('admin.pdf.invoice', compact('order','type'))->download('invoice.pdf');
     }
 
     public function getSendProforma($order_id, Request $request){
@@ -174,7 +165,7 @@ class OrdersController extends Controller
         $type = 'proforma';
 
         $pdf_path = storage_path('invoices/'.$type.'-'.$order_id.'.pdf');
-        PDF::loadView('pdf.invoice', compact('order','type'))->save($pdf_path);
+        PDF::loadView('admin.pdf.invoice', compact('order','type'))->save($pdf_path);
 
         // send email
         Mail::send('mail.invoice', ['type' => 'proforma'], function ($m) use($order,$pdf_path) {
@@ -184,9 +175,7 @@ class OrdersController extends Controller
         $order->order_status_id = 2;
         $order->save();
 
-        Alert::set('success', 'Invoice sent');
-
-        return redirect()->back();
+        return back()->with('success', 'Invoice sent');
     }
 
     public function getSendInvoice($order_id, Request $request){
@@ -200,16 +189,14 @@ class OrdersController extends Controller
         $order->save();
 
         $pdf_path = storage_path('invoices/'.$type.'-'.$order_id.'.pdf');
-        PDF::loadView('pdf.invoice', compact('order','type'))->save($pdf_path);
+        PDF::loadView('admin.pdf.invoice', compact('order','type'))->save($pdf_path);
 
         // send email
         Mail::send('mail.invoice', ['type' => 'invoice'], function ($m) use($order,$pdf_path) {
             $m->to($order->billing_email, $order->billing_name)->subject("Invoice No: {$order->invoice_number} ".date('Y'))->attach($pdf_path);
         });
 
-        Alert::set('success', 'Invoice sent');
-
-        return redirect()->back();
+        return back()->with('success', 'Invoice sent');
     }
 
     public function getPrintInvoice($order_id, Request $request){
@@ -221,6 +208,6 @@ class OrdersController extends Controller
         $order->invoice_number = $max_invoice_number + 1;
         $order->save();
 
-        return PDF::loadView('pdf.invoice', compact('order','type'))->download($type.'-'.$order_id.'.pdf');
+        return PDF::loadView('admin.pdf.invoice', compact('order','type'))->download($type.'-'.$order_id.'.pdf');
     }
 }

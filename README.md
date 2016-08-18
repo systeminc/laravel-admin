@@ -31,6 +31,7 @@ Make sure that your add this in `'database/seeds/DatabaseSeeder.php'`
 public function run()
 {
     $this->call(AdminSeeder::class);
+    $this->call(OrderStatusesSeeder::class);
 }
 ```
 

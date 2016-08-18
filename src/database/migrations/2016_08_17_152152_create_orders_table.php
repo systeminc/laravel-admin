@@ -15,13 +15,13 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('invoice_number');
-            $table->integer('order_status_id')->default(7);
+            $table->integer('order_status_id')->default(1);
             $table->integer('shipment_price');
             $table->integer('total_price');
             $table->datetime('valid_until');
             $table->datetime('date_of_purchase');
-            $table->enum('currency');
-            $table->enum('currency_sign');
+            $table->enum('currency',['USD','EUR'])->default('EUR');
+            $table->enum('currency_sign',['USD','EUR'])->default('EUR');
             $table->text('note');
             $table->string('billing_name');
             $table->string('billing_email');

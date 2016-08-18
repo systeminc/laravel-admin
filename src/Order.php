@@ -40,27 +40,6 @@ class Order extends Model
 		'show_shipping_address',
     ];
 
-	public static function rules(){
-		return [
-			'billing_name' => 'required|string',
-			'billing_email' => 'required|email',
-			'billing_telephone' => 'required|string',
-			'billing_address' => 'required|string',
-			'billing_city' => 'required|string',
-			'billing_country' => 'required|string',
-			'billing_postcode' => 'required|string',
-			'billing_contact_person' => 'required|string',
-			'shipping_name' => 'string',
-			'shipping_email' => 'email',
-			'shipping_telephone' => 'string',
-			'shipping_address' => 'string',
-			'shipping_city' => 'string',
-			'shipping_country' => 'string',
-			'shipping_postcode' => 'string',
-			'shipping_contact_person' => 'string',
-			];
-	}
-
 	public function status(){
 		return $this->belongsTo('SystemInc\LaravelAdmin\OrderStatus', 'order_status_id');
 	}
@@ -73,15 +52,13 @@ class Order extends Model
         $this->total_price = 0;
 
         foreach ($this->items as $item) {
-            if ($item->custom_price) 
-            {
+            if ($item->custom_price) {
                 $this->total_price += $item->custom_price - $item->discount;
             }
-            else{
-                $this->total_price += $item->tool->price * $item->quantity - $item->discount;
+            else {
+                $this->total_price += $item->product->price * $item->quantity - $item->discount;
             }
         }
-
         $this->total_price += $this->shipment_price;
 
         return $this->total_price;

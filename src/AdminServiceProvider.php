@@ -65,8 +65,10 @@ class AdminServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(\Intervention\Image\ImageServiceProvider::class);
+        // $this->app->register(\Barryvdh\DomPDF\ServiceProvider::class);
 
         $loader = AliasLoader::getInstance();
         $loader->alias('Image', \Intervention\Image\Facades\Image::class);
+        // $loader->alias('PDF', \Barryvdh\DomPDF\Facade::class);
     }
 }

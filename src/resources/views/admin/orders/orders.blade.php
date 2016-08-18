@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('admin_layouts.admin')
 
 @section('admin-content')
 	
@@ -22,7 +22,7 @@
 			<tr class='blue'>
 		@elseif ($order->status->id == 5)
 			<tr class='green'>
-		@elseif ($order->status->id == 7)
+		@elseif ($order->status->id == 1)
 			<tr class='red'>
 		@else
 			<tr>
