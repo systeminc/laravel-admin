@@ -3,9 +3,6 @@
 namespace SystemInc\LaravelAdmin\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use SystemInc\LaravelAdmin\Gallery;
-use SystemInc\LaravelAdmin\Product;
 use SystemInc\LaravelAdmin\ProductComment;
 
 class ProductsCommentsController extends Controller
@@ -17,13 +14,14 @@ class ProductsCommentsController extends Controller
      */
     public function getIndex()
     {
-        $comments = ProductComment::orderBy('id','desc')->paginate(15);
+        $comments = ProductComment::orderBy('id', 'desc')->paginate(15);
 
         return view('admin.products.comments', compact('comments'));
     }
 
     /**
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getApprove($id)
@@ -36,7 +34,8 @@ class ProductsCommentsController extends Controller
     }
 
     /**
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getDisapprove($id)

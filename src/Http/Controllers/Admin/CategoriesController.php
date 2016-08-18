@@ -28,7 +28,7 @@ class CategoriesController extends Controller
      */
     public function getNew()
     {
-        $category = new ProductCategory;
+        $category = new ProductCategory();
 
         $categories = ProductCategory::all();
 
@@ -38,7 +38,8 @@ class CategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getEdit($id)
@@ -53,7 +54,8 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function postSave(Request $request)
@@ -61,9 +63,8 @@ class CategoriesController extends Controller
         $id = $request->segment(4);
 
         if ($id == 'new') {
-            $category = new ProductCategory;
-        }
-        else {
+            $category = new ProductCategory();
+        } else {
             $category = ProductCategory::find($id);
         }
 
@@ -77,18 +78,17 @@ class CategoriesController extends Controller
             // if image name exists
             $i = 1;
 
-            while (File::exists($dirname . "/" . $filename)) {
+            while (File::exists($dirname.'/'.$filename)) {
                 $fileParts = pathinfo($filename);
-                $filename = rtrim($fileParts['filename'], "_".($i-1)) . "_$i." . $fileParts['extension'];
+                $filename = rtrim($fileParts['filename'], '_'.($i - 1))."_$i.".$fileParts['extension'];
                 $i++;
             }
 
             $request->file('thumb')->move($dirname, $filename);
-            $category->thumb = $dirname . "/" . $filename;
+            $category->thumb = $dirname.'/'.$filename;
         }
 
         if ($request->input('delete_thumb')) {
-
             if (File::exists($category->thumb)) {
                 File::delete($category->thumb);
             }
@@ -107,7 +107,8 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getDelete(Request $request, $id)

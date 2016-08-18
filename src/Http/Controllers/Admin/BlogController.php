@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use File;
 use Illuminate\Http\Request;
 use SystemInc\LaravelAdmin\BlogArticle;
-use SystemInc\LaravelAdmin\Gallery;
 
 class BlogController extends Controller
 {
@@ -17,8 +16,8 @@ class BlogController extends Controller
      */
     public function getIndex()
     {
-        $articles = BlogArticle::orderBy('created_at','desc')->get();
-        
+        $articles = BlogArticle::orderBy('created_at', 'desc')->get();
+
         return view('admin.blog.articles', compact('articles'));
     }
 
@@ -29,9 +28,9 @@ class BlogController extends Controller
      */
     public function getNew(Request $request)
     {
-        $article = new BlogArticle;
-        $article->title = "New Article";
-        $article->uri_id = "new-article-" . time();
+        $article = new BlogArticle();
+        $article->title = 'New Article';
+        $article->uri_id = 'new-article-'.time();
         $article->save();
 
         return redirect($request->segment(1).'/blog/edit/'.$article->id);
@@ -40,7 +39,8 @@ class BlogController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getEdit($id)
@@ -53,7 +53,8 @@ class BlogController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function postSave(Request $request)
@@ -71,18 +72,17 @@ class BlogController extends Controller
 
             // if image name exists
             $i = 1;
-            while (File::exists($dirname . "/" . $filename)) {
+            while (File::exists($dirname.'/'.$filename)) {
                 $fileParts = pathinfo($filename);
-                $filename = rtrim($fileParts['filename'], "_".($i-1)) . "_$i." . $fileParts['extension'];
+                $filename = rtrim($fileParts['filename'], '_'.($i - 1))."_$i.".$fileParts['extension'];
                 $i++;
             }
 
             $request->file('thumb')->move($dirname, $filename);
-            $article->thumb = $dirname . "/" . $filename;
+            $article->thumb = $dirname.'/'.$filename;
         }
 
         if ($request->input('delete_thumb')) {
-
             if (File::exists($article->thumb)) {
                 File::delete($article->thumb);
             }
@@ -96,7 +96,8 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getDelete(Request $request, $id)
