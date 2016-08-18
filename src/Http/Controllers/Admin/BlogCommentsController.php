@@ -3,8 +3,6 @@
 namespace SystemInc\LaravelAdmin\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use SystemInc\LaravelAdmin\BlogArticle;
 use SystemInc\LaravelAdmin\BlogComment;
 
 class BlogCommentsController extends Controller
@@ -16,13 +14,14 @@ class BlogCommentsController extends Controller
      */
     public function getIndex()
     {
-        $comments = BlogComment::orderBy('id','desc')->paginate(15);
-        
+        $comments = BlogComment::orderBy('id', 'desc')->paginate(15);
+
         return view('admin.blog.comments', compact('comments'));
     }
 
     /**
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getApprove($id)
@@ -35,7 +34,8 @@ class BlogCommentsController extends Controller
     }
 
     /**
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getDisapprove($id)

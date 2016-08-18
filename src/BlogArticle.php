@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class BlogArticle extends Model
 {
     protected $fillable = [
-		'uri_id',
-		'title',
-		'thumb',
-		'content',
-		'excerpt',
-		'visible',
-		'meta_title',
-		'meta_description',
-		'meta_keywords',  
+        'uri_id',
+        'title',
+        'thumb',
+        'content',
+        'excerpt',
+        'visible',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
     ];
 }

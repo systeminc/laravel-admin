@@ -18,7 +18,7 @@ class ProductsController extends Controller
      */
     public function getIndex()
     {
-        $products = Product::orderBy('id','desc')->get();
+        $products = Product::orderBy('id', 'desc')->get();
 
         return view('admin.products.products', compact('products'));
     }
@@ -30,12 +30,12 @@ class ProductsController extends Controller
      */
     public function getNew(Request $request)
     {
-        $product = new Product;
-        $product->title = "New product";
+        $product = new Product();
+        $product->title = 'New product';
         $product->save();
 
-        $gallery = new Gallery;
-        $gallery->title = "product " . $product->id;
+        $gallery = new Gallery();
+        $gallery->title = 'product '.$product->id;
         $gallery->save();
 
         $product->gallery_id = $gallery->id;
@@ -47,7 +47,8 @@ class ProductsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getEdit($id)
@@ -64,7 +65,8 @@ class ProductsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function postSave(Request $request)
@@ -81,18 +83,17 @@ class ProductsController extends Controller
 
             // if image name exists
             $i = 1;
-            while (File::exists($dirname . "/" . $filename)) {
+            while (File::exists($dirname.'/'.$filename)) {
                 $fileParts = pathinfo($filename);
-                $filename = rtrim($fileParts['filename'], "_".($i-1)) . "_$i." . $fileParts['extension'];
+                $filename = rtrim($fileParts['filename'], '_'.($i - 1))."_$i.".$fileParts['extension'];
                 $i++;
             }
 
             $request->file('thumb')->move($dirname, $filename);
-            $product->thumb = $dirname . "/" . $filename;
+            $product->thumb = $dirname.'/'.$filename;
         }
 
         if ($request->input('delete_thumb')) {
-
             if (File::exists($product->thumb)) {
                 File::delete($product->thumb);
             }
@@ -106,18 +107,17 @@ class ProductsController extends Controller
 
             // if image name exists
             $i = 1;
-            while (File::exists($dirname . "/" . $filename)) {
+            while (File::exists($dirname.'/'.$filename)) {
                 $fileParts = pathinfo($filename);
-                $filename = rtrim($fileParts['filename'], "_".($i-1)) . "_$i." . $fileParts['extension'];
+                $filename = rtrim($fileParts['filename'], '_'.($i - 1))."_$i.".$fileParts['extension'];
                 $i++;
             }
 
             $request->file('pdf')->move($dirname, $filename);
-            $product->pdf = $dirname . "/" . $filename;
+            $product->pdf = $dirname.'/'.$filename;
         }
 
         if ($request->input('delete_pdf')) {
-
             if (File::exists($product->pdf)) {
                 File::delete($product->pdf);
             }
@@ -131,7 +131,8 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getDelete(Request $request, $id)
