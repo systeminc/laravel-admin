@@ -18,6 +18,9 @@ class AdminServiceProvider extends ServiceProvider
             require __DIR__.'/Http/routes.php';
         }
 
+        //REGISTER OUR CONFIG FILE
+        $this->app['config']->set('laravel-admin', require __DIR__.'/config/laravel-admin.php');
+
         // Merge auth configurations
         $auth_config = array_merge_recursive($this->app['config']['auth'], require __DIR__.'/config/auth.php');
         $this->app['config']->set('auth', $auth_config);
@@ -26,35 +29,7 @@ class AdminServiceProvider extends ServiceProvider
         $filesystems_config = array_merge_recursive($this->app['config']['filesystems'], require __DIR__.'/config/filesystems.php');
         $this->app['config']->set('filesystems', $filesystems_config);
 
-        //Gracefull push
-        $this->publishes([
-            //IMAGES
-            __DIR__.'/resources/images/' => public_path('images'),
-            //VIEWS
-            __DIR__.'/resources/views/' => resource_path('views'),
-            //STYLES AND JS
-            __DIR__.'/resources/assets/' => resource_path('assets'),
-            //MIGRATIONS
-            __DIR__.'/database/migrations/' => database_path('migrations'),
-            //SEEDS
-            __DIR__.'/database/seeds/' => database_path('seeds'),
-        ], 'laravel-admin');
-
-        //Force push
-        $this->publishes([
-            //IMAGES
-            __DIR__.'/resources/images/' => public_path('images'),
-            //VIEWS
-            __DIR__.'/resources/views/' => resource_path('views'),
-            //STYLES AND JS
-            __DIR__.'/resources/assets/' => resource_path('assets'),
-            //MIGRATIONS
-            __DIR__.'/database/migrations/' => database_path('migrations'),
-            //SEEDS
-            __DIR__.'/database/seeds/' => database_path('seeds'),
-            //GULP JS
-            __DIR__.'/resources/gulpfile.js' => base_path('gulpfile.js'),
-        ], 'laravel-admin-force');
+        $this->loadViewsFrom(__DIR__.'/resources/views/', 'admin');
     }
 
     /**
@@ -64,11 +39,17 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton('command.laravel-admin.instal', function () {
+            return new Console\InstalCommand;
+        });
+
+        $this->commands(['command.laravel-admin.instal']);
+
         $this->app->register(\Intervention\Image\ImageServiceProvider::class);
-        // $this->app->register(\Barryvdh\DomPDF\ServiceProvider::class);
+        $this->app->register(\Barryvdh\DomPDF\ServiceProvider::class);
 
         $loader = AliasLoader::getInstance();
         $loader->alias('Image', \Intervention\Image\Facades\Image::class);
-        // $loader->alias('PDF', \Barryvdh\DomPDF\Facade::class);
+        $loader->alias('PDF', \Barryvdh\DomPDF\Facade::class);
     }
 }

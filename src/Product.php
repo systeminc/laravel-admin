@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use SoftDeletes;
+	use SoftDeletes;
 
-    protected $dates = ['deleted_at'];
-
-    public $fillable = [
+	protected $dates = ['deleted_at'];
+	
+	public $fillable = [
         'product_category_id',
         'brand_id',
         'title',
@@ -31,15 +31,13 @@ class Product extends Model
         'stock',
     ];
 
-    public function category()
-    {
-        return $this->belongsTo('SystemInc\LaravelAdmin\ProductCategory', 'product_category_id');
-    }
+	public function category(){
+		return $this->belongsTo('SystemInc\LaravelAdmin\ProductCategory', 'product_category_id');
+	}	
 
-    public function models()
-    {
-        // return $this->belongsToMany(HddModel::class, 'products_hdd_models');
-    }
+	public function models(){
+		// return $this->belongsToMany(HddModel::class, 'products_hdd_models');
+	}	
 
     public function gallery()
     {
