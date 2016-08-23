@@ -7,7 +7,7 @@ use Storage;
 
 class UploadsController extends Controller
 {
-    public function getIndex($filename)
+    public function Index($filename)
     {      
         if (Storage::exists($filename)) {
             $file = Storage::get($filename);

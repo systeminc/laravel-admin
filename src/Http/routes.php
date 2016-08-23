@@ -1,13 +1,13 @@
 <?php
 
 // LARAVEL ADMIN
-Route::group(['middleware' => ['web'], 'prefix' => 'administration', 'namespace' => 'SystemInc\LaravelAdmin\Http\Controllers'], function () {
+Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_prefix'), 'namespace' => 'SystemInc\LaravelAdmin\Http\Controllers'], function () {
 
     // resources
     Route::get('css/{filename}', 'ResourcesController@css');
     Route::get('scripts/{filename?}', 'ResourcesController@scripts')->where('filename', '(.*)');
     Route::get('images/{filename}', 'ResourcesController@images');
-    Route::controller('uploads', 'UploadsController');
+    Route::get('uploads/{filename?}', 'UploadsController@index')->where('filename', '(.*)');
 
     // w/o credentials
     Route::get('login', 'AdminController@getLogin');
@@ -17,7 +17,6 @@ Route::group(['middleware' => ['web'], 'prefix' => 'administration', 'namespace'
     Route::group(['middleware' => [SystemInc\LaravelAdmin\Http\Middleware\AuthenticateAdmin::class]], function () {
 
         Route::group(['prefix' => 'blog', 'namespace' => 'Blog'], function () {
-            Route::controller('comments', 'CommentsController');
             Route::controller('', 'BlogController');
         });
 

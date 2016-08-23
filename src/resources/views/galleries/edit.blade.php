@@ -9,6 +9,10 @@
 		<label for="title">Title:</label>
 		<input type="text" name="title" value="{{ $gallery->title }}">	
 
+		@if (session('message'))
+			<span class="alert alert-error">{{ session('message') }}</span>
+		@endif
+
 		<div class="gallery-wrap">
 			<ul class="image-list sortable cf" data-link="ajax/{{ $gallery->title }}/change-gallery-order">
 				@foreach ($images as $image)
@@ -16,7 +20,7 @@
 						<div class="buttons">
 							<div onclick="ajaxDeleteGalleryImage('ajax/{{ $gallery->title }}/delete-gallery-images/{{ $image->id }}', '{{$image->id}}')" class="button remove-image delete">Delete</div>
 						</div>
-						<img src="{{$image->source}}" />
+						<img src="uploads/{{$image->source}}" />
 					</li>
 				@endforeach
 			</ul>

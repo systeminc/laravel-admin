@@ -55,7 +55,7 @@ class CodeBlocksController extends Controller
         }
         Storage::disk('system')->put('/code-blocks/'.$request->title.'.blade.php', $request->html_layout);
 
-        return redirect('administration/code-blocks');
+        return redirect(config('laravel-admin.route_prefix').'/code-blocks');
     }
 
     /**
@@ -89,7 +89,7 @@ class CodeBlocksController extends Controller
         }
         Storage::disk('system')->put('/code-blocks/'.$request->title.'.blade.php', $request->html_layout);
 
-        return redirect('administration/code-blocks/edit/'.$request->title);
+        return redirect(config('laravel-admin.route_prefix').'/code-blocks/edit/'.$request->title);
     }
 
     /**
@@ -117,6 +117,6 @@ class CodeBlocksController extends Controller
     {
         $snippet = Storage::disk('system')->delete('/code-blocks/'.$template_name.'.blade.php');
 
-        return redirect('administration/code-blocks');
+        return redirect(config('laravel-admin.route_prefix').'/code-blocks');
     }
 }

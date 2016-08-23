@@ -1,5 +1,7 @@
 <?php
 
+namespace SystemInc\LaravelAdmin\Database\Seeds;
+
 use Illuminate\Database\Seeder;
 use SystemInc\LaravelAdmin\OrderStatus;
 

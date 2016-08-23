@@ -32,7 +32,7 @@ $(function() {
             zIndex: 9999
         });
 
-        overlay.append('<iframe src="administration/tiny-images?editor_id='+editor.id+'&page_name='+$('#'+editor.id).data('page-name')+'&page_id='+$('#'+editor.id).data('page-id')+'" frameborder="0" style="width:100%;height:100%">');
+        overlay.append('<iframe src="tiny-images?editor_id='+editor.id+'&page_name='+$('#'+editor.id).data('page-name')+'&page_id='+$('#'+editor.id).data('page-id')+'" frameborder="0" style="width:100%;height:100%">');
 
         overlay.find("iframe").scroll(function(event) {
             event.stopPropagation();

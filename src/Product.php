@@ -53,4 +53,5 @@ class Product extends Model
     {
         return $this->hasMany('SystemInc\LaravelAdmin\ProductComment')->orderBy('created_at', 'desc');
     }
+
 }

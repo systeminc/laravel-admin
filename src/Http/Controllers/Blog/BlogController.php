@@ -3,9 +3,11 @@
 namespace SystemInc\LaravelAdmin\Http\Controllers\Blog;
 
 use App\Http\Controllers\Controller;
-use File;
 use Illuminate\Http\Request;
-use SystemInc\LaravelAdmin\BlogArticle;
+use Image;
+use Storage;
+use SystemInc\LaravelAdmin\BlogPost;
+use SystemInc\LaravelAdmin\BlogPostComment;
 use SystemInc\LaravelAdmin\Gallery;
 
 class BlogController extends Controller
@@ -17,9 +19,10 @@ class BlogController extends Controller
      */
     public function getIndex()
     {
-        $articles = BlogArticle::orderBy('created_at','desc')->get();
+        $posts = BlogPost::orderBy('created_at','desc')->paginate(10);
+        $comments = BlogPostComment::orderBy('created_at','desc')->paginate(10);
         
-        return view('admin::blog.articles', compact('articles'));
+        return view('admin::blog.index', compact('posts', 'comments'));
     }
 
     /**
@@ -27,14 +30,14 @@ class BlogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getNew(Request $request)
+    public function getPostNew(Request $request)
     {
-        $article = new BlogArticle;
-        $article->title = "New Article";
-        $article->uri_id = "new-article-" . time();
-        $article->save();
+        $post = new BlogPost;
+        $post->title = "New Article";
+        $post->uri_id = "new-post-" . time();
+        $post->save();
 
-        return redirect($request->segment(1).'/blog/edit/'.$article->id);
+        return redirect($request->segment(1).'/blog/post-edit/'.$post->id);
     }
 
     /**
@@ -43,11 +46,11 @@ class BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getEdit($id)
+    public function getPostEdit($id)
     {
-        $article = BlogArticle::find($id);
+        $post = BlogPost::find($id);
 
-        return view('admin::blog.article', compact('article'));
+        return view('admin::blog.post', compact('post'));
     }
 
     /**
@@ -60,37 +63,37 @@ class BlogController extends Controller
     {
         $id = $request->segment(4);
 
-        $article = BlogArticle::find($id);
-        $article->update($request->all());
+        $post = BlogPost::find($id);
+        $post->update($request->all());
 
-        if ($request->file('thumb') && $request->file('thumb')->isValid()) {
+        $image = $request->file('thumb');
 
-            // image doesn't exist
-            $filename = $request->file('thumb')->getClientOriginalName();
-            $dirname = 'images/blog';
+        if ($image && $image->isValid()) {
+            $image_name = str_random(5);
 
-            // if image name exists
-            $i = 1;
-            while (File::exists($dirname . "/" . $filename)) {
-                $fileParts = pathinfo($filename);
-                $filename = rtrim($fileParts['filename'], "_".($i-1)) . "_$i." . $fileParts['extension'];
-                $i++;
-            }
+            $original = '/'.$image_name.'.'.$image->getClientOriginalExtension();
+            $dirname = 'images/blog'.$original;
 
-            $request->file('thumb')->move($dirname, $filename);
-            $article->thumb = $dirname . "/" . $filename;
+            $original_image = Image::make($image)
+                ->fit(1920, 1080, function ($constraint) {
+                    $constraint->upsize();
+                })->encode();
+
+            Storage::put($dirname, $original_image);
+
+            $post->thumb = $dirname;
         }
 
         if ($request->input('delete_thumb')) {
 
-            if (File::exists($article->thumb)) {
-                File::delete($article->thumb);
+            if (Storage::exists($post->thumb)) {
+                Storage::delete($post->thumb);
             }
-            $article->thumb = null;
+            $post->thumb = null;
         }
-        $article->save();
+        $post->save();
 
-        return redirect($request->segment(1).'/blog/edit/'.$article->id)->with('success', 'Saved successfully');
+        return redirect($request->segment(1).'/blog/post-edit/'.$post->id)->with('success', 'Saved successfully');
     }
 
     /**
@@ -99,10 +102,36 @@ class BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getDelete(Request $request, $id)
+    public function getPostDelete(Request $request, $id)
     {
-        $article = BlogArticle::find($id)->delete();
+        $post = BlogPost::find($id)->delete();
 
         return redirect($request->segment(1).'/blog/')->with('success', 'Item deleted');
+    }
+
+    /**
+     * @param  int  $comment_id
+     * @return \Illuminate\Http\Response
+     */
+    public function getApproveComment($comment_id)
+    {
+        $post = BlogPostComment::find($comment_id);
+        $post->approved = 1;
+        $post->save();
+
+        return back();
+    }
+
+    /**
+     * @param  int  $comment_id
+     * @return \Illuminate\Http\Response
+     */
+    public function getDisapproveComment($comment_id)
+    {
+        $post = BlogPostComment::find($comment_id);
+        $post->approved = 0;
+        $post->save();
+
+        return back();
     }
 }

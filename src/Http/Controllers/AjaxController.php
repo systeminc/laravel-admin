@@ -3,8 +3,8 @@
 namespace SystemInc\LaravelAdmin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use File;
 use Illuminate\Http\Request;
+use Storage;
 use SystemInc\LaravelAdmin\Gallery;
 use SystemInc\LaravelAdmin\GalleryImage;
 use View;
@@ -57,7 +57,7 @@ class AjaxController extends Controller
     {
         $image = GalleryImage::find($id);
 
-        File::delete($image->source, $image->thumb_source, $image->mobile_source);
+        Storage::delete($image->source, $image->thumb_source, $image->mobile_source);
 
         $image->delete();
 

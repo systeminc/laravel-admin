@@ -60,7 +60,7 @@ class GalleriesController extends Controller
             ]);
             $this->Images($request->file('images'), $gallery->id);
 
-            return redirect('administration/galleries');
+            return redirect(config('laravel-admin.route_prefix').'/galleries');
         } else {
             return back();
         }
@@ -116,14 +116,18 @@ class GalleriesController extends Controller
     {
         $gallery = Gallery::whereTitle($gallery_title)->first();
 
+        if ($gallery->product_id) {
+            return redirect(config('laravel-admin.route_prefix').'/galleries/edit/'.$gallery_title)->with('message', 'This gallery is in the use');
+        }
+
         foreach ($gallery->images as $image) {
-            File::delete($image->source, $image->thumb_source, $image->mobile_source);
+            Storage::delete($image->source, $image->thumb_source, $image->mobile_source);
 
             $image->delete();
         }
         $gallery->delete();
 
-        return redirect('administration/galleries');
+        return redirect(config('laravel-admin.route_prefix').'/galleries');
     }
 
     /**
@@ -148,33 +152,35 @@ class GalleriesController extends Controller
                     $thumb_url = 'images/galleries'.$thumb;
                     $mobile_url = 'images/galleries'.$mobile;
 
-                    if (!File::isDirectory('images/galleries/thumb')) {
-                        File::makeDirectory('images/galleries/thumb', 493, true);
+                    $original_path = storage_path($original_url);
+
+                    if (!File::isDirectory(storage_path('images/galleries/thumb/'))) {
+                        File::makeDirectory(storage_path('images/galleries/thumb/'), 493, true);
                     }
 
-                    if (!File::isDirectory('images/galleries/mobile')) {
-                        File::makeDirectory('images/galleries/mobile', 493, true);
+                    if (!File::isDirectory(storage_path('images/galleries/mobile/'))) {
+                        File::makeDirectory(storage_path('images/galleries/mobile/'), 493, true);
                     }
 
-                    $original_path = public_path($original_url);
-                    $thumb_path = public_path($thumb_url);
-                    $mobile_path = public_path($mobile_url);
-
-                    $original_resized = Image::make($image)
+                    $original_image = Image::make($image)
                         ->fit(1920, 1080, function ($constraint) {
                             $constraint->upsize();
-                        })->save($original_path);
+                        })->encode();
+                    Storage::put($original_url, $original_image);
 
-                    $thumb_resized = Image::make($image)
+                    $thumb_image = Image::make($image)
                         ->fit(375, 200, function ($constraint) {
                             $constraint->upsize();
-                        })->save($thumb_path);
+                        })->encode();
+                    Storage::put($thumb_url, $thumb_image);
 
-                    $mobile_resized = Image::make($image)
+                    $mobile_image = Image::make($image)
                         ->fit(1024, 768, function ($constraint) {
                             $constraint->upsize();
-                        })->save($mobile_path);
+                        })->encode();
+                    Storage::put($mobile_url, $mobile_image);
                 }
+
                 GalleryImage::create([
                     'gallery_id'        => $gallery_id,
                     'source'            => $original_url,

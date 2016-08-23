@@ -21,7 +21,6 @@
 		<div class="header-menu cf">
 			<ul class="cf">
 				<li><a href="blog">Blog</a></li>
-				<li><a href="blog/comments">Blog Comments</a></li>
 				<li><a href="code-blocks">Code blocks</a></li>
 				<li><a href="galleries">Galleries</a></li>
 				<li><a href="pages">Pages</a></li>

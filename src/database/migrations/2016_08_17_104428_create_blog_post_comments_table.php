@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBlogCommentsTable extends Migration
+class CreateBlogPostCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,16 @@ class CreateBlogCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('blog_comments', function (Blueprint $table) {
+        Schema::create('blog_post_comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('blog_article_id')->unsigned();
+            $table->integer('blog_post_id')->unsigned();
             $table->string('name');
             $table->string('email');
             $table->text('content');
             $table->integer('approved')->default(0);
             $table->timestamps();
 
-            $table->foreign('blog_article_id')->references('id')->on('blog_articles')->onDelete('cascade');            
+            $table->foreign('blog_post_id')->references('id')->on('blog_posts')->onDelete('cascade');            
         });
     }
 
@@ -32,6 +32,6 @@ class CreateBlogCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('blog_comments');
+        Schema::drop('blog_post_comments');
     }
 }

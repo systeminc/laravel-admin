@@ -3,8 +3,10 @@
 namespace SystemInc\LaravelAdmin\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
-use File;
 use Illuminate\Http\Request;
+use Image;
+use Storage;
+use SLA;
 use SystemInc\LaravelAdmin\ProductCategory;
 
 class CategoriesController extends Controller
@@ -16,6 +18,11 @@ class CategoriesController extends Controller
      */
     public function getIndex()
     {
+
+        $tests = dd(SLA::blog());
+
+        return view('admin::test', compact('tests'));
+
         $categories = ProductCategory::orderBy('title')->get();
 
         return view('admin::categories.categories', compact('categories'));
@@ -69,28 +76,28 @@ class CategoriesController extends Controller
 
         $category->fill($request->all());
 
-        if ($request->hasFile('thumb') && $request->file('thumb')->isValid()) {
-            // image doesn't exist
-            $filename = $request->file('thumb')->getClientOriginalName();
-            $dirname = 'images/categories';
+        $image = $request->file('thumb');
 
-            // if image name exists
-            $i = 1;
+        if ($image && $image->isValid()) {
+            $image_name = str_random(5);
 
-            while (File::exists($dirname . "/" . $filename)) {
-                $fileParts = pathinfo($filename);
-                $filename = rtrim($fileParts['filename'], "_".($i-1)) . "_$i." . $fileParts['extension'];
-                $i++;
-            }
+            $original = '/'.$image_name.'.'.$image->getClientOriginalExtension();
+            $dirname = 'images/categories'.$original;
 
-            $request->file('thumb')->move($dirname, $filename);
-            $category->thumb = $dirname . "/" . $filename;
+            $original_image = Image::make($image)
+                ->fit(1920, 1080, function ($constraint) {
+                    $constraint->upsize();
+                })->encode();
+
+            Storage::put($dirname, $original_image);
+
+            $category->thumb = $dirname;
         }
 
         if ($request->input('delete_thumb')) {
 
-            if (File::exists($category->thumb)) {
-                File::delete($category->thumb);
+            if (Storage::exists($category->thumb)) {
+                Storage::delete($category->thumb);
             }
 
             $category->thumb = null;

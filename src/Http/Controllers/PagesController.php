@@ -58,7 +58,7 @@ class PagesController extends Controller
         $extend_layout = "@extends('layouts.$request->template')\xA@section('content')\xA\xAYour code goes here\xA\xA@stop";
         Storage::disk('system')->put('/system/'.$request->title.'.blade.php', $extend_layout);
 
-        return redirect('administration/pages/edit/'.$request->title);
+        return redirect(config('laravel-admin.route_prefix').'/pages/edit/'.$request->title);
     }
 
     /**
@@ -92,7 +92,7 @@ class PagesController extends Controller
         }
         Storage::disk('system')->put('/system/'.$request->title.'.blade.php', $request->html_layout);
 
-        return redirect('administration/pages/edit/'.$request->title);
+        return redirect(config('laravel-admin.route_prefix').'/pages/edit/'.$request->title);
     }
 
     /**
@@ -120,6 +120,6 @@ class PagesController extends Controller
     {
         Storage::disk('system')->delete('/system/'.$filename.'.blade.php');
 
-        return redirect('administration/pages');
+        return redirect(config('laravel-admin.route_prefix').'/pages');
     }
 }

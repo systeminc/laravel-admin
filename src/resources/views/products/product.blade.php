@@ -19,7 +19,7 @@
 			<textarea name="excerpt" rows="5">{{$product->excerpt}}</textarea>
 
 			<label>Description</label>
-			<textarea name="description" class="htmlEditor" rows="15">{{$product->description}}</textarea>
+			<textarea name="description" data-page-name="product" data-page-id="{{$product->id}}" id="editor-{{ str_replace('.', '', $product->id) }}" class="htmlEditor" rows="15">{{$product->description}}</textarea>
 
 			<label>Product Category</label>
 			<select name="product_category_id">
@@ -31,7 +31,7 @@
 			<label>PDF</label>
 			<div class="file-input-wrap cf">
 				@if(!empty($product->pdf)) 
-					<div class="small-image-preview" style="background-image: url('images/admin/pdf-icon.png')"></div>
+					<div class="small-image-preview" style="background-image: url('images/pdf-icon.png')"></div>
 					<input type="checkbox" name="delete_pdf">Delete this file?
 				@else
 					<div class="fileUpload">
@@ -44,7 +44,7 @@
 			<label>Thumbnail</label>
 			<div class="file-input-wrap cf">
 				@if(!empty($product->thumb)) 
-					<div class="small-image-preview" style="background-image: url({{$product->thumb}})"></div>
+					<div class="small-image-preview" style="background-image: url(uploads/{{$product->thumb}})"></div>
 					<input type="checkbox" name="delete_thumb">Delete this file?
 				@else
 					<div class="fileUpload">

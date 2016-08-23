@@ -46,7 +46,7 @@
             </div>
 
 
-            <button class="button large-button full-button">Log in</button>
+            <button class="button full-button">Log in</button>
 
         </form>
     </div>

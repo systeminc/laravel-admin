@@ -18,16 +18,13 @@ class AdminServiceProvider extends ServiceProvider
             require __DIR__.'/Http/routes.php';
         }
 
-        //REGISTER OUR CONFIG FILE
-        $this->app['config']->set('laravel-admin', require __DIR__.'/config/laravel-admin.php');
+        // Merge filesystems configurations
+        $filesystems_config = array_merge_recursive($this->app['config']['filesystems'], require __DIR__.'/config/filesystems.php');
+        $this->app['config']->set('filesystems', $filesystems_config);        
 
         // Merge auth configurations
         $auth_config = array_merge_recursive($this->app['config']['auth'], require __DIR__.'/config/auth.php');
         $this->app['config']->set('auth', $auth_config);
-
-        // Merge filesystems configurations
-        $filesystems_config = array_merge_recursive($this->app['config']['filesystems'], require __DIR__.'/config/filesystems.php');
-        $this->app['config']->set('filesystems', $filesystems_config);
 
         $this->loadViewsFrom(__DIR__.'/resources/views/', 'admin');
     }
@@ -39,6 +36,8 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton('SLA', 'SystemInc\LaravelAdmin\SLA');
+
         $this->app->singleton('command.laravel-admin.instal', function () {
             return new Console\InstalCommand;
         });

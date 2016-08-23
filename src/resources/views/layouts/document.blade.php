@@ -3,7 +3,7 @@
 <head>
 
 	<title>{{ $head['title'] or 'SYSTEM INC Admin panel' }}</title>
-	<base href="{{ url('/administration') }}/">
+	<base href="{{ url('/'.config('laravel-admin.route_prefix')) }}/">
 
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 

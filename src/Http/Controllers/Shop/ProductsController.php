@@ -3,8 +3,9 @@
 namespace SystemInc\LaravelAdmin\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
-use File;
+use Image;
 use Illuminate\Http\Request;
+use Storage;
 use SystemInc\LaravelAdmin\Gallery;
 use SystemInc\LaravelAdmin\Product;
 use SystemInc\LaravelAdmin\ProductCategory;
@@ -36,6 +37,7 @@ class ProductsController extends Controller
 
         $gallery = new Gallery;
         $gallery->title = "product " . $product->id;
+        $gallery->product_id = $product->id;
         $gallery->save();
 
         $product->gallery_id = $gallery->id;
@@ -74,52 +76,54 @@ class ProductsController extends Controller
         $product = Product::find($id);
         $product->update($request->all());
 
-        if ($request->file('thumb') && $request->file('thumb')->isValid()) {
-            // image doesn't exist
-            $filename = $request->file('thumb')->getClientOriginalName();
-            $dirname = 'images/products';
+        $image = $request->file('thumb');
 
-            // if image name exists
-            $i = 1;
-            while (File::exists($dirname . "/" . $filename)) {
-                $fileParts = pathinfo($filename);
-                $filename = rtrim($fileParts['filename'], "_".($i-1)) . "_$i." . $fileParts['extension'];
-                $i++;
-            }
+        if ($image && $image->isValid()) {
+            $image_name = str_random(5);
 
-            $request->file('thumb')->move($dirname, $filename);
-            $product->thumb = $dirname . "/" . $filename;
+            $original = '/'.$image_name.'.'.$image->getClientOriginalExtension();
+            $dirname = 'images/products'.$original;
+
+            $original_image = Image::make($image)
+                ->fit(1920, 1080, function ($constraint) {
+                    $constraint->upsize();
+                })->encode();
+
+            Storage::put($dirname, $original_image);
+
+            $product->thumb = $dirname;
         }
 
         if ($request->input('delete_thumb')) {
 
-            if (File::exists($product->thumb)) {
-                File::delete($product->thumb);
+            if (Storage::exists($product->thumb)) {
+                Storage::delete($product->thumb);
             }
             $product->thumb = null;
         }
 
+        // PDF
         if ($request->file('pdf') && $request->file('pdf')->isValid()) {
-            // image doesn't exist
-            $filename = $request->file('pdf')->getClientOriginalName();
-            $dirname = 'pdfs';
 
-            // if image name exists
+            $filename = $request->file('pdf')->getClientOriginalName();
+            $dirname = 'pdf';
+
+            // if pdf name exists
             $i = 1;
-            while (File::exists($dirname . "/" . $filename)) {
+            while (Storage::exists($dirname . "/" . $filename)) {
                 $fileParts = pathinfo($filename);
                 $filename = rtrim($fileParts['filename'], "_".($i-1)) . "_$i." . $fileParts['extension'];
                 $i++;
             }
 
-            $request->file('pdf')->move($dirname, $filename);
+            $request->file('pdf')->move(storage_path('app/'.$dirname), $filename);
             $product->pdf = $dirname . "/" . $filename;
         }
 
         if ($request->input('delete_pdf')) {
 
-            if (File::exists($product->pdf)) {
-                File::delete($product->pdf);
+            if (Storage::exists($product->pdf)) {
+                Storage::delete($product->pdf);
             }
             $product->pdf = null;
         }
@@ -141,11 +145,11 @@ class ProductsController extends Controller
         $gallery = Gallery::whereTitle($product->gallery->title)->first();
 
         foreach ($gallery->images as $image) {
-            File::delete($image->source, $image->thumb_source, $image->mobile_source);
+            Storage::delete($image->source, $image->thumb_source, $image->mobile_source);
 
             $image->delete();
         }
-        File::delete($product->pdf);
+        Storage::delete($product->pdf);
 
         $gallery->delete();
         $product->delete();

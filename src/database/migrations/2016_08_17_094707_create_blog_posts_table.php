@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBlogArticlesTable extends Migration
+class CreateBlogPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateBlogArticlesTable extends Migration
      */
     public function up()
     {
-        Schema::create('blog_articles', function (Blueprint $table) {
+        Schema::create('blog_posts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('uri_id');
             $table->string('title');
@@ -34,6 +34,6 @@ class CreateBlogArticlesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('blog_articles');
+        Schema::drop('blog_posts');
     }
 }

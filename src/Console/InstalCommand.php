@@ -4,6 +4,8 @@ namespace SystemInc\LaravelAdmin\Console;
 
 use Artisan;
 use Illuminate\Console\Command;
+use File;
+use SystemInc\LaravelAdmin\Admin;
 
 class InstalCommand extends Command
 {
@@ -11,7 +13,12 @@ class InstalCommand extends Command
     protected $description = 'Instal Laravel Administration Essentials';
 
     public function handle()
-    {        
+    {
+        if (!empty(config('laravel-admin'))) {
+            $this->error('Laravel Admin already installed');
+            return false;
+        }
+
         $this->line('');
         $this->line('');
         $this->line('');
@@ -39,43 +46,63 @@ class InstalCommand extends Command
         $this->line('');
         $this->line('Configure...');
 
+        $config =  require __DIR__.'/../config/laravel-admin.php';
 
-        $prefix = $this->ask('Route prefix', $this->laravel->app->config['laravel-admin']['route_prefix']);
+        $prefix = '';
+
+        while (str_replace('-', '', $prefix) == '') {
+            $prefix = $this->ask('Route prefix', $config['route_prefix']);
+            $prefix = trim(preg_replace('/[^a-z-]/', '', $prefix), '-');
+        }
+
+        $name = $this->ask('Admin name', 'Admin');
+
+        $email = $this->ask('Admin email', 'admin@example.com');
+
+        $password = '';
+
+        while (empty($password)) {
+            $password = $this->ask('Admin password');
+        }
+
+        Admin::create([
+            'name'     => $name,
+            'email'    => $email,
+            'password' => bcrypt($password),
+        ]);
         
-        $email = $this->ask('Admin email', $this->laravel->app->config['laravel-admin']['email']);
+        $config_file = File::get(__DIR__.'/../config/laravel-admin.php');
+        $config_file = str_replace($config['route_prefix'], $prefix, $config_file);
 
-        $pass = $this->ask('Admin password', $this->laravel->app->config['laravel-admin']['password']);
-
-
-		$this->line('Configuration Saved!');
-		$this->line('');
-		$this->line('***');
+        $this->line('Configuration Saved!');
+        $this->line('');
+        $this->line('***');
         $this->line('');
         $this->line('Migrating...');
-		$this->line('');
+        $this->line('');
 
         $migrate = Artisan::call('migrate', [
-        	'--path' => 'vendor/systeminc/laravel-admin/src/database/migrations',
-        	'--quiet' => true,
-        	]);
+            '--path' => 'vendor/systeminc/laravel-admin/src/database/migrations',
+            '--quiet' => true,
+            ]);
 
-		$this->line('Migrating Done!');
-		$this->line('');
-		$this->line('***');
+        $this->line('Migrating Done!');
+        $this->line('');
+        $this->line('***');
         $this->line('');
         $this->line('Seeding...');
-		$this->line('');
+        $this->line('');
         
         require __DIR__.'/../database/seeds/DatabaseSeeder.php';
-        // $seeding = Artisan::call('db:seed', [
-        // 	'--class' => \DatabaseSeeder::class,
-        // 	'--quiet' => true,
-        // 	]);
+        $seeder = new \DatabaseSeeder;
+        $seeder->run();
 
-		$this->line('Seeding Done!');
+        $this->line('Seeding Done!');
+
+        File::put(base_path('config/laravel-admin.php'), $config_file);
+
 		$this->line('');
 		$this->info('Successfully installed!');
 		$this->line(' _________________________________________________________________________________________________ ');
-        
     }
 }
