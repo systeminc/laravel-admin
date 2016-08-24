@@ -3,8 +3,8 @@
 namespace SystemInc\LaravelAdmin\Console;
 
 use Artisan;
-use Illuminate\Console\Command;
 use File;
+use Illuminate\Console\Command;
 use SystemInc\LaravelAdmin\Admin;
 
 class InstalCommand extends Command
@@ -16,6 +16,7 @@ class InstalCommand extends Command
     {
         if (!empty(config('laravel-admin'))) {
             $this->error('Laravel Admin already installed');
+
             return false;
         }
 
@@ -46,7 +47,7 @@ class InstalCommand extends Command
         $this->line('');
         $this->line('Configure...');
 
-        $config =  require __DIR__.'/../config/laravel-admin.php';
+        $config = require __DIR__.'/../config/laravel-admin.php';
 
         $prefix = '';
 
@@ -70,7 +71,7 @@ class InstalCommand extends Command
             'email'    => $email,
             'password' => bcrypt($password),
         ]);
-        
+
         $config_file = File::get(__DIR__.'/../config/laravel-admin.php');
         $config_file = str_replace($config['route_prefix'], $prefix, $config_file);
 
@@ -82,7 +83,7 @@ class InstalCommand extends Command
         $this->line('');
 
         $migrate = Artisan::call('migrate', [
-            '--path' => 'vendor/systeminc/laravel-admin/src/database/migrations',
+            '--path'  => 'vendor/systeminc/laravel-admin/src/database/migrations',
             '--quiet' => true,
             ]);
 
@@ -92,17 +93,17 @@ class InstalCommand extends Command
         $this->line('');
         $this->line('Seeding...');
         $this->line('');
-        
+
         require __DIR__.'/../database/seeds/DatabaseSeeder.php';
-        $seeder = new \DatabaseSeeder;
+        $seeder = new \DatabaseSeeder();
         $seeder->run();
 
         $this->line('Seeding Done!');
 
         File::put(base_path('config/laravel-admin.php'), $config_file);
 
-		$this->line('');
-		$this->info('Successfully installed!');
-		$this->line(' _________________________________________________________________________________________________ ');
+        $this->line('');
+        $this->info('Successfully installed!');
+        $this->line(' _________________________________________________________________________________________________ ');
     }
 }

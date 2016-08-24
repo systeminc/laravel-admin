@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateBlogPostCommentsTable extends Migration
 {
@@ -21,7 +21,7 @@ class CreateBlogPostCommentsTable extends Migration
             $table->integer('approved')->default(0);
             $table->timestamps();
 
-            $table->foreign('blog_post_id')->references('id')->on('blog_posts')->onDelete('cascade');            
+            $table->foreign('blog_post_id')->references('id')->on('blog_posts')->onDelete('cascade');
         });
     }
 

@@ -8,7 +8,6 @@ use Image;
 use Storage;
 use SystemInc\LaravelAdmin\BlogPost;
 use SystemInc\LaravelAdmin\BlogPostComment;
-use SystemInc\LaravelAdmin\Gallery;
 
 class BlogController extends Controller
 {
@@ -19,9 +18,9 @@ class BlogController extends Controller
      */
     public function getIndex()
     {
-        $posts = BlogPost::orderBy('created_at','desc')->paginate(10);
-        $comments = BlogPostComment::orderBy('created_at','desc')->paginate(10);
-        
+        $posts = BlogPost::orderBy('created_at', 'desc')->paginate(10);
+        $comments = BlogPostComment::orderBy('created_at', 'desc')->paginate(10);
+
         return view('admin::blog.index', compact('posts', 'comments'));
     }
 
@@ -32,9 +31,9 @@ class BlogController extends Controller
      */
     public function getPostNew(Request $request)
     {
-        $post = new BlogPost;
-        $post->title = "New Article";
-        $post->uri_id = "new-post-" . time();
+        $post = new BlogPost();
+        $post->title = 'New Article';
+        $post->uri_id = 'new-post-'.time();
         $post->save();
 
         return redirect($request->segment(1).'/blog/post-edit/'.$post->id);
@@ -43,7 +42,8 @@ class BlogController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getPostEdit($id)
@@ -56,7 +56,8 @@ class BlogController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function postSave(Request $request)
@@ -85,7 +86,6 @@ class BlogController extends Controller
         }
 
         if ($request->input('delete_thumb')) {
-
             if (Storage::exists($post->thumb)) {
                 Storage::delete($post->thumb);
             }
@@ -99,7 +99,8 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getPostDelete(Request $request, $id)
@@ -110,7 +111,8 @@ class BlogController extends Controller
     }
 
     /**
-     * @param  int  $comment_id
+     * @param int $comment_id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getApproveComment($comment_id)
@@ -123,7 +125,8 @@ class BlogController extends Controller
     }
 
     /**
-     * @param  int  $comment_id
+     * @param int $comment_id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getDisapproveComment($comment_id)

@@ -15,7 +15,6 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
 
     // with credentials
     Route::group(['middleware' => [SystemInc\LaravelAdmin\Http\Middleware\AuthenticateAdmin::class]], function () {
-
         Route::group(['prefix' => 'blog', 'namespace' => 'Blog'], function () {
             Route::controller('', 'BlogController');
         });

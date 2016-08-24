@@ -11,6 +11,6 @@ return [
     |
     */
 
-	'route_prefix' => 'administration',
+    'route_prefix' => 'administration',
 
 ];
