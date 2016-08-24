@@ -1,0 +1,140 @@
+<?php
+
+namespace SystemInc\LaravelAdmin\Http\Controllers\Blog;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Image;
+use Storage;
+use SystemInc\LaravelAdmin\BlogPost;
+use SystemInc\LaravelAdmin\BlogPostComment;
+
+class BlogController extends Controller
+{
+    /**
+     * Display a listing of the items.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getIndex()
+    {
+        $posts = BlogPost::orderBy('created_at', 'desc')->paginate(10);
+        $comments = BlogPostComment::orderBy('created_at', 'desc')->paginate(10);
+
+        return view('admin::blog.index', compact('posts', 'comments'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPostNew(Request $request)
+    {
+        $post = new BlogPost();
+        $post->title = 'New Article';
+        $post->uri_id = 'new-post-'.time();
+        $post->save();
+
+        return redirect($request->segment(1).'/blog/post-edit/'.$post->id);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPostEdit($id)
+    {
+        $post = BlogPost::find($id);
+
+        return view('admin::blog.post', compact('post'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function postSave(Request $request)
+    {
+        $id = $request->segment(4);
+
+        $post = BlogPost::find($id);
+        $post->update($request->all());
+
+        $image = $request->file('thumb');
+
+        if ($image && $image->isValid()) {
+            $image_name = str_random(5);
+
+            $original = '/'.$image_name.'.'.$image->getClientOriginalExtension();
+            $dirname = 'images/blog'.$original;
+
+            $original_image = Image::make($image)
+                ->fit(1920, 1080, function ($constraint) {
+                    $constraint->upsize();
+                })->encode();
+
+            Storage::put($dirname, $original_image);
+
+            $post->thumb = $dirname;
+        }
+
+        if ($request->input('delete_thumb')) {
+            if (Storage::exists($post->thumb)) {
+                Storage::delete($post->thumb);
+            }
+            $post->thumb = null;
+        }
+        $post->save();
+
+        return redirect($request->segment(1).'/blog/post-edit/'.$post->id)->with('success', 'Saved successfully');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPostDelete(Request $request, $id)
+    {
+        $post = BlogPost::find($id)->delete();
+
+        return redirect($request->segment(1).'/blog/')->with('success', 'Item deleted');
+    }
+
+    /**
+     * @param int $comment_id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getApproveComment($comment_id)
+    {
+        $post = BlogPostComment::find($comment_id);
+        $post->approved = 1;
+        $post->save();
+
+        return back();
+    }
+
+    /**
+     * @param int $comment_id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDisapproveComment($comment_id)
+    {
+        $post = BlogPostComment::find($comment_id);
+        $post->approved = 0;
+        $post->save();
+
+        return back();
+    }
+}

@@ -1,0 +1,1 @@
+@include('admin::layouts.'.$template_name)

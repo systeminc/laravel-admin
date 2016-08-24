@@ -24,7 +24,7 @@ class AuthenticateAdmin
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('administration/login');
+                return redirect()->guest(config('laravel-admin.route_prefix').'/login');
             }
         }
 

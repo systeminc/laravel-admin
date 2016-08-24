@@ -1,1 +1,0 @@
-@include('layouts.'.$template_name)
