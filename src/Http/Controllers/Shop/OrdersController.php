@@ -154,7 +154,7 @@ class OrdersController extends Controller
 
     public function getPreviewProforma($order_id)
     {
-        $data = array('order' => Order::find($order_id), 'type' => 'proforma');
+        $data = ['order' => Order::find($order_id), 'type' => 'proforma'];
 
         $pdf = PDF::loadView('admin::pdf.invoice', $data);
 
@@ -163,7 +163,7 @@ class OrdersController extends Controller
 
     public function getPreviewInvoice($order_id)
     {
-        $data = array('order' => Order::find($order_id), 'type' => 'invoice');
+        $data = ['order' => Order::find($order_id), 'type' => 'invoice'];
 
         $pdf = PDF::loadView('admin::pdf.invoice', $data);
 

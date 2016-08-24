@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Image;
 use Storage;
-use SLA;
 use SystemInc\LaravelAdmin\ProductCategory;
 
 class CategoriesController extends Controller
@@ -30,7 +29,7 @@ class CategoriesController extends Controller
      */
     public function getNew()
     {
-        $category = new ProductCategory;
+        $category = new ProductCategory();
 
         $categories = ProductCategory::all();
 
@@ -40,7 +39,8 @@ class CategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getEdit($id)
@@ -55,7 +55,8 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function postSave(Request $request)
@@ -63,9 +64,8 @@ class CategoriesController extends Controller
         $id = $request->segment(count($request->segments()));
 
         if ($id == 'new') {
-            $category = new ProductCategory;
-        }
-        else {
+            $category = new ProductCategory();
+        } else {
             $category = ProductCategory::find($id);
         }
 
@@ -90,7 +90,6 @@ class CategoriesController extends Controller
         }
 
         if ($request->input('delete_thumb')) {
-
             if (Storage::exists($category->thumb)) {
                 Storage::delete($category->thumb);
             }
@@ -109,7 +108,8 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getDelete(Request $request, $id)
