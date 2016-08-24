@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateOrdersTable extends Migration
 {
@@ -20,8 +20,8 @@ class CreateOrdersTable extends Migration
             $table->integer('total_price');
             $table->datetime('valid_until');
             $table->datetime('date_of_purchase');
-            $table->enum('currency',['USD','EUR'])->default('EUR');
-            $table->enum('currency_sign',['USD','EUR'])->default('EUR');
+            $table->enum('currency', ['USD', 'EUR'])->default('EUR');
+            $table->enum('currency_sign', ['USD', 'EUR'])->default('EUR');
             $table->text('note');
             $table->string('billing_name');
             $table->string('billing_email');
@@ -38,11 +38,11 @@ class CreateOrdersTable extends Migration
             $table->string('shipping_city');
             $table->string('shipping_country');
             $table->string('shipping_postcode');
-            $table->string('shipping_contact_person');            
-            $table->string('parity');            
-            $table->string('term_of_payment');            
-            $table->text('footnote');            
-            $table->integer('show_shipping_address')->default(0);            
+            $table->string('shipping_contact_person');
+            $table->string('parity');
+            $table->string('term_of_payment');
+            $table->text('footnote');
+            $table->integer('show_shipping_address')->default(0);
             $table->timestamps();
         });
     }

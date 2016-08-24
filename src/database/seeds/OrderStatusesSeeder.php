@@ -15,7 +15,7 @@ class OrderStatusesSeeder extends Seeder
     public function run()
     {
         OrderStatus::create([
-        	'title' => 'Order Created',
+            'title' => 'Order Created',
         ]);
         OrderStatus::create([
             'title' => 'Order Received',

@@ -20,7 +20,7 @@ class AdminServiceProvider extends ServiceProvider
 
         // Merge filesystems configurations
         $filesystems_config = array_merge_recursive($this->app['config']['filesystems'], require __DIR__.'/config/filesystems.php');
-        $this->app['config']->set('filesystems', $filesystems_config);        
+        $this->app['config']->set('filesystems', $filesystems_config);
 
         // Merge auth configurations
         $auth_config = array_merge_recursive($this->app['config']['auth'], require __DIR__.'/config/auth.php');
@@ -39,7 +39,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->singleton('SLA', 'SystemInc\LaravelAdmin\SLA');
 
         $this->app->singleton('command.laravel-admin.instal', function () {
-            return new Console\InstalCommand;
+            return new Console\InstalCommand();
         });
 
         $this->commands(['command.laravel-admin.instal']);
