@@ -3,14 +3,14 @@
 namespace SystemInc\LaravelAdmin;
 
 use SystemInc\LaravelAdmin\Blog;
-use SystemInc\LaravelAdmin\Product;
+use SystemInc\LaravelAdmin\Shop;
 use Storage;
 use Illuminate\Support\Collection;
 
 class SLA 
 {
     /**
-     * Instance of Blog model
+     * Instance of BlogPost
      * @return type
      */
     public function blog()
@@ -19,12 +19,12 @@ class SLA
     }
 
     /**
-     * Instance of Product model
+     * Instance of Shop
      * @return type
      */
     public function shop()
     {
-    	return new Product;
+    	return new Shop;
     }
 
     /**

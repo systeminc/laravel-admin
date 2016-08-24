@@ -18,14 +18,9 @@ class CategoriesController extends Controller
      */
     public function getIndex()
     {
-
-        $tests = dd(SLA::blog());
-
-        return view('admin::test', compact('tests'));
-
         $categories = ProductCategory::orderBy('title')->get();
 
-        return view('admin::categories.categories', compact('categories'));
+        return view('admin::categories.index', compact('categories'));
     }
 
     /**
