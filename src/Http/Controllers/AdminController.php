@@ -4,10 +4,10 @@ namespace SystemInc\LaravelAdmin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Auth;
-use Storage;
 use Hash;
-use Image;
 use Illuminate\Http\Request;
+use Image;
+use Storage;
 use SystemInc\LaravelAdmin\Admin;
 use View;
 
@@ -104,7 +104,8 @@ class AdminController extends Controller
     /**
      * Store a tiny image in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function anyTinyImages(Request $request)
@@ -119,7 +120,6 @@ class AdminController extends Controller
         $directory = 'images/tiny/'.$page_name.'/'.$page_id;
 
         if (!Storage::exists($directory)) {
-
             Storage::createDir($directory);
         }
 
@@ -137,8 +137,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Upload Tiny Image
-     * 
+     * Upload Tiny Image.
      * */
     public function anyUploadTinyImage(Request $request)
     {
@@ -148,30 +147,28 @@ class AdminController extends Controller
 
         foreach ($request->file('files') as $file) {
             if ($file->isValid() && in_array($file->getClientOriginalExtension(), $allowed) && strpos($directory, 'images/tiny') !== false) {
-
                 $original = $file->getClientOriginalName();
 
                 $original_image = Image::make($file)->encode();
 
-                Storage::put($directory."/".$original, $original_image);
+                Storage::put($directory.'/'.$original, $original_image);
             }
         }
+
         return back();
     }
 
     /**
-     * Delete Tiny Image
-     * 
+     * Delete Tiny Image.
      * */
     public function postDeleteTinyImage(Request $request)
     {
         $path = $request->get('path');
 
         if (Storage::exists($path) && strpos($path, 'images/tiny') !== false) {
-
             Storage::delete($path);
         }
+
         return Response::json(true);
     }
-
 }

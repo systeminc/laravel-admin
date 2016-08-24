@@ -3,8 +3,8 @@
 namespace SystemInc\LaravelAdmin\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
-use Image;
 use Illuminate\Http\Request;
+use Image;
 use Storage;
 use SystemInc\LaravelAdmin\Gallery;
 use SystemInc\LaravelAdmin\Product;
@@ -19,7 +19,7 @@ class ProductsController extends Controller
      */
     public function getIndex()
     {
-        $products = Product::orderBy('id','desc')->get();
+        $products = Product::orderBy('id', 'desc')->get();
 
         return view('admin::products.products', compact('products'));
     }
@@ -31,12 +31,12 @@ class ProductsController extends Controller
      */
     public function getNew(Request $request)
     {
-        $product = new Product;
-        $product->title = "New product";
+        $product = new Product();
+        $product->title = 'New product';
         $product->save();
 
-        $gallery = new Gallery;
-        $gallery->title = "product " . $product->id;
+        $gallery = new Gallery();
+        $gallery->title = 'product '.$product->id;
         $gallery->product_id = $product->id;
         $gallery->save();
 
@@ -49,7 +49,8 @@ class ProductsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getEdit($id)
@@ -66,7 +67,8 @@ class ProductsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function postSave(Request $request)
@@ -95,7 +97,6 @@ class ProductsController extends Controller
         }
 
         if ($request->input('delete_thumb')) {
-
             if (Storage::exists($product->thumb)) {
                 Storage::delete($product->thumb);
             }
@@ -104,24 +105,22 @@ class ProductsController extends Controller
 
         // PDF
         if ($request->file('pdf') && $request->file('pdf')->isValid()) {
-
             $filename = $request->file('pdf')->getClientOriginalName();
             $dirname = 'pdf';
 
             // if pdf name exists
             $i = 1;
-            while (Storage::exists($dirname . "/" . $filename)) {
+            while (Storage::exists($dirname.'/'.$filename)) {
                 $fileParts = pathinfo($filename);
-                $filename = rtrim($fileParts['filename'], "_".($i-1)) . "_$i." . $fileParts['extension'];
+                $filename = rtrim($fileParts['filename'], '_'.($i - 1))."_$i.".$fileParts['extension'];
                 $i++;
             }
 
             $request->file('pdf')->move(storage_path('app/'.$dirname), $filename);
-            $product->pdf = $dirname . "/" . $filename;
+            $product->pdf = $dirname.'/'.$filename;
         }
 
         if ($request->input('delete_pdf')) {
-
             if (Storage::exists($product->pdf)) {
                 Storage::delete($product->pdf);
             }
@@ -135,7 +134,8 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getDelete(Request $request, $id)
