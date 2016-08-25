@@ -25,7 +25,6 @@
 	</form>
 	
 	<div class="cf">
-		<a class="button left" href="pages/preview/{{ $filename }}" target="_blank">Preview</a>
 		<a class="button right" href="pages/delete/{{ $filename }}">Delete page</a>
 	</div>
 

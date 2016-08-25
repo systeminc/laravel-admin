@@ -39,13 +39,13 @@ class CategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param int $category_id
      *
      * @return \Illuminate\Http\Response
      */
-    public function getEdit($id)
+    public function getEdit($category_id)
     {
-        $category = ProductCategory::find($id);
+        $category = ProductCategory::find($category_id);
 
         $categories = ProductCategory::all();
 
@@ -59,14 +59,12 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function postSave(Request $request)
+    public function postSave(Request $request, $category_id)
     {
-        $id = $request->segment(count($request->segments()));
-
-        if ($id == 'new') {
+        if ($category_id == 'new') {
             $category = new ProductCategory();
         } else {
-            $category = ProductCategory::find($id);
+            $category = ProductCategory::find($category_id);
         }
 
         $category->fill($request->all());
@@ -108,13 +106,13 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param int $category_id
      *
      * @return \Illuminate\Http\Response
      */
-    public function getDelete(Request $request, $id)
+    public function getDelete(Request $request, $category_id)
     {
-        $category = ProductCategory::find($id)->delete();
+        $category = ProductCategory::find($category_id)->delete();
 
         return redirect($request->segment(1).'/shop/categories/')->with('success', 'Item deleted');
     }

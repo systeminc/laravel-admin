@@ -42,13 +42,13 @@ class BlogController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param int $post_id
      *
      * @return \Illuminate\Http\Response
      */
-    public function getPostEdit($id)
+    public function getPostEdit($post_id)
     {
-        $post = BlogPost::find($id);
+        $post = BlogPost::find($post_id);
 
         return view('admin::blog.post', compact('post'));
     }
@@ -56,15 +56,14 @@ class BlogController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param int $post_id
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function postSave(Request $request)
+    public function postSave(Request $request, $post_id)
     {
-        $id = $request->segment(4);
-
-        $post = BlogPost::find($id);
+        $post = BlogPost::find($post_id);
         $post->update($request->all());
 
         $image = $request->file('thumb');
@@ -99,13 +98,13 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param int $post_id
      *
      * @return \Illuminate\Http\Response
      */
-    public function getPostDelete(Request $request, $id)
+    public function getPostDelete(Request $request, $post_id)
     {
-        $post = BlogPost::find($id)->delete();
+        $post = BlogPost::find($post_id)->delete();
 
         return redirect($request->segment(1).'/blog/')->with('success', 'Item deleted');
     }

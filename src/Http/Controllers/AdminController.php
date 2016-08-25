@@ -7,6 +7,7 @@ use Auth;
 use Hash;
 use Illuminate\Http\Request;
 use Image;
+use Response;
 use Storage;
 use SystemInc\LaravelAdmin\Admin;
 use View;

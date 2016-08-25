@@ -96,20 +96,6 @@ class PagesController extends Controller
     }
 
     /**
-     * Preview page.
-     *
-     * @param string $filename
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getPreview($filename)
-    {
-        $snippet = Storage::disk('system')->get('/system/'.$filename.'.blade.php');
-
-        return view('admin::pages.preview', compact('snippet', 'filename'));
-    }
-
-    /**
      * Delete page.
      *
      * @param string $filename

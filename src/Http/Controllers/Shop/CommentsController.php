@@ -20,13 +20,13 @@ class CommentsController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int $comment_id
      *
      * @return \Illuminate\Http\Response
      */
-    public function getApprove($id)
+    public function getApprove($comment_id)
     {
-        $product = ProductComment::find($id);
+        $product = ProductComment::find($comment_id);
         $product->approved = 1;
         $product->save();
 
@@ -34,13 +34,13 @@ class CommentsController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int $comment_id
      *
      * @return \Illuminate\Http\Response
      */
-    public function getDisapprove($id)
+    public function getDisapprove($comment_id)
     {
-        $product = ProductComment::find($id);
+        $product = ProductComment::find($comment_id);
         $product->approved = 0;
         $product->save();
 

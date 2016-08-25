@@ -30,13 +30,13 @@ class OrdersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param int $order_id
      *
      * @return \Illuminate\Http\Response
      */
-    public function getEdit($id)
+    public function getEdit($order_id)
     {
-        $order = Order::find($id);
+        $order = Order::find($order_id);
 
         $statuses = OrderStatus::all();
 
@@ -54,7 +54,7 @@ class OrdersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function postSave(Request $request)
+    public function postSave(Request $request, $order_id)
     {
         // validation
         $validation = Validator::make($request->all(), UpdatedOrderValidation::rules(), UpdatedOrderValidation::messages());
@@ -63,9 +63,7 @@ class OrdersController extends Controller
             return back()->withInput()->withErrors($validation);
         }
 
-        $id = $request->segment(count($request->segments()));
-
-        $order = Order::find($id);
+        $order = Order::find($order_id);
         $old_order_status_id = $order->order_status_id;
 
         if ($request->input('invoice_number')) {
@@ -107,7 +105,7 @@ class OrdersController extends Controller
         return back()->with('success', 'Saved successfully');
     }
 
-    public function postAddItem($order_id, Request $request)
+    public function postAddItem(Request $request, $order_id)
     {
         $order = Order::find($order_id);
         $product = Product::find($request->input('product_id'));
@@ -126,7 +124,7 @@ class OrdersController extends Controller
         return back()->with('success', $product->title.' added');
     }
 
-    public function getDeleteItem($item_id, Request $request)
+    public function getDeleteItem(Request $request, $item_id)
     {
         $item = OrderItem::find($item_id);
         $product = $item->product;
@@ -136,7 +134,7 @@ class OrdersController extends Controller
         return back()->with('success', $product->title.' deleted');
     }
 
-    public function postEditItem($item_id, Request $request)
+    public function postEditItem(Request $request, $item_id)
     {
         $item = OrderItem::find($item_id);
 
@@ -170,7 +168,7 @@ class OrdersController extends Controller
         return $pdf->stream('invoice.pdf');
     }
 
-    public function getSendProforma($order_id, Request $request)
+    public function getSendProforma(Request $request, $order_id)
     {
         $order = Order::find($order_id);
         $type = 'proforma';
@@ -189,7 +187,7 @@ class OrdersController extends Controller
         return back()->with('success', 'Invoice sent');
     }
 
-    public function getSendInvoice($order_id, Request $request)
+    public function getSendInvoice(Request $request, $order_id)
     {
         $order = Order::find($order_id);
         $type = 'invoice';
@@ -211,7 +209,7 @@ class OrdersController extends Controller
         return back()->with('success', 'Invoice sent');
     }
 
-    public function getPrintInvoice($order_id, Request $request)
+    public function getPrintInvoice(Request $request, $order_id)
     {
         $order = Order::find($order_id);
         $type = 'invoice';

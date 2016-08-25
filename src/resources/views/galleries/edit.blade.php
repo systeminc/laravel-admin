@@ -34,7 +34,8 @@
 	</form>
 
 <script>
-	$(".fileUpload input").change(function(event) {
+	$(".fileUpload input").change(function(e) {
+		e.preventDefault();
 		$(this).parents('form').submit();
 	});
 </script>

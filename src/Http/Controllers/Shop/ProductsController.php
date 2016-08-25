@@ -49,13 +49,13 @@ class ProductsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param int $product_id
      *
      * @return \Illuminate\Http\Response
      */
-    public function getEdit($id)
+    public function getEdit($product_id)
     {
-        $product = Product::find($id);
+        $product = Product::find($product_id);
 
         $products = Product::all();
 
@@ -71,11 +71,9 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function postSave(Request $request)
+    public function postSave(Request $request, $product_id)
     {
-        $id = $request->segment(count($request->segments()));
-
-        $product = Product::find($id);
+        $product = Product::find($product_id);
         $product->update($request->all());
 
         $image = $request->file('thumb');
@@ -134,13 +132,13 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param int $product_id
      *
      * @return \Illuminate\Http\Response
      */
-    public function getDelete(Request $request, $id)
+    public function getDelete(Request $request, $product_id)
     {
-        $product = Product::find($id);
+        $product = Product::find($product_id);
 
         $gallery = Gallery::whereTitle($product->gallery->title)->first();
 

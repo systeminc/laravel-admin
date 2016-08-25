@@ -23,7 +23,6 @@
 		<input type="submit" value="Save">
 	</form>
 	<div>
-		<a class="button left" href="code-blocks/preview/{{ $template_name }}" target="_blank">Preview</a>
 		<a class="button right" href="code-blocks/delete/{{ $template_name }}">Delete code-block</a>
 	</div>
 <script>

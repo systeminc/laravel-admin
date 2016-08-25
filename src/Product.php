@@ -46,11 +46,6 @@ class Product extends Model
         return $this->belongsTo('SystemInc\LaravelAdmin\Gallery', 'gallery_id');
     }
 
-    public function brand()
-    {
-        return $this->belongsTo('SystemInc\LaravelAdmin\Brand');
-    }
-
     public function comments()
     {
         return $this->hasMany('SystemInc\LaravelAdmin\ProductComment')->orderBy('created_at', 'desc');

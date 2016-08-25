@@ -93,20 +93,6 @@ class CodeBlocksController extends Controller
     }
 
     /**
-     * Preview layout.
-     *
-     * @param string $template_name
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getPreview($template_name)
-    {
-        $snippet = Storage::disk('system')->get('/code-blocks/'.$template_name.'.blade.php');
-
-        return view('admin::code-blocks.preview', compact('snippet', 'template_name'));
-    }
-
-    /**
      * Delete layout.
      *
      * @param string $template_name
