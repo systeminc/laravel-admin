@@ -8,6 +8,6 @@ class ShopController extends Controller
 {
     public function getIndex()
     {
-    	return view('admin::shop.index');
+        return view('admin::shop.index');
     }
 }
