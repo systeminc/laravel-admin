@@ -1,1 +1,1679 @@
-!function(){var a={},b=function(b){for(var c=a[b],e=c.deps,f=c.defn,g=e.length,h=new Array(g),i=0;g>i;++i)h[i]=d(e[i]);var j=f.apply(null,h);if(void 0===j)throw"module ["+b+"] returned undefined";c.instance=j},c=function(b,c,d){if("string"!=typeof b)throw"module id must be a string";if(void 0===c)throw"no dependencies for "+b;if(void 0===d)throw"no definition function for "+b;a[b]={deps:c,defn:d,instance:void 0}},d=function(c){var d=a[c];if(void 0===d)throw"module ["+c+"] was undefined";return void 0===d.instance&&b(c),d.instance},e=function(a,b){for(var c=a.length,e=new Array(c),f=0;c>f;++f)e.push(d(a[f]));b.apply(null,b)},f={};f.bolt={module:{api:{define:c,require:e,demand:d}}};var g=c,h=function(a,b){g(a,[],function(){return b})};h("1",tinymce.ThemeManager),h("2",tinymce.util.Delay),h("b",tinymce.util.Tools),h("c",tinymce.ui.Factory),h("d",tinymce.DOM),g("e",["b","c"],function(a,b){var c=function(a,b){return function(c,d){for(var e,f=d.parents.length;f--&&(e=d.parents[f].nodeName,"OL"!=e&&"UL"!=e););a.active(c&&e==b)}},d=function(a,b){var d=function(a,b){return{selector:a,handler:b}},e=function(a){b.active(a)},f=function(a){b.disabled(a)};return"bullist"==a?d("ul > li",c(b,"UL")):"numlist"==a?d("ol > li",c(b,"OL")):b.settings.stateSelector?d(b.settings.stateSelector,e):b.settings.disabledStateSelector?d(b.settings.disabledStateSelector,f):null},e=function(a,b,c){return function(){var e=d(b,c);null!==e&&a.selection.selectorChanged(e.selector,e.handler)}},f=function(c,d,f){var g,h=[];if(f)return a.each(f.split(/[ ,]/),function(a){var d;"|"==a?g=null:b.has(a)?(a={type:a},h.push(a),g=null):(g||(g={type:"buttongroup",items:[]},h.push(g)),c.buttons[a]&&(d=a,a=c.buttons[d],"function"==typeof a&&(a=a()),a.type=a.type||"button",a=b.create(a),a.on("postRender",e(c,d,a)),g.items.push(a)))}),b.create({type:"toolbar",layout:"flow",name:d,items:h})};return{create:f}}),h("m",tinymce.util.Promise),g("n",[],function(){var a=0,b=function(){var a=function(){return Math.round(4294967295*Math.random()).toString(36)};return"s"+Date.now().toString(36)+a()+a()+a()},c=function(c){return c+a++ +b()};return{uuid:c}}),g("s",[],function(){var a=function(a,b){function c(c){var e,f,g;f=b[c?"startContainer":"endContainer"],g=b[c?"startOffset":"endOffset"],1==f.nodeType&&(e=a.create("span",{"data-mce-type":"bookmark"}),f.hasChildNodes()?(g=Math.min(g,f.childNodes.length-1),c?f.insertBefore(e,f.childNodes[g]):a.insertAfter(e,f.childNodes[g])):f.appendChild(e),f=e,g=0),d[c?"startContainer":"endContainer"]=f,d[c?"startOffset":"endOffset"]=g}var d={};return c(!0),b.collapsed||c(),d},b=function(a,b){function c(c){function d(a){for(var b=a.parentNode.firstChild,c=0;b;){if(b==a)return c;1==b.nodeType&&"bookmark"==b.getAttribute("data-mce-type")||c++,b=b.nextSibling}return-1}var e,f,g;e=g=b[c?"startContainer":"endContainer"],f=b[c?"startOffset":"endOffset"],e&&(1==e.nodeType&&(f=d(e),e=e.parentNode,a.remove(g)),b[c?"startContainer":"endContainer"]=e,b[c?"startOffset":"endOffset"]=f)}c(!0),c();var d=a.createRng();return d.setStart(b.startContainer,b.startOffset),b.endContainer&&d.setEnd(b.endContainer,b.endOffset),d};return{create:a,resolve:b}}),h("t",tinymce.dom.TreeWalker),h("u",tinymce.dom.RangeUtils),g("o",["s","b","t","u"],function(a,b,c,d){var e=function(a,b,d){var e,f,g=[];for(e=new c(b,a),f=b;f&&(1===f.nodeType&&g.push(f),f!==d);f=e.next());return g},f=function(c,d){var e,f,g;f=c.dom,g=c.selection,e=a.create(f,g.getRng()),b.each(d,function(a){c.dom.remove(a,!0)}),g.setRng(a.resolve(f,e))},g=function(a){return"A"===a.nodeName&&a.hasAttribute("href")},h=function(a,b){var c=a.getParent(b,g);return c?c:b},i=function(a){var c,f,i,j,k,l,m;return k=a.selection,l=a.dom,m=k.getRng(),c=h(l,d.getNode(m.startContainer,m.startOffset)),f=d.getNode(m.endContainer,m.endOffset),i=a.getBody(),j=b.grep(e(i,c,f),g)},j=function(a){f(a,i(a))};return{unlinkSelection:j}}),g("k",["n","o"],function(a,b){var c=function(a,b){var c,d,e;for(e='<table data-mce-id="mce" style="width: 100%">',e+="<tbody>",d=0;b>d;d++){for(e+="<tr>",c=0;a>c;c++)e+="<td><br></td>";e+="</tr>"}return e+="</tbody>",e+="</table>"},d=function(a){var b=a.dom.select("*[data-mce-id]");return b[0]},e=function(a,b,e){a.undoManager.transact(function(){var f,g;a.insertContent(c(b,e)),f=d(a),f.removeAttribute("data-mce-id"),g=a.dom.select("td,th",f),a.selection.setCursorLocation(g[0],0)})},f=function(a,b){a.execCommand("FormatBlock",!1,b)},g=function(b,c,d){var e,f;e=b.editorUpload.blobCache,f=e.create(a.uuid("mceu"),d,c),e.add(f),b.insertContent(b.dom.createHTML("img",{src:f.blobUri()}))},h=function(a){a.selection.collapse(!1)},i=function(a){a.focus(),b.unlinkSelection(a),h(a)},j=function(a,b,c){a.focus(),a.dom.setAttrib(b,"href",c),h(a)},k=function(a,b){a.execCommand("mceInsertLink",!1,{href:b}),h(a)},l=function(a,b){var c=a.dom.getParent(a.selection.getStart(),"a[href]");c?j(a,c,b):k(a,b)},m=function(a,b){0===b.trim().length?i(a):l(a,b)};return{insertTable:e,formatBlock:f,insertBlob:g,createLink:m,unlink:i}}),g("p",[],function(){var a=function(a){return/^www\.|\.(com|org|edu|gov|uk|net|ca|de|jp|fr|au|us|ru|ch|it|nl|se|no|es|mil)$/i.test(a.trim())},b=function(a){return/^https?:\/\//.test(a.trim())};return{isDomainLike:a,isAbsolute:b}}),g("f",["b","c","m","k","p"],function(a,b,c,d,e){var f=function(a){a.find("textbox").eq(0).each(function(a){a.focus()})},g=function(c,d){var e=b.create(a.extend({type:"form",layout:"flex",direction:"row",padding:5,name:c,spacing:3},d));return e.on("show",function(){f(e)}),e},h=function(a,b){return b?a.show():a.hide()},i=function(a,b){return new c(function(c){a.windowManager.confirm("The URL you entered seems to be an external link. Do you want to add the required http:// prefix?",function(a){var d=a===!0?"http://"+b:b;c(d)})})},j=function(a,b){return!e.isAbsolute(b)&&e.isDomainLike(b)?i(a,b):c.resolve(b)},k=function(a,b){var c=function(){a.focus(),d.unlink(a),b()};return g("quicklink",{items:[{type:"button",name:"unlink",icon:"unlink",onclick:c,tooltip:"Remove link"},{type:"textbox",name:"linkurl",placeholder:"Paste or type a link"},{type:"button",icon:"checkmark",subtype:"primary",tooltip:"Ok",onclick:"submit"}],onshow:function(){var b,c="";b=a.dom.getParent(a.selection.getStart(),"a[href]"),b&&(c=a.dom.getAttrib(b,"href")),this.fromJSON({linkurl:c}),h(this.find("#unlink"),b)},onsubmit:function(c){j(a,c.data.linkurl).then(function(c){d.createLink(a,c),b()})}})};return{createQuickLinkForm:k}}),h("q",tinymce.geom.Rect),g("r",[],function(){var a=function(a){return{x:a.left,y:a.top,w:a.width,h:a.height}},b=function(a){return{left:a.x,top:a.y,width:a.w,height:a.h,right:a.x+a.w,bottom:a.y+a.h}};return{fromClientRect:a,toClientRect:b}}),g("g",["d","q","r"],function(a,b,c){var d=function(b){var c=a.getViewPort();return{x:b.x+c.x,y:b.y+c.y,w:b.w,h:b.h}},e=function(a){var b=a.getBoundingClientRect();return d({x:b.left,y:b.top,w:Math.max(a.clientWidth,a.offsetWidth),h:Math.max(a.clientHeight,a.offsetHeight)})},f=function(a,b){return e(b)},g=function(a){return e(a.getElement().ownerDocument.body)},h=function(a){return e(a.getContentAreaContainer()||a.getBody())},i=function(a){var b=a.selection.getBoundingClientRect();return b?d(c.fromClientRect(b)):null};return{getElementRect:f,getPageAreaRect:g,getContentAreaRect:h,getSelectionRect:i}}),g("h",["q","r"],function(a,b){var c=function(a,b){return{rect:a,position:b}},d=function(a,b){return{x:b.x,y:b.y,w:a.w,h:a.h}},e=function(b,e,f,g,h){var i,j,k;return i=a.findBestRelativePosition(h,f,g,b),f=a.clamp(f,g),i?(j=a.relativePosition(h,f,i),k=d(h,j),c(k,i)):(f=a.intersect(g,f),f?(i=a.findBestRelativePosition(h,f,g,e))?(j=a.relativePosition(h,f,i),k=d(h,j),c(k,i)):(k=d(h,f),c(k,i)):null)},f=function(a,b,c){return e(["cr-cl","cl-cr"],["bc-tc","bl-tl","br-tr"],a,b,c)},g=function(a,b,c){return e(["tc-bc","bc-tc","tl-bl","bl-tl","tr-br","br-tr"],["bc-tc","bl-tl","br-tr"],a,b,c)},h=function(a,c,d,e){var f;return"function"==typeof a?(f=a({elementRect:b.toClientRect(c),contentAreaRect:b.toClientRect(d),panelRect:b.toClientRect(e)}),b.fromClientRect(f)):e};return{calcInsert:f,calc:g,userConstrain:h}}),g("3",["b","c","d","e","f","g","h"],function(a,b,c,d,e,f,g){return function(){var h,i,j="bold italic | quicklink h2 h3 blockquote",k="quickimage quicktable",l=function(b,c){return a.map(c,function(a){return d.create(b,a.id,a.items)})},m=function(a){var b=a.selection_toolbar;return b?b:j},n=function(a){var b=a.insert_toolbar;return b?b:k},o=function(a,c){var f,g=a.settings;return f=l(a,c),f=f.concat([d.create(a,"text",m(g)),d.create(a,"insert",n(g)),e.createQuickLinkForm(a,x)]),b.create({type:"floatpanel",role:"dialog",classes:"tinymce tinymce-inline arrow",ariaLabel:"Inline toolbar",layout:"flex",direction:"column",align:"stretch",autohide:!1,autofix:!0,fixed:!0,border:1,items:f,oncancel:function(){a.focus()}})},p=function(a){a&&a.show()},q=function(a,b){a.moveTo(b.x,b.y)},r=function(b,c){c=c?c.substr(0,2):"",a.each({t:"down",b:"up",c:"center"},function(a,d){b.classes.toggle("arrow-"+a,d===c.substr(0,1))}),"cr"===c?(b.classes.toggle("arrow-left",!0),b.classes.toggle("arrow-right",!1)):"cl"===c?(b.classes.toggle("arrow-left",!0),b.classes.toggle("arrow-right",!0)):a.each({l:"left",r:"right"},function(a,d){b.classes.toggle("arrow-"+a,d===c.substr(1,1))})},s=function(a,b){var c=a.items().filter("#"+b);c.length>0&&(c[0].show(),a.reflow())},t=function(a,b,d,e){var h,j,k,l;p(a),a.items().hide(),s(a,b),l=d.settings.inline_toolbar_position_handler,h=f.getContentAreaRect(d),j=c.getRect(a.getEl()),k="insert"===b?g.calcInsert(e,h,j):g.calc(e,h,j),k?(j=k.rect,i=e,q(a,g.userConstrain(l,e,h,j)),r(a,k.position)):x(a)},u=function(){return h.items().filter("form:visible").length>0},v=function(a,b){if(h){h.items().hide(),s(h,b);var d,e,j,k;p(h),h.items().hide(),s(h,b),k=a.settings.inline_toolbar_position_handler,d=f.getContentAreaRect(a),e=c.getRect(h.getEl()),j=g.calc(i,d,e),j&&(e=j.rect,q(h,g.userConstrain(k,i,d,e)),r(h,j.position))}},w=function(a,b,c,d){h||(h=o(a,d),h.renderTo(document.body).reflow().moveTo(c.x,c.y),a.nodeChanged()),t(h,b,a,c)},x=function(){h&&h.hide()},y=function(){h&&h.find("toolbar:visible").eq(0).each(function(a){a.focus(!0)})},z=function(){h&&(h.remove(),h=null)},A=function(){return h&&h.visible()&&u()};return{show:w,showForm:v,inForm:A,hide:x,focus:y,remove:z}}}),g("i",["m"],function(a){var b=function(b){return new a(function(a){var c=new FileReader;c.onloadend=function(){a(c.result.split(",")[1])},c.readAsDataURL(b)})};return{blobToBase64:b}}),g("j",["m"],function(a){var b=function(){return new a(function(a){var b;b=document.createElement("input"),b.type="file",b.style.position="fixed",b.style.left=0,b.style.top=0,b.style.opacity=.001,document.body.appendChild(b),b.onchange=function(b){a(Array.prototype.slice.call(b.target.files))},b.click(),b.parentNode.removeChild(b)})};return{pickFile:b}}),g("4",["3","i","j","k"],function(a,b,c,d){var e=function(a){for(var b=function(b){return function(){d.formatBlock(a,b)}},c=1;6>c;c++){var e="h"+c;a.addButton(e,{text:e.toUpperCase(),tooltip:"Heading "+c,stateSelector:e,onclick:b(e),onPostRender:function(){var a=this.getEl().firstChild.firstChild;a.style.fontWeight="bold"}})}},f=function(a,f){a.addButton("quicklink",{icon:"link",tooltip:"Insert/Edit link",stateSelector:"a[href]",onclick:function(){f.showForm(a,"quicklink")}}),a.addButton("quickimage",{icon:"image",tooltip:"Insert image",onclick:function(){c.pickFile().then(function(c){var e=c[0];b.blobToBase64(e).then(function(b){d.insertBlob(a,b,e)})})}}),a.addButton("quicktable",{icon:"table",tooltip:"Insert table",onclick:function(){f.hide(),d.insertTable(a,2,2)}}),e(a)};return{addToEditor:f}}),h("l",tinymce.EditorManager),g("5",["l","d"],function(a,b){var c=function(a,b){var c=function(){a.fire("SkinLoaded"),b()};a.initialized?c():a.on("init",c)},d=function(d,e,f){var g=a.baseURL,h=g+"/skins/"+e,i=function(){c(d,f)};b.styleSheetLoader.load(h+"/skin.min.css",i),d.contentCSS.push(h+"/content.inline.min.css")};return{load:d}}),g("8",[],function(){var a=function(a,b){return{id:a,rect:b}},b=function(a,b){for(var c=0;c<b.length;c++){var d=b[c],e=d(a);if(e)return e}return null};return{match:b,result:a}}),g("6",["8","g"],function(a,b){var c=function(c){return function(d){return d.selection.isCollapsed()?null:a.result(c,b.getSelectionRect(d))}},d=function(c,d){return function(e){var f,g=e.schema.getTextBlockElements();for(f=0;f<c.length;f++)if("TABLE"===c[f].nodeName)return null;for(f=0;f<c.length;f++)if(c[f].nodeName in g)return e.dom.isEmpty(c[f])?a.result(d,b.getSelectionRect(e)):null;return null}};return{textSelection:c,emptyTextBlock:d}}),g("7",["8","g"],function(a,b){var c=function(c,d){return function(e){for(var f=0;f<d.length;f++)if(d[f].predicate(c))return a.result(d[f].id,b.getElementRect(e,c));return null}},d=function(c,d){return function(e){for(var f=0;f<c.length;f++)for(var g=0;g<d.length;g++)if(d[g].predicate(c[f]))return a.result(d[g].id,b.getElementRect(e,c[f]));return null}};return{element:c,parent:d}}),g("9",[],function(){var a=function(b){return b.reduce(function(b,c){return Array.isArray(c)?b.concat(a(c)):b.concat(c)},[])};return{flatten:a}}),g("a",["b"],function(a){var b=function(a,b){return{id:a,predicate:b}},c=function(c){return a.map(c,function(a){return b(a.id,a.predicate)})};return{create:b,fromContextToolbars:c}}),g("0",["1","2","3","4","5","6","7","8","9","a"],function(a,b,c,d,e,f,g,h,i,j){var k=function(a){var b=a.selection.getNode(),c=a.dom.getParents(b);return c},l=function(a,b,c,d){var e=function(c){return a.dom.is(c,b)};return{predicate:e,id:c,items:d}},m=function(a){var b=a.contextToolbars;return i.flatten([b?b:[],l(a,"img","image","alignleft aligncenter alignright")])},n=function(a,b){var c,d,e;return d=k(a),e=j.fromContextToolbars(b),c=h.match(a,[g.element(d[0],e),f.textSelection("text"),f.emptyTextBlock(d,"insert"),g.parent(d,e)]),c&&c.rect?c:null},o=function(a,b){var c=function(){var c=m(a),d=n(a,c);d?b.show(a,d.id,d.rect,c):b.hide()};return function(){a.removed||c()}},p=function(a,b){return function(){a.inForm()||b()}},q=function(a,c){var d=b.throttle(o(a,c),0),e=b.throttle(p(c,o(a,c)),0);a.on("blur hide ObjectResizeStart",c.hide),a.on("click",d),a.on("nodeChange mouseup",e),a.on("ResizeEditor ResizeWindow keyup",d),a.on("remove",c.remove),a.shortcuts.add("Alt+F10","",c.focus)},r=function(a,b){a.shortcuts.remove("meta+k"),a.shortcuts.add("meta+k","",function(){var c=m(a),d=d=h.match(a,[f.textSelection("quicklink")]);d&&b.show(a,d.id,d.rect,c)})},s=function(a,b){var c=a.settings.skin||"lightgray";return e.load(a,c,function(){q(a,b),r(a,b)}),{}},t=function(a){throw new Error(a)};return a.add("inlite",function(a){var b=new c;d.addToEditor(a,b);var e=function(){return a.inline?s(a,b):t("inlite theme only supports inline mode.")};return{renderUI:e}}),function(){}}),d("0")()}();
+(function () {
+
+var defs = {}; // id -> {dependencies, definition, instance (possibly undefined)}
+
+// Used when there is no 'main' module.
+// The name is probably (hopefully) unique so minification removes for releases.
+var register_3795 = function (id) {
+  var module = dem(id);
+  var fragments = id.split('.');
+  var target = Function('return this;')();
+  for (var i = 0; i < fragments.length - 1; ++i) {
+    if (target[fragments[i]] === undefined)
+      target[fragments[i]] = {};
+    target = target[fragments[i]];
+  }
+  target[fragments[fragments.length - 1]] = module;
+};
+
+var instantiate = function (id) {
+  var actual = defs[id];
+  var dependencies = actual.deps;
+  var definition = actual.defn;
+  var len = dependencies.length;
+  var instances = new Array(len);
+  for (var i = 0; i < len; ++i)
+    instances[i] = dem(dependencies[i]);
+  var defResult = definition.apply(null, instances);
+  if (defResult === undefined)
+     throw 'module [' + id + '] returned undefined';
+  actual.instance = defResult;
+};
+
+var def = function (id, dependencies, definition) {
+  if (typeof id !== 'string')
+    throw 'module id must be a string';
+  else if (dependencies === undefined)
+    throw 'no dependencies for ' + id;
+  else if (definition === undefined)
+    throw 'no definition function for ' + id;
+  defs[id] = {
+    deps: dependencies,
+    defn: definition,
+    instance: undefined
+  };
+};
+
+var dem = function (id) {
+  var actual = defs[id];
+  if (actual === undefined)
+    throw 'module [' + id + '] was undefined';
+  else if (actual.instance === undefined)
+    instantiate(id);
+  return actual.instance;
+};
+
+var req = function (ids, callback) {
+  var len = ids.length;
+  var instances = new Array(len);
+  for (var i = 0; i < len; ++i)
+    instances.push(dem(ids[i]));
+  callback.apply(null, callback);
+};
+
+var ephox = {};
+
+ephox.bolt = {
+  module: {
+    api: {
+      define: def,
+      require: req,
+      demand: dem
+    }
+  }
+};
+
+var define = def;
+var require = req;
+var demand = dem;
+// this helps with minificiation when using a lot of global references
+var defineGlobal = function (id, ref) {
+  define(id, [], function () { return ref; });
+};
+/*jsc
+["tinymce/inlite/Theme","global!tinymce.ThemeManager","global!tinymce.util.Delay","tinymce/inlite/ui/Panel","tinymce/inlite/ui/Buttons","tinymce/inlite/core/SkinLoader","tinymce/inlite/core/SelectionMatcher","tinymce/inlite/core/ElementMatcher","tinymce/inlite/core/Matcher","tinymce/inlite/alien/Arr","tinymce/inlite/core/PredicateId","global!tinymce.util.Tools","global!tinymce.ui.Factory","global!tinymce.DOM","tinymce/inlite/ui/Toolbar","tinymce/inlite/ui/Forms","tinymce/inlite/core/Measure","tinymce/inlite/core/Layout","tinymce/inlite/file/Conversions","tinymce/inlite/file/Picker","tinymce/inlite/core/Actions","global!tinymce.EditorManager","global!tinymce.util.Promise","tinymce/inlite/alien/Uuid","tinymce/inlite/alien/Unlink","tinymce/inlite/core/UrlType","global!tinymce.geom.Rect","tinymce/inlite/core/Convert","tinymce/inlite/alien/Bookmark","global!tinymce.dom.TreeWalker","global!tinymce.dom.RangeUtils"]
+jsc*/
+defineGlobal("global!tinymce.ThemeManager", tinymce.ThemeManager);
+defineGlobal("global!tinymce.util.Delay", tinymce.util.Delay);
+defineGlobal("global!tinymce.util.Tools", tinymce.util.Tools);
+defineGlobal("global!tinymce.ui.Factory", tinymce.ui.Factory);
+defineGlobal("global!tinymce.DOM", tinymce.DOM);
+/**
+ * Toolbar.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/ui/Toolbar', [
+	'global!tinymce.util.Tools',
+	'global!tinymce.ui.Factory'
+], function (Tools, Factory) {
+	var setActiveItem = function (item, name) {
+		return function(state, args) {
+			var nodeName, i = args.parents.length;
+
+			while (i--) {
+				nodeName = args.parents[i].nodeName;
+				if (nodeName == 'OL' || nodeName == 'UL') {
+					break;
+				}
+			}
+
+			item.active(state && nodeName == name);
+		};
+	};
+
+	var getSelectorStateResult = function (itemName, item) {
+		var result = function (selector, handler) {
+			return {
+				selector: selector,
+				handler: handler
+			};
+		};
+
+		var activeHandler = function(state) {
+			item.active(state);
+		};
+
+		var disabledHandler = function (state) {
+			item.disabled(state);
+		};
+
+		if (itemName == 'bullist') {
+			return result('ul > li', setActiveItem(item, 'UL'));
+		}
+
+		if (itemName == 'numlist') {
+			return result('ol > li', setActiveItem(item, 'OL'));
+		}
+
+		if (item.settings.stateSelector) {
+			return result(item.settings.stateSelector, activeHandler);
+		}
+
+		if (item.settings.disabledStateSelector) {
+			return result(item.settings.disabledStateSelector, disabledHandler);
+		}
+
+		return null;
+	};
+
+	var bindSelectorChanged = function (editor, itemName, item) {
+		return function () {
+			var result = getSelectorStateResult(itemName, item);
+			if (result !== null) {
+				editor.selection.selectorChanged(result.selector, result.handler);
+			}
+		};
+	};
+
+	var create = function (editor, name, items) {
+		var toolbarItems = [], buttonGroup;
+
+		if (!items) {
+			return;
+		}
+
+		Tools.each(items.split(/[ ,]/), function(item) {
+			var itemName;
+
+			if (item == '|') {
+				buttonGroup = null;
+			} else {
+				if (Factory.has(item)) {
+					item = {type: item};
+					toolbarItems.push(item);
+					buttonGroup = null;
+				} else {
+					if (!buttonGroup) {
+						buttonGroup = {type: 'buttongroup', items: []};
+						toolbarItems.push(buttonGroup);
+					}
+
+					if (editor.buttons[item]) {
+						itemName = item;
+						item = editor.buttons[itemName];
+
+						if (typeof item == 'function') {
+							item = item();
+						}
+
+						item.type = item.type || 'button';
+
+						item = Factory.create(item);
+						item.on('postRender', bindSelectorChanged(editor, itemName, item));
+						buttonGroup.items.push(item);
+					}
+				}
+			}
+		});
+
+		return Factory.create({
+			type: 'toolbar',
+			layout: 'flow',
+			name: name,
+			items: toolbarItems
+		});
+	};
+
+	return {
+		create: create
+	};
+});
+
+defineGlobal("global!tinymce.util.Promise", tinymce.util.Promise);
+/**
+ * Uuid.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * Generates unique ids this is the same as in core but since
+ * it's not exposed as a global we can't access it.
+ */
+define("tinymce/inlite/alien/Uuid", [
+], function() {
+	var count = 0;
+
+	var seed = function () {
+		var rnd = function () {
+			return Math.round(Math.random() * 0xFFFFFFFF).toString(36);
+		};
+
+		return 's' + Date.now().toString(36) + rnd() + rnd() + rnd();
+	};
+
+	var uuid = function (prefix) {
+		return prefix + (count++) + seed();
+	};
+
+	return {
+		uuid: uuid
+	};
+});
+
+/**
+ * Bookmark.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/alien/Bookmark', [
+], function () {
+	/**
+	 * Returns a range bookmark. This will convert indexed bookmarks into temporary span elements with
+	 * index 0 so that they can be restored properly after the DOM has been modified. Text bookmarks will not have spans
+	 * added to them since they can be restored after a dom operation.
+	 *
+	 * So this: <p><b>|</b><b>|</b></p>
+	 * becomes: <p><b><span data-mce-type="bookmark">|</span></b><b data-mce-type="bookmark">|</span></b></p>
+	 *
+	 * @param  {DOMRange} rng DOM Range to get bookmark on.
+	 * @return {Object} Bookmark object.
+	 */
+	var create = function (dom, rng) {
+		var bookmark = {};
+
+		function setupEndPoint(start) {
+			var offsetNode, container, offset;
+
+			container = rng[start ? 'startContainer' : 'endContainer'];
+			offset = rng[start ? 'startOffset' : 'endOffset'];
+
+			if (container.nodeType == 1) {
+				offsetNode = dom.create('span', {'data-mce-type': 'bookmark'});
+
+				if (container.hasChildNodes()) {
+					offset = Math.min(offset, container.childNodes.length - 1);
+
+					if (start) {
+						container.insertBefore(offsetNode, container.childNodes[offset]);
+					} else {
+						dom.insertAfter(offsetNode, container.childNodes[offset]);
+					}
+				} else {
+					container.appendChild(offsetNode);
+				}
+
+				container = offsetNode;
+				offset = 0;
+			}
+
+			bookmark[start ? 'startContainer' : 'endContainer'] = container;
+			bookmark[start ? 'startOffset' : 'endOffset'] = offset;
+		}
+
+		setupEndPoint(true);
+
+		if (!rng.collapsed) {
+			setupEndPoint();
+		}
+
+		return bookmark;
+	};
+
+	/**
+	 * Moves the selection to the current bookmark and removes any selection container wrappers.
+	 *
+	 * @param {Object} bookmark Bookmark object to move selection to.
+	 */
+	var resolve = function (dom, bookmark) {
+		function restoreEndPoint(start) {
+			var container, offset, node;
+
+			function nodeIndex(container) {
+				var node = container.parentNode.firstChild, idx = 0;
+
+				while (node) {
+					if (node == container) {
+						return idx;
+					}
+
+					// Skip data-mce-type=bookmark nodes
+					if (node.nodeType != 1 || node.getAttribute('data-mce-type') != 'bookmark') {
+						idx++;
+					}
+
+					node = node.nextSibling;
+				}
+
+				return -1;
+			}
+
+			container = node = bookmark[start ? 'startContainer' : 'endContainer'];
+			offset = bookmark[start ? 'startOffset' : 'endOffset'];
+
+			if (!container) {
+				return;
+			}
+
+			if (container.nodeType == 1) {
+				offset = nodeIndex(container);
+				container = container.parentNode;
+				dom.remove(node);
+			}
+
+			bookmark[start ? 'startContainer' : 'endContainer'] = container;
+			bookmark[start ? 'startOffset' : 'endOffset'] = offset;
+		}
+
+		restoreEndPoint(true);
+		restoreEndPoint();
+
+		var rng = dom.createRng();
+
+		rng.setStart(bookmark.startContainer, bookmark.startOffset);
+
+		if (bookmark.endContainer) {
+			rng.setEnd(bookmark.endContainer, bookmark.endOffset);
+		}
+
+		return rng;
+	};
+
+	return {
+		create: create,
+		resolve: resolve
+	};
+});
+
+
+
+defineGlobal("global!tinymce.dom.TreeWalker", tinymce.dom.TreeWalker);
+defineGlobal("global!tinymce.dom.RangeUtils", tinymce.dom.RangeUtils);
+/**
+ * Unlink.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * Unlink implementation that doesn't leave partial links for example it would produce:
+ *  a[b<a href="x">c]d</a>e -> a[bc]de
+ * instead of:
+ *  a[b<a href="x">c]d</a>e -> a[bc]<a href="x">d</a>e
+ */
+define("tinymce/inlite/alien/Unlink", [
+	'tinymce/inlite/alien/Bookmark',
+	'global!tinymce.util.Tools',
+	'global!tinymce.dom.TreeWalker',
+	'global!tinymce.dom.RangeUtils'
+], function (Bookmark, Tools, TreeWalker, RangeUtils) {
+	var getSelectedElements = function (rootElm, startNode, endNode) {
+		var walker, node, elms = [];
+
+		walker = new TreeWalker(startNode, rootElm);
+		for (node = startNode; node; node = walker.next()) {
+			if (node.nodeType === 1) {
+				elms.push(node);
+			}
+
+			if (node === endNode) {
+				break;
+			}
+		}
+
+		return elms;
+	};
+
+	var unwrapElements = function (editor, elms) {
+		var bookmark, dom, selection;
+
+		dom = editor.dom;
+		selection = editor.selection;
+		bookmark = Bookmark.create(dom, selection.getRng());
+
+		Tools.each(elms, function (elm) {
+			editor.dom.remove(elm, true);
+		});
+
+		selection.setRng(Bookmark.resolve(dom, bookmark));
+	};
+
+	var isLink = function (elm) {
+		return elm.nodeName === 'A' && elm.hasAttribute('href');
+	};
+
+	var getParentAnchorOrSelf = function (dom, elm) {
+		var anchorElm = dom.getParent(elm, isLink);
+		return anchorElm ? anchorElm : elm;
+	};
+
+	var getSelectedAnchors = function (editor) {
+		var startElm, endElm, rootElm, anchorElms, selection, dom, rng;
+
+		selection = editor.selection;
+		dom = editor.dom;
+		rng = selection.getRng();
+		startElm = getParentAnchorOrSelf(dom, RangeUtils.getNode(rng.startContainer, rng.startOffset));
+		endElm = RangeUtils.getNode(rng.endContainer, rng.endOffset);
+		rootElm = editor.getBody();
+		anchorElms = Tools.grep(getSelectedElements(rootElm, startElm, endElm), isLink);
+
+		return anchorElms;
+	};
+
+	var unlinkSelection = function (editor) {
+		unwrapElements(editor, getSelectedAnchors(editor));
+	};
+
+	return {
+		unlinkSelection: unlinkSelection
+	};
+});
+
+/**
+ * Actions.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/core/Actions', [
+	'tinymce/inlite/alien/Uuid',
+	'tinymce/inlite/alien/Unlink'
+], function (Uuid, Unlink) {
+	var createTableHtml = function (cols, rows) {
+		var x, y, html;
+
+		html = '<table data-mce-id="mce" style="width: 100%">';
+		html += '<tbody>';
+
+		for (y = 0; y < rows; y++) {
+			html += '<tr>';
+
+			for (x = 0; x < cols; x++) {
+				html += '<td><br></td>';
+			}
+
+			html += '</tr>';
+		}
+
+		html += '</tbody>';
+		html += '</table>';
+
+		return html;
+	};
+
+	var getInsertedElement = function (editor) {
+		var elms = editor.dom.select('*[data-mce-id]');
+		return elms[0];
+	};
+
+	var insertTable = function (editor, cols, rows) {
+		editor.undoManager.transact(function () {
+			var tableElm, cellElm;
+
+			editor.insertContent(createTableHtml(cols, rows));
+
+			tableElm = getInsertedElement(editor);
+			tableElm.removeAttribute('data-mce-id');
+			cellElm = editor.dom.select('td,th', tableElm);
+			editor.selection.setCursorLocation(cellElm[0], 0);
+		});
+	};
+
+	var formatBlock = function (editor, formatName) {
+		editor.execCommand('FormatBlock', false, formatName);
+	};
+
+	var insertBlob = function (editor, base64, blob) {
+		var blobCache, blobInfo;
+
+		blobCache = editor.editorUpload.blobCache;
+		blobInfo = blobCache.create(Uuid.uuid('mceu'), blob, base64);
+		blobCache.add(blobInfo);
+
+		editor.insertContent(editor.dom.createHTML('img', {src: blobInfo.blobUri()}));
+	};
+
+	var collapseSelectionToEnd = function (editor) {
+		editor.selection.collapse(false);
+	};
+
+	var unlink = function (editor) {
+		editor.focus();
+		Unlink.unlinkSelection(editor);
+		collapseSelectionToEnd(editor);
+	};
+
+	var changeHref = function (editor, elm, url) {
+		editor.focus();
+		editor.dom.setAttrib(elm, 'href', url);
+		collapseSelectionToEnd(editor);
+	};
+
+	var insertLink = function (editor, url) {
+		editor.execCommand('mceInsertLink', false, {href: url});
+		collapseSelectionToEnd(editor);
+	};
+
+	var updateOrInsertLink = function (editor, url) {
+		var elm = editor.dom.getParent(editor.selection.getStart(), 'a[href]');
+		elm ? changeHref(editor, elm, url) : insertLink(editor, url);
+	};
+
+	var createLink = function (editor, url) {
+		url.trim().length === 0 ? unlink(editor) : updateOrInsertLink(editor, url);
+	};
+
+	return {
+		insertTable: insertTable,
+		formatBlock: formatBlock,
+		insertBlob: insertBlob,
+		createLink: createLink,
+		unlink: unlink
+	};
+});
+
+/**
+ * UrlType.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/core/UrlType', [
+], function () {
+	var isDomainLike = function (href) {
+		return /^www\.|\.(com|org|edu|gov|uk|net|ca|de|jp|fr|au|us|ru|ch|it|nl|se|no|es|mil)$/i.test(href.trim());
+	};
+
+	var isAbsolute = function (href) {
+		return /^https?:\/\//.test(href.trim());
+	};
+
+	return {
+		isDomainLike: isDomainLike,
+		isAbsolute: isAbsolute
+	};
+});
+
+
+
+/**
+ * Forms.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/ui/Forms', [
+	'global!tinymce.util.Tools',
+	'global!tinymce.ui.Factory',
+	'global!tinymce.util.Promise',
+	'tinymce/inlite/core/Actions',
+	'tinymce/inlite/core/UrlType'
+], function (Tools, Factory, Promise, Actions, UrlType) {
+	var focusFirstTextBox = function (form) {
+		form.find('textbox').eq(0).each(function (ctrl) {
+			ctrl.focus();
+		});
+	};
+
+	var createForm = function (name, spec) {
+		var form = Factory.create(
+			Tools.extend({
+				type: 'form',
+				layout: 'flex',
+				direction: 'row',
+				padding: 5,
+				name: name,
+				spacing: 3
+			}, spec)
+		);
+
+		form.on('show', function () {
+			focusFirstTextBox(form);
+		});
+
+		return form;
+	};
+
+	var toggleVisibility = function (ctrl, state) {
+		return state ? ctrl.show() : ctrl.hide();
+	};
+
+	var askAboutPrefix = function (editor, href) {
+		return new Promise(function (resolve) {
+			editor.windowManager.confirm(
+				'The URL you entered seems to be an external link. Do you want to add the required http:// prefix?',
+				function (result) {
+					var output = result === true ? 'http://' + href : href;
+					resolve(output);
+				}
+			);
+		});
+	};
+
+	var convertLinkToAbsolute = function (editor, href) {
+		return !UrlType.isAbsolute(href) && UrlType.isDomainLike(href) ? askAboutPrefix(editor, href) : Promise.resolve(href);
+	};
+
+	var createQuickLinkForm = function (editor, hide) {
+		var unlink = function () {
+			editor.focus();
+			Actions.unlink(editor);
+			hide();
+		};
+
+		return createForm('quicklink', {
+			items: [
+				{type: 'button', name: 'unlink', icon: 'unlink', onclick: unlink, tooltip: 'Remove link'},
+				{type: 'textbox', name: 'linkurl', placeholder: 'Paste or type a link'},
+				{type: 'button', icon: 'checkmark', subtype: 'primary', tooltip: 'Ok', onclick: 'submit'}
+			],
+			onshow: function () {
+				var elm, linkurl = '';
+
+				elm = editor.dom.getParent(editor.selection.getStart(), 'a[href]');
+				if (elm) {
+					linkurl = editor.dom.getAttrib(elm, 'href');
+				}
+
+				this.fromJSON({
+					linkurl: linkurl
+				});
+
+				toggleVisibility(this.find('#unlink'), elm);
+			},
+			onsubmit: function (e) {
+				convertLinkToAbsolute(editor, e.data.linkurl).then(function (url) {
+					Actions.createLink(editor, url);
+					hide();
+				});
+			}
+		});
+	};
+
+	return {
+		createQuickLinkForm: createQuickLinkForm
+	};
+});
+
+defineGlobal("global!tinymce.geom.Rect", tinymce.geom.Rect);
+/**
+ * Convert.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/core/Convert', [
+], function () {
+	var fromClientRect = function (clientRect) {
+		return {
+			x: clientRect.left,
+			y: clientRect.top,
+			w: clientRect.width,
+			h: clientRect.height
+		};
+	};
+
+	var toClientRect = function (geomRect) {
+		return {
+			left: geomRect.x,
+			top: geomRect.y,
+			width: geomRect.w,
+			height: geomRect.h,
+			right: geomRect.x + geomRect.w,
+			bottom: geomRect.y + geomRect.h
+		};
+	};
+
+	return {
+		fromClientRect: fromClientRect,
+		toClientRect: toClientRect
+	};
+});
+
+/**
+ * Measure.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/core/Measure', [
+	'global!tinymce.DOM',
+	'global!tinymce.geom.Rect',
+	'tinymce/inlite/core/Convert'
+], function (DOM, Rect, Convert) {
+	var toAbsolute = function (rect) {
+		var vp = DOM.getViewPort();
+
+		return {
+			x: rect.x + vp.x,
+			y: rect.y + vp.y,
+			w: rect.w,
+			h: rect.h
+		};
+	};
+
+	var measureElement = function (elm) {
+		var clientRect = elm.getBoundingClientRect();
+
+		return toAbsolute({
+			x: clientRect.left,
+			y: clientRect.top,
+			w: Math.max(elm.clientWidth, elm.offsetWidth),
+			h: Math.max(elm.clientHeight, elm.offsetHeight)
+		});
+	};
+
+	var getElementRect = function (editor, elm) {
+		return measureElement(elm);
+	};
+
+	var getPageAreaRect = function (editor) {
+		return measureElement(editor.getElement().ownerDocument.body);
+	};
+
+	var getContentAreaRect = function (editor) {
+		return measureElement(editor.getContentAreaContainer() || editor.getBody());
+	};
+
+	var getSelectionRect = function (editor) {
+		var clientRect = editor.selection.getBoundingClientRect();
+		return clientRect ? toAbsolute(Convert.fromClientRect(clientRect)) : null;
+	};
+
+	return {
+		getElementRect: getElementRect,
+		getPageAreaRect: getPageAreaRect,
+		getContentAreaRect: getContentAreaRect,
+		getSelectionRect: getSelectionRect
+	};
+});
+
+/**
+ * Layout.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/core/Layout', [
+	'global!tinymce.geom.Rect',
+	'tinymce/inlite/core/Convert'
+], function (Rect, Convert) {
+	var result = function (rect, position) {
+		return {
+			rect: rect,
+			position: position
+		};
+	};
+
+	var moveTo = function (rect, toRect) {
+		return {x: toRect.x, y: toRect.y, w: rect.w, h: rect.h};
+	};
+
+	var calcByPositions = function (testPositions1, testPositions2, targetRect, contentAreaRect, panelRect) {
+		var relPos, relRect, outputPanelRect;
+
+		relPos = Rect.findBestRelativePosition(panelRect, targetRect, contentAreaRect, testPositions1);
+		targetRect = Rect.clamp(targetRect, contentAreaRect);
+
+		if (relPos) {
+			relRect = Rect.relativePosition(panelRect, targetRect, relPos);
+			outputPanelRect = moveTo(panelRect, relRect);
+			return result(outputPanelRect, relPos);
+		}
+
+		targetRect = Rect.intersect(contentAreaRect, targetRect);
+		if (targetRect) {
+			relPos = Rect.findBestRelativePosition(panelRect, targetRect, contentAreaRect, testPositions2);
+			if (relPos) {
+				relRect = Rect.relativePosition(panelRect, targetRect, relPos);
+				outputPanelRect = moveTo(panelRect, relRect);
+				return result(outputPanelRect, relPos);
+			}
+
+			outputPanelRect = moveTo(panelRect, targetRect);
+			return result(outputPanelRect, relPos);
+		}
+
+		return null;
+	};
+
+	var calcInsert = function (targetRect, contentAreaRect, panelRect) {
+		return calcByPositions(
+			['cr-cl', 'cl-cr'],
+			['bc-tc', 'bl-tl', 'br-tr'],
+			targetRect,
+			contentAreaRect,
+			panelRect
+		);
+	};
+
+	var calc = function (targetRect, contentAreaRect, panelRect) {
+		return calcByPositions(
+			['tc-bc', 'bc-tc', 'tl-bl', 'bl-tl', 'tr-br', 'br-tr'],
+			['bc-tc', 'bl-tl', 'br-tr'],
+			targetRect,
+			contentAreaRect,
+			panelRect
+		);
+	};
+
+	var userConstrain = function (handler, targetRect, contentAreaRect, panelRect) {
+		var userConstrainedPanelRect;
+
+		if (typeof handler === 'function') {
+			userConstrainedPanelRect = handler({
+				elementRect: Convert.toClientRect(targetRect),
+				contentAreaRect: Convert.toClientRect(contentAreaRect),
+				panelRect: Convert.toClientRect(panelRect)
+			});
+
+			return Convert.fromClientRect(userConstrainedPanelRect);
+		}
+
+		return panelRect;
+	};
+
+	return {
+		calcInsert: calcInsert,
+		calc: calc,
+		userConstrain: userConstrain
+	};
+});
+
+/**
+ * Panel.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/ui/Panel', [
+	'global!tinymce.util.Tools',
+	'global!tinymce.ui.Factory',
+	'global!tinymce.DOM',
+	'tinymce/inlite/ui/Toolbar',
+	'tinymce/inlite/ui/Forms',
+	'tinymce/inlite/core/Measure',
+	'tinymce/inlite/core/Layout'
+], function (Tools, Factory, DOM, Toolbar, Forms, Measure, Layout) {
+	return function () {
+		var DEFAULT_TEXT_SELECTION_ITEMS = 'bold italic | quicklink h2 h3 blockquote';
+		var DEFAULT_INSERT_TOOLBAR_ITEMS = 'quickimage quicktable';
+		var panel, currentRect;
+
+		var createToolbars = function (editor, toolbars) {
+			return Tools.map(toolbars, function (toolbar) {
+				return Toolbar.create(editor, toolbar.id, toolbar.items);
+			});
+		};
+
+		var getTextSelectionToolbarItems = function (settings) {
+			var value = settings.selection_toolbar;
+			return value ? value : DEFAULT_TEXT_SELECTION_ITEMS;
+		};
+
+		var getInsertToolbarItems = function (settings) {
+			var value = settings.insert_toolbar;
+			return value ? value : DEFAULT_INSERT_TOOLBAR_ITEMS;
+		};
+
+		var create = function (editor, toolbars) {
+			var items, settings = editor.settings;
+
+			items = createToolbars(editor, toolbars);
+			items = items.concat([
+				Toolbar.create(editor, 'text', getTextSelectionToolbarItems(settings)),
+				Toolbar.create(editor, 'insert', getInsertToolbarItems(settings)),
+				Forms.createQuickLinkForm(editor, hide)
+			]);
+
+			return Factory.create({
+				type: 'floatpanel',
+				role: 'dialog',
+				classes: 'tinymce tinymce-inline arrow',
+				ariaLabel: 'Inline toolbar',
+				layout: 'flex',
+				direction: 'column',
+				align: 'stretch',
+				autohide: false,
+				autofix: true,
+				fixed: true,
+				border: 1,
+				items: items,
+				oncancel: function() {
+					editor.focus();
+				}
+			});
+		};
+
+		var showPanel = function (panel) {
+			if (panel) {
+				panel.show();
+			}
+		};
+
+		var movePanelTo = function (panel, pos) {
+			panel.moveTo(pos.x, pos.y);
+		};
+
+		var togglePositionClass = function (panel, relPos) {
+			relPos = relPos ? relPos.substr(0, 2) : '';
+
+			Tools.each({
+				t: 'down',
+				b: 'up',
+				c: 'center'
+			}, function(cls, pos) {
+				panel.classes.toggle('arrow-' + cls, pos === relPos.substr(0, 1));
+			});
+
+			if (relPos === 'cr') {
+				panel.classes.toggle('arrow-left', true);
+				panel.classes.toggle('arrow-right', false);
+			} else if (relPos === 'cl') {
+				panel.classes.toggle('arrow-left', true);
+				panel.classes.toggle('arrow-right', true);
+			} else {
+				Tools.each({
+					l: 'left',
+					r: 'right'
+				}, function(cls, pos) {
+					panel.classes.toggle('arrow-' + cls, pos === relPos.substr(1, 1));
+				});
+			}
+		};
+
+		var showToolbar = function (panel, id) {
+			var toolbars = panel.items().filter('#' + id);
+
+			if (toolbars.length > 0) {
+				toolbars[0].show();
+				panel.reflow();
+			}
+		};
+
+		var showPanelAt = function (panel, id, editor, targetRect) {
+			var contentAreaRect, panelRect, result, userConstainHandler;
+
+			showPanel(panel);
+			panel.items().hide();
+			showToolbar(panel, id);
+
+			userConstainHandler = editor.settings.inline_toolbar_position_handler;
+			contentAreaRect = Measure.getContentAreaRect(editor);
+			panelRect = DOM.getRect(panel.getEl());
+
+			if (id === 'insert') {
+				result = Layout.calcInsert(targetRect, contentAreaRect, panelRect);
+			} else {
+				result = Layout.calc(targetRect, contentAreaRect, panelRect);
+			}
+
+			if (result) {
+				panelRect = result.rect;
+				currentRect = targetRect;
+				movePanelTo(panel, Layout.userConstrain(userConstainHandler, targetRect, contentAreaRect, panelRect));
+
+				togglePositionClass(panel, result.position);
+			} else {
+				hide(panel);
+			}
+		};
+
+		var hasFormVisible = function () {
+			return panel.items().filter('form:visible').length > 0;
+		};
+
+		var showForm = function (editor, id) {
+			if (panel) {
+				panel.items().hide();
+				showToolbar(panel, id);
+
+				var contentAreaRect, panelRect, result, userConstainHandler;
+
+				showPanel(panel);
+				panel.items().hide();
+				showToolbar(panel, id);
+
+				userConstainHandler = editor.settings.inline_toolbar_position_handler;
+				contentAreaRect = Measure.getContentAreaRect(editor);
+				panelRect = DOM.getRect(panel.getEl());
+
+				result = Layout.calc(currentRect, contentAreaRect, panelRect);
+
+				if (result) {
+					panelRect = result.rect;
+					movePanelTo(panel, Layout.userConstrain(userConstainHandler, currentRect, contentAreaRect, panelRect));
+
+					togglePositionClass(panel, result.position);
+				}
+			}
+		};
+
+		var show = function (editor, id, targetRect, toolbars) {
+			if (!panel) {
+				panel = create(editor, toolbars);
+				panel.renderTo(document.body).reflow().moveTo(targetRect.x, targetRect.y);
+				editor.nodeChanged();
+			}
+
+			showPanelAt(panel, id, editor, targetRect);
+		};
+
+		var hide = function () {
+			if (panel) {
+				panel.hide();
+			}
+		};
+
+		var focus = function () {
+			if (panel) {
+				panel.find('toolbar:visible').eq(0).each(function (item) {
+					item.focus(true);
+				});
+			}
+		};
+
+		var remove = function () {
+			if (panel) {
+				panel.remove();
+				panel = null;
+			}
+		};
+
+		var inForm = function () {
+			return panel && panel.visible() && hasFormVisible();
+		};
+
+		return {
+			show: show,
+			showForm: showForm,
+			inForm: inForm,
+			hide: hide,
+			focus: focus,
+			remove: remove
+		};
+	};
+});
+
+/**
+ * Conversions.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/file/Conversions', [
+	'global!tinymce.util.Promise'
+], function (Promise) {
+	var blobToBase64 = function (blob) {
+		return new Promise(function(resolve) {
+			var reader = new FileReader();
+
+			reader.onloadend = function() {
+				resolve(reader.result.split(',')[1]);
+			};
+
+			reader.readAsDataURL(blob);
+		});
+	};
+
+	return {
+		blobToBase64: blobToBase64
+	};
+});
+
+
+
+/**
+ * Picker.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/file/Picker', [
+	'global!tinymce.util.Promise'
+], function (Promise) {
+	var pickFile = function () {
+		return new Promise(function (resolve) {
+			var fileInput;
+
+			fileInput = document.createElement("input");
+			fileInput.type = "file";
+			fileInput.style.position = 'fixed';
+			fileInput.style.left = 0;
+			fileInput.style.top = 0;
+			fileInput.style.opacity = 0.001;
+			document.body.appendChild(fileInput);
+
+			fileInput.onchange = function(e) {
+				resolve(Array.prototype.slice.call(e.target.files));
+			};
+
+			fileInput.click();
+			fileInput.parentNode.removeChild(fileInput);
+		});
+	};
+
+	return {
+		pickFile: pickFile
+	};
+});
+
+
+
+/**
+ * Buttons.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/ui/Buttons', [
+	'tinymce/inlite/ui/Panel',
+	'tinymce/inlite/file/Conversions',
+	'tinymce/inlite/file/Picker',
+	'tinymce/inlite/core/Actions'
+], function (Panel, Conversions, Picker, Actions) {
+	var addHeaderButtons = function (editor) {
+		var formatBlock = function (name) {
+			return function () {
+				Actions.formatBlock(editor, name);
+			};
+		};
+
+		for (var i = 1; i < 6; i++) {
+			var name = 'h' + i;
+
+			editor.addButton(name, {
+				text: name.toUpperCase(),
+				tooltip: 'Heading ' + i,
+				stateSelector: name,
+				onclick: formatBlock(name),
+				onPostRender: function () {
+					// TODO: Remove this hack that produces bold H1-H6 when we have proper icons
+					var span = this.getEl().firstChild.firstChild;
+					span.style.fontWeight = 'bold';
+				}
+			});
+		}
+	};
+
+	var addToEditor = function (editor, panel) {
+		editor.addButton('quicklink', {
+			icon: 'link',
+			tooltip: 'Insert/Edit link',
+			stateSelector: 'a[href]',
+			onclick: function () {
+				panel.showForm(editor, 'quicklink');
+			}
+		});
+
+		editor.addButton('quickimage', {
+			icon: 'image',
+			tooltip: 'Insert image',
+			onclick: function () {
+				Picker.pickFile().then(function (files) {
+					var blob = files[0];
+
+					Conversions.blobToBase64(blob).then(function (base64) {
+						Actions.insertBlob(editor, base64, blob);
+					});
+				});
+			}
+		});
+
+		editor.addButton('quicktable', {
+			icon: 'table',
+			tooltip: 'Insert table',
+			onclick: function () {
+				panel.hide();
+				Actions.insertTable(editor, 2, 2);
+			}
+		});
+
+		addHeaderButtons(editor);
+	};
+
+	return {
+		addToEditor: addToEditor
+	};
+});
+
+defineGlobal("global!tinymce.EditorManager", tinymce.EditorManager);
+/**
+ * SkinLoader.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/core/SkinLoader', [
+	'global!tinymce.EditorManager',
+	'global!tinymce.DOM'
+], function (EditorManager, DOM) {
+	var fireSkinLoaded = function (editor, callback) {
+		var done = function () {
+			editor.fire('SkinLoaded');
+			callback();
+		};
+
+		if (editor.initialized) {
+			done();
+		} else {
+			editor.on('init', done);
+		}
+	};
+
+	var load = function (editor, skin, callback) {
+		var baseUrl = EditorManager.baseURL;
+		var skinUrl = baseUrl + '/skins/' + skin;
+
+		var done = function () {
+			fireSkinLoaded(editor, callback);
+		};
+
+		DOM.styleSheetLoader.load(skinUrl + '/skin.min.css', done);
+		editor.contentCSS.push(skinUrl + '/content.inline.min.css');
+	};
+
+	return {
+		load: load
+	};
+});
+
+
+
+/**
+ * Matcher.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/core/Matcher', [
+], function () {
+	// result :: String, Rect -> Matcher.result
+	var result = function (id, rect) {
+		return {
+			id: id,
+			rect: rect
+		};
+	};
+
+	// match :: Editor, [(Editor -> Matcher.result | Null)] -> Matcher.result | Null
+	var match = function (editor, matchers) {
+		for (var i = 0; i < matchers.length; i++) {
+			var f = matchers[i];
+			var result = f(editor);
+
+			if (result) {
+				return result;
+			}
+		}
+
+		return null;
+	};
+
+	return {
+		match: match,
+		result: result
+	};
+});
+
+/**
+ * SelectionMatcher.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/core/SelectionMatcher', [
+	'tinymce/inlite/core/Matcher',
+	'tinymce/inlite/core/Measure'
+], function (Matcher, Measure) {
+	// textSelection :: String -> (Editor -> Matcher.result | Null)
+	var textSelection = function (id) {
+		return function (editor) {
+			if (!editor.selection.isCollapsed()) {
+				return Matcher.result(id, Measure.getSelectionRect(editor));
+			}
+
+			return null;
+		};
+	};
+
+	// emptyTextBlock :: [Elements], String -> (Editor -> Matcher.result | Null)
+	var emptyTextBlock = function (elements, id) {
+		return function (editor) {
+			var i, textBlockElementsMap = editor.schema.getTextBlockElements();
+
+			for (i = 0; i < elements.length; i++) {
+				if (elements[i].nodeName === 'TABLE') {
+					return null;
+				}
+			}
+
+			for (i = 0; i < elements.length; i++) {
+				if (elements[i].nodeName in textBlockElementsMap) {
+					if (editor.dom.isEmpty(elements[i])) {
+						return Matcher.result(id, Measure.getSelectionRect(editor));
+					}
+
+					return null;
+				}
+			}
+
+			return null;
+		};
+	};
+
+	return {
+		textSelection: textSelection,
+		emptyTextBlock: emptyTextBlock
+	};
+});
+
+/**
+ * ElementMatcher.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/core/ElementMatcher', [
+	'tinymce/inlite/core/Matcher',
+	'tinymce/inlite/core/Measure'
+], function (Matcher, Measure) {
+	// element :: Element, [PredicateId] -> (Editor -> Matcher.result | Null)
+	var element = function (element, predicateIds) {
+		return function (editor) {
+			for (var i = 0; i < predicateIds.length; i++) {
+				if (predicateIds[i].predicate(element)) {
+					return Matcher.result(predicateIds[i].id, Measure.getElementRect(editor, element));
+				}
+			}
+
+			return null;
+		};
+	};
+
+	// parent :: [Elements], [PredicateId] -> (Editor -> Matcher.result | Null)
+	var parent = function (elements, predicateIds) {
+		return function (editor) {
+			for (var i = 0; i < elements.length; i++) {
+				for (var x = 0; x < predicateIds.length; x++) {
+					if (predicateIds[x].predicate(elements[i])) {
+						return Matcher.result(predicateIds[x].id, Measure.getElementRect(editor, elements[i]));
+					}
+				}
+			}
+
+			return null;
+		};
+	};
+
+	return {
+		element: element,
+		parent: parent
+	};
+});
+
+/**
+ * Arr.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/alien/Arr', [
+], function () {
+	var flatten = function (arr) {
+		return arr.reduce(function (results, item) {
+			return Array.isArray(item) ? results.concat(flatten(item)) : results.concat(item);
+		}, []);
+	};
+
+	return {
+		flatten: flatten
+	};
+});
+
+/**
+ * PredicateId.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/core/PredicateId', [
+	'global!tinymce.util.Tools'
+], function (Tools) {
+	var create = function (id, predicate) {
+		return {
+			id: id,
+			predicate: predicate
+		};
+	};
+
+	// fromContextToolbars :: [ContextToolbar] -> [PredicateId]
+	var fromContextToolbars = function (toolbars) {
+		return Tools.map(toolbars, function (toolbar) {
+			return create(toolbar.id, toolbar.predicate);
+		});
+	};
+
+	return {
+		create: create,
+		fromContextToolbars: fromContextToolbars
+	};
+});
+
+/**
+ * Theme.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2016 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+define('tinymce/inlite/Theme', [
+	'global!tinymce.ThemeManager',
+	'global!tinymce.util.Delay',
+	'tinymce/inlite/ui/Panel',
+	'tinymce/inlite/ui/Buttons',
+	'tinymce/inlite/core/SkinLoader',
+	'tinymce/inlite/core/SelectionMatcher',
+	'tinymce/inlite/core/ElementMatcher',
+	'tinymce/inlite/core/Matcher',
+	'tinymce/inlite/alien/Arr',
+	'tinymce/inlite/core/PredicateId'
+], function(ThemeManager, Delay, Panel, Buttons, SkinLoader, SelectionMatcher, ElementMatcher, Matcher, Arr, PredicateId) {
+	var getSelectionElements = function (editor) {
+		var node = editor.selection.getNode();
+		var elms = editor.dom.getParents(node);
+		return elms;
+	};
+
+	var createToolbar = function (editor, selector, id, items) {
+		var selectorPredicate = function (elm) {
+			return editor.dom.is(elm, selector);
+		};
+
+		return {
+			predicate: selectorPredicate,
+			id: id,
+			items: items
+		};
+	};
+
+	var getToolbars = function (editor) {
+		var contextToolbars = editor.contextToolbars;
+
+		return Arr.flatten([
+			contextToolbars ? contextToolbars : [],
+			createToolbar(editor, 'img', 'image', 'alignleft aligncenter alignright')
+		]);
+	};
+
+	var findMatchResult = function (editor, toolbars) {
+		var result, elements, contextToolbarsPredicateIds;
+
+		elements = getSelectionElements(editor);
+		contextToolbarsPredicateIds = PredicateId.fromContextToolbars(toolbars);
+
+		result = Matcher.match(editor, [
+			ElementMatcher.element(elements[0], contextToolbarsPredicateIds),
+			SelectionMatcher.textSelection('text'),
+			SelectionMatcher.emptyTextBlock(elements, 'insert'),
+			ElementMatcher.parent(elements, contextToolbarsPredicateIds)
+		]);
+
+		return result && result.rect ? result : null;
+	};
+
+	var togglePanel = function (editor, panel) {
+		var toggle = function () {
+			var toolbars = getToolbars(editor);
+			var result = findMatchResult(editor, toolbars);
+
+			if (result) {
+				panel.show(editor, result.id, result.rect, toolbars);
+			} else {
+				panel.hide();
+			}
+		};
+
+		return function () {
+			if (!editor.removed) {
+				toggle();
+			}
+		};
+	};
+
+	var ignoreWhenFormIsVisible = function (panel, f) {
+		return function () {
+			if (!panel.inForm()) {
+				f();
+			}
+		};
+	};
+
+	var bindContextualToolbarsEvents = function (editor, panel) {
+		var throttledTogglePanel = Delay.throttle(togglePanel(editor, panel), 0);
+		var throttledTogglePanelWhenNotInForm = Delay.throttle(ignoreWhenFormIsVisible(panel, togglePanel(editor, panel)), 0);
+
+		editor.on('blur hide ObjectResizeStart', panel.hide);
+		editor.on('click', throttledTogglePanel);
+		editor.on('nodeChange mouseup', throttledTogglePanelWhenNotInForm);
+		editor.on('ResizeEditor ResizeWindow keyup', throttledTogglePanel);
+		editor.on('remove', panel.remove);
+
+		editor.shortcuts.add('Alt+F10', '', panel.focus);
+	};
+
+	var overrideLinkShortcut = function (editor, panel) {
+		editor.shortcuts.remove('meta+k');
+		editor.shortcuts.add('meta+k', '', function () {
+			var toolbars = getToolbars(editor);
+			var result = result = Matcher.match(editor, [
+				SelectionMatcher.textSelection('quicklink')
+			]);
+
+			if (result) {
+				panel.show(editor, result.id, result.rect, toolbars);
+			}
+		});
+	};
+
+	var renderInlineUI = function (editor, panel) {
+		var skinName = editor.settings.skin || 'lightgray';
+
+		SkinLoader.load(editor, skinName, function () {
+			bindContextualToolbarsEvents(editor, panel);
+			overrideLinkShortcut(editor, panel);
+		});
+
+		return {};
+	};
+
+	var fail = function (message) {
+		throw new Error(message);
+	};
+
+	ThemeManager.add('inlite', function (editor) {
+		var panel = new Panel();
+
+		Buttons.addToEditor(editor, panel);
+
+		var renderUI = function () {
+			return editor.inline ? renderInlineUI(editor, panel) : fail('inlite theme only supports inline mode.');
+		};
+
+		return {
+			renderUI: renderUI
+		};
+	});
+
+	return function() {};
+});
+
+dem('tinymce/inlite/Theme')();
+})();
