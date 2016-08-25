@@ -74,6 +74,7 @@ html{
 
 body{
 	font-family: "HelveticaNeue", Arial, sans-serif;
+	font-size: 12px;
 	height: 100%;
 	min-height: 100%;
 }
@@ -122,38 +123,6 @@ form{
 
 }//end form
 
-
-.close-button{
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 26px;
-    cursor: pointer;
-    transition: all 400ms;
-    background: url('../../images/close-button.png');
-    width: 16px;
-    height: 16px;
-
-    &.grey{
-    	background-position: top;
-    }
-
-    &.black{
-    	background-position: bottom;
-    }
-
-    &.white{
-    	background-position: center;
-    }
-
-	.transition();
-
-	&:hover{
-		opacity: 0.8;
-	}
-}//end close button
-
-
 .button{
 	font-size: 16px;
 	color: #fff;
@@ -172,126 +141,6 @@ form{
 		display: block;
 	}
 }// end button
-
-.large-button{
-	width: 148px;
-	height: 40px;
-	font-size: 14px;
-	line-height: 36px;
-}// end large button
-
-
-.full-button, .full-button-white{
-	background: @global-green;
-	border: 1px solid @global-green;
-
-	.border-radius();
-	.transition();
-
-	&:hover{
-		background: @global-yellow;
-		border: 1px solid @global-yellow;
-	}
-}// end full button 
-
-.full-button-white{
-	background: #fff;
-	color: #9b9b9b;
-	border: 1px solid #fff;
-
-	&:hover{
-		background: @global-green;
-		border: 1px solid @global-green;
-		color: #fff;
-	}
-}
-
-
-.green-dot, .orange-dot, .grey-dot{
-	width: 16px;
-	height: 16px;
-	.border-radius(50px);
-	border: 1px solid #979797;
-	display: inline-block;
-	position: relative;
-	top:3px;
-	margin-right: 10px;
-}
-
-.green-dot{
-	background: #7ed321;
-}
-
-.orange-dot{
-	background: #f5a623;
-}
-
-.grey-dot{
-	background: #9b9b9b;
-}
-//end dots
-
-
-// CHECK BUTTON
-input[type=radio].css-radio-checkbox,
-input[type=checkbox].css-radio-checkbox {
-	position: absolute; 
-	overflow: hidden; 
-	clip: rect(0 0 0 0); 
-	height:1px; 
-	width:1px; 
-	margin:-1px; 
-	padding:0;
-	border:0;
-}
-
-input[type=radio].css-radio-checkbox + label.css-label,
-input[type=checkbox].css-radio-checkbox + label.css-label{
-	padding-left:22px;
-	height:18px; 
-	display:inline-block;
-	line-height:19px;
-	background-repeat:no-repeat;
-	background-position: 0 0;
-	vertical-align:middle;
-	cursor:pointer;
-	font-weight: normal;
-	font-size: 12px;
-	color: #9b9b9b;
-	margin: 0;
-	margin-left: 12px;
-
-	@media @380{
-		margin-left: 0px;
-	}
-
-}
-
-input[type=radio].css-radio-checkbox + label.css-label{
-	width: 130px;
-}
-input[type=checkbox].css-radio-checkbox + label.css-label{
-	width: auto;
-  
-	&.larger{
-	  width: 85px;
-	}
-}
-.get-back input[type=radio].css-radio-checkbox + label.css-label{
-	width: 60px
-}
-
-input[type=radio].css-radio-checkbox:checked + label.css-label,
-input[type=checkbox].css-radio-checkbox:checked + label.css-label {
-	background-position: 0 -18px;
-}
-
-.css-label{
-	background-image:url('../../images/checked.png');
-	font-size: 12px!important;
-}
-// END CHECK BUTTON
-
 
 /*MESSAGES*/
 .alert {

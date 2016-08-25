@@ -6,11 +6,6 @@
 @defaultTextColor: #555;
 @red: #E91A40;
 
-body{
-	font-size: 12px;
-	font-family: "HelveticaNeue", Arial, sans-serif;
-}
-
 .right{
 	float: right;
 }
@@ -179,6 +174,7 @@ header{
 	left: 0;
 	top: 0;
 	background: #292929;
+    z-index: 5;
 
 	.logo{
 		display: block;
@@ -212,6 +208,9 @@ header{
 			line-height: 1.4em;
 			text-transform: uppercase;
 			border-top: 1px solid white;
+		    position: relative;
+		    display: block;
+		    z-index: 5;
 			
 			a{
 				display: block;
@@ -220,7 +219,7 @@ header{
 			}
 
 			&:hover,
-			&.active,
+			&.active
 			{
 				background: white;
 				border-color: #ddd;
@@ -230,12 +229,41 @@ header{
 				}
 			}
 
+			&:hover{
+				.submenu{
+					display: block;
+
+					
+				}
+			}
+
 			&:last-child{
 				border-bottom: 1px solid white;
 			}
 		} 
+		.submenu{
+			display: none;
+		    margin-left: 0px;
+		    top: -1px;
+		    position: absolute;
+		    right: -91%;
+		    background: #292929;
+		    box-sizing: border-box;
+
+		    li{
+		    	a{
+		    		color:lighten(@defaultTextColor, 30%);
+
+		    		&:hover{
+		    			color: darken(@defaultTextColor, 30%);
+		    		}
+		    	}
+		    }
+	    	
+		}
 	}
 }
+
 
 // CONTENT
 .admin-content{
