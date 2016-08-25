@@ -61,7 +61,7 @@ class GalleriesController extends Controller
 
             return redirect(config('laravel-admin.route_prefix').'/galleries');
         } else {
-            return back()->with('error', 'Title is required');;
+            return back()->with('error', 'Title is required');
         }
     }
 
