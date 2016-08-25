@@ -18,10 +18,6 @@ class AdminServiceProvider extends ServiceProvider
             require __DIR__.'/Http/routes.php';
         }
 
-        // Merge filesystems configurations
-        $filesystems_config = array_merge_recursive($this->app['config']['filesystems'], require __DIR__.'/config/filesystems.php');
-        $this->app['config']->set('filesystems', $filesystems_config);
-
         // Merge auth configurations
         $auth_config = array_merge_recursive($this->app['config']['auth'], require __DIR__.'/config/auth.php');
         $this->app['config']->set('auth', $auth_config);

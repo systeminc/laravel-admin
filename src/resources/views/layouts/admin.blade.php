@@ -21,14 +21,19 @@
 		<div class="header-menu cf">
 			<ul class="cf">
 				<li><a href="blog">Blog</a></li>
-				<li><a href="code-blocks">Code blocks</a></li>
+				<li><a href="layout">Layout</a></li>
 				<li><a href="galleries">Galleries</a></li>
 				<li><a href="pages">Pages</a></li>
-				<li><a href="shop/categories">Categories</a></li>
-				<li><a href="shop/products">Products</a></li>
-				<li><a href="shop/comments">Products Comments</a></li>
-				<li><a href="shop/orders">Orders</a></li>
-				<li><a href="shop/stock">Stock</a></li>
+				<li><a href="shop">Shop</a>
+					<ul class="submenu">
+						<li><a href="shop/categories">Categories</a></li>
+						<li><a href="shop/products">Products</a></li>
+						<li><a href="shop/comments">Products Comments</a></li>
+						<li><a href="shop/orders">Orders</a></li>
+						<li><a href="shop/stock">Stock</a></li>
+					</ul>
+				</li>
+				
 			</ul>
 			<ul class="account cf">
 				<li><a href="change-password">Change password</a></li>

@@ -76,7 +76,7 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
             });
 
             // shop
-            Route::controller('', 'ShopController');
+            Route::get('', 'ShopController@getIndex');
         });
 
         // galleries
@@ -89,30 +89,20 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
             Route::get('', 'GalleriesController@getIndex');
         });
 
-        // pages
-        Route::group(['prefix' => 'pages'], function () {
-            Route::post('save', 'PagesController@postSave');
-            Route::post('update/{filename}', 'PagesController@postUpdate');
-            Route::get('edit/{filename}', 'PagesController@getEdit');
-            Route::get('delete/{filename}', 'PagesController@getDelete');
-            Route::get('create', 'PagesController@getCreate');
-            Route::get('', 'PagesController@getIndex');
-        });
-
         // ajax
         Route::group(['prefix' => 'ajax'], function () {
             Route::post('{type}/change-gallery-order', 'AjaxController@postChangeGalleryOrder');
             Route::post('{type}/delete-gallery-images/{id}', 'AjaxController@postDeleteGalleryImages');
         });
 
-        // code-blocks
-        Route::group(['prefix' => 'code-blocks'], function () {
-            Route::post('update/{template_name}', 'CodeBlocksController@postUpdate');
-            Route::post('save', 'CodeBlocksController@postSave');
-            Route::get('edit/{template_name}', 'CodeBlocksController@getEdit');
-            Route::get('delete/{template_name}', 'CodeBlocksController@getDelete');
-            Route::get('create', 'CodeBlocksController@getCreate');
-            Route::get('', 'CodeBlocksController@getIndex');
+        // pages
+        Route::group(['prefix' => 'pages'], function () {
+            Route::get('', 'PagesController@getIndex');
+        });
+
+        // layout
+        Route::group(['prefix' => 'layout'], function () {
+            Route::get('', 'LayoutsController@getIndex');
         });
 
         // admin

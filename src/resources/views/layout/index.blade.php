@@ -2,6 +2,7 @@
 
 @section('admin-content')
 
-	<h1>Pages</h1>
+	<h1>Layout</h1>
+
 
 @stop

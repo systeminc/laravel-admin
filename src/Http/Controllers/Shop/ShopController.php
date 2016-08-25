@@ -6,5 +6,8 @@ use App\Http\Controllers\Controller;
 
 class ShopController extends Controller
 {
-    //
+    public function getIndex()
+    {
+    	return view('admin::shop.index');
+    }
 }

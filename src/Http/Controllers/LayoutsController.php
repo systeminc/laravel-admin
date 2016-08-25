@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Storage;
 use View;
 
-class PagesController extends Controller
+class LayoutsController extends Controller
 {
     public function __construct()
     {
@@ -20,12 +20,12 @@ class PagesController extends Controller
     }
 
     /**
-     * Pages controller index page.
+     * Layouts controller index page.
      *
      * @return \Illuminate\Http\Response
      */
     public function getIndex()
     {
-        return view('admin::pages.index');
+        return view('admin::layout.index');
     }
 }

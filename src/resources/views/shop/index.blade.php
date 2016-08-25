@@ -2,6 +2,6 @@
 
 @section('admin-content')
 
-	<h1>Pages</h1>
+	<h1>Shop</h1>
 
 @stop
