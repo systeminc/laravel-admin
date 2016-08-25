@@ -56,7 +56,7 @@ class BlogController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param int $post_id
+     * @param int                      $post_id
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response

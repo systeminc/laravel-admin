@@ -3,8 +3,6 @@
 namespace SystemInc\LaravelAdmin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Storage;
 use View;
 
 class PagesController extends Controller

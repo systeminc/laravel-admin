@@ -2,8 +2,6 @@
 
 namespace SystemInc\LaravelAdmin;
 
-use DB;
-
 class Shop
 {
     protected $products;
