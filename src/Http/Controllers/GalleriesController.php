@@ -58,11 +58,10 @@ class GalleriesController extends Controller
             $gallery = Gallery::create([
                 'title' => $request->title,
             ]);
-            $this->Images($request->file('images'), $gallery->id);
 
             return redirect(config('laravel-admin.route_prefix').'/galleries');
         } else {
-            return back();
+            return back()->with('error', 'Title is required');;
         }
     }
 
