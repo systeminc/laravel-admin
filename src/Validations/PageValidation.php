@@ -12,8 +12,8 @@ class PageValidation
     public static function rules()
     {
         return [
-        'title' => 'required',
-        'uri_key' => 'required',
+        'title'       => 'required',
+        'uri_key'     => 'required',
         'description' => 'required',
         ];
     }

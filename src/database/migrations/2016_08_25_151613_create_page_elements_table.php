@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreatePageElementsTable extends Migration
 {
@@ -22,8 +22,8 @@ class CreatePageElementsTable extends Migration
             $table->integer('order_number')->default(0);
             $table->timestamps();
 
-            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');            
-            $table->foreign('page_element_type_id')->references('id')->on('page_element_types')->onDelete('cascade');            
+            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
+            $table->foreign('page_element_type_id')->references('id')->on('page_element_types')->onDelete('cascade');
         });
     }
 
