@@ -97,8 +97,14 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
 
         // pages
         Route::group(['prefix' => 'pages'], function () {
+            Route::any('update-element/{page_id}', 'PagesController@postUpdateElement');
+            Route::any('new-element/{page_id}', 'PagesController@postNewElement');
+            Route::post('add-element/{page_id}', 'PagesController@postAddElement');
             Route::post('update/{page_id}', 'PagesController@postUpdate');
             Route::post('save', 'PagesController@postSave');
+            Route::get('delete-element-file/{element_id}', 'PagesController@getDeleteElementFile');
+            Route::get('delete-element/{element_id}', 'PagesController@getDeleteElement');
+            Route::get('edit-element/{element_id}', 'PagesController@getEditElement');
             Route::get('delete/{page_id}', 'PagesController@getDelete');
             Route::get('edit/{page_id}', 'PagesController@getEdit');
             Route::get('create', 'PagesController@getCreate');

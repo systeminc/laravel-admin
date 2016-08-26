@@ -18,9 +18,11 @@ class CreatePagesTable extends Migration
             $table->string('uri_key');
             $table->text('description');
             $table->text('keyword');
-            $table->integer('parent_id')->nullable();
+            $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('order_number')->default(0);
             $table->timestamps();
+
+            $table->foreign('parent_id')->references('id')->on('pages')->onDelete('cascade');
         });
     }
 
