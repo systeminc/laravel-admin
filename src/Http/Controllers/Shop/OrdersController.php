@@ -24,7 +24,7 @@ class OrdersController extends Controller
     {
         $orders = Order::orderBy('created_at', 'desc')->paginate(15);
 
-        return view('admin::orders.orders', compact('orders'));
+        return view('admin::orders.index', compact('orders'));
     }
 
     /**

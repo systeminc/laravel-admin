@@ -24,7 +24,7 @@
 
     "require": {
         "intervention/image": "^2.3",
-        "barryvdh/laravel-dompdf": "0.6.*",
+        "barryvdh/laravel-dompdf": "^0.7.0",
         "php": ">=5.5.9"
     }
 }
