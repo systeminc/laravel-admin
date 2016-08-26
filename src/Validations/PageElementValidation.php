@@ -12,7 +12,7 @@ class PageElementValidation
     public static function rules()
     {
         return [
-        'title' => 'required',
+        'title'   => 'required',
         'content' => 'required',
         ];
     }
