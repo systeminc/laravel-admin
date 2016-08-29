@@ -81,7 +81,7 @@ class ProductsController extends Controller
         if ($validation->fails()) {
             return back()->withInput()->withErrors($validation);
         }
-        
+
         $product = Product::find($product_id);
         $product->update($request->all());
 
