@@ -19,8 +19,10 @@ class ResourcesController extends Controller
     }
 
     /**
-     * Get css
-     * @param file $filename 
+     * Get css.
+     *
+     * @param file $filename
+     *
      * @return response
      */
     public function css($filename)
@@ -29,8 +31,10 @@ class ResourcesController extends Controller
     }
 
     /**
-     * Get script
-     * @param file $filename 
+     * Get script.
+     *
+     * @param file $filename
+     *
      * @return response
      */
     public function scripts($filename)
@@ -45,8 +49,10 @@ class ResourcesController extends Controller
     }
 
     /**
-     * Get image
-     * @param file $filename 
+     * Get image.
+     *
+     * @param file $filename
+     *
      * @return response
      */
     public function images($filename)
