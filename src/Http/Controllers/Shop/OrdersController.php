@@ -106,9 +106,11 @@ class OrdersController extends Controller
     }
 
     /**
-     * Add item
-     * @param Request $request 
-     * @param int $order_id 
+     * Add item.
+     *
+     * @param Request $request
+     * @param int     $order_id
+     *
      * @return type
      */
     public function postAddItem(Request $request, $order_id)
@@ -131,9 +133,11 @@ class OrdersController extends Controller
     }
 
     /**
-     * Delete item
-     * @param Request $request 
-     * @param int $item_id 
+     * Delete item.
+     *
+     * @param Request $request
+     * @param int     $item_id
+     *
      * @return type
      */
     public function getDeleteItem(Request $request, $item_id)
@@ -147,9 +151,11 @@ class OrdersController extends Controller
     }
 
     /**
-     * Edit item
-     * @param Request $request 
-     * @param int $item_id 
+     * Edit item.
+     *
+     * @param Request $request
+     * @param int     $item_id
+     *
      * @return type
      */
     public function postEditItem(Request $request, $item_id)
@@ -169,8 +175,10 @@ class OrdersController extends Controller
     }
 
     /**
-     * Preview PDF proforma
-     * @param int $order_id 
+     * Preview PDF proforma.
+     *
+     * @param int $order_id
+     *
      * @return type
      */
     public function getPreviewProforma($order_id)
@@ -183,8 +191,10 @@ class OrdersController extends Controller
     }
 
     /**
-     * Preview PDF invoice
-     * @param int $order_id 
+     * Preview PDF invoice.
+     *
+     * @param int $order_id
+     *
      * @return type
      */
     public function getPreviewInvoice($order_id)
@@ -197,9 +207,11 @@ class OrdersController extends Controller
     }
 
     /**
-     * Send PDF proforma
-     * @param Request $request 
-     * @param int $order_id 
+     * Send PDF proforma.
+     *
+     * @param Request $request
+     * @param int     $order_id
+     *
      * @return type
      */
     public function getSendProforma(Request $request, $order_id)
@@ -222,9 +234,11 @@ class OrdersController extends Controller
     }
 
     /**
-     * Send PDF invoice
-     * @param Request $request 
-     * @param int $order_id 
+     * Send PDF invoice.
+     *
+     * @param Request $request
+     * @param int     $order_id
+     *
      * @return type
      */
     public function getSendInvoice(Request $request, $order_id)
@@ -250,9 +264,11 @@ class OrdersController extends Controller
     }
 
     /**
-     * Print PDF invoice
-     * @param Request $request 
-     * @param int $order_id 
+     * Print PDF invoice.
+     *
+     * @param Request $request
+     * @param int     $order_id
+     *
      * @return type
      */
     public function getPrintInvoice(Request $request, $order_id)

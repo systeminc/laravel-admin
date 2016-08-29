@@ -36,7 +36,7 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app->singleton('command.laravel-admin.instal', function () {
             return new Console\InstalCommand();
-        });        
+        });
 
         $this->app->singleton('command.laravel-admin.update', function () {
             return new Console\UpdateCommand();
