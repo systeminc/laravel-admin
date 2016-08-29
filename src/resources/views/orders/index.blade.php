@@ -50,10 +50,11 @@
 			</tr>
 		@endforeach
 		</table>
+		
+		{!! $orders->render() !!}
 
 	@else
 		<p>You don't have any orders yet</p>
 	@endif
 
-	{!! $orders->render() !!}
 @stop
