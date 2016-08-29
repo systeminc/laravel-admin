@@ -72,8 +72,7 @@ class CategoriesController extends Controller
 
         if ($category_id == 'new') {
             $category = new ProductCategory();
-        } 
-        else {
+        } else {
             $category = ProductCategory::find($category_id);
         }
 
