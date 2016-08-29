@@ -18,11 +18,21 @@ class ResourcesController extends Controller
         $this->image_path = base_path('vendor/systeminc/laravel-admin/src/resources/assets/dist/images/');
     }
 
+    /**
+     * Get css
+     * @param file $filename 
+     * @return response
+     */
     public function css($filename)
     {
         return response()->file($this->css_path.$filename, ['Content-Type' => 'text/css']);
     }
 
+    /**
+     * Get script
+     * @param file $filename 
+     * @return response
+     */
     public function scripts($filename)
     {
         if (File::extension($this->js_path.$filename)) {
@@ -34,6 +44,11 @@ class ResourcesController extends Controller
         return response()->file($this->js_path.$filename, ['Content-Type' => $mime]);
     }
 
+    /**
+     * Get image
+     * @param file $filename 
+     * @return response
+     */
     public function images($filename)
     {
         return response()->file($this->image_path.$filename);

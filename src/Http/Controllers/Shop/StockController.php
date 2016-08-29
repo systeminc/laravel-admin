@@ -8,6 +8,10 @@ use SystemInc\LaravelAdmin\Product;
 
 class StockController extends Controller
 {
+    /**
+     * Get stock of items
+     * @return type
+     */
     public function getIndex()
     {
         $products = Product::orderBy('title')->get();

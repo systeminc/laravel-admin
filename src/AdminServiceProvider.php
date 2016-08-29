@@ -36,9 +36,14 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app->singleton('command.laravel-admin.instal', function () {
             return new Console\InstalCommand();
+        });        
+
+        $this->app->singleton('command.laravel-admin.update', function () {
+            return new Console\UpdateCommand();
         });
 
         $this->commands(['command.laravel-admin.instal']);
+        $this->commands(['command.laravel-admin.update']);
 
         $this->app->register(\Intervention\Image\ImageServiceProvider::class);
         $this->app->register(\Barryvdh\DomPDF\ServiceProvider::class);

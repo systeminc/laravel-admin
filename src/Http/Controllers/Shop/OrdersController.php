@@ -105,6 +105,12 @@ class OrdersController extends Controller
         return back()->with('success', 'Saved successfully');
     }
 
+    /**
+     * Add item
+     * @param Request $request 
+     * @param int $order_id 
+     * @return type
+     */
     public function postAddItem(Request $request, $order_id)
     {
         $order = Order::find($order_id);
@@ -124,6 +130,12 @@ class OrdersController extends Controller
         return back()->with('success', $product->title.' added');
     }
 
+    /**
+     * Delete item
+     * @param Request $request 
+     * @param int $item_id 
+     * @return type
+     */
     public function getDeleteItem(Request $request, $item_id)
     {
         $item = OrderItem::find($item_id);
@@ -134,6 +146,12 @@ class OrdersController extends Controller
         return back()->with('success', $product->title.' deleted');
     }
 
+    /**
+     * Edit item
+     * @param Request $request 
+     * @param int $item_id 
+     * @return type
+     */
     public function postEditItem(Request $request, $item_id)
     {
         $item = OrderItem::find($item_id);
@@ -150,6 +168,11 @@ class OrdersController extends Controller
         return back()->with('success', $item->product->title.' edited');
     }
 
+    /**
+     * Preview PDF proforma
+     * @param int $order_id 
+     * @return type
+     */
     public function getPreviewProforma($order_id)
     {
         $data = ['order' => Order::find($order_id), 'type' => 'proforma'];
@@ -159,6 +182,11 @@ class OrdersController extends Controller
         return $pdf->stream('invoice.pdf');
     }
 
+    /**
+     * Preview PDF invoice
+     * @param int $order_id 
+     * @return type
+     */
     public function getPreviewInvoice($order_id)
     {
         $data = ['order' => Order::find($order_id), 'type' => 'invoice'];
@@ -168,6 +196,12 @@ class OrdersController extends Controller
         return $pdf->stream('invoice.pdf');
     }
 
+    /**
+     * Send PDF proforma
+     * @param Request $request 
+     * @param int $order_id 
+     * @return type
+     */
     public function getSendProforma(Request $request, $order_id)
     {
         $order = Order::find($order_id);
@@ -177,7 +211,7 @@ class OrdersController extends Controller
         PDF::loadView('admin::pdf.invoice', compact('order', 'type'))->save($pdf_path);
 
         // send email
-        Mail::send('mail.invoice', ['type' => 'proforma'], function ($m) use ($order, $pdf_path) {
+        Mail::send('admin::mail.invoice', ['type' => 'proforma'], function ($m) use ($order, $pdf_path) {
             $m->to($order->billing_email, $order->billing_name)->subject("Proforma invoice No: T-{$order->id}-".date('Y'))->attach($pdf_path);
         });
 
@@ -187,6 +221,12 @@ class OrdersController extends Controller
         return back()->with('success', 'Invoice sent');
     }
 
+    /**
+     * Send PDF invoice
+     * @param Request $request 
+     * @param int $order_id 
+     * @return type
+     */
     public function getSendInvoice(Request $request, $order_id)
     {
         $order = Order::find($order_id);
@@ -202,13 +242,19 @@ class OrdersController extends Controller
         PDF::loadView('admin::pdf.invoice', compact('order', 'type'))->save($pdf_path);
 
         // send email
-        Mail::send('mail.invoice', ['type' => 'invoice'], function ($m) use ($order, $pdf_path) {
+        Mail::send('admin::mail.invoice', ['type' => 'invoice'], function ($m) use ($order, $pdf_path) {
             $m->to($order->billing_email, $order->billing_name)->subject("Invoice No: {$order->invoice_number} ".date('Y'))->attach($pdf_path);
         });
 
         return back()->with('success', 'Invoice sent');
     }
 
+    /**
+     * Print PDF invoice
+     * @param Request $request 
+     * @param int $order_id 
+     * @return type
+     */
     public function getPrintInvoice(Request $request, $order_id)
     {
         $order = Order::find($order_id);

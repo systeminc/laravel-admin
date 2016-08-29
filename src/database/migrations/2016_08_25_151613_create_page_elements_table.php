@@ -16,7 +16,7 @@ class CreatePageElementsTable extends Migration
             $table->increments('id');
             $table->string('key');
             $table->string('title');
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->integer('page_id')->unsigned();
             $table->integer('page_element_type_id')->unsigned();
             $table->integer('order_number')->default(0);

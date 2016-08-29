@@ -7,6 +7,11 @@ use Storage;
 
 class UploadsController extends Controller
 {
+    /**
+     * Get uploaded file from default storage
+     * @param file $filename 
+     * @return response
+     */
     public function Index($filename)
     {
         if (Storage::exists($filename)) {

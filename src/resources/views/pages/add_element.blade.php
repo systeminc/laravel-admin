@@ -20,7 +20,7 @@
 			@endif 
 		
 			<label>Title</label>
-			<input type="text" name="title" placeholder="Page title">
+			<input type="text" name="title" placeholder="Page title" value="{{ old('title') }}">
 		
 			@if ($errors->first('content'))
 			    <div class="alert alert-error no-hide">
@@ -33,12 +33,12 @@
 			@if ($page_element_type_id == 1 || old('page_element_type_id') == 1)
 
 				<label>Content</label>
-				<textarea name="content" class="htmlEditor" rows="5" placeholder="Content"></textarea>
+				<textarea name="content" class="htmlEditor" rows="5" placeholder="Content" {{ old('content') }}></textarea>
 				
 			@elseif ($page_element_type_id == 2 || old('page_element_type_id') == 2)
 
 				<label>Content</label>
-				<textarea name="content" class="htmlEditor" rows="5" placeholder="Content"></textarea>
+				<textarea name="content" class="htmlEditor" rows="5" placeholder="Content" {{ old('content') }}></textarea>
 
 				<script>
 					$( document ).ready(function() {

@@ -66,12 +66,6 @@ class InstalCommand extends Command
             $password = $this->ask('Admin password');
         }
 
-        Admin::create([
-            'name'     => $name,
-            'email'    => $email,
-            'password' => bcrypt($password),
-        ]);
-
         $config_file = File::get(__DIR__.'/../config/laravel-admin.php');
         $config_file = str_replace($config['route_prefix'], $prefix, $config_file);
 
@@ -80,7 +74,6 @@ class InstalCommand extends Command
         $this->line('***');
         $this->line('');
         $this->line('Migrating...');
-        $this->line('');
 
         $migrate = Artisan::call('migrate', [
             '--path'  => 'vendor/systeminc/laravel-admin/src/database/migrations',
@@ -92,16 +85,28 @@ class InstalCommand extends Command
         $this->line('***');
         $this->line('');
         $this->line('Seeding...');
-        $this->line('');
+
+        Admin::create([
+            'name'     => $name,
+            'email'    => $email,
+            'password' => bcrypt($password),
+        ]);
 
         require __DIR__.'/../database/seeds/DatabaseSeeder.php';
         $seeder = new \DatabaseSeeder();
         $seeder->run();
 
         $this->line('Seeding Done!');
+        $this->line('');
+        $this->line('***');
+        $this->line('');
+        $this->line('Publishing...');
 
         File::put(base_path('config/laravel-admin.php'), $config_file);
 
+        $this->line('Publishing Done!');
+        $this->line('');
+        $this->line('***');
         $this->line('');
         $this->info('Successfully installed!');
         $this->line(' _________________________________________________________________________________________________ ');

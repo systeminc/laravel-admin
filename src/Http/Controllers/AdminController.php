@@ -112,10 +112,7 @@ class AdminController extends Controller
     public function anyTinyImages(Request $request)
     {
         $page_id = $request->get('page_id');
-
-        // $page_name = 'test';
         $page_name = $request->get('page_name');
-
         $editor_id = $request->get('editor_id');
 
         $directory = 'images/tiny/'.$page_name.'/'.$page_id;
@@ -123,23 +120,18 @@ class AdminController extends Controller
         if (!Storage::exists($directory)) {
             Storage::createDir($directory);
         }
+        $images = Storage::files($directory);
 
-        View::share('page_id', $page_id);
-
-        View::share('page_name', $page_name);
-
-        View::share('editor_id', $editor_id);
-
-        View::share('images', Storage::files($directory));
-
-        View::share('directory', $directory);
-
-        return view('admin::tiny-images');
+        return view('admin::tiny-images', compact('page_id', 'page_name', 'editor_id', 'images', 'directory'));
     }
 
     /**
-     * Upload Tiny Image.
-     * */
+     * Upload a tiny image in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function anyUploadTinyImage(Request $request)
     {
         $directory = $request->get('directory');
@@ -160,8 +152,12 @@ class AdminController extends Controller
     }
 
     /**
-     * Delete Tiny Image.
-     * */
+     * Delete a tiny image from storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function postDeleteTinyImage(Request $request)
     {
         $path = $request->get('path');
