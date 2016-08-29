@@ -30,12 +30,12 @@
 			@if ($element->page_element_type_id == 1 || old('page_element_type_id') == 1)
 
 				<label>Content</label>
-				<textarea name="content" class="htmlEditor" rows="5" placeholder="Content" value="{{ $element->content or old('content') }}"></textarea>
+				<textarea name="content" class="htmlEditor" rows="5" placeholder="Content">{{ $element->content or old('content') }}</textarea>
 				
 			@elseif ($element->page_element_type_id == 2 || old('page_element_type_id') == 2)
 
 				<label>Content</label>
-				<textarea name="content" class="htmlEditor" rows="5" placeholder="Content" value="{{ $element->content or old('content') }}"></textarea>
+				<textarea name="content" class="htmlEditor" rows="5" placeholder="Content">{{ $element->content or old('content') }}</textarea>
 
 				<script>
 					$( document ).ready(function() {

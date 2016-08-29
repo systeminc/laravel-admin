@@ -19,7 +19,7 @@ class CreateGalleryImagesTable extends Migration
             $table->string('path_source');
             $table->string('thumb_source');
             $table->string('mobile_source');
-            $table->integer('order_number')->unsigned();
+            $table->integer('order_number')->unsigned()->default(0);
             $table->timestamps();
 
             $table->foreign('gallery_id')->references('id')->on('galleries')->onDelete('cascade');

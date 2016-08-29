@@ -16,13 +16,13 @@ class CreateBlogPostsTable extends Migration
             $table->increments('id');
             $table->string('uri_id');
             $table->string('title');
-            $table->string('thumb');
-            $table->text('content');
-            $table->text('excerpt');
+            $table->string('thumb')->nullable()->default(null);
+            $table->text('content')->nullable()->default(null);
+            $table->text('excerpt')->nullable()->default(null);
             $table->integer('visible')->default(0);
-            $table->string('meta_title');
-            $table->string('meta_description');
-            $table->string('meta_keywords');
+            $table->string('meta_title')->nullable()->default(null);
+            $table->string('meta_description')->nullable()->default(null);
+            $table->string('meta_keywords')->nullable()->default(null);
             $table->timestamps();
         });
     }

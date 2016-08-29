@@ -33,12 +33,12 @@
 			@if ($page_element_type_id == 1 || old('page_element_type_id') == 1)
 
 				<label>Content</label>
-				<textarea name="content" class="htmlEditor" rows="5" placeholder="Content" {{ old('content') }}></textarea>
+				<textarea name="content" class="htmlEditor" rows="5" placeholder="Content">{{ old('content') }}</textarea>
 				
 			@elseif ($page_element_type_id == 2 || old('page_element_type_id') == 2)
 
 				<label>Content</label>
-				<textarea name="content" class="htmlEditor" rows="5" placeholder="Content" {{ old('content') }}></textarea>
+				<textarea name="content" class="htmlEditor" rows="5" placeholder="Content">{{ old('content') }}</textarea>
 
 				<script>
 					$( document ).ready(function() {

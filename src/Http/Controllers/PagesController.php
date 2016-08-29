@@ -209,7 +209,7 @@ class PagesController extends Controller
     {
         $element = PageElement::find($element_id);
 
-        if (empty($element->content)) {
+        if (empty($element->content) || $element->page_element_type_id !== 3) {
             $mime = null;
         } else {
             $mime = Storage::mimeType($element->content);

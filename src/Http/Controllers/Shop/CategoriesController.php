@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Image;
 use Storage;
 use SystemInc\LaravelAdmin\ProductCategory;
+use SystemInc\LaravelAdmin\Validations\CategoryValidation;
+use Validator;
 
 class CategoriesController extends Controller
 {
@@ -61,9 +63,17 @@ class CategoriesController extends Controller
      */
     public function postSave(Request $request, $category_id)
     {
+        // validation
+        $validation = Validator::make($request->all(), CategoryValidation::rules(), CategoryValidation::messages());
+
+        if ($validation->fails()) {
+            return back()->withInput()->withErrors($validation);
+        }
+
         if ($category_id == 'new') {
             $category = new ProductCategory();
-        } else {
+        } 
+        else {
             $category = ProductCategory::find($category_id);
         }
 

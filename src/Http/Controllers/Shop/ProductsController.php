@@ -9,6 +9,8 @@ use Storage;
 use SystemInc\LaravelAdmin\Gallery;
 use SystemInc\LaravelAdmin\Product;
 use SystemInc\LaravelAdmin\ProductCategory;
+use SystemInc\LaravelAdmin\Validations\ProductValidation;
+use Validator;
 
 class ProductsController extends Controller
 {
@@ -73,6 +75,13 @@ class ProductsController extends Controller
      */
     public function postSave(Request $request, $product_id)
     {
+        // validation
+        $validation = Validator::make($request->all(), ProductValidation::rules(), ProductValidation::messages());
+
+        if ($validation->fails()) {
+            return back()->withInput()->withErrors($validation);
+        }
+        
         $product = Product::find($product_id);
         $product->update($request->all());
 

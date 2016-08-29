@@ -4,23 +4,55 @@
 
 	<h1>Category Info</h1>
 
-	<form action="shop/categories/save/{{$category->id or 'new'}}" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="_token" value="{{csrf_token()}}">
+	<form action="shop/categories/save/{{ $category->id or 'new'}}" method="post" enctype="multipart/form-data">
+		{{ csrf_field() }}
+
+			@if ($errors->first('title'))
+			    <div class="alert alert-error no-hide">
+			        <span class="help-block">
+			            <strong>{{ $errors->first('title') }}</strong>
+			        </span>
+			    </div>
+			@endif 
 
 		<label>Title</label>
-		<input type="text" name="title" value="{{$category->title}}">
+		<input type="text" name="title" value="{{ $category->title or old('title') }}">
+
+			@if ($errors->first('subtitle'))
+			    <div class="alert alert-error no-hide">
+			        <span class="help-block">
+			            <strong>{{ $errors->first('subtitle') }}</strong>
+			        </span>
+			    </div>
+			@endif 
 
 		<label>Subtitle</label>
-		<input type="text" name="subtitle" value="{{$category->subtitle}}">
+		<input type="text" name="subtitle" value="{{$category->subtitle or old('subtitle')}}">
+
+			@if ($errors->first('uri'))
+			    <div class="alert alert-error no-hide">
+			        <span class="help-block">
+			            <strong>{{ $errors->first('uri') }}</strong>
+			        </span>
+			    </div>
+			@endif 		
 
 		<label>URI</label>
-		<input type="text" name="uri" value="{{$category->uri}}" disabled>
+		<input type="text" name="uri" value="{{$category->uri or old('uri')}}" disabled>
 
 		<label>Excerpt</label>
-		<textarea name="excerpt" class="htmlEditorTools" rows="5">{{$category->excerpt}}</textarea>
+		<textarea name="excerpt" class="htmlEditorTools" rows="5">{{$category->excerpt or old('excerpt')}}</textarea>
+
+			@if ($errors->first('description'))
+			    <div class="alert alert-error no-hide">
+			        <span class="help-block">
+			            <strong>{{ $errors->first('description') }}</strong>
+			        </span>
+			    </div>
+			@endif 
 
 		<label>Description</label>
-		<textarea name="description" class="htmlEditor" rows="15" data-page-id="{{$category->uri}}">{{$category->description}}</textarea>
+		<textarea name="description" class="htmlEditor" rows="15" data-page-name="category" data-page-id="{{$category->id}}" id="editor-{{ str_replace('.', '', $category->id) }}">{{$category->description or old('description')}}</textarea>
 
 		<label>Thumbnail</label>
 		<div class="file-input-wrap cf">
@@ -47,13 +79,13 @@
 		</select>
 
 		<label>SEO Title</label>
-		<input type="text" name="seo_title" value="{{$category->seo_title}}">
+		<input type="text" name="seo_title" value="{{$category->seo_title or old('seo_title')}}">
 
 		<label>SEO Description</label>
-		<input type="text" name="seo_description" value="{{$category->seo_description}}">
+		<input type="text" name="seo_description" value="{{$category->seo_description or old('seo_description')}}">
 
 		<label>SEO Keywords</label>
-		<input type="text" name="seo_keywords" value="{{$category->seo_keywords}}">
+		<input type="text" name="seo_keywords" value="{{$category->seo_keywords or old('seo_keywords')}}">
 
 		<input type="submit" value="Save">
 
@@ -61,5 +93,10 @@
 			<a class="button remove-item" href="shop/categories/delete/{{$category->id}}">Delete</a>
 		@endif
 	</form>
-
+<script>
+	
+	$('input[name="title"]').keyup(function() {
+		$('input[name="uri"]').val($(this).val().replace(' ', '-'));
+	})
+</script>
 @stop

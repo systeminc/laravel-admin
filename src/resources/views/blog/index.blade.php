@@ -6,19 +6,21 @@
 	<a href="blog/post-new" class="button right">Add new</a>
 	<span class="last-update"></span>
 	
-		@if (session('success'))
-		    <span class="alert alert-success">
-		        {{ session('success') }}
-		    </span>
-		@endif
-		
-	<ul>
-	@foreach ($posts as &$post)
-		<li><a href="blog/post-edit/{{$post->id}}"><b>{{$post->title}}</a></li>
-	@endforeach
-	</ul>
+	@if (session('success'))
+	    <span class="alert alert-success">
+	        {{ session('success') }}
+	    </span>
+	@endif
+	
+	@if (!empty($posts->first()))
+		<ul>
+		@foreach ($posts as &$post)
+			<li><a href="blog/post-edit/{{$post->id}}"><b>{{$post->title}}</a></li>
+		@endforeach
+		</ul>
 
-	{!! $posts->render() !!}
+		{!! $posts->render() !!}
+	@endif	
 
 	<h1>Latest Comments</h1>
 	<span class="last-update"></span>
