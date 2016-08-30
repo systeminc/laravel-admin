@@ -2,7 +2,7 @@
 <html>
 <head>
 
-	<title>{{ $head['title'] or 'SYSTEM INC Admin panel' }}</title>
+	<title>{{ (!empty(SystemInc\LaravelAdmin\Setting::first()) && SystemInc\LaravelAdmin\Setting::first()->title !== null) ? SystemInc\LaravelAdmin\Setting::first()->title : 'SYSTEM INC Admin panel' }}</title>
 	<base href="{{ url('/'.config('laravel-admin.route_prefix')) }}/">
 
 	<meta name="csrf-token" content="{{ csrf_token() }}">

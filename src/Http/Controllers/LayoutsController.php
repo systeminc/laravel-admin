@@ -3,20 +3,9 @@
 namespace SystemInc\LaravelAdmin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use View;
 
 class LayoutsController extends Controller
 {
-    public function __construct()
-    {
-        // head meta defaults
-        View::share('head', [
-            'title'       => 'SystemInc Admin Panel',
-            'description' => '',
-            'keywords'    => '',
-        ]);
-    }
-
     /**
      * Layouts controller index page.
      *

@@ -14,4 +14,9 @@ class Page extends Model
         'parent_id',
         'order_number',
     ];
+
+    public function elements()
+    {
+    	return $this->hasMany('SystemInc\LaravelAdmin\PageElement');
+    }
 }

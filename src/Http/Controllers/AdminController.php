@@ -4,26 +4,14 @@ namespace SystemInc\LaravelAdmin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Auth;
-use Hash;
 use Illuminate\Http\Request;
 use Image;
 use Response;
 use Storage;
 use SystemInc\LaravelAdmin\Admin;
-use View;
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-        // head meta defaults
-        View::share('head', [
-            'title'       => 'SystemInc Admin Panel',
-            'description' => '',
-            'keywords'    => '',
-        ]);
-    }
-
     /**
      * Index admin page.
      *
@@ -60,34 +48,6 @@ class AdminController extends Controller
         } else {
             return back()->with(['message' => 'Login failed']);
         }
-    }
-
-    /**
-     * Change password form.
-     * */
-    public function getChangePassword()
-    {
-        return view('admin::change_password');
-    }
-
-    /**
-     *	Change admin password.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function postChangePassword(Request $request)
-    {
-        $admin = Admin::find(Auth::guard('system-admin')->user()->id);
-
-        if (Hash::check($request->old_pass, $admin->password)) {
-            if ($request->new_pass === $request->confirm_pass) {
-                $admin->password = Hash::make($request->new_pass);
-
-                $admin->save();
-            }
-        }
-
-        return redirect(config('laravel-admin.route_prefix'));
     }
 
     /**

@@ -9,20 +9,9 @@ use Image;
 use Storage;
 use SystemInc\LaravelAdmin\Gallery;
 use SystemInc\LaravelAdmin\GalleryImage;
-use View;
 
 class GalleriesController extends Controller
 {
-    public function __construct()
-    {
-        // head meta defaults
-        View::share('head', [
-            'title'       => 'SystemInc Admin Panel',
-            'description' => '',
-            'keywords'    => '',
-        ]);
-    }
-
     /**
      * Show all galleries.
      *

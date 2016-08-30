@@ -15,7 +15,7 @@
 
 	<header class="cf">
 		<div class="header-top">
-			<a href="" class="logo"><img src="images/logo-white.png" alt="Load Afrika logo"></a>
+			<a href="" class="logo"><img src="{{ (!empty(SystemInc\LaravelAdmin\Setting::first()) && SystemInc\LaravelAdmin\Setting::first()->source !== null) ? 'uploads/'.SystemInc\LaravelAdmin\Setting::first()->source : 'images/logo-white.png' }}" alt="SystemInc Laravel admin logo"></a>
 		</div>
 
 		<div class="header-menu cf">
@@ -36,7 +36,7 @@
 				
 			</ul>
 			<ul class="account cf">
-				<li><a href="change-password">Change password</a></li>
+				<li><a href="settings">Settings</a></li>
 				<li><a href="logout">Logout</a></li>
 			</ul>
 		</div>

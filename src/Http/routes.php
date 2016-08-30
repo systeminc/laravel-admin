@@ -6,7 +6,7 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
     // resources
     Route::get('css/{filename}', 'ResourcesController@css');
     Route::get('scripts/{filename?}', 'ResourcesController@scripts')->where('filename', '(.*)');
-    Route::get('images/{filename}', 'ResourcesController@images');
+    Route::get('images/{filename?}', 'ResourcesController@images');
     Route::get('uploads/{filename?}', 'UploadsController@index')->where('filename', '(.*)');
 
     // w/o credentials
@@ -116,13 +116,22 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
             Route::get('', 'LayoutsController@getIndex');
         });
 
+        // settings
+        Route::group(['prefix' => 'settings'], function () {
+            Route::post('create-admin', 'SettingsController@postCreateAdmin');
+            Route::post('update-admin/{admin_id}', 'SettingsController@postUpdateAdmin');
+            Route::post('change-password/{admin_id}', 'SettingsController@postChangePassword');
+            Route::post('update', 'SettingsController@postUpdate');
+            Route::get('edit/{admin_id}', 'SettingsController@getEdit');
+            Route::get('add-admin', 'SettingsController@getAddAdmin');
+            Route::get('', 'SettingsController@getIndex');
+        });
+
         // admin
         Route::any('upload-tiny-image', 'AdminController@anyUploadTinyImage');
         Route::any('tiny-images', 'AdminController@anyTinyImages');
         Route::post('delete-tiny-image', 'AdminController@postDeleteTinyImage');
-        Route::post('change-password', 'AdminController@postChangePassword');
         Route::get('logout', 'AdminController@getLogout');
-        Route::get('change-password', 'AdminController@getChangePassword');
         Route::get('', 'AdminController@getIndex');
     });
 });

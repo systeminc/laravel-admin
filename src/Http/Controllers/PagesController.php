@@ -11,20 +11,9 @@ use SystemInc\LaravelAdmin\PageElementType;
 use SystemInc\LaravelAdmin\Validations\PageElementValidation;
 use SystemInc\LaravelAdmin\Validations\PageValidation;
 use Validator;
-use View;
 
 class PagesController extends Controller
 {
-    public function __construct()
-    {
-        // head meta defaults
-        View::share('head', [
-            'title'       => 'SystemInc Admin Panel',
-            'description' => '',
-            'keywords'    => '',
-        ]);
-    }
-
     /**
      * Pages controller index page.
      *

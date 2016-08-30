@@ -27,6 +27,16 @@ class SLA
     }
 
     /**
+     * Instance of Pages.
+     *
+     * @return type
+     */
+    public function page($page)
+    {
+        return new Pages($page);
+    }
+
+    /**
      * Get file from storage(Image, PDF,...).
      *
      * @param string $filename
