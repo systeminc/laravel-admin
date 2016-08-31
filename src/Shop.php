@@ -18,7 +18,7 @@ class Shop
             $this->{$key} = $this->{$key}();
         }
 
-        return $this->{$key};
+        return $this->{$key}->all();
     }
 
     /**
