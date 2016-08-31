@@ -3,8 +3,8 @@
 namespace SystemInc\LaravelAdmin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Hash;
+use Illuminate\Http\Request;
 use Storage;
 use SystemInc\LaravelAdmin\Admin;
 use SystemInc\LaravelAdmin\Setting;
@@ -26,8 +26,10 @@ class SettingsController extends Controller
     }
 
     /**
-     * Update admin panel
-     * @param Request $request 
+     * Update admin panel.
+     *
+     * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function postUpdate(Request $request)
@@ -43,7 +45,7 @@ class SettingsController extends Controller
             $source = $dirname;
         }
         $data = [
-            'title' => !empty($request->title) ? $request->title : null,
+            'title'  => !empty($request->title) ? $request->title : null,
             'source' => !empty($source) ? $source : null,
         ];
 
@@ -59,8 +61,10 @@ class SettingsController extends Controller
     }
 
     /**
-     * Edit admin 
-     * @param int $admin_id 
+     * Edit admin.
+     *
+     * @param int $admin_id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getEdit($admin_id)
@@ -80,27 +84,26 @@ class SettingsController extends Controller
         $admin = Admin::find($admin_id);
 
         if (Hash::check($request->old_pass, $admin->password)) {
-
             if ($request->new_pass === $request->confirm_pass) {
                 $admin->password = Hash::make($request->new_pass);
 
                 $admin->save();
 
-                return back()->with(['success' => "Password changed"]);
-
+                return back()->with(['success' => 'Password changed']);
             } else {
-                return back()->with(['pass' => "Wrong repeat password"]);
+                return back()->with(['pass' => 'Wrong repeat password']);
             }
-
-        } else {    
-            return back()->with(['pass' => "Wrong old password"]);
+        } else {
+            return back()->with(['pass' => 'Wrong old password']);
         }
     }
 
     /**
-     * Update admin
-     * @param Request $request 
-     * @param int $admin_id 
+     * Update admin.
+     *
+     * @param Request $request
+     * @param int     $admin_id
+     *
      * @return \Illuminate\Http\Response
      */
     public function postUpdateAdmin(Request $request, $admin_id)
@@ -124,7 +127,8 @@ class SettingsController extends Controller
     }
 
     /**
-     * Add admin
+     * Add admin.
+     *
      * @return \Illuminate\Http\Response
      */
     public function getAddAdmin()
@@ -133,8 +137,10 @@ class SettingsController extends Controller
     }
 
     /**
-     * Save admin
-     * @param Request $request 
+     * Save admin.
+     *
+     * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function postCreateAdmin(Request $request)
@@ -148,8 +154,8 @@ class SettingsController extends Controller
         }
 
         Admin::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'     => $request->name,
+            'email'    => $request->email,
             'password' => Hash::make($request->password),
         ]);
 

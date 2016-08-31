@@ -8,6 +8,6 @@ class SLA extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return "sla";
+        return 'sla';
     }
 }

@@ -22,6 +22,6 @@ class Page extends Model
 
     public function element($key)
     {
-    	return PageElement::whereKey($key)->first();
+        return PageElement::whereKey($key)->first();
     }
 }

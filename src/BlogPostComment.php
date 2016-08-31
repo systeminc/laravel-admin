@@ -16,6 +16,6 @@ class BlogPostComment extends Model
 
     public function article()
     {
-    	return $this->belongsTo('SystemInc\LaravelAdmin\BlogPost', 'blog_post_id');
+        return $this->belongsTo('SystemInc\LaravelAdmin\BlogPost', 'blog_post_id');
     }
 }

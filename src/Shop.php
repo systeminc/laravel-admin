@@ -22,38 +22,42 @@ class Shop
     }
 
     /**
-     * Get Query Billder for Product
+     * Get Query Billder for Product.
+     *
      * @return type
      */
     public function products()
     {
-        return new Product;
+        return new Product();
     }
 
     /**
-     * Get Query Billder for ProductCategory
+     * Get Query Billder for ProductCategory.
+     *
      * @return type
      */
     public function categories()
     {
-        return new ProductCategory;
+        return new ProductCategory();
     }
 
     /**
-     * Get Query Billder for ProductComment
+     * Get Query Billder for ProductComment.
+     *
      * @return type
      */
     public function comments()
     {
-        return new ProductComment;
+        return new ProductComment();
     }
 
     /**
-     * Get Query Billder for Order
+     * Get Query Billder for Order.
+     *
      * @return type
      */
     public function orders()
     {
-        return new Order;
+        return new Order();
     }
 }
