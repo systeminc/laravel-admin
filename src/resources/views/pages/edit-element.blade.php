@@ -2,7 +2,7 @@
 
 @section('admin-content')
 
-	<h1>Edit {{ $element->title }} element</h1>	
+	<h1>Edit element</h1>	
 	<span class="last-update"></span>
 
 		<form action="pages/update-element/{{ $element->id }}" method="post" enctype="multipart/form-data">

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class BlogPost extends Model
 {
     protected $fillable = [
+        'blog_category_id',
         'uri_id',
         'title',
         'thumb',
@@ -17,4 +18,14 @@ class BlogPost extends Model
         'meta_description',
         'meta_keywords',
     ];
+
+    public function comments()
+    {
+        return $this->hasMany('SystemInc\LaravelAdmin\BlogPostComment', 'blog_post_id');
+    }
+
+    public function categories()
+    {
+        return $this->belongsTo('SystemInc\LaravelAdmin\BlogCategory', 'blog_category_id');
+    }
 }

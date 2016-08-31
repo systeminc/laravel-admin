@@ -111,7 +111,7 @@ class OrdersController extends Controller
      * @param Request $request
      * @param int     $order_id
      *
-     * @return type
+     * @return \Illuminate\Http\Response
      */
     public function postAddItem(Request $request, $order_id)
     {
@@ -138,7 +138,7 @@ class OrdersController extends Controller
      * @param Request $request
      * @param int     $item_id
      *
-     * @return type
+     * @return \Illuminate\Http\Response
      */
     public function getDeleteItem(Request $request, $item_id)
     {
@@ -156,7 +156,7 @@ class OrdersController extends Controller
      * @param Request $request
      * @param int     $item_id
      *
-     * @return type
+     * @return \Illuminate\Http\Response
      */
     public function postEditItem(Request $request, $item_id)
     {
@@ -179,7 +179,7 @@ class OrdersController extends Controller
      *
      * @param int $order_id
      *
-     * @return type
+     * @return \Illuminate\Http\Response
      */
     public function getPreviewProforma($order_id)
     {
@@ -195,7 +195,7 @@ class OrdersController extends Controller
      *
      * @param int $order_id
      *
-     * @return type
+     * @return \Illuminate\Http\Response
      */
     public function getPreviewInvoice($order_id)
     {
@@ -212,7 +212,7 @@ class OrdersController extends Controller
      * @param Request $request
      * @param int     $order_id
      *
-     * @return type
+     * @return \Illuminate\Http\Response
      */
     public function getSendProforma(Request $request, $order_id)
     {
@@ -239,7 +239,7 @@ class OrdersController extends Controller
      * @param Request $request
      * @param int     $order_id
      *
-     * @return type
+     * @return \Illuminate\Http\Response
      */
     public function getSendInvoice(Request $request, $order_id)
     {
@@ -269,7 +269,7 @@ class OrdersController extends Controller
      * @param Request $request
      * @param int     $order_id
      *
-     * @return type
+     * @return \Illuminate\Http\Response
      */
     public function getPrintInvoice(Request $request, $order_id)
     {

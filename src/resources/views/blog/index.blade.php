@@ -2,9 +2,11 @@
 
 @section('admin-content')
 	
-	<h1>Latest Posts</h1>
-	<a href="blog/post-new" class="button right">Add new</a>
-	<span class="last-update"></span>
+	<div>
+		<a href="blog/post-new" class="button right">Add new</a>
+		<h1>Latest Posts</h1>
+		<span class="last-update"></span>
+	</div>
 	
 	@if (session('success'))
 	    <span class="alert alert-success">
@@ -29,8 +31,9 @@
 	
 		<ul class="comments">
 		@foreach ($comments as &$comment)
+
 			<li class="@if(!$comment->approved)disapproved @endif">
-				<a class="article-title" href="blog/{{$comment->article->url_id}}" target="_blank">{{$comment->article->title}}</a>
+				<a class="article-title" href="blog/post-edit/{{$comment->article->id}}" target="_blank">{{$comment->article->title}}</a>
 				<div class="name">{{$comment->name}} / {{$comment->email}}</div>
 				<p>{{$comment->content}}</p>
 				<div class="created_at">{{$comment->created_at->format('Y-m-d H:i')}}h</div>

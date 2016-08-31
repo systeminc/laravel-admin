@@ -7,7 +7,7 @@ use Storage;
 class SLA
 {
     /**
-     * Instance of BlogPost.
+     * Instance of Blog.
      *
      * @return type
      */
@@ -27,13 +27,23 @@ class SLA
     }
 
     /**
-     * Instance of Pages.
+     * Instance of Page.
      *
      * @return type
      */
-    public function page($page)
+    public function page()
     {
-        return new Pages($page);
+        return new Page();
+    }
+
+    /**
+     * Instance of Gallery.
+     *
+     * @return type
+     */
+    public function gallery()
+    {
+        return new Gallery();
     }
 
     /**

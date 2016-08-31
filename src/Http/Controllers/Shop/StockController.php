@@ -11,7 +11,7 @@ class StockController extends Controller
     /**
      * Get stock of items.
      *
-     * @return type
+     * @return \Illuminate\Http\Response
      */
     public function getIndex()
     {

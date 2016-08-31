@@ -20,8 +20,11 @@
 
 		<div class="header-menu cf">
 			<ul class="cf">
-				<li><a href="blog">Blog</a></li>
-				<li><a href="layout">Layout</a></li>
+				<li><a href="blog">Blog</a>
+					<ul class="submenu">
+						<li><a href="blog/categories">Categories</a></li>
+					</ul>
+				</li>
 				<li><a href="galleries">Galleries</a></li>
 				<li><a href="pages">Pages</a></li>
 				<li><a href="shop">Shop</a>

@@ -4,7 +4,6 @@
 
 This is **Laravel Admin**, CRUD (create, read, update and delete) package that can halp you get your administration panel in minutes. At this moment we support these modules:
 
-- **Layout** (SEO, code blocks, global website elements)
 - **Pages** (page elements, galleries, subpages)
 - **Blog** (posts, comments)
 - **Shop** (products, categories, comments, orders, stock)

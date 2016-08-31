@@ -27,6 +27,14 @@
 			<label>Content</label>
 			<textarea name="content" class="htmlEditor" rows="15" data-page-name="blog" data-page-id="{{$post->id}}" id="editor-{{ str_replace('.', '', $post->id) }}">{{$post->content}}</textarea>
 
+			<label>Blog Category</label>
+			<select name="blog_category_id">
+					<option value="0">Choose category</option>
+				@foreach ($categories as &$category)
+					<option value="{{$category->id}}" @if($category->id==$post->blog_category_id) selected @endif>{{$category->title}}</option>
+				@endforeach
+			</select>
+
 			<label>Thumbnail</label>
 			<div class="file-input-wrap cf">
 				@if(!empty($post->thumb)) 

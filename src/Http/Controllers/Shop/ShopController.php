@@ -9,7 +9,7 @@ class ShopController extends Controller
     /**
      * Shop index page.
      *
-     * @return type
+     * @return \Illuminate\Http\Response
      */
     public function getIndex()
     {

@@ -6,6 +6,12 @@ class Shop
 {
     protected $products;
 
+    protected $categories;
+
+    protected $comments;
+
+    protected $orders;
+
     public function __get($key)
     {
         if (empty($this->{$key})) {
@@ -15,8 +21,39 @@ class Shop
         return $this->{$key};
     }
 
+    /**
+     * Get Query Billder for Product
+     * @return type
+     */
     public function products()
     {
-        return $this->products = Product::all();
+        return new Product;
+    }
+
+    /**
+     * Get Query Billder for ProductCategory
+     * @return type
+     */
+    public function categories()
+    {
+        return new ProductCategory;
+    }
+
+    /**
+     * Get Query Billder for ProductComment
+     * @return type
+     */
+    public function comments()
+    {
+        return new ProductComment;
+    }
+
+    /**
+     * Get Query Billder for Order
+     * @return type
+     */
+    public function orders()
+    {
+        return new Order;
     }
 }

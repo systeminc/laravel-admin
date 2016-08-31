@@ -150,6 +150,36 @@ label{
 	}
 }
 
+.comments{
+	li{
+		padding: 10px;
+
+		.tool-title{
+			padding: 0;
+			margin-bottom: 5px;
+		}
+
+		.name{
+			font-weight: bold;
+			margin-bottom: 5px;
+		}
+
+		p{
+			margin-bottom: 10px;
+		}
+
+		.action{
+			text-align: right;
+			padding: 10px;
+			font-style: italic;
+			font-size: 12px;
+		}
+
+		&.disapproved{
+			background-color: rgba(184,0,0,.2);
+		}
+	}
+}
 
 // LOGIN
 .login-page{
@@ -246,13 +276,16 @@ header{
 		    margin-left: 0px;
 		    top: -1px;
 		    position: absolute;
-		    right: -91%;
+		    left: 100%;
 		    background: #292929;
 		    box-sizing: border-box;
+		    border-left: 1px solid #fff;
+		    min-width: 100%;
 
 		    li{
 		    	a{
 		    		color:lighten(@defaultTextColor, 30%);
+		    		white-space: nowrap;
 
 		    		&:hover{
 		    			color: darken(@defaultTextColor, 30%);

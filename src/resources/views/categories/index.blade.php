@@ -2,14 +2,16 @@
 
 @section('admin-content')
 	
-	<h1>Categories</h1>
-	<a href="shop/categories/new" class="button right">Add new</a>
-	<span class="last-update"></span>
+	<div>
+		<a href="blog/categories/new" class="button right">Add new</a>
+		<h1>Categories</h1>
+		<span class="last-update"></span>
+	</div>
 	
 	<ul>
-	@foreach ($categories as &$category)
-		<li><a href="shop/categories/edit/{{$category->id}}"><b>{{$category->title}}</a></li>
-	@endforeach
+		@foreach ($categories as &$category)
+			<li><a href="blog/categories/edit/{{$category->id}}"><b>{{$category->title}}</a></li>
+		@endforeach
 	</ul>
 
 @stop

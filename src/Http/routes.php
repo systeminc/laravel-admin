@@ -18,6 +18,16 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
 
         // blog
         Route::group(['prefix' => 'blog', 'namespace' => 'Blog'], function () {
+            
+            // categories
+            Route::group(['prefix' => 'categories'], function () {
+                Route::post('save/{category_id}', 'CategoriesController@postSave');
+                Route::get('delete/{category_id}', 'CategoriesController@getDelete');
+                Route::get('edit/{category_id}', 'CategoriesController@getEdit');
+                Route::get('new', 'CategoriesController@getNew');
+                Route::get('', 'CategoriesController@getIndex');
+            });
+            
             Route::post('save/{post_id}', 'BlogController@postSave');
             Route::get('disapprove-comment/{comment_id}', 'BlogController@getDisapproveComment');
             Route::get('approve-comment/{comment_id}', 'BlogController@getApproveComment');
@@ -109,11 +119,6 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
             Route::get('edit/{page_id}', 'PagesController@getEdit');
             Route::get('create', 'PagesController@getCreate');
             Route::get('', 'PagesController@getIndex');
-        });
-
-        // layout
-        Route::group(['prefix' => 'layout'], function () {
-            Route::get('', 'LayoutsController@getIndex');
         });
 
         // settings

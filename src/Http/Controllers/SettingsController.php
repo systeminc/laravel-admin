@@ -25,6 +25,11 @@ class SettingsController extends Controller
         return view('admin::settings.index', compact('admins', 'setting'));
     }
 
+    /**
+     * Update admin panel
+     * @param Request $request 
+     * @return \Illuminate\Http\Response
+     */
     public function postUpdate(Request $request)
     {
         $file = $request->file('logo');
@@ -53,6 +58,11 @@ class SettingsController extends Controller
         return back();
     }
 
+    /**
+     * Edit admin 
+     * @param int $admin_id 
+     * @return \Illuminate\Http\Response
+     */
     public function getEdit($admin_id)
     {
         $admin = Admin::find($admin_id);
@@ -87,6 +97,12 @@ class SettingsController extends Controller
         }
     }
 
+    /**
+     * Update admin
+     * @param Request $request 
+     * @param int $admin_id 
+     * @return \Illuminate\Http\Response
+     */
     public function postUpdateAdmin(Request $request, $admin_id)
     {
         $admin = Admin::find($admin_id);
@@ -107,11 +123,20 @@ class SettingsController extends Controller
         return back();
     }
 
+    /**
+     * Add admin
+     * @return \Illuminate\Http\Response
+     */
     public function getAddAdmin()
     {
         return view('admin::settings.create');
     }
 
+    /**
+     * Save admin
+     * @param Request $request 
+     * @return \Illuminate\Http\Response
+     */
     public function postCreateAdmin(Request $request)
     {
         if (empty($request->name) || empty($request->email) || empty($request->password)) {

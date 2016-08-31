@@ -2,6 +2,10 @@
 
 @section('admin-content')
 
+{{ SLA::shop()->orders->create([
+	'billing_name'=> 'maki10',
+	'billing_email' => 'nemanjammaric@gmail.com']) }}
+
 	<h1>Edit {{ $page->title }} page</h1>
 
 	<form action="pages/update/{{ $page->id }}" method="post">
@@ -82,23 +86,18 @@
 		@endif
 	</div>	
 
-	<div>
-		<span class="last-update"></span>
-		<h1>Add Page Element</h1>
-	</div>
+	<form action="pages/new-element/{{ $page->id }}" method="post">
+		{{ csrf_field() }}
 
-		<form action="pages/new-element/{{ $page->id }}" method="post">
-			{{ csrf_field() }}
+		<select name="page_element_type_id" class="element-type">
+			<option value="0">Add element</option>
 
-			<select name="page_element_type_id" class="element-type">
-				<option value="0">Add element</option>
-
-				@foreach ($element_types as $element_type)
-					<option value="{{ $element_type->id }}">{{ $element_type->title }}</option>
-				@endforeach
-			</select>
-		
-		</form>
+			@foreach ($element_types as $element_type)
+				<option value="{{ $element_type->id }}">{{ $element_type->title }}</option>
+			@endforeach
+		</select>
+	
+	</form>
 	
 <script>
 	

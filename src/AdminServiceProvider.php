@@ -32,7 +32,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('SLA', 'SystemInc\LaravelAdmin\SLA');
+        $this->app->singleton('sla', 'SystemInc\LaravelAdmin\SLA');
 
         $this->app->singleton('command.laravel-admin.instal', function () {
             return new Console\InstalCommand();

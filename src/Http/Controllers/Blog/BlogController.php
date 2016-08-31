@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Image;
 use Storage;
+use SystemInc\LaravelAdmin\BlogCategory;
 use SystemInc\LaravelAdmin\BlogPost;
 use SystemInc\LaravelAdmin\BlogPostComment;
 
@@ -50,7 +51,9 @@ class BlogController extends Controller
     {
         $post = BlogPost::find($post_id);
 
-        return view('admin::blog.post', compact('post'));
+        $categories = BlogCategory::all();
+
+        return view('admin::blog.post', compact('post', 'categories'));
     }
 
     /**
