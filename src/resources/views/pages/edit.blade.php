@@ -2,10 +2,6 @@
 
 @section('admin-content')
 
-{{ SLA::shop()->orders->create([
-	'billing_name'=> 'maki10',
-	'billing_email' => 'nemanjammaric@gmail.com']) }}
-
 	<h1>Edit {{ $page->title }} page</h1>
 
 	<form action="pages/update/{{ $page->id }}" method="post">

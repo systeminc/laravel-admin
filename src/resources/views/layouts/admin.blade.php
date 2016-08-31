@@ -2,12 +2,12 @@
 
 @section('styles')
 	@parent
-	<link rel="stylesheet" type="text/css" href="css/admin.css">
+	<link rel="stylesheet" type="text/css" href="css/admin.css?v={{ File::lastModified(base_path('vendor/systeminc/laravel-admin/src/resources/assets/dist/css/admin.css')) }}">
 @append
 
 @section('scripts')
 	@parent
-	<script src="scripts/admin.js"></script>
+	<script src="scripts/admin.js?v={{ File::lastModified(base_path('vendor/systeminc/laravel-admin/src/resources/assets/dist/js/admin.js'))}} "></script>
 	@yield('custom-script')
 @append
 

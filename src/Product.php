@@ -36,11 +36,6 @@ class Product extends Model
         return $this->belongsTo('SystemInc\LaravelAdmin\ProductCategory', 'product_category_id');
     }
 
-    public function models()
-    {
-        // return $this->belongsToMany(HddModel::class, 'products_hdd_models');
-    }
-
     public function gallery()
     {
         return $this->belongsTo('SystemInc\LaravelAdmin\Gallery', 'gallery_id');
