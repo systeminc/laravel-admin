@@ -12,9 +12,9 @@ class BlogCategoryValidation
     public static function rules()
     {
         return [
-        'title'       => 'required',
+        'title'        => 'required',
         'subtitle'     => 'required',
-        'description' => 'required',
+        'description'  => 'required',
         ];
     }
 

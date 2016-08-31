@@ -5,9 +5,9 @@ namespace SystemInc\LaravelAdmin;
 class Blog
 {
     protected $posts;
-    
+
     protected $comments;
-    
+
     protected $categories;
 
     public function __get($key)
@@ -19,30 +19,33 @@ class Blog
         return $this->{$key};
     }
 
-	/**
-	 * Get Query Billder for BlogPost
-	 * @return type
-	 */
+    /**
+     * Get Query Billder for BlogPost.
+     *
+     * @return type
+     */
     public function posts()
     {
-        return new BlogPost;
-    }    
+        return new BlogPost();
+    }
 
     /**
-     * Get Query Billder for BlogPostComment
+     * Get Query Billder for BlogPostComment.
+     *
      * @return type
      */
     public function comments()
     {
-        return new BlogPostComment;
-    }    
+        return new BlogPostComment();
+    }
 
     /**
-     * Get Query Billder for BlogCategory
+     * Get Query Billder for BlogCategory.
+     *
      * @return type
      */
     public function categories()
     {
-        return new BlogCategory;
+        return new BlogCategory();
     }
 }

@@ -72,8 +72,7 @@ class CategoriesController extends Controller
 
         if ($category_id == 'new') {
             $category = new BlogCategory();
-        } 
-        else {
+        } else {
             $category = BlogCategory::find($category_id);
         }
 
