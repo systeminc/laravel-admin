@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lead extends Model
 {
-	use SoftDeletes;
+    use SoftDeletes;
 
     protected $fillable = ['data'];
 
-	protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at'];
 }

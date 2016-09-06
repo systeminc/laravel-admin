@@ -47,10 +47,10 @@ class LeadsController extends Controller
 
     public function postSettings(Request $request)
     {
-       $data = [
-            'mailer_name'  => !empty($request->mailer_name) ? $request->mailer_name : null,
+        $data = [
+            'mailer_name'        => !empty($request->mailer_name) ? $request->mailer_name : null,
             'thank_you_subject'  => !empty($request->thank_you_subject) ? $request->thank_you_subject : null,
-            'thank_you_body'  => !empty($request->thank_you_body) ? $request->thank_you_body : null,
+            'thank_you_body'     => !empty($request->thank_you_body) ? $request->thank_you_body : null,
         ];
 
         $setting = LeadSetting::first();
@@ -76,7 +76,6 @@ class LeadsController extends Controller
         if (!is_array($request->receivers)) {
             return back()->with(['error' => 'Please select receivers']);
         } else {
-
             if (empty($request->subject) || empty($request->body)) {
                 return back()->with(['error' => 'Please fill all message data']);
             }
@@ -92,9 +91,9 @@ class LeadsController extends Controller
                 });
 
                 LeadMailed::create([
-                    'email' => $receiver,
+                    'email'   => $receiver,
                     'subject' => $request->subject,
-                    'body' => $request->body,
+                    'body'    => $request->body,
                 ]);
             }
 
