@@ -105,6 +105,18 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
             Route::post('{type}/delete-gallery-images/{id}', 'AjaxController@postDeleteGalleryImages');
         });
 
+        // leads
+        Route::group(['prefix' => 'leads'], function () {
+            Route::get('edit-email/{email_id}', 'LeadsController@getEditEmail');
+            Route::post('email-leads', 'LeadsController@postEmail');
+            Route::get('email-leads', 'LeadsController@getEmail');
+            Route::post('settings', 'LeadsController@postSettings');
+            Route::get('settings', 'LeadsController@getSettings');
+            Route::get('delete/{lead_id}', 'LeadsController@getDelete');
+            Route::get('edit/{lead_id}', 'LeadsController@getEdit');
+            Route::get('', 'LeadsController@getIndex');
+        });
+
         // pages
         Route::group(['prefix' => 'pages'], function () {
             Route::any('update-element/{page_id}', 'PagesController@postUpdateElement');

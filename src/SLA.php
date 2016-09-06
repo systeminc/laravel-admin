@@ -47,6 +47,16 @@ class SLA
     }
 
     /**
+     * Instance of Subscribe.
+     *
+     * @return type
+     */
+    public function lead()
+    {
+        return new Subscribe();
+    }
+
+    /**
      * Get file from storage(Image, PDF,...).
      *
      * @param string $filename
