@@ -68,7 +68,8 @@
 
 	<div>
 		<span class="last-update"></span>
-		<h1>Added Elements</h1>
+		<h1>Elements</h1>
+
 
 		@if (!empty($elements->first()))
 			
@@ -94,6 +95,25 @@
 		</select>
 	
 	</form>
+
+	<div>
+		<span class="last-update"></span>
+		<h1>Subpages</h1>
+
+		@if (!empty($page->child($page->id)))
+			
+			<ul class="sortable cf" data-link="ajax/{{ $page->id }}/change-subpages-order">
+				@foreach ($page->child($page->id) as $key => $child)
+					<li class="items-order" data-id="{{$child['id']}}">
+						<a href="pages/edit/{{$child['id']}}"><b>{{ ucfirst($child['title']) }} - {{$child['uri_key']}}</a>
+					</li>
+				@endforeach
+			</ul>
+		@else
+			<p>No subpages</p>
+		@endif
+	</div>	
+
 	
 <script>
 	

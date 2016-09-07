@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Storage;
 use SystemInc\LaravelAdmin\Gallery;
 use SystemInc\LaravelAdmin\GalleryImage;
+use SystemInc\LaravelAdmin\Page;
 
 class AjaxController extends Controller
 {
@@ -49,6 +50,25 @@ class AjaxController extends Controller
         Storage::delete($image->source, $image->thumb_source, $image->mobile_source);
 
         $image->delete();
+
+        return 'Success';
+    }
+
+    /**
+     * Change subpage order
+     * @param Request $request 
+     * @param int $page_id 
+     * @return \Illuminate\Http\Response
+     */
+    public function postChangeSubpagesOrder(Request $request, $page_id)
+    {
+        foreach ($request->order as $order_number => $id) {
+            $subpage = Page::where(['parent_id' => $page_id, 'id' => $id])->first();
+
+            $subpage->order_number = $order_number;
+
+            $subpage->save();
+        }
 
         return 'Success';
     }

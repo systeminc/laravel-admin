@@ -101,6 +101,7 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
 
         // ajax
         Route::group(['prefix' => 'ajax'], function () {
+            Route::post('{page_id}/change-subpages-order', 'AjaxController@postChangeSubpagesOrder');
             Route::post('{type}/change-gallery-order', 'AjaxController@postChangeGalleryOrder');
             Route::post('{type}/delete-gallery-images/{id}', 'AjaxController@postDeleteGalleryImages');
         });
