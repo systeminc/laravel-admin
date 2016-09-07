@@ -55,9 +55,11 @@ class AjaxController extends Controller
     }
 
     /**
-     * Change subpage order
-     * @param Request $request 
-     * @param int $page_id 
+     * Change subpage order.
+     *
+     * @param Request $request
+     * @param int     $page_id
+     *
      * @return \Illuminate\Http\Response
      */
     public function postChangeSubpagesOrder(Request $request, $page_id)
