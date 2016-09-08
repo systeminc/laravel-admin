@@ -48,10 +48,10 @@ class Page extends Model
         }
 
         return [
-            'id' => $this->id, 
-            'title' => $this->title, 
-            'uri_key' => $this->uri_key, 
-            'subpages' => $tree, 
+            'id'       => $this->id,
+            'title'    => $this->title,
+            'uri_key'  => $this->uri_key,
+            'subpages' => $tree,
             ];
     }
 
@@ -72,4 +72,4 @@ class Page extends Model
 
         return $tree;
     }
-}   
+}
