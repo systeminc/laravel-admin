@@ -160,12 +160,14 @@ class PagesController extends Controller
             return back()->withInput()->withErrors($validation);
         }
 
+        $title = preg_replace('/[^a-zA-Z0-9_]/', '', $request->title);
+
         // CHECK IS FILE
         if ($request->page_element_type_id == 3) {
             $file = $request->file('content');
 
             if ($file && $file->isValid()) {
-                $dirname = 'products/'.$request->key.'/'.$request->title.'/'.$file->getClientOriginalName();
+                $dirname = 'products/'.$request->key.'/'.$title.'/'.$file->getClientOriginalName();
 
                 Storage::put($dirname, file_get_contents($file));
 
@@ -177,7 +179,7 @@ class PagesController extends Controller
         $element = new PageElement();
 
         $element->fill([
-            'key'                  => $request->key.'.'.$request->title,
+            'key'                  => $request->key.'.'.$title,
             'title'                => $request->title,
             'content'              => $content,
             'page_id'              => $page_id,
