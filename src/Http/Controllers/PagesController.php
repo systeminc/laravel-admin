@@ -61,7 +61,7 @@ class PagesController extends Controller
         $page = new Page();
         $page->fill($data);
 
-        $page->elements_prefix = $this->sanitizeElementsPrefix($request->elements_prefix);
+        $page->elements_prefix = $this->sanitizeElements($request->elements_prefix);
         $page->uri_key = $this->sanitizeUri($request->uri_key);
 
         $page->save();
