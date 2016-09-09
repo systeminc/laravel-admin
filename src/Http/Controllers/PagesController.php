@@ -95,7 +95,7 @@ class PagesController extends Controller
 
         //CHECK IT IS RENAMED ELEMENT PREFIX AND CHANGE ALL PREFIX FOR PAGE ELEMENTS
         if ($page->elements_prefix !== $request->elements_prefix) {
-            foreach (PageElement::get() as $element) {
+            foreach (PageElement::wherePageId($page->id)->get() as $element) {
                 $element_key = explode('.', $element->key);
 
                 $element->key = $elements_prefix.'.'.$element_key[1];
