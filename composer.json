@@ -31,6 +31,6 @@
         "post-update-cmd": [
             "php artisan laravel-admin:update"
         ]
-    },
+    }
 
 }
