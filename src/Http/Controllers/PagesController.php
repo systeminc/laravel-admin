@@ -58,12 +58,12 @@ class PagesController extends Controller
         if ($validation->fails()) {
             return back()->withInput()->withErrors($validation);
         }
-        $page = new Page;
+        $page = new Page();
         $page->fill($data);
 
         $page->elements_prefix = $this->sanitizeElementsPrefix($request->elements_prefix);
         $page->uri_key = $this->sanitizeUri($request->uri_key);
-        
+
         $page->save();
 
         return redirect($request->segment(1).'/pages/edit/'.$page->id);
