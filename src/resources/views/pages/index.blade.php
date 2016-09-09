@@ -10,7 +10,7 @@
 	
 	<ul>
 		@foreach ($pages as &$page)
-			<li><a href="pages/edit/{{$page->id}}"><b>{{$page->title}}</a></li>
+			<li><a href="pages/edit/{{$page->id}}" {{ empty($page->parent_id) ?: "class='subpage'"}}><b>{{$page->title}}</a></li>
 		@endforeach
 	</ul>
 

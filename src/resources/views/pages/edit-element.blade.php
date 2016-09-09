@@ -16,9 +16,12 @@
 			    </div>
 			@endif 
 		
+			<label>Key</label>
+			<input type="text" value="{{ $element->key }}" disabled>
+		
 			<label>Title</label>
 			<input type="text" name="title" placeholder="Page title" value="{{ $element->title or old('title') }}">
-		
+
 			@if ($errors->first('content'))
 			    <div class="alert alert-error no-hide">
 			        <span class="help-block">

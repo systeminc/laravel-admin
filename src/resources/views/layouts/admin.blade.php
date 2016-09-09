@@ -28,6 +28,7 @@
 				<li><a href="galleries">Galleries</a></li>
 				<li><a href="pages">Pages</a></li>
 				<li><a href="leads">Leads</a></li>
+				<li><a href="locations">Locations</a></li>
 				<li><a href="shop">Shop</a>
 					<ul class="submenu">
 						<li><a href="shop/categories">Categories</a></li>

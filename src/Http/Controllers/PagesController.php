@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Storage;
 use SystemInc\LaravelAdmin\Page;
+use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 use SystemInc\LaravelAdmin\PageElement;
 use SystemInc\LaravelAdmin\PageElementType;
 use SystemInc\LaravelAdmin\Validations\PageElementValidation;
@@ -14,6 +15,7 @@ use Validator;
 
 class PagesController extends Controller
 {
+    use HelpersTrait;
     /**
      * Pages controller index page.
      *
@@ -31,9 +33,11 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getCreate()
+    public function getCreate($page_id = false)
     {
-        return view('admin::pages.create');
+        $pages = Page::all();
+
+        return view('admin::pages.create', compact('pages', 'page_id'));
     }
 
     /**
@@ -53,7 +57,11 @@ class PagesController extends Controller
         if ($validation->fails()) {
             return back()->withInput()->withErrors($validation);
         }
-        $page = Page::create($data);
+        $page = Page::fill($data);
+
+        $page->elements_prefix = $this->sanitizeElementsPrefix($request->elements_prefix);
+        $page->uri_key = $this->sanitizeUri($request->uri_key);;
+        $page->save();
 
         return redirect($request->segment(1).'/pages/edit/'.$page->id);
     }
@@ -71,14 +79,34 @@ class PagesController extends Controller
         $data = $request->all();
 
         // validation
-        $validation = Validator::make($data, PageValidation::rules(), PageValidation::messages());
+        $validation = Validator::make($data, PageValidation::rules($page_id), PageValidation::messages());
 
         if ($validation->fails()) {
             return back()->withInput()->withErrors($validation);
         }
         $data['parent_id'] = !empty($request->parent_id) ? $request->parent_id : null;
 
-        $page = Page::find($page_id)->update($data);
+        $page = Page::find($page_id);
+
+        $elements_prefix = $this->sanitizeElements($request->elements_prefix);
+
+        //CHECK IT IS RENAMED ELEMENT PREFIX AND CHANGE ALL PREFIX FOR PAGE ELEMENTS
+        if ($page->elements_prefix !== $request->elements_prefix) {   
+
+            foreach (PageElement::get() as $element) {
+                $element_key = explode('.', $element->key);
+
+                $element->key = $elements_prefix.'.'.$element_key[1];
+
+                PageElement::find($element->id)->update($element->toArray());
+            }
+        }
+        $page->fill($data);
+
+        $page->elements_prefix = $elements_prefix;
+        $page->uri_key = $this->sanitizeUri($request->uri_key);
+
+        $page->save();
 
         return back();
     }
@@ -160,14 +188,14 @@ class PagesController extends Controller
             return back()->withInput()->withErrors($validation);
         }
 
-        $title = preg_replace('/[^a-zA-Z0-9_]/', '', $request->title);
+        $title = $this->sanitizeElements($request->title);
 
         // CHECK IS FILE
         if ($request->page_element_type_id == 3) {
             $file = $request->file('content');
 
             if ($file && $file->isValid()) {
-                $dirname = 'products/'.$request->key.'/'.$title.'/'.$file->getClientOriginalName();
+                $dirname = 'pages/'.$request->elements_prefix.'/'.$title.'/'.$file->getClientOriginalName();
 
                 Storage::put($dirname, file_get_contents($file));
 
@@ -179,8 +207,8 @@ class PagesController extends Controller
         $element = new PageElement();
 
         $element->fill([
-            'key'                  => $request->key.'.'.$title,
-            'title'                => $request->title,
+            'key'                  => $request->elements_prefix.'.'.$title,
+            'title'                => $title,
             'content'              => $content,
             'page_id'              => $page_id,
             'page_element_type_id' => $request->page_element_type_id,
@@ -243,12 +271,13 @@ class PagesController extends Controller
         }
 
         $element = PageElement::find($element_id);
+        $title = $this->sanitizeElements($request->title);
 
         if (empty($element->content) && $request->file('content')) {
             $file = $request->file('content');
 
             if ($file->isValid()) {
-                $dirname = 'products/'.$element->page->title.'/'.$request->title.'/'.$file->getClientOriginalName();
+                $dirname = 'pages/'.$element->page->elements_prefix.'/'.$title.'/'.$file->getClientOriginalName();
 
                 Storage::put($dirname, file_get_contents($file));
 
@@ -261,8 +290,8 @@ class PagesController extends Controller
         }
 
         $element->update([
-            'key'     => $element->page->title.'.'.$request->title,
-            'title'   => $request->title,
+            'key'     => $element->page->elements_prefix.'.'.$title,
+            'title'   => $title,
             'content' => !empty($content) ? $content : $request->content,
         ]);
 

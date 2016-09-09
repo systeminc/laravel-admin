@@ -99,6 +99,16 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
             Route::get('', 'GalleriesController@getIndex');
         });
 
+        // locations
+        Route::group(['prefix' => 'locations'], function () {
+            Route::post('save', 'LocationsController@postSave');
+            Route::post('update/{location_id}', 'LocationsController@postUpdate');
+            Route::get('delete/{location_id}', 'LocationsController@getDelete');
+            Route::get('edit/{location_id}', 'LocationsController@getEdit');
+            Route::get('create', 'LocationsController@getCreate');
+            Route::get('', 'LocationsController@getIndex');
+        });
+
         // ajax
         Route::group(['prefix' => 'ajax'], function () {
             Route::post('{page_id}/change-subpages-order', 'AjaxController@postChangeSubpagesOrder');
@@ -130,6 +140,7 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
             Route::get('edit-element/{element_id}', 'PagesController@getEditElement');
             Route::get('delete/{page_id}', 'PagesController@getDelete');
             Route::get('edit/{page_id}', 'PagesController@getEdit');
+            Route::get('create/{page_id}', 'PagesController@getCreate');
             Route::get('create', 'PagesController@getCreate');
             Route::get('', 'PagesController@getIndex');
         });

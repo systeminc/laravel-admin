@@ -4,6 +4,12 @@
 
 	<h1>Edit {{ $page->title }} page</h1>
 
+	@if (session('error'))
+	    <span class="alert alert-error">
+	        {{ session('error') }}
+	    </span>
+	@endif
+	
 	<form action="pages/update/{{ $page->id }}" method="post">
 		{{ csrf_field() }}
 
@@ -26,7 +32,18 @@
 		    </div>
 		@endif 
 
-		<label>URI</label>
+		@if ($errors->first('elements_prefix'))
+		    <div class="alert alert-error no-hide">
+		        <span class="help-block">
+		            <strong>{{ $errors->first('elements_prefix') }}</strong>
+		        </span>
+		    </div>
+		@endif 
+
+		<label>Elements Prefix</label>
+		<input type="text" name="elements_prefix" placeholder="Elements Prefix" value="{{ $page->elements_prefix }}">
+
+		<label>URI key</label>
 		<input type="text" name="uri_key" placeholder="Url id" value="{{ $page->uri_key }}">
 
 		<label>Keyword</label>
@@ -69,6 +86,7 @@
 	<div>
 		<span class="last-update"></span>
 		<h1>Elements</h1>
+		<span class="last-update"></span>
 
 
 		@if (!empty($elements->first()))
@@ -98,7 +116,9 @@
 
 	<div>
 		<span class="last-update"></span>
+		<a href="pages/create/{{ $page->id }}" class="button right">Add subpage</a>
 		<h1>Subpages</h1>
+		<span class="last-update"></span>
 
 		@if (!empty($page->child($page->id)))
 			

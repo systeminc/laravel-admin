@@ -37,6 +37,16 @@ class SLA
     }
 
     /**
+     * Get page element
+     * @param string $key 
+     * @return type
+     */
+    public function element($key)
+    {
+        return PageElement::whereKey($key)->first();
+    }
+
+    /**
      * Instance of Gallery.
      *
      * @return type

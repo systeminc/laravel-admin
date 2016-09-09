@@ -3,6 +3,12 @@
 @section('admin-content')
 
 	<h1>Create Page</h1>
+	
+	@if (session('error'))
+	    <span class="alert alert-error">
+	        {{ session('error') }}
+	    </span>
+	@endif
 
 	<form action="pages/save" method="post">
 		{{ csrf_field() }}
@@ -16,7 +22,18 @@
 		@endif 
 
 		<label>Title</label>
-		<input type="text" name="title" placeholder="Page title">
+		<input type="text" name="title" placeholder="Page title" value="{{ old('title') }}">
+
+		@if ($errors->first('elements_prefix'))
+		    <div class="alert alert-error no-hide">
+		        <span class="help-block">
+		            <strong>{{ $errors->first('elements_prefix') }}</strong>
+		        </span>
+		    </div>
+		@endif 
+
+		<label>Elements Prefix</label>
+		<input type="text" name="elements_prefix" placeholder="Elements Prefix" value="{{ old('elements_prefix') }}">
 
 		@if ($errors->first('uri_key'))
 		    <div class="alert alert-error no-hide">
@@ -26,11 +43,11 @@
 		    </div>
 		@endif 
 
-		<label>URI</label>
-		<input type="text" name="uri_key" placeholder="Url id">
+		<label>URI key</label>
+		<input type="text" name="uri_key" placeholder="Url id" value="{{ old('uri_key') }}">
 
 		<label>Keyword</label>
-		<input type="text" name="keyword" placeholder="Keyword">
+		<input type="text" name="keyword" placeholder="Keyword" value="{{ old('keyword') }}">
 
 		@if ($errors->first('description'))
 		    <div class="alert alert-error no-hide">
@@ -41,7 +58,21 @@
 		@endif 
 
 		<label>Description</label>
-		<textarea name="description" class="htmlEditorTools" rows="5" placeholder="Description"></textarea>
+		<textarea name="description" class="htmlEditorTools" rows="5" placeholder="Description">{{ old('description') }}</textarea>
+		
+		<div>
+			<label>Parent page</label>
+
+			<select name="parent_id">
+				<option value="">Choose parent page</option>
+
+				@foreach ($pages as $key => $parent)
+					
+					<option value="{{ $parent->id }}" {{ $parent->id == $page_id ? 'selected="selected"' : '' }}>{{ $parent->title }}</option>
+					
+				@endforeach
+			</select>
+		</div>
 
 		<input type="submit" value="Create">
 	</form>
