@@ -4,8 +4,8 @@ namespace SystemInc\LaravelAdmin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Storage;
 use Image;
+use Storage;
 use SystemInc\LaravelAdmin\Location;
 use SystemInc\LaravelAdmin\Validations\LocationValidation;
 use Validator;
@@ -52,7 +52,7 @@ class LocationsController extends Controller
             return back()->withInput()->withErrors($validation);
         }
 
-        $location = new Location;
+        $location = new Location();
         $location->fill($data);
 
         $image = $request->file('image');

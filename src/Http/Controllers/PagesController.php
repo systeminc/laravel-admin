@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Storage;
 use SystemInc\LaravelAdmin\Page;
-use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 use SystemInc\LaravelAdmin\PageElement;
 use SystemInc\LaravelAdmin\PageElementType;
+use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 use SystemInc\LaravelAdmin\Validations\PageElementValidation;
 use SystemInc\LaravelAdmin\Validations\PageValidation;
 use Validator;
@@ -16,6 +16,7 @@ use Validator;
 class PagesController extends Controller
 {
     use HelpersTrait;
+
     /**
      * Pages controller index page.
      *
@@ -60,7 +61,7 @@ class PagesController extends Controller
         $page = Page::fill($data);
 
         $page->elements_prefix = $this->sanitizeElementsPrefix($request->elements_prefix);
-        $page->uri_key = $this->sanitizeUri($request->uri_key);;
+        $page->uri_key = $this->sanitizeUri($request->uri_key);
         $page->save();
 
         return redirect($request->segment(1).'/pages/edit/'.$page->id);
@@ -91,8 +92,7 @@ class PagesController extends Controller
         $elements_prefix = $this->sanitizeElements($request->elements_prefix);
 
         //CHECK IT IS RENAMED ELEMENT PREFIX AND CHANGE ALL PREFIX FOR PAGE ELEMENTS
-        if ($page->elements_prefix !== $request->elements_prefix) {   
-
+        if ($page->elements_prefix !== $request->elements_prefix) {
             foreach (PageElement::get() as $element) {
                 $element_key = explode('.', $element->key);
 
