@@ -12,9 +12,9 @@ class LocationValidation
     public static function rules()
     {
         return [
-        'title'       => 'required',
+        'title'        => 'required',
         'latitude'     => 'required',
-        'longitude' => 'required',
+        'longitude'    => 'required',
         ];
     }
 

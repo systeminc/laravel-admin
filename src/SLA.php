@@ -37,8 +37,10 @@ class SLA
     }
 
     /**
-     * Get page element
-     * @param string $key 
+     * Get page element.
+     *
+     * @param string $key
+     *
      * @return type
      */
     public function element($key)

@@ -9,13 +9,13 @@ class PageValidation
      *
      * @return array
      */
-    public static function rules($page_id = "")
+    public static function rules($page_id = '')
     {
         return [
-        'title'       => 'required',
-        'elements_prefix'       => 'required|unique:pages,elements_prefix,'. $page_id,
-        'uri_key'     => 'required',
-        'description' => 'required',
+        'title'                 => 'required',
+        'elements_prefix'       => 'required|unique:pages,elements_prefix,'.$page_id,
+        'uri_key'               => 'required',
+        'description'           => 'required',
         ];
     }
 
