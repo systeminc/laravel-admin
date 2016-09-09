@@ -208,7 +208,7 @@ class PagesController extends Controller
 
         $element->fill([
             'key'                  => $request->elements_prefix.'.'.$title,
-            'title'                => $title,
+            'title'                => $request->title,
             'content'              => $content,
             'page_id'              => $page_id,
             'page_element_type_id' => $request->page_element_type_id,
@@ -291,7 +291,7 @@ class PagesController extends Controller
 
         $element->update([
             'key'     => $element->page->elements_prefix.'.'.$title,
-            'title'   => $title,
+            'title'   => $request->title,
             'content' => !empty($content) ? $content : $request->content,
         ]);
 
