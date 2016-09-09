@@ -26,21 +26,23 @@
 		<label for="description">Description:</label>
 		<textarea name="description" class="htmlEditor" rows="15" data-page-name="description" data-page-id="new" id="editor-1">{{ old('description') }}</textarea>
 				
-		<div class="input-wrap proposal-address-input-wrap">
+		<div class="input-wrap">
 			<label>Adress:</label>
 			<input type="text" name="address" placeholder="Address for finding location" id="address" value="{{ old('address') }}"/>
 
-			<div id="locate" class="button dark">Locate</div>
+		<div id="locate" class="button dark">Locate</div>
 
-			<input type="hidden" name="latitude" placeholder="latitude" id="latitude" />
-			<input type="hidden" name="longitude" placeholder="longitude" id="longitude" />
-			<input type="hidden" name="zoom" id="zoom" placeholder="zoom" value="12"/>
-			<input type="hidden" name="image" id="mapImage"/>
-		</div>
-
-		<div class="static-map-wrap" style="height: 200px;">
+		<div class="static-map-wrap" style="height: auto;z-index: 1;">
 			<div id="map" style="width: 100%;min-height: 300px;margin-bottom: 24px;"></div>								
 		</div>
+
+		<label for="latitude">Latitude:</label>
+			<input type="text" name="latitude" placeholder="Latitude" id="latitude" />
+		<label for="longitude">Longitude:</label>
+			<input type="text" name="longitude" placeholder="Longitude" id="longitude" />
+
+		<input type="hidden" name="zoom" id="zoom" placeholder="zoom" value=""/>
+		<input type="hidden" id="mapImage"/>
 
 		<label>Image</label>
 		<div class="file-input-wrap cf">
@@ -56,7 +58,7 @@
 		<input type="submit" value="Add">
 	</form>
 
-<script src='https://maps.googleapis.com/maps/api/js'></script>
+<script src='https://maps.googleapis.com/maps/api/js{{ !empty(config('laravel-admin.google_map_api')) ? '?key='.config('laravel-admin.google_map_api') : ''}}'></script>
 <script>
 
 var map;
@@ -74,24 +76,15 @@ function initMap() {
 		scrollwheel: false,
 	});
 
-	@if (1!=1)
-		var marker = new google.maps.Marker({
-			// icon: '../images/map-marker-orange.png',
-			position: {lat: , lng:  },
-			map: map,
-		});
-
-		markers.push(marker);
-	@endif
-
 	document.getElementById('locate').addEventListener('click', function() {
     	var address = document.getElementById("address").value;
 		codeAddress(address,'true',map);
-		});
+		map.setZoom(12);
 
-		map.addListener('zoom_changed', function(event) {
+	});
+
+	map.addListener('zoom_changed', function(event) {
 	    $('#zoom').val(map.getZoom());
-	    var zoom = $('#zoom').val(map.getZoom()).val();
 
 	    setStaticMap($('#latitude').val(), $('#longitude').val(), map.getZoom());
 	});
@@ -143,55 +136,9 @@ deleteMarkers = function() {
 // get lat and lng from  address
 geocoder = new google.maps.Geocoder();
 
-
 $('#locate').click(function(){
 	var address = document.getElementById("address").value;
 	codeAddress(address,'true',map);
 })
-
-
-$('#update-offer').click(function(e){
-	e.preventDefault();
-	if( $('#latitude').val() == '' ){
-		var address = document.getElementById("address").value;
-		codeAddress(address,'true');
-
-
-		setTimeout(function(){
-			var interval = setInterval(function(){
-				if( $('#latitude').val() != '' ){
-					$(".form").submit();
-					clearInterval(interval);
-				}
-			},100)
-
-		},500)
-		
-	}else{
-		$(".form").submit();
-	}
-
-})
-
-
-if( $('#latitude').val() == "" && $('#address').val() != '' ){
-	var address = document.getElementById("address").value;
-	codeAddress(address,'true');
-	
-	setTimeout(function(){
-		var interval = setInterval(function(){
-			if( $('#latitude').val() != '' ){
-				$.post('administration/ajax/update-location', { image: $('#mapImage').val(), latitude: $('#latitude').val() , longitude: $('#longitude').val(), zoom: $('#zoom').val()}, function(data) {
-					
-				});
-				clearInterval(interval);
-			}
-		},100)
-
-	},500)
-
-
-
-}
 </script>
 @stop
