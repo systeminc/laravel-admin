@@ -66,7 +66,7 @@ class UpdateCommand extends Command
 
         foreach (config('laravel-admin') as $key => $value) {
             $config_file = str_replace($config[$key], $value, $config_file);
-        
+
             //CHECK IS CONFIG MERGE WITH CLIENT
             if (!isset($client_config[$key]) && !$config_changed) {
                 $config_changed = true;
@@ -79,7 +79,7 @@ class UpdateCommand extends Command
         if ($config_changed) {
             $this->info('Config file ("config/laravel-admin.php") is merged, please see changes for new feature');
         }
-        
+
         $this->line('Updating Configuration Done!');
         $this->line('');
         $this->line('***');

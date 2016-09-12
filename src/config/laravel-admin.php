@@ -34,13 +34,13 @@ return [
     */
 
     'modules' => [
-        'blog' => true,
+        'blog'      => true,
         'galleries' => true,
-        'pages' => true,
-        'leads' => true,
+        'pages'     => true,
+        'leads'     => true,
         'locations' => true,
-        'shop' => true,
-        'settings' => true,
+        'shop'      => true,
+        'settings'  => true,
     ],
 
 ];
