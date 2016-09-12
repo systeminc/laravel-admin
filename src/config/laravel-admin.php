@@ -24,4 +24,23 @@ return [
 
     'google_map_api' => '',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Display modules
+    |--------------------------------------------------------------------------
+    |
+    | Set modules you want to show
+    |
+    */
+
+    'modules' => [
+        'blog' => true,
+        'galleries' => true,
+        'pages' => true,
+        'leads' => true,
+        'locations' => true,
+        'shop' => true,
+        'settings' => true,
+    ],
+
 ];

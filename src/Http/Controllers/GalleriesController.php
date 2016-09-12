@@ -12,6 +12,13 @@ use SystemInc\LaravelAdmin\GalleryImage;
 
 class GalleriesController extends Controller
 {
+    public function __construct()
+    {
+        if (config('laravel-admin.modules.galleries') == false) {
+            return redirect(config('laravel-admin.route_prefix'))->with('error', 'This modules is disabled in config/laravel-admin.php')->send();
+        }
+    }
+
     /**
      * Show all galleries.
      *
