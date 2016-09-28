@@ -4,7 +4,7 @@
 
 	<div class="admin-header">
 		<h1>Edit {{ $admin->name }}</h1>
-		<span class="last-update">Last change: 06 Sep, 2016, 11:38h</span>
+		<span class="last-update">Last change: {{ $admin->updated_at->tz('CET')->format('d M Y, H:i\h') }}</span>
 		<div class="button-wrap">
 			<a href="settings/add-admin" class="button right">Add Admin</a>
 		</div>

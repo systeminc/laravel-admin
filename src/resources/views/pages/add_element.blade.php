@@ -4,6 +4,7 @@
 
 	<div class="admin-header">
 		<h1>Add element in {{ $page->title }} page</h1>	
+		<span class="last-update"></span>
 	</div>
 
 	<div class="admin-content">
