@@ -67,7 +67,7 @@ class OrdersController extends Controller
         $order = Order::find($order_id);
         $old_order_status_id = $order->order_status_id;
 
-        if ( $request->invoice_number ) {
+        if ($request->invoice_number) {
             $order_with_same_invoice_number = Order::whereRaw('YEAR(created_at)='.$order->created_at->format('Y'))
                 ->where('invoice_number', $request->invoice_number)
                 ->where('id', '<>', $order->id)
@@ -76,7 +76,6 @@ class OrdersController extends Controller
             if ($order_with_same_invoice_number) {
                 return back()->with('error', 'Invoice number already taken by Order '.$order_with_same_invoice_number->id);
             }
-
         }
 
         $order->update($request->all());
