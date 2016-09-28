@@ -67,8 +67,8 @@ class PagesController extends Controller
         }
         $page = new Page();
         $page->fill($data);
-        
-        if( empty($request->parent_id) ){
+
+        if (empty($request->parent_id)) {
             $page->parent_id = null;
         }
 
