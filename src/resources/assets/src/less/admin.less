@@ -3,8 +3,23 @@
 
 @successColor: rgba(126, 211, 33, 0.3);
 @errorColor: rgba(242, 68, 27, 0.3);
-@defaultTextColor: #555;
 @red: #E91A40;
+@defaultTextColor: #4A4A4A;
+@hover-color: #7ED321;
+@white: #fff;
+
+body{
+	font-family: 'Open Sans', sans-serif;
+	background: @white;
+}
+
+.loader{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: @white;
+	z-index: 10;
+}
 
 .right{
 	float: right;
@@ -16,7 +31,6 @@
 
 .button-right{
 	border: none;
-	border-radius: 5px;
 	padding: 10px;
 	color: @defaultTextColor;
 	background: #ddd;
@@ -40,8 +54,10 @@
 	box-sizing: border-box;
 	padding: 10px;
 	margin-bottom: 20px;
-	border: 1px solid #ddd;
-	border-radius: 5px;
+	border: 1px solid lighten(@defaultTextColor, 62.5%);
+	border-radius: 0;
+	font-family: 'Open Sans', sans-serif;
+	
 }
 
 .maximum-width{
@@ -50,20 +66,80 @@
 
 .button{
 	border: none;
-	border-radius: 5px;
+	border-radius: 0px;
 	padding: 10px;
 	color: @defaultTextColor;
 	background: #ddd;
 	cursor: pointer;
 	min-width: 100px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	line-height: 15px;
+	font-weight: normal;
+
+	.transition();
 
 	&.remove-item{
-		background-color: @errorColor;
+		display: inline-block;
+		text-align: left;
+		width: 290px;
+		color: @white;
+		box-sizing: border-box;
+		padding: 16px;
+		background: lighten(@defaultTextColor, 30%) url("../images/delete.png") no-repeat 95% 50%;
+		vertical-align: top;
+
+		&.file{
+			min-width: 50px;
+		    width: 80px;
+		    padding: 3px 4px;
+		    background-size: contain !important;
+		    background-origin: content-box !important;
+		    line-height: 16px;
+		    font-size: 11px;
+		    left: 192px;
+		    top: 10px;
+		    position: absolute;
+
+		    &.image{
+			    left: 10px;
+			    box-shadow: 0px 0px 8px #fff;
+
+		    }
+		}
+
+		&:hover{
+			background: @hover-color url("../images/delete.png") no-repeat 95% 50%;
+		}
+
+	}
+
+	&.save-item{
+		text-align: left;
+		width: 290px;
+		color: @white;
+		box-sizing: border-box;
+		padding: 16px;
+		background: @defaultTextColor url("../images/save.png") no-repeat 95% 50%;
+
+		&:hover{
+			background: @hover-color url("../images/save.png") no-repeat 95% 50%;
+		}
+	}
+
+	&.item{
+		text-align: left;
+		width: 290px;
+		color: @white;
+		box-sizing: border-box;
+		padding: 16px;
+		margin: 0 0 10px 0;
+		background: @defaultTextColor;
 	}
 
 	&:hover{
-		color: white;
-		background: @defaultTextColor;
+		color: @white;
+		background: @hover-color;
 	}
 }
 
@@ -91,7 +167,7 @@ input{
 	&:hover,
 	&:focus
 	{
-		box-shadow: 0 0 9px -3px rgba(0,0,0,0.5);
+		border-color: @hover-color;
 	}
 }
 
@@ -108,22 +184,49 @@ select{
 label{
 	display: block;
 	text-transform: uppercase;
-	font-size: 0.9em;
-	color: lighten(@defaultTextColor, 20%);
-	margin-bottom: 5px;
-	margin-left: 10px;
+	font-size: 12px;
+	color: lighten(@defaultTextColor, 12%);
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+    line-height: 18px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+form{
+	label{
+		color: lighten(@defaultTextColor, 12%);
+		font-family: 'Open Sans', sans-serif;
+		font-weight: bold;
+
+	}
+	
+	textarea{
+		.input-box-defaults;
+		.transition;
+
+		&:hover,
+		&:focus{
+			border-color: @hover-color;
+		}
+	}
+
+	input{
+		height: auto;
+	}
+
 }
 
 .add-button{
 	background: #777;
 	padding: 9px 25px;
-	border-radius: 4px;
-	color: white;
-	font: bold 14px "HelveticaNeue", Arial,sans-serif;
+	color: @white;
+	font-size: 14px;
+	font-weight: bold;
 	display: inline-block;
 	
 	&:hover{
-		color: white;
+		color: @white;
 		background: #555;
 	}
 }
@@ -135,6 +238,21 @@ label{
 	position: relative;
 	overflow: hidden;
 	margin-bottom: 20px;
+	text-align: left;
+	width: 290px;
+	// display: block;
+	color: @white;
+	box-sizing: border-box;
+	padding: 16px;
+	background: lighten(@defaultTextColor, 30%) url("../images/upload.png") no-repeat 95% 50%;
+
+	&:hover{
+		background: @hover-color url("../images/upload.png") no-repeat 95% 50%;
+	}
+
+	span{
+		font-weight: normal;
+	}
 
 	input {
 		position: absolute;
@@ -146,13 +264,24 @@ label{
 		cursor: pointer;
 		opacity: 0;
 		filter: alpha(opacity=0);
-		font-family: "HelveticaNeue", 'Montserrat', sans-serif;
+		font-family: 'Open Sans', sans-serif;
 	}
 }
 
 .comments{
 	li{
-		padding: 10px;
+		padding: 15px;
+
+		a{
+			padding: 10px 0 !important;
+
+			&.article-title,
+			&.product-title{
+				font-size: 1.7em;
+				line-height: 1.6em;
+
+			}
+		}
 
 		.tool-title{
 			padding: 0;
@@ -166,17 +295,35 @@ label{
 
 		p{
 			margin-bottom: 10px;
+			color: @defaultTextColor !important;
+		}
+
+		.created_at{
+			color: @defaultTextColor;
+			display: inline-block;
+			line-height: 35px;
 		}
 
 		.action{
-			text-align: right;
+			display: inline-block;
+			float: right;
 			padding: 10px;
-			font-style: italic;
+			font-weight: normal;
 			font-size: 12px;
+			margin: 0;
 		}
 
 		&.disapproved{
-			background-color: rgba(184,0,0,.2);
+			// background-color: rgba(184,0,0,.2);
+
+			.action{
+				background: @defaultTextColor;
+				color: @white;
+
+				&:hover{
+					background: @hover-color;
+				}
+			}
 		}
 	}
 }
@@ -199,20 +346,24 @@ label{
 // NAVIGATION
 header{
 	position: fixed;
-	width: 200px;
+	width: 250px;
 	height: 100%;
 	left: 0;
 	top: 0;
-	background: #292929;
+	background: @white;
+    box-shadow: 0px 2px 5px @defaultTextColor;
     z-index: 5;
+
 
 	.logo{
 		display: block;
 		text-align: center;
-		margin: 30px 20px;
+		margin: 30px 20px 60px;
 
 		img{
-			width: 160px;
+			max-width: 140px;
+			max-height: 30px;
+			display: block;
 		}	
 	}
 
@@ -225,95 +376,297 @@ header{
   	}
 
 	.header-menu{
-		ul.account{
-			position: absolute;
-			bottom: 0;
-			width: 100%;
+		ul{
+			&.account{
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+			}
+
+			&.submenu{
+				display: none;
+			    margin-left: 0px;
+			    box-sizing: border-box;
+			    min-width: 100%;
+
+			    li{
+		    	    font-size: initial;
+			    	background: @white;
+			    	border: none;
+
+		    	    &:hover,
+		    	    &.active{
+				    	background: lighten(@defaultTextColor, 62.5%);
+
+				    	a{
+				    		font-weight: bold;
+				    	}
+		    	    	
+		    	    }
+
+					a{
+						padding-left: 40px;
+						color: lighten(@defaultTextColor, 14%);
+					}
+			    }
+			}
+
 		}
 
 		li{
 			.transition;
 
-			font-size: 1em;
+			font-size: 1.3em;
 			line-height: 1.4em;
-			text-transform: uppercase;
-			border-top: 1px solid white;
+			border-top: 1px solid lighten(@defaultTextColor, 62.5%);
 		    position: relative;
 		    display: block;
 		    z-index: 5;
+		    cursor: pointer;
 			
 			a{
 				display: block;
 				padding: 10px 20px;
-				color: lighten(@defaultTextColor, 30%);
+				color: lighten(@defaultTextColor, 14%);
 			}
 
-			&:hover,
-			&.active
+			&:hover
 			{
-				background: white;
-				border-color: #ddd;
+				background: lighten(@defaultTextColor, 62.5%);
 
 				a{
-					color: darken(@defaultTextColor, 30%);
+					font-weight: bold;
+					color: @defaultTextColor;
 				}
 			}
 
-			&:hover{
+			&.active{
+				&:hover{
+					background: none;
+					a{
+						font-weight: normal;
+					}
+				}
+
 				.submenu{
 					display: block;
 
-					
+					li{
+						a{
+							font-weight: normal;
+							
+						}
+
+						&:hover,
+						&.active{
+							a{
+								font-weight: bold;
+							}
+						}
+					}
 				}
 			}
 
-			&:last-child{
-				border-bottom: 1px solid white;
+			&.open{
+				&:hover{
+					background: none;
+					a{
+						font-weight: normal;
+					}
+				}
+
+				.submenu{
+					li{
+						a{
+							font-weight: normal;
+							
+						}
+
+						&:hover,
+						&.active{
+							a{
+								font-weight: bold;
+							}
+						}
+					}
+				}
+
+			}
+
+			&.last{
+				border-bottom: 1px solid lighten(@defaultTextColor, 60%);
+			}
+
+			.icon-menu{
+				position: absolute;
+				right: 15px;
+				top: 0px;
+				height: 21px;
+				margin-top: 15px;
+				z-index: 2;
+
+			}
+
+			&.logout{
+				background: @defaultTextColor;
+
+				&:before{
+					width: 16px;
+					height: 16px;
+					left: 14px;
+					top: 50%;
+					margin-top: -8px;
+					position: absolute;
+					background-image: url("../images/logout.png");
+					background-size: contain;
+					background-repeat: no-repeat;
+					background-position: center;
+				}
+
+				a{
+					color: @white;
+					padding-left: 40px;
+
+				}
+			}
+
+			&.settings{
+				&:before{
+					width: 16px;
+					height: 16px;
+					left: 14px;
+					top: 50%;
+					margin-top: -8px;
+					position: absolute;
+					background-image: url("../images/settings.png");
+					background-size: contain;
+					background-repeat: no-repeat;
+					background-position: center;
+				}
+
+				a{
+					padding-left: 40px;
+
+				}
+
 			}
 		} 
-		.submenu{
-			display: none;
-		    margin-left: 0px;
-		    top: -1px;
-		    position: absolute;
-		    left: 100%;
-		    background: #292929;
-		    box-sizing: border-box;
-		    border-left: 1px solid #fff;
-		    min-width: 100%;
 
-		    li{
-		    	a{
-		    		color:lighten(@defaultTextColor, 30%);
-		    		white-space: nowrap;
+	}
+}
 
-		    		&:hover{
-		    			color: darken(@defaultTextColor, 30%);
-		    		}
-		    	}
-		    }
-	    	
+.icon-menu{
+	width: 20px;
+	height: 11px;
+	cursor: pointer;
+	
+
+	.center{
+		position: absolute;
+		top: 5px;
+		width: 100%;
+		height: 1px;
+		background: lighten(@defaultTextColor, 30%);
+		cursor: pointer;
+
+		.transition();
+		
+		&:after,
+		&:before{
+			background: lighten(@defaultTextColor, 30%);
+			position: absolute;
+			width: 100%;
+			height: 1px;
+
+			.transition();
+		}
+
+		&:before{
+			top: -4px;
+		}
+
+		&:after{
+			top: 4px;
 		}
 	}
+
+	&.open{
+
+		.center{
+			background: none;
+
+			&:before,
+			&:after{
+				top: 0;
+				width: 50%;
+			}
+
+			&:before{
+
+				.transform-rotate(-29deg);
+			}
+
+			&:after{
+				right: 1px;
+
+				.transform-rotate(29deg);
+
+			}
+
+
+		}
+	}
+
 }
 
 
 // CONTENT
-.admin-content{
-	margin-left: 200px;
-	padding: 50px;
+.admin-content-wrap{
+	overflow: hidden;
+	margin-left: 250px;
 	color: @defaultTextColor;
 
-	.last-update{
-		margin-bottom: 50px;
-		display: block;
-		color: #aaa;
+	.admin-header{
+		padding: 47px 75px 17px;
+		background: lighten(@defaultTextColor, 64.5%);
+		
+		h1{
+			font-size: 2.7em;
+			margin-bottom: 10px;
+		}
+
+		.last-update{
+			font-size: 12px;
+			min-height: 9px;
+		    display: inline-block;
+		}
+
+		.button-wrap{
+			position: absolute;
+			right: 20px;
+			top: 47px;
+
+			a{
+				float: right;
+				vertical-align: top;
+			}
+
+		}
 	}
 
-	h1{
-		font-size: 3em;
-		margin-bottom: 10px;
+	.admin-content{
+		padding: 30px 75px;
+
+		p{
+		    margin: 30px 0;
+		    font-size: 19px;
+		    color: lighten(@defaultTextColor, 50%);
+		    font-weight: normal;
+		}
 	}
+
+
+
 
 	h2{
 		.maximum-width;
@@ -366,9 +719,9 @@ header{
 	}
 
 	.gallery-wrap{
-		background: #ddd;
 		padding: 10px;
 		margin-bottom: 30px;
+		background: lighten(@defaultTextColor, 67%);
 
 		label{
 			color: @defaultTextColor;
@@ -414,10 +767,9 @@ header{
 				    cursor: pointer;
 				    display: inline-block;
 				    font-size: 10px;
-				    color: white;
+				    color: @white;
 				    border: none;
-				    font-weight: bold;
-				    border-radius: 4px;
+				    font-weight: normal;
 				    text-transform: uppercase;
 				    min-width: auto;
 
@@ -446,17 +798,34 @@ header{
 	}
 
 	ul, table{
+		margin: 20px 0;
+
+		&.border{
+			border-top: 1px solid lighten(@defaultTextColor, 62.5%);
+
+			li{
+				border-bottom: 1px solid lighten(@defaultTextColor, 62.5%);
+				margin-bottom: 0;
+				background: none;
+
+				&:hover{
+					background: lighten(@defaultTextColor, 62.5%);
+				}
+			}
+		}
+
 		li, tr
 		{
 			.transition;
-			margin: 1px auto;
-			background-color: fade(@defaultTextColor, 20%);
+			margin-bottom: 2px;
+			background-color: lighten(@defaultTextColor, 65%);
 			
 			a{
-				padding: 20px;
+				padding: 15px 20px;
 				display: block;
 				font-size: 1.2em;
 				color: @defaultTextColor;
+				font-weight: bold;
 			}
 
 			a.remove-item{
@@ -470,7 +839,7 @@ header{
 			}
 
 			&.items-order{
-				transition: none;
+				// transition: none;
 			}
 
 			&.green{
@@ -486,29 +855,115 @@ header{
 			}
 
 			&:hover{
-				background-color: fade(@defaultTextColor, 10%);
+				background-color: fade(@defaultTextColor, 20%);
 			}
 		} 
 	}
 
 	table{
+		width: 100%;
+		text-align: left;
+
 		th, td{
-			padding: 10px;
+			padding: 10px 6px;
 			text-align: left;
 			vertical-align: middle;
 		}
 		th{
-			background-color: fade(@defaultTextColor, 50%);
+			background-color: lighten(@defaultTextColor, 60%);
 		}
 		tr{
+
+			td{
+				background: @white;
+				border-bottom: 1px solid lighten(@defaultTextColor, 62.5%);
+			}
+
 			a{
 				display: inline-block;
 				padding: 0;
 
 				&:hover{
-					color: white;
+					color: @white;
 				}
 			}
+		}
+
+		&.order-list{
+			tr{
+				td{
+					.transition;
+				}
+
+				&:hover{
+					td{
+						background: lighten(@defaultTextColor, 62.5%);
+					}
+				}
+			}
+			
+			.actions{
+				vertical-align: top;
+			}
+
+			.button{
+				display: inline-block;
+				padding: 5px;
+				font-size: 10px;
+				letter-spacing: 0.2px;
+				color: @white;
+				margin: 3px;
+				min-width: 0;
+				font-weight: bold;
+				background: lighten(@defaultTextColor, 30%);
+
+				&:hover{
+					background-color: @hover-color;
+				}
+			}
+		}
+
+		&.stock-table{
+			a{
+				.transition;
+				cursor: pointer;
+
+				&:hover{
+					color: lighten(@defaultTextColor, 40%);
+				}
+			}
+		}
+
+		&.lead-table{
+			border-top: 1px solid lighten(@defaultTextColor, 62.5%);
+
+			tr{
+				td{
+					.transition;
+				}
+
+				&:hover{
+					td{
+						background: lighten(@defaultTextColor, 62.5%);
+					}
+				}
+			}
+
+			.button{
+				.transition;
+				cursor: pointer;
+				font-size: 12px;
+				width: 100px;
+				padding: 7px 6px;
+			    line-height: 16px;
+		        background-size: contain;
+			    background-origin: content-box;
+			    background-position: right;
+
+				&:hover{
+					color: @white;
+				}
+			}	
 		}
 	}
 	.subpages{
@@ -661,7 +1116,7 @@ header{
 			display: inline-block;
 			width: auto;
 			padding: 5px 10px;
-			background: white;
+			background: @white;
 			font-size: 2em;
 			color: #aaa;
 			border: 1px solid fade(@defaultTextColor, 10%);
@@ -706,47 +1161,54 @@ header{
 	}
 }
 
-.order-list{
-	.actions{
-		vertical-align: top;
+.order-items-form-wrap{
+	li{
+		padding: 10px;
 	}
-
-	.button{
-		display: inline-block;
-		padding: 5px;
-		background: #999;
-		border-radius: 5px;
-		font-size: 10px;
-		text-transform: uppercase;
-		color: white;
-		margin: 3px;
-		min-width: 0;
-
-		&:hover{
-			background: #666;
-		}
-	}
+	
 }
-
 .order-items-form{
+	max-width: 100% !important;
+
+	.order-box{
+		display: inline-block;
+		margin-left: 20px;
+	}
+
 	input[type='text']{
 	    width: 60px;
 	    display: inline-block;
 	    text-align: center;
+	    margin-bottom: 0;
+	    padding: 5px;
     }
-    input[type='submit']{
-	    border: none;
-	    border-radius: 5px;
-	    padding: 10px;
-	    color: #555;
-	    background: #ddd;
-	    cursor: pointer;
-	    min-width: 100px;
-	    text-align: center;
-    }
-
+    
     label{
 	    display: inline-block;
+	    margin-right: 10px;
+    }
+
+    span{
+    	margin-right: 10px;
+    }
+
+    .button{
+	    max-width: 100px;
+        font-size: 12px !important;
+	    text-align: left;
+	    padding: 9px !important;
+	    line-height: 1em !important;
+	    float: none;
+	    color: @white !important;
+        background-size: contain!important;
+	    background-origin: content-box!important;
+	    margin-bottom: 0;
+
+    }
+
+    .action-wrap{
+    	display: inline-block;
+    	margin-left: 20px;
     }
 
     .actions{
@@ -759,6 +1221,71 @@ header{
 
     .title{
     	width: 230px;
+    	font-size: 19px;
+    	line-height: 1.3em;
     	display: inline-block;
+    	font-weight: bold;
+    	margin-bottom: 10px;
     }
+}
+
+.select-style {
+	padding: 0;
+	margin: 0 auto;
+	width: 290px;
+	overflow: hidden;
+	background-color: @white;
+	margin-bottom: 10px;
+	background: @defaultTextColor url("../images/arrow-down.png") no-repeat 95% 50%;
+	float: left;
+	cursor: pointer;
+	margin-bottom: 20px;
+
+	.transition();
+
+	&:hover{
+		background: @hover-color url("../images/arrow-down.png") no-repeat 95% 50%;
+	}
+	
+	select {
+		padding: 14px;
+		font-size: 14px;
+		margin: 0px auto;
+		width: 100%;
+		color: @white;
+		border: none;
+		box-shadow: none;
+		background-color: transparent;
+		background-image: none;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		&:focus {
+			outline: none;
+		}
+	}
+}
+
+.section-header{
+	position: relative;
+	margin: 15px 0;
+
+	span{
+	    line-height: 36px;
+	    font-size: 20px;
+	    background: @white;
+	    z-index: 2;
+	    position: relative;
+	    padding: 0 10px;
+	    font-weight: bold;
+	}
+
+	.line{
+	    width: 120%;
+	    position: absolute;
+	    top: 50%;
+	    z-index: 0;
+	    margin-left: -10%;
+		border-top: 1px solid lighten(@defaultTextColor, 62.5%);
+	}
 }

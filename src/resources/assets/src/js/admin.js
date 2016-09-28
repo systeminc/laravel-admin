@@ -41,16 +41,24 @@ $(function(){
 	$('.datepicker').datepicker({
     	dateFormat: 'yy-mm-dd', 
     	altField: '#date', 
-    	changeYear: true, 
     	yearRange: '1930:'+(new Date).getFullYear()
     });
     
+
+    $('.icon-menu').click(function(){
+    	$(this).toggleClass('open');
+    	$(this).parent().toggleClass('open');
+
+    	$(this).siblings('.submenu').slideToggle();
+    })
 
 });
 
 $(window).on("load", function(){
 
     hideAlert();
+
+    $('.loader').fadeOut(1000);
 
     $( ".sortable" ).sortable({
 	  	stop: function( event, ui ) {

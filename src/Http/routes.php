@@ -6,7 +6,7 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
     // resources
     Route::get('css/{filename}', 'ResourcesController@css');
     Route::get('scripts/{filename?}', 'ResourcesController@scripts')->where('filename', '(.*)');
-    Route::get('images/{filename?}', 'ResourcesController@images');
+    Route::get('images/{filename?}', 'ResourcesController@images')->where('filename', '(.*)');
     Route::get('uploads/{filename?}', 'UploadsController@index')->where('filename', '(.*)');
 
     // w/o credentials
@@ -99,10 +99,33 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
             Route::get('', 'GalleriesController@getIndex');
         });
 
+        // locations
+        Route::group(['prefix' => 'locations'], function () {
+            Route::post('save', 'LocationsController@postSave');
+            Route::post('update/{location_id}', 'LocationsController@postUpdate');
+            Route::get('delete/{location_id}', 'LocationsController@getDelete');
+            Route::get('edit/{location_id}', 'LocationsController@getEdit');
+            Route::get('create', 'LocationsController@getCreate');
+            Route::get('', 'LocationsController@getIndex');
+        });
+
         // ajax
         Route::group(['prefix' => 'ajax'], function () {
+            Route::post('{page_id}/change-subpages-order', 'AjaxController@postChangeSubpagesOrder');
             Route::post('{type}/change-gallery-order', 'AjaxController@postChangeGalleryOrder');
             Route::post('{type}/delete-gallery-images/{id}', 'AjaxController@postDeleteGalleryImages');
+        });
+
+        // leads
+        Route::group(['prefix' => 'leads'], function () {
+            Route::get('edit-email/{email_id}', 'LeadsController@getEditEmail');
+            Route::post('email-leads', 'LeadsController@postEmail');
+            Route::get('email-leads', 'LeadsController@getEmail');
+            Route::post('settings', 'LeadsController@postSettings');
+            Route::get('settings', 'LeadsController@getSettings');
+            Route::get('delete/{lead_id}', 'LeadsController@getDelete');
+            Route::get('edit/{lead_id}', 'LeadsController@getEdit');
+            Route::get('', 'LeadsController@getIndex');
         });
 
         // pages
@@ -117,6 +140,7 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
             Route::get('edit-element/{element_id}', 'PagesController@getEditElement');
             Route::get('delete/{page_id}', 'PagesController@getDelete');
             Route::get('edit/{page_id}', 'PagesController@getEdit');
+            Route::get('create/{page_id}', 'PagesController@getCreate');
             Route::get('create', 'PagesController@getCreate');
             Route::get('', 'PagesController@getIndex');
         });

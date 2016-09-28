@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/systeminc/laravel-admin.svg?branch=master)](https://travis-ci.org/systeminc/laravel-admin) [![StyleCI](https://styleci.io/repos/65193755/shield)](https://styleci.io/repos/65193755)
 
-This is **Laravel Admin**, CRUD (create, read, update and delete) package that can halp you get your administration panel in minutes. At this moment we support these modules:
+This is **Laravel Admin**, CRUD (create, read, update and delete) package that can help you get your administration panel in minutes. At this moment we support these modules:
 
 - **Pages** (page elements, galleries, subpages)
 - **Blog** (posts, comments)
@@ -55,4 +55,4 @@ Contributions to the Laravel Admin library are welcome. Please note the followin
 
 ## License
 
-This Laravel Admin is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+This Laravel Admin is open-source software licensed under the [MIT license](http://opensource.org/licenses/MIT)

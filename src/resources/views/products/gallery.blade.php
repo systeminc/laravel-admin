@@ -1,11 +1,16 @@
-<h2>Gallery</h2>
+<div class="section-header">
+	<span>Gallery</span>
+	<div class="line"></div>
+</div>
+<br><br>
 
-	<form style="max-width: 100%;" action="galleries/update/{{ $product->gallery->title }}" class="images" method="post" enctype="multipart/form-data">
-		{{ csrf_field() }}
-		<label for="title">Title:</label>
-		<input type="text" name="title" value="{{ $product->gallery->title }}">	
-
-		<div class="gallery-wrap">
+<form style="max-width: 100%;" action="galleries/update/{{ $product->gallery->title }}" class="images" method="post" enctype="multipart/form-data">
+	{{ csrf_field() }}
+	<label for="title">Title:</label>
+	<input type="text" name="title" value="{{ $product->gallery->title }}">	
+	
+	@if( count($product->gallery->images) )
+		<div class="gallery-wrap"> 
 			<ul class="image-list sortable cf" data-link="ajax/{{ $product->gallery->title }}/change-gallery-order">
 				@foreach ($product->gallery->images as $image)
 					<li class="items-order" data-id="{{$image->id}}">
@@ -17,12 +22,13 @@
 				@endforeach
 			</ul>
 		</div>	
+	@endif
 
-	    <div class="fileUpload">
-			<span>Add image</span>
-			<input type="file" name="images[]" multiple="multiple">
-		</div>
-	</form>
+    <div class="fileUpload">
+		<span>Add image</span>
+		<input type="file" name="images[]" multiple="multiple">
+	</div>
+</form>
 
 <script>
 	$(".fileUpload input").change(function(event) {

@@ -66,6 +66,14 @@
 }
 
 
+.transform-rotate( @degree ){
+	-webkit-transform: rotate(@degree);
+	-moz-transform: rotate(@degree);
+	-ms-transform: rotate(@degree);
+	-o-transform: rotate(@degree);
+	transform: rotate(@degree);
+}
+
 
 html{
 	height: 100%;
@@ -118,6 +126,7 @@ form{
 		box-sizing: border-box;
 		margin-bottom: 14px;
 		display: block;
+		outline: none;
 	}
 
 
@@ -153,6 +162,7 @@ form{
 	color: #c09853;
 	line-height: 1.3em;
 	font-size: 12px;
+	display: inline-block;
 	
 	&.alert-success {
 		color: #468847;

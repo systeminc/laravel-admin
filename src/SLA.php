@@ -37,6 +37,18 @@ class SLA
     }
 
     /**
+     * Get page element.
+     *
+     * @param string $key
+     *
+     * @return type
+     */
+    public function element($key)
+    {
+        return PageElement::whereKey($key)->first();
+    }
+
+    /**
      * Instance of Gallery.
      *
      * @return type
@@ -44,6 +56,16 @@ class SLA
     public function gallery()
     {
         return new Gallery();
+    }
+
+    /**
+     * Instance of Subscribe.
+     *
+     * @return type
+     */
+    public function lead()
+    {
+        return new Subscribe();
     }
 
     /**
