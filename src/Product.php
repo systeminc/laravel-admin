@@ -18,6 +18,7 @@ class Product extends Model
         'url_id',
         'excerpt',
         'description',
+        'long_description',
         'thumb',
         'animation',
         'video',

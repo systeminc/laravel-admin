@@ -45,7 +45,7 @@
 				@endif 		
 
 			<label>URI</label>
-			<input type="text" name="uri" value="{{$category->uri or old('uri')}}" disabled>
+			<input type="text" name="uri" value="{{$category->uri or old('uri')}}">
 
 			<label>Excerpt</label>
 			<textarea name="excerpt" class="htmlEditorTools" rows="5">{{$category->excerpt or old('excerpt')}}</textarea>
