@@ -41,16 +41,24 @@ $(function(){
 	$('.datepicker').datepicker({
     	dateFormat: 'yy-mm-dd', 
     	altField: '#date', 
-    	changeYear: true, 
     	yearRange: '1930:'+(new Date).getFullYear()
     });
     
+
+    $('.icon-menu').click(function(){
+    	$(this).toggleClass('open');
+    	$(this).parent().toggleClass('open');
+
+    	$(this).siblings('.submenu').slideToggle();
+    })
 
 });
 
 $(window).on("load", function(){
 
     hideAlert();
+
+    $('.loader').fadeOut(1000);
 
     $( ".sortable" ).sortable({
 	  	stop: function( event, ui ) {
@@ -106,7 +114,7 @@ function codeAddress(address, proposal, resultsMap) {
 				deleteMarkers();
 
 				var marker = new google.maps.Marker({
-			    	// icon: '../images/map-marker-orange.png',
+			    	icon: '../images/map-marker-orange.png',
 					map: resultsMap,
 					position: results[0].geometry.location
 				});

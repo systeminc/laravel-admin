@@ -1,11 +1,12 @@
 @extends('admin::layouts.admin')
 
 @section('admin-content')
-
-	<section>	
+	<div class="admin-header">
 		<h1>{{$post->title}}</h1>
-		<span class="last-update">Last change: {{ $post->updated_at->tz('CET')->format('d M Y, H:i\h') }}</span>
+		<span class="last-update">Last change: {{ $post->updated_at->tz('CET')->format('d M, Y, H:i\h') }}</span>
+	</div>
 
+	<div class="admin-content">
 		@if (session('success'))
 		    <span class="alert alert-success">
 		        {{ session('success') }}
@@ -27,13 +28,17 @@
 			<label>Content</label>
 			<textarea name="content" class="htmlEditor" rows="15" data-page-name="blog" data-page-id="{{$post->id}}" id="editor-{{ str_replace('.', '', $post->id) }}">{{$post->content}}</textarea>
 
-			<label>Blog Category</label>
-			<select name="blog_category_id">
-					<option value="0">Choose category</option>
-				@foreach ($categories as &$category)
-					<option value="{{$category->id}}" @if($category->id==$post->blog_category_id) selected @endif>{{$category->title}}</option>
-				@endforeach
-			</select>
+			<div class="cf">
+				<label>Blog Category</label>
+				<div class="select-style">
+					<select name="blog_category_id">
+							<option value="0">Choose category</option>
+						@foreach ($categories as &$category)
+							<option value="{{$category->id}}" @if($category->id==$post->blog_category_id) selected @endif>{{$category->title}}</option>
+						@endforeach
+					</select>				
+				</div>
+			</div>
 
 			<label>Thumbnail</label>
 			<div class="file-input-wrap cf">
@@ -58,20 +63,24 @@
 			<input type="text" name="meta_keywords" value="{{$post->meta_keywords}}">
 
 			<label>Visible</label>
-			<select name="visible">
-				<option value="0" @if(!$post->visible) selected @endif>Not Visible</option>
-				<option value="1" @if($post->visible) selected @endif>Visible</option>
-			</select>
+			<div class="select-style">
+				<select name="visible">
+					<option value="0" @if(!$post->visible) selected @endif>Not Visible</option>
+					<option value="1" @if($post->visible) selected @endif>Visible</option>
+				</select>				
+			</div>
 
 			<div class="cf"></div>
 
-			<input type="submit" value="Save">
+			<input type="submit" value="Save" class="save-item">
 
 			@if ($post->id)
 				<a class="button remove-item" href="blog/post-delete/{{$post->id}}">Delete</a>
 			@endif
 
 		</form>
-	</section>
+		
+	</div>
+	
 
 @stop

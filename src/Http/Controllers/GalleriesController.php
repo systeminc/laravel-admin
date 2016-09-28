@@ -68,9 +68,9 @@ class GalleriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getEdit($gallery_title)
+    public function getEdit($gallery_id)
     {
-        $gallery = Gallery::whereTitle($gallery_title)->first();
+        $gallery = Gallery::find($gallery_id);
         $images = $gallery->images;
 
         return view('admin::galleries.edit', compact('gallery', 'images'));
@@ -84,11 +84,11 @@ class GalleriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function postUpdate(Request $request, $gallery_title)
+    public function postUpdate(Request $request, $gallery_id)
     {
-        $gallery = Gallery::whereTitle($gallery_title)->first();
+        $gallery = Gallery::find($gallery_id);
 
-        if ($request->title == $gallery_title) {
+        if ($request->title == $gallery->title) {
             $this->Images($request->file('images'), $gallery->id);
         } elseif (!empty($request->title)) {
             $gallery->title = $request->title;
@@ -107,12 +107,12 @@ class GalleriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getDelete($gallery_title)
+    public function getDelete($gallery_id)
     {
-        $gallery = Gallery::whereTitle($gallery_title)->first();
+        $gallery = Gallery::find($gallery_id);
 
         if ($gallery->product_id) {
-            return redirect(config('laravel-admin.route_prefix').'/galleries/edit/'.$gallery_title)->with('message', 'This gallery is in the use');
+            return redirect(config('laravel-admin.route_prefix').'/galleries/edit/'.$gallery_id)->with('message', 'This gallery is in the use');
         }
 
         foreach ($gallery->images as $image) {

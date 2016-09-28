@@ -2,9 +2,12 @@
 
 @section('admin-content')
 
-	<h1>Edit element</h1>	
-	<span class="last-update"></span>
+	<div class="admin-header">
+		<h1>Edit element</h1>	
+		<span class="last-update">Last change: {{$element->updated_at->tz('CET')->format('d M, Y, H:i\h')}}</span>
+	</div>
 
+	<div class="admin-content">
 		<form action="pages/update-element/{{ $element->id }}" method="post" enctype="multipart/form-data">
 			{{ csrf_field() }}
 		
@@ -33,27 +36,31 @@
 			@if ($element->page_element_type_id == 1 || old('page_element_type_id') == 1)
 
 				<label>Content</label>
-				<textarea name="content" class="htmlEditor" rows="5" placeholder="Content">{{ $element->content or old('content') }}</textarea>
+				<textarea name="content" rows="5" placeholder="Content">{{ $element->content or old('content') }}</textarea>
 				
 			@elseif ($element->page_element_type_id == 2 || old('page_element_type_id') == 2)
 
 				<label>Content</label>
 				<textarea name="content" class="htmlEditor" rows="5" placeholder="Content">{{ $element->content or old('content') }}</textarea>
 
-				<script>
-					$( document ).ready(function() {
-						setTimeout(function(){
-							$(".mce-i-code").click(); // trigger code content							
-						},500);
-					});					
-				</script>
-
 			@elseif ($element->page_element_type_id == 3 || old('page_element_type_id') == 3)
 
 				@if (strstr($mime, 'image') !== false)
-					<img src="uploads/{{ $element->content }}" alt="" width="200" class="left">
+					<div class="cf" style="position: relative">
+						<img src="uploads/{{ $element->content }}" alt="" width="200" class="left">
+						<div class="cf">
+							<input type="hidden" name="content" value="{{ $element->content }}">
+							<a href="pages/delete-element-file/{{ $element->id }}" class="button remove-item file image left">Delete file</a>
+						</div>
+					</div>
 				@elseif ($mime !== null)
-					<a href="uploads/{{ $element->content }}" download class="button left">{{ $element->title }}</a>
+					<div class="cf" style="position: relative">
+						<a href="uploads/{{ $element->content }}" download class="button item left">{{ $element->title }}</a>
+						<div class="cf">
+							<input type="hidden" name="content" value="{{ $element->content }}">
+							<a href="pages/delete-element-file/{{ $element->id }}" class="button remove-item file left">Delete file</a>
+						</div>
+					</div>
 				@endif
 
 				@if (empty($element->content))
@@ -62,15 +69,15 @@
 						<span>Add file</span>
 						<input type="file" name="content">
 					</div>
-				@else
-					<input type="hidden" name="content" value="{{ $element->content }}">
-					<a href="pages/delete-element-file/{{ $element->id }}" class="button remove-item left">Delete file</a>
 				@endif
 			@endif
+			<br><br>
 
-			<input type="submit" value="Update">
+			<input type="submit" value="Update" class="save-item">
 			
-			<a href="pages/delete-element/{{ $element->id }}" class="button remove-item right">Delete Element</a>
+			<a href="pages/delete-element/{{ $element->id }}" class="button remove-item">Delete Element</a>
 		</form>
+	</div>
+
 
 @stop

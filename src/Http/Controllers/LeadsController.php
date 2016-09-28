@@ -81,10 +81,10 @@ class LeadsController extends Controller
     public function postEmail(Request $request)
     {
         if (!is_array($request->receivers)) {
-            return back()->with(['error' => 'Please select receivers']);
+            return back()->withInput()->with(['error' => 'Please select receivers']);
         } else {
             if (empty($request->subject) || empty($request->body)) {
-                return back()->with(['error' => 'Please fill all message data']);
+                return back()->withInput()->with(['error' => 'Please fill all message data']);
             }
 
             $url = explode('.', $request->root());

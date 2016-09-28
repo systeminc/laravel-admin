@@ -67,6 +67,10 @@ class PagesController extends Controller
         }
         $page = new Page();
         $page->fill($data);
+        
+        if( empty($request->parent_id) ){
+            $page->parent_id = null;
+        }
 
         $page->elements_prefix = $this->sanitizeElements($request->elements_prefix);
         $page->uri_key = $this->sanitizeUri($request->uri_key);

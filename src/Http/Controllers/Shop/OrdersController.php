@@ -63,22 +63,23 @@ class OrdersController extends Controller
             return back()->withInput()->withErrors($validation);
         }
 
+
         $order = Order::find($order_id);
         $old_order_status_id = $order->order_status_id;
 
-        if ($request->input('invoice_number')) {
+        if ( $request->invoice_number ) {
             $order_with_same_invoice_number = Order::whereRaw('YEAR(created_at)='.$order->created_at->format('Y'))
-                ->where('invoice_number', $request->input('invoice_number'))
+                ->where('invoice_number', $request->invoice_number)
                 ->where('id', '<>', $order->id)
                 ->first();
 
             if ($order_with_same_invoice_number) {
                 return back()->with('error', 'Invoice number already taken by Order '.$order_with_same_invoice_number->id);
             }
+
         }
 
         $order->update($request->all());
-        $order->fresh();
 
         if (empty($request->input('valid_until'))) {
             $order->valid_until = null;

@@ -16,7 +16,6 @@ class UpdatedOrderValidation
             'order_status_id'         => 'exists:order_statuses,id',
             'shipment_price'          => 'numeric',
             'currency'                => 'in:EUR,USD',
-            'currency_sign'           => 'in:€,$',
             'note'                    => 'string',
             'billing_name'            => 'required|string',
             'billing_email'           => 'required|email',

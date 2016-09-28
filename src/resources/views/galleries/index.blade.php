@@ -2,18 +2,22 @@
 
 @section('admin-content')
 
-	<div>
+	<div class="admin-header">
 		<h1>Galleries</h1>
-		<a href="galleries/create" class="button button-right">Create Gallery</a>
+		<span class="last-update"></span>
+		<div class="button-wrap">
+			<a href="galleries/create" class="button right">Create Gallery</a>
+		</div>
+	</div>
+
+	<div class="admin-content">
+		<ul class="border">
+			@foreach ($galleries as $gallery)
+				<li><a href="galleries/edit/{{ $gallery->id }}"><b>{{ ucfirst($gallery->title) }}</a></li>
+				
+			@endforeach
+		</ul>
+		
 	</div>
 	
-	<ul>
-		@foreach ($galleries as $gallery)
-			<a href="galleries/edit/{{ $gallery->title }}">
-				<li style="padding: 20px;font-size: 20px;border-radius: 10px;">
-					{{ ucfirst($gallery->title) }}
-				</li>
-			</a>
-		@endforeach
-	</ul>
 @stop

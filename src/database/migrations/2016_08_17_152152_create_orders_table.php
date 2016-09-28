@@ -21,7 +21,6 @@ class CreateOrdersTable extends Migration
             $table->datetime('valid_until');
             $table->datetime('date_of_purchase');
             $table->enum('currency', ['USD', 'EUR'])->default('EUR');
-            $table->enum('currency_sign', ['USD', 'EUR'])->default('EUR');
             $table->text('note');
             $table->string('billing_name');
             $table->string('billing_email');

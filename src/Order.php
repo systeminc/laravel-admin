@@ -16,7 +16,6 @@ class Order extends Model
         'valid_until',
         'date_of_purchase',
         'currency',
-        'currency_sign',
         'note',
         'billing_name',
         'billing_email',

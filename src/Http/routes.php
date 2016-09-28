@@ -6,7 +6,7 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
     // resources
     Route::get('css/{filename}', 'ResourcesController@css');
     Route::get('scripts/{filename?}', 'ResourcesController@scripts')->where('filename', '(.*)');
-    Route::get('images/{filename?}', 'ResourcesController@images');
+    Route::get('images/{filename?}', 'ResourcesController@images')->where('filename', '(.*)');
     Route::get('uploads/{filename?}', 'UploadsController@index')->where('filename', '(.*)');
 
     // w/o credentials
