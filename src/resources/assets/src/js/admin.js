@@ -52,7 +52,7 @@ $(function(){
     	$(this).siblings('.submenu').slideToggle();
     })
 
-    $('.input-wrap .button').click(function(){
+    $('.input-box-wrap .button').click(function(){
     	$('.input-popup').fadeToggle();
     })
 

@@ -97,9 +97,12 @@
 
 			@if (!empty($elements->first()))
 				
-				<ul>
+				<ul class="elements-list">
 					@foreach ($elements as $element)
-						<li><a href="pages/edit-element/{{$element->id}}"><b>{{ ucfirst($element->title) }} - {{$element->key}}</a></li>
+						<li>
+							<a href="pages/edit-element/{{$element->id}}"><b>{{ ucfirst($element->title) }} - {{$element->key}}</b></a>
+							<a href="pages/delete-element/{{ $element->id }}" class="button remove-item file list">Delete Element</a>
+						</li>
 					@endforeach
 				</ul>
 			@else

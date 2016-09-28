@@ -22,9 +22,6 @@
 			    </div>
 			@endif 
 
-			<label>Key</label>
-			<input type="text" value="{{ $page->elements_prefix .'.'}}" disabled>
-
 			<label>Title</label>
 			<input type="text" name="title" placeholder="Page title" value="{{ old('title') }}">
 		

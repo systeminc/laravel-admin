@@ -106,6 +106,14 @@ body{
 			    box-shadow: 0px 0px 8px #fff;
 
 		    }
+
+		    &.list{
+		    	color: @white;
+		    	top: 12px;
+		    	left: auto;
+		    	right: 0;
+		    	width: 115px
+		    }
 		}
 
 		&:hover{
@@ -691,7 +699,7 @@ header{
 		}
 	}
 
-	.input-wrap{
+	.input-box-wrap{
 		position: relative;
 
 		.button{
@@ -709,7 +717,7 @@ header{
 		    right: 0;
 		    background: lighten(@defaultTextColor, 64.5%);
 		    z-index: 3;
-		    width: 266px;
+		    width: 185px;
 		    padding: 10px;
 		    box-sizing: border-box;
 		    display: none;
@@ -896,6 +904,15 @@ header{
 				background-color: fade(@defaultTextColor, 20%);
 			}
 		} 
+	}
+
+	ul{
+		&.elements-list{
+			li{
+				position: relative;
+			}
+			
+		}
 	}
 
 	table{

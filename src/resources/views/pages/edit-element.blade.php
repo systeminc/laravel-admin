@@ -20,7 +20,7 @@
 			@endif 
 		
 			<label>Key</label>
-			<div class="input-wrap">
+			<div class="input-box-wrap">
 				<input type="text" value="{{ $element->key }}" disabled>
 				<div class="button">change</div>
 				
