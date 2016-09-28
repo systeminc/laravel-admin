@@ -55,4 +55,4 @@ Contributions to the Laravel Admin library are welcome. Please note the followin
 
 ## License
 
-This Laravel Admin is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+This Laravel Admin is open-source software licensed under the [MIT license](http://opensource.org/licenses/MIT)
