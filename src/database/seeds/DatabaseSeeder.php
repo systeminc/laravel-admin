@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(AdminSeeder::class);
+        $this->call(SystemInc\LaravelAdmin\Database\Seeds\OrderStatusesSeeder::class);
+        $this->call(SystemInc\LaravelAdmin\Database\Seeds\PageElementTypeSeeder::class);
     }
 }

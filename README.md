@@ -2,8 +2,17 @@
 
 [![Build Status](https://travis-ci.org/systeminc/laravel-admin.svg?branch=master)](https://travis-ci.org/systeminc/laravel-admin) [![StyleCI](https://styleci.io/repos/65193755/shield)](https://styleci.io/repos/65193755)
 
+This is **Laravel Admin**, CRUD (create, read, update and delete) package that can help you get your administration panel in minutes. At this moment we support these modules:
+
+- **Pages** (page elements, galleries, subpages)
+- **Blog** (posts, comments)
+- **Shop** (products, categories, comments, orders, stock)
+
+Once you have your administration panel up, you can easily put all of those elements wherever you want in you application files. For usage documentation see **Usage section** bellow.
+
+---
+
 ## Installation
-------------
 
 Install using composer:
 
@@ -17,62 +26,25 @@ Add the service provider to the `'providers'` array in `config/app.php`:
 SystemInc\LaravelAdmin\AdminServiceProvider::class,
 ```
 
-## Configuration
-
-Copy the package config to your local config with the publish command:
+If you want to use this package as a facade, add this line to the `$aliases` array in `config/app.php`.
 
 ```php
-php artisan vendor:publish --provider="SystemInc\LaravelAdmin\AdminServiceProvider" --tag="laravel-admin"
+'SLA' => SystemInc\LaravelAdmin\Facades\SLA::class,
 ```
 
-Make sure that your add this in `'database/seeds/DatabaseSeeder.php'`
+Start package installation by running instal command below:
 
 ```php
-public function run()
-{
-    $this->call(AdminSeeder::class);
-}
+php artisan laravel-admin:instal
 ```
 
-and in `'gulpfile.js'`
+Note that this installation uses migrations, so you must run it from machine that has access to your database. 
 
-```js
-elixir(function(mix) {
-    mix.less('login.less');
-    mix.less('admin.less');
-
-    mix.scripts(['jquery-1.12.4.js', 'jquery-ui.js','vue.js', 'tinymce/tinymce.min.js', 'tinymce-init.js', 'global.js','admin.js'], 'public/js/admin.js');
-
-   	mix.version(['css/admin.css', 'css/login.css', 'js/admin.js']);
-});
-```
-
-### Note
-
-If your are using fresh install of Laravel 5.2 just push all our files in your app like so:
-
-```php
-php artisan vendor:publish --provider="SystemInc\LaravelAdmin\AdminServiceProvider" --tag="laravel-admin-force" --force
-```
-
-## Migrate
-
-Just run below and we are set to go:
-
-```php
-php artisan migrate --seed
-```
+For instance, if you use Vagrant, you will have to do `vagrant ssh` first, go to your project directory, and run this instal command. The same way you run your standard Laravel's migration command. 
 
 ## Usage
 
-To start using our admin panel go to your home url and add hit `'/administration'` in link:
-
-```
-'email' 	=> 'admin@system-inc.com',
-'password'  => 'admin123'
-```
-
-Credentials for default login is in `'database/seeds/AdminSeeder.php'`. **Please change credentials if your are going outside you local environment.**
+TODO
 
 ## Contributing
 
@@ -83,4 +55,4 @@ Contributions to the Laravel Admin library are welcome. Please note the followin
 
 ## License
 
-This Laravel Admin is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+This Laravel Admin is open-source software licensed under the [MIT license](http://opensource.org/licenses/MIT)

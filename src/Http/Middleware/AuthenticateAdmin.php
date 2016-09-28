@@ -20,11 +20,11 @@ class AuthenticateAdmin
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->guest()) {
+        if (Auth::guard($this->guard)->guest()) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('administration/login');
+                return redirect()->guest(config('laravel-admin.route_prefix').'/login');
             }
         }
 
