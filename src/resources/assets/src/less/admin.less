@@ -691,6 +691,44 @@ header{
 		}
 	}
 
+	.input-wrap{
+		position: relative;
+
+		.button{
+		    position: absolute;
+		    right: 0;
+		    top: 7px;
+		    padding: 4px 10px;
+		    min-width: 40px;
+		    font-size: 12px;
+		}
+
+		.input-popup{
+		    position: absolute;
+		    top: 37px;
+		    right: 0;
+		    background: lighten(@defaultTextColor, 64.5%);
+		    z-index: 3;
+		    width: 266px;
+		    padding: 10px;
+		    box-sizing: border-box;
+		    display: none;
+
+		    p{
+		    	font-size: 12px;
+		    	line-height: 1.2em;
+		    	font-weight: bold;
+		    	color: @defaultTextColor;
+		    	margin: 0;
+		    	margin-bottom: 10px;
+		    }
+
+		    input{
+		    	margin-bottom: 0;
+		    }
+		}
+	}
+
 	input[type='text'], 
 	textarea 
 	{
@@ -1240,6 +1278,7 @@ header{
 	float: left;
 	cursor: pointer;
 	margin-bottom: 20px;
+	color: @defaultTextColor;
 
 	.transition();
 
@@ -1262,6 +1301,10 @@ header{
 		appearance: none;
 		&:focus {
 			outline: none;
+		}
+
+		option{
+			color: @defaultTextColor;
 		}
 	}
 }

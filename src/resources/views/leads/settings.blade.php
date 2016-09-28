@@ -3,7 +3,7 @@
 @section('admin-content')
 	<div class="admin-header">
 		<h1>Leads Setting</h1>
-		<span class="last-update">Last change: {{ $setting->updated_at->tz('CET')->format('d M Y, H:i\h') }}</span>
+		<span class="last-update">{{ empty($setting->updated_at) ? "" : 'Last change: '.$setting->updated_at->tz('CET')->format('d M Y, H:i\h') }}</span>
 	</div>
 
 	<div class="admin-content">

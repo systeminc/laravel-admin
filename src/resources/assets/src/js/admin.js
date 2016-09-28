@@ -52,6 +52,10 @@ $(function(){
     	$(this).siblings('.submenu').slideToggle();
     })
 
+    $('.input-wrap .button').click(function(){
+    	$('.input-popup').fadeToggle();
+    })
+
 });
 
 $(window).on("load", function(){

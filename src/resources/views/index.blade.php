@@ -3,6 +3,7 @@
 @section('admin-content')
 	<div class="admin-header">
 		<h1>Admin panel</h1>
+		<span class="last-update"></span>
 	</div>
 
 	<div class="admin-content">
