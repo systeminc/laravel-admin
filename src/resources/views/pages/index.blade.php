@@ -11,8 +11,7 @@
 	</div>
 
 	<div class="admin-content">
-		{{ $navigation }}
+		{!! $navigation !!}
 	</div>
-	
 
 @stop
