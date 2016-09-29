@@ -53,9 +53,13 @@ class SLA
      *
      * @return type
      */
-    public function gallery()
+    public function gallery($key = false)
     {
-        return new Gallery();
+        if ($key) {
+            return Gallery::whereKey($key)->first();
+        } else {
+            return new Gallery();
+        }
     }
 
     /**

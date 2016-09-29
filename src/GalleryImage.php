@@ -2,6 +2,7 @@
 
 namespace SystemInc\LaravelAdmin;
 
+use SLA;
 use Illuminate\Database\Eloquent\Model;
 
 class GalleryImage extends Model
@@ -14,4 +15,9 @@ class GalleryImage extends Model
         'mobile_source',
         'order_number',
     ];
+
+    public function getUrlAttribute()
+    {
+        return SLA::getFile($this->source);
+    }
 }

@@ -10,6 +10,7 @@ class Gallery extends Model
 
     protected $fillable = [
         'title',
+        'key',
         'product_id',
     ];
 
