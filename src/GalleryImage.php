@@ -2,8 +2,8 @@
 
 namespace SystemInc\LaravelAdmin;
 
-use SLA;
 use Illuminate\Database\Eloquent\Model;
+use SLA;
 
 class GalleryImage extends Model
 {

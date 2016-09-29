@@ -10,7 +10,6 @@ use Storage;
 use SystemInc\LaravelAdmin\Gallery;
 use SystemInc\LaravelAdmin\GalleryImage;
 use SystemInc\LaravelAdmin\Traits\HelpersTrait;
-use SLA;
 
 class GalleriesController extends Controller
 {
@@ -63,7 +62,7 @@ class GalleriesController extends Controller
 
             $gallery = Gallery::create([
                 'title' => $request->title,
-                'key' => $key,
+                'key'   => $key,
             ]);
 
             return redirect(config('laravel-admin.route_prefix').'/galleries');
@@ -97,7 +96,6 @@ class GalleriesController extends Controller
      */
     public function postUpdate(Request $request, $gallery_id)
     {
-
         $gallery = Gallery::find($gallery_id);
 
         if ($request->title == $gallery->title) {
