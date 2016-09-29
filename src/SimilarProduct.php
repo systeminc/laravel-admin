@@ -10,6 +10,6 @@ class SimilarProduct extends Model
 
     public function product()
     {
-    	return $this->belongsTo('SystemInc\LaravelAdmin\Product', 'product_similar_id');
+        return $this->belongsTo('SystemInc\LaravelAdmin\Product', 'product_similar_id');
     }
 }

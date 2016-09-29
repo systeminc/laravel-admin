@@ -167,21 +167,23 @@ class ProductsController extends Controller
     }
 
     /**
-     * Add similar product
-     * @param Request $request 
-     * @param int $product_id 
+     * Add similar product.
+     *
+     * @param Request $request
+     * @param int     $product_id
+     *
      * @return type
      */
     public function postAddSimilar(Request $request, $product_id)
     {
-        $similar_product = SimilarProduct::where(['product_id' => $product_id, 'product_similar_id' => $request->product_similar_id,])->first();
+        $similar_product = SimilarProduct::where(['product_id' => $product_id, 'product_similar_id' => $request->product_similar_id])->first();
 
         if ($similar_product) {
             return back()->with(['similar' => 'This product exists in similar products']);
         }
 
         SimilarProduct::create([
-            'product_id' => $product_id,
+            'product_id'         => $product_id,
             'product_similar_id' => $request->product_similar_id,
         ]);
 
@@ -189,8 +191,10 @@ class ProductsController extends Controller
     }
 
     /**
-     * Delete similar product
-     * @param int $similar_id 
+     * Delete similar product.
+     *
+     * @param int $similar_id
+     *
      * @return type
      */
     public function getDeleteSimilar($similar_id)
