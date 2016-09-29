@@ -73,6 +73,20 @@ class SLA
     }
 
     /**
+     * Instance of Location.
+     *
+     * @return type
+     */
+    public function location($key)
+    {
+        if ($key) {
+            return LocationMarker::whereKey($key)->first();
+        } else {
+            return new Location();
+        }    
+    }
+
+    /**
      * Get file from storage(Image, PDF,...).
      *
      * @param string $filename
