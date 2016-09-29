@@ -17,6 +17,6 @@ class Location extends Model
 
     public function marker()
     {
-    	return $this->hasMany('SystemInc\LaravelAdmin\LocationMarker');
+        return $this->hasMany('SystemInc\LaravelAdmin\LocationMarker');
     }
 }
