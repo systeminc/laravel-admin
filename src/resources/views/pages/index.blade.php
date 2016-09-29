@@ -11,11 +11,7 @@
 	</div>
 
 	<div class="admin-content">
-		<ul class="border">
-			@foreach ($pages as &$page)
-				<li><a href="pages/edit/{{$page->id}}" {{ empty($page->parent_id) ?: "class='subpage'"}}><b>{{$page->title}}</a></li>
-			@endforeach
-		</ul>
+		{{ $navigation }}
 	</div>
 	
 
