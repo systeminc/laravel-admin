@@ -3,7 +3,6 @@
 namespace SystemInc\LaravelAdmin;
 
 use Illuminate\Database\Eloquent\Model;
-use SLA;
 
 class GalleryImage extends Model
 {
@@ -18,6 +17,6 @@ class GalleryImage extends Model
 
     public function getUrlAttribute()
     {
-        return SLA::getFile($this->source);
+        return (new SLA())->getFile($this->source);
     }
 }
