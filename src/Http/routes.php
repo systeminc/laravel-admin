@@ -105,6 +105,7 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
         Route::group(['prefix' => 'locations'], function () {
             Route::get('delete-marker/{marker_id}', 'LocationsController@getDeleteMarker');
             Route::post('update-marker/{maker_id}', 'LocationsController@postUpdateMarker');
+            Route::post('save-marker/{location_id}', 'LocationsController@postSaveMarker');
             Route::get('edit-marker/{marker_id}', 'LocationsController@getEditMarker');
             Route::get('add-marker/{location_id}', 'LocationsController@getAddMarker');
             Route::post('update/{location_id}', 'LocationsController@postUpdate');
