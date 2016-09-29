@@ -2,8 +2,8 @@
 
 @section('admin-content')
 	<div class="admin-header">
-		<h1>Edit location</h1>
-		<span class="last-update">Last change: {{$location->updated_at->tz('CET')->format('d M, Y, H:i\h')}}</span>
+		<h1>Edit location Marker</h1>
+		<span class="last-update">Last change: {{$marker->updated_at->tz('CET')->format('d M, Y, H:i\h')}}</span>
 	</div>
 
 	<div class="admin-content">
@@ -13,7 +13,7 @@
 		    </span>
 		@endif
 
-		<form action="locations/update/{{ $location->id }}" method="post" enctype="multipart/form-data">
+		<form action="locations/update-marker/{{ $marker->id }}" method="post">
 			{{ csrf_field() }}
 
 			@if ($errors->first('title'))
@@ -25,14 +25,25 @@
 			@endif 
 
 			<label>Title</label>
-			<input type="text" name="title" placeholder="Page title" value="{{ $location->title or old('title') }}">
+			<input type="text" name="title" placeholder="Marker title" value="{{ $marker->title }}">
+
+			@if ($errors->first('key'))
+			    <div class="alert alert-error no-hide">
+			        <span class="help-block">
+			            <strong>{{ $errors->first('key') }}</strong>
+			        </span>
+			    </div>
+			@endif 
+
+			<label>Key</label>
+			<input type="text" name="key" placeholder="Marker key" value="{{ $marker->key }}">
 
 			<label for="description">Description:</label>
-			<textarea name="description" class="htmlEditor" rows="15" data-page-name="description" data-page-id="new" id="editor-1">{{ $location->description or old('description') }}</textarea>
+			<textarea name="description" class="htmlEditor" rows="15" data-page-name="description" data-page-id="new" id="editor-1">{{ $marker->description or $marker->description }}</textarea>
 			
 			<div class="input-wrap">
 				<label>Adress:</label>
-				<input type="text" name="address" placeholder="Address for finding location" id="address" value="{{ old('address') }}"/>
+				<input type="text" name="address" placeholder="Address for finding marker location" id="address" value="{{ old('address') }}"/>
 
 			<div id="locate" class="button dark item">Locate</div>
 
@@ -41,66 +52,17 @@
 			</div>
 
 			<label for="latitude">Latitude:</label>
-				<input type="text" name="latitude" placeholder="Latitude" id="latitude" value="{{ $location->latitude }}"/>
+				<input type="text" name="latitude" placeholder="Latitude" id="latitude" value="{{ $marker->latitude }}"/>
 			<label for="longitude">Longitude:</label>
-				<input type="text" name="longitude" placeholder="Longitude" id="longitude" value="{{ $location->longitude }}"/>
+				<input type="text" name="longitude" placeholder="Longitude" id="longitude" value="{{ $marker->longitude }}"/>
 
 			<input type="hidden" name="zoom" id="zoom" placeholder="zoom"/>
 			<input type="hidden" id="mapImage"/>
 
-			<label>Image</label>
-			<div class="file-input-wrap cf">
-				@if(!empty($location->image)) 
-					<div class="small-image-preview" style="background-image: url(uploads/{{$location->image}})"></div>
-					<input type="checkbox" name="delete_image" value="Delete this file">Delete this file?
-				@else
-					<div class="fileUpload">
-						<span>Choose file</span>
-						<input type="file" name="image"/>
-					</div>
-				@endif
-			</div>
-
-			<label for="link">Link:</label>
-			<input type="text" name="link" placeholder="URL" value="{{ $location->link or old('link') }}">
-
 			<input type="submit" value="Update" class="save-item">
+			<a href="location/delete-marker/{{ $marker->id }}" class="button remove-item right delete">Delete marker</a>
 
-			<a href="locations/delete/{{ $location->id }}" class="button remove-item">Delete location</a>
 		</form>
-
-		<div class="section-header">
-			<span>Map markers</span>
-			<div class="line"></div>
-		</div>
-
-		@if (session('marker'))
-		    <div class="alert alert-error no-hide">
-		        <span class="help-block">
-		            <strong>{{ session('marker') }}</strong>
-		        </span>
-		    </div>
-		@endif
-
-		<div class="cf">
-			<div class="cf"></div>
-			<a href="locations/add-marker/{{ $location->id }}" class="button right">Add marker</a>
-			<div class="cf"></div>
-
-			@if (!empty($location->marker->first()))
-				
-				<ul class="elements-list">
-					@foreach ($location->marker as $marker)
-						<li>
-							<a href="locations/edit-marker/{{$marker->id}}"><b>{{ ucfirst($marker->title) }}</b></a>
-							<a href="locations/delete-marker/{{ $marker->id }}" class="button remove-item file list delete">Delete</a>
-						</li>
-					@endforeach
-				</ul>
-			@else
-				<p>No markers yet</p>
-			@endif
-		</div>
 
 		<script src="https://maps.googleapis.com/maps/api/js{{ !empty(config('laravel-admin.google_map_api')) ? '?key='.config('laravel-admin.google_map_api') : ''}}"></script>
 		<script>
@@ -111,8 +73,8 @@
 
 		function initMap() {
 			var mapDiv = document.getElementById('map');
-			var lat = {{ $location->latitude }};
-			var lng = {{ $location->longitude }};
+			var lat = {{ $marker->latitude }};
+			var lng = {{ $marker->longitude }};
 
 			map = new google.maps.Map(mapDiv, {
 				center: { lat: lat, lng: lng },
@@ -120,10 +82,14 @@
 				scrollwheel: false,
 			});
 
-			@if ($location->latitude && $location->longitude)
+			@if ($marker->latitude && $marker->longitude)
 				var marker = new google.maps.Marker({
-					icon: 'images/map-marker-orange.png',
-					position: {lat: {{ $location->latitude }}, lng: {{ $location->longitude }} },
+			    	@if ($marker->location->image)
+				    	icon: '{{ 'uploads/'.$marker->location->image }}',
+			    	@else
+				    	icon: 'images/map-marker-orange.png',
+			    	@endif
+					position: {lat: {{ $marker->latitude }}, lng: {{ $marker->longitude }} },
 					map: map,
 				});
 
@@ -155,7 +121,11 @@
 			deleteMarkers();		
 
 		    var marker = new google.maps.Marker({
-		    	icon: 'images/map-marker-orange.png',
+		    	@if ($marker->location->image)
+			    	icon: '{{ 'uploads/'.$marker->location->image }}',
+		    	@else
+			    	icon: 'images/map-marker-orange.png',
+		    	@endif
 		        position: latLng, 
 		        map: map
 		    });

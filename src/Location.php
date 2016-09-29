@@ -14,4 +14,9 @@ class Location extends Model
         'image',
         'link',
     ];
+
+    public function marker()
+    {
+    	return $this->hasMany('SystemInc\LaravelAdmin\LocationMarker');
+    }
 }

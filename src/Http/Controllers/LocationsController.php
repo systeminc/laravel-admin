@@ -7,11 +7,16 @@ use Illuminate\Http\Request;
 use Image;
 use Storage;
 use SystemInc\LaravelAdmin\Location;
+use SystemInc\LaravelAdmin\LocationMarker;
+use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 use SystemInc\LaravelAdmin\Validations\LocationValidation;
+use SystemInc\LaravelAdmin\Validations\LocationMarkerValidation;
 use Validator;
 
 class LocationsController extends Controller
 {
+    use HelpersTrait;
+
     public function __construct()
     {
         if (config('laravel-admin.modules.locations') == false) {
@@ -167,5 +172,99 @@ class LocationsController extends Controller
         $location->delete();
 
         return redirect(config('laravel-admin.route_prefix').'/locations')->with('success', 'Deleted successfully');
+    }
+
+    /**
+     * Add map marker
+     * @param int $location_id 
+     * @return type
+     */
+    public function getAddMarker($location_id)
+    {
+        $location = Location::find($location_id);
+
+        return view('admin::locations.add_marker', compact('location'));
+    }
+
+    /**
+     * Save map marker
+     * @param Request $request 
+     * @param int $location_id 
+     * @return type
+     */
+    public function postSaveMarker(Request $request, $location_id)
+    {        
+        // validation
+        $validation = Validator::make($request->all(), LocationMarkerValidation::rules(), LocationMarkerValidation::messages());
+
+        if ($validation->fails()) {
+            return back()->withInput()->withErrors($validation);
+        }
+
+        LocationMarker::create([
+            'title' => $request->title,
+            'key'   => $this->sanitizeUri($request->key),
+            'location_id'   => $location_id,
+            'description'   =>  $request->description,
+            'latitude'  => $request->latitude,
+            'longitude' => $request->longitude
+        ]);
+
+        return redirect(config('laravel-admin.route_prefix').'/locations/edit/'.$location_id)->with('success', 'Map marker is created');
+    }
+
+    /**
+     * Edit map marker
+     * @param int $marker_id 
+     * @return type
+     */
+    public function getEditMarker($marker_id)
+    {
+        $marker = LocationMarker::find($marker_id);
+        
+        return view('admin::locations.edit_marker', compact('marker'));
+    }
+
+    /**
+     * Update map marker
+     * @param Request $request 
+     * @param int $marker_id 
+     * @return type
+     */
+    public function postUpdateMarker(Request $request, $marker_id)
+    {
+        // validation
+        $validation = Validator::make($request->all(), LocationMarkerValidation::rules($marker_id), LocationMarkerValidation::messages());
+
+        if ($validation->fails()) {
+            return back()->withInput()->withErrors($validation);
+        }
+
+        LocationMarker::find($marker_id)->update([
+            'title' => $request->title,
+            'key'   => $this->sanitizeUri($request->key),
+            'description'   =>  $request->description,
+            'latitude'  => $request->latitude,
+            'longitude' => $request->longitude
+        ]);
+
+        return redirect(config('laravel-admin.route_prefix').'/locations/edit/'.$marker_id)->with('success', 'Map marker is updated');
+
+    }
+
+    /**
+     * Delete map marker
+     * @param int $marker_id 
+     * @return type
+     */
+    public function getDeleteMarker($marker_id)
+    {
+        $marker = LocationMarker::find($marker_id);
+
+        $redirect_id = $marker->location_id;
+
+        $marker->delete();
+
+        return redirect(config('laravel-admin.route_prefix').'/locations/edit/'.$redirect_id)->with('success', 'Map marker is deleted');
     }
 }
