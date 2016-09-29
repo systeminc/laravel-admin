@@ -18,7 +18,7 @@ trait HelpersTrait
     {
         return trim(strtolower(preg_replace('/[^a-zA-Z0-9_]/', '', $element)), '_');
     }
-    
+
     public function generateNestedPageList($pages, $navigation = '')
     {
         $navigation .= '<ul>';
@@ -33,7 +33,7 @@ trait HelpersTrait
 
             $navigation .= '</li>';
         }
-        
+
         $navigation .= '</ul>';
 
         return $navigation;
