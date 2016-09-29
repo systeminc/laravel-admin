@@ -31,9 +31,11 @@ class PagesController extends Controller
      */
     public function getIndex()
     {
-        $pages = Page::all();
+        $pages = Page::whereParentId(null)->get();
 
-        return view('admin::pages.index', compact('pages'));
+        $navigation = $this->generateNestedPageList($pages);
+
+        return view('admin::pages.index', compact('pages', 'navigation'));
     }
 
     /**
