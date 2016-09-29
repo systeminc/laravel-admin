@@ -9,6 +9,7 @@ use Storage;
 use SystemInc\LaravelAdmin\Gallery;
 use SystemInc\LaravelAdmin\Product;
 use SystemInc\LaravelAdmin\ProductCategory;
+use SystemInc\LaravelAdmin\SimilarProduct;
 use SystemInc\LaravelAdmin\Validations\ProductValidation;
 use Validator;
 
@@ -39,6 +40,7 @@ class ProductsController extends Controller
 
         $gallery = new Gallery();
         $gallery->title = 'product '.$product->id;
+        $gallery->key = 'product'.$product->id;
         $gallery->product_id = $product->id;
         $gallery->save();
 
@@ -162,5 +164,39 @@ class ProductsController extends Controller
         $product->delete();
 
         return redirect($request->segment(1).'/shop/products/')->with('success', 'Item deleted');
+    }
+
+    /**
+     * Add similar product
+     * @param Request $request 
+     * @param int $product_id 
+     * @return type
+     */
+    public function postAddSimilar(Request $request, $product_id)
+    {
+        $similar_product = SimilarProduct::where(['product_id' => $product_id, 'product_similar_id' => $request->product_similar_id,])->first();
+
+        if ($similar_product) {
+            return back()->with(['similar' => 'This product exists in similar products']);
+        }
+
+        SimilarProduct::create([
+            'product_id' => $product_id,
+            'product_similar_id' => $request->product_similar_id,
+        ]);
+
+        return back();
+    }
+
+    /**
+     * Delete similar product
+     * @param int $similar_id 
+     * @return type
+     */
+    public function getDeleteSimilar($similar_id)
+    {
+        SimilarProduct::find($similar_id)->delete();
+
+        return back();
     }
 }

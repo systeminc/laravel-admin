@@ -154,13 +154,18 @@
 		</section>
 
 		<section>
+			<section>
+				@include('admin::products.similar')
+			</section>
+		</section>
+
+		<section>
 			@if($product->gallery)
 			<section>
 				@include('admin::products.gallery')
 			</section>
 			@endif
 		</section>
-		
 		
 	</div>
 

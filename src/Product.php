@@ -46,4 +46,9 @@ class Product extends Model
     {
         return $this->hasMany('SystemInc\LaravelAdmin\ProductComment')->orderBy('created_at', 'desc');
     }
+
+    public function similar()
+    {
+        return $this->hasMany('SystemInc\LaravelAdmin\SimilarProduct')->orderBy('created_at', 'desc');
+    }
 }

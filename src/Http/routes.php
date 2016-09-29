@@ -42,6 +42,8 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
 
             // products
             Route::group(['prefix' => 'products'], function () {
+                Route::get('delete-similar/{similar_id}', 'ProductsController@getDeleteSimilar');
+                Route::post('add-similar/{product_id}', 'ProductsController@postAddSimilar');
                 Route::post('save/{product_id}', 'ProductsController@postSave');
                 Route::get('delete/{product_id}', 'ProductsController@getDelete');
                 Route::get('edit/{product_id}', 'ProductsController@getEdit');
