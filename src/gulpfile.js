@@ -26,7 +26,7 @@ elixir(function(mix) {
     mix.less(
     	[
 	    	'login.less', 
-            '../bower_components/jquery-ui/jquery-ui.min.css',
+            '../bower_components/jquery-ui/themes/base/jquery-ui.css',
             'admin.less'
     	],
     	'resources/assets/dist/css/admin.css'
