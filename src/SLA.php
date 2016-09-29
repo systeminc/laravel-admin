@@ -83,7 +83,7 @@ class SLA
             return LocationMarker::whereKey($key)->first();
         } else {
             return new Location();
-        }    
+        }
     }
 
     /**
