@@ -1,9 +1,9 @@
 <?php
 
-use SystemInc\LaravelAdmin\Gallery;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use SystemInc\LaravelAdmin\Gallery;
 
 class AddKeyToGalleriesTable extends Migration
 {
@@ -18,7 +18,7 @@ class AddKeyToGalleriesTable extends Migration
             $table->string('key')->after('title');
         });
 
-        Gallery::orderBy('id')->each(function($gallery, $key){
+        Gallery::orderBy('id')->each(function ($gallery, $key) {
             Gallery::find($gallery->id)->update(['key' => 'gallery_'.$gallery->id]);
         });
 
