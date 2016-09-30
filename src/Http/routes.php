@@ -101,18 +101,29 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
             Route::get('', 'GalleriesController@getIndex');
         });
 
-        // locations
-        Route::group(['prefix' => 'locations'], function () {
-            Route::get('delete-marker/{marker_id}', 'LocationsController@getDeleteMarker');
-            Route::post('update-marker/{maker_id}', 'LocationsController@postUpdateMarker');
-            Route::post('save-marker/{location_id}', 'LocationsController@postSaveMarker');
-            Route::get('edit-marker/{marker_id}', 'LocationsController@getEditMarker');
-            Route::get('add-marker/{location_id}', 'LocationsController@getAddMarker');
-            Route::post('update/{location_id}', 'LocationsController@postUpdate');
-            Route::get('delete/{location_id}', 'LocationsController@getDelete');
-            Route::get('edit/{location_id}', 'LocationsController@getEdit');
-            Route::get('create', 'LocationsController@getCreate');
-            Route::get('', 'LocationsController@getIndex');
+        //Places
+        Route::group(['prefix' => 'places', 'namespace' => 'Places'], function () {
+            // locations
+            Route::group(['prefix' => 'locations'], function () {
+                Route::get('delete/{location_id}', 'LocationsController@getDelete');
+                Route::post('update/{location_id}', 'LocationsController@postUpdate');
+                Route::get('edit/{location_id}', 'LocationsController@getEdit');
+                Route::post('save', 'LocationsController@postSave');
+                Route::get('create', 'LocationsController@getCreate');
+                Route::get('', 'LocationsController@getIndex');
+            });    
+
+            // locations
+            Route::group(['prefix' => 'maps'], function () {
+                Route::get('delete/{map_id}', 'MapsController@getDelete');
+                Route::post('update/{map_id}', 'MapsController@postUpdate');
+                Route::get('edit/{map_id}', 'MapsController@getEdit');
+                Route::post('save', 'MapsController@postSave');
+                Route::get('create', 'MapsController@getCreate');
+                Route::get('', 'MapsController@getIndex');
+            });
+            
+            Route::get('', 'PlacesController@getIndex');
         });
 
         // ajax

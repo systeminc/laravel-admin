@@ -2,18 +2,20 @@
 
 @section('admin-content')
 	<div class="admin-header">
-		<h1>Edit location Marker</h1>
-		<span class="last-update">Last change: {{$marker->updated_at->tz('CET')->format('d M, Y, H:i\h')}}</span>
+		<h1>Edit map</h1>
+		<span class="last-update">Last change: {{$map->updated_at->tz('CET')->format('d M, Y, H:i\h')}}</span>
 	</div>
 
 	<div class="admin-content">
-		@if (session('success'))
-		    <span class="alert alert-success">
-		        {{ session('success') }}
-		    </span>
-		@endif
+		@if (session('error'))
+	        <div class="alert alert-error no-hide">
+	            <span class="help-block">
+	                <strong>{{ session('error') }}</strong>
+	            </span>
+	        </div>
+	    @endif
 
-		<form action="locations/update-marker/{{ $marker->id }}" method="post">
+		<form action="places/maps/update/{{ $map->id }}" method="post" enctype="multipart/form-data">
 			{{ csrf_field() }}
 
 			@if ($errors->first('title'))
@@ -25,7 +27,7 @@
 			@endif 
 
 			<label>Title</label>
-			<input type="text" name="title" placeholder="Marker title" value="{{ $marker->title }}">
+			<input type="text" name="title" placeholder="Location title" value="{{ $map->title or old('title') }}">
 
 			@if ($errors->first('key'))
 			    <div class="alert alert-error no-hide">
@@ -36,14 +38,14 @@
 			@endif 
 
 			<label>Key</label>
-			<input type="text" name="key" placeholder="Marker key" value="{{ $marker->key }}">
+			<input type="text" name="key" placeholder="Location key" value="{{ $map->key or old('key') }}">
 
 			<label for="description">Description:</label>
-			<textarea name="description" class="htmlEditor" rows="15" data-page-name="description" data-page-id="new" id="editor-1">{{ $marker->description or $marker->description }}</textarea>
+			<textarea name="description" class="htmlEditor" rows="15" data-page-name="description" data-page-id="new" id="editor-1">{{ $map->description or old('description') }}</textarea>
 			
 			<div class="input-wrap">
 				<label>Adress:</label>
-				<input type="text" name="address" placeholder="Address for finding marker location" id="address" value="{{ old('address') }}"/>
+				<input type="text" name="address" placeholder="Address for finding map" id="address" value="{{ $map->address }}"/>
 
 			<div id="locate" class="button dark item">Locate</div>
 
@@ -52,16 +54,16 @@
 			</div>
 
 			<label for="latitude">Latitude:</label>
-				<input type="text" name="latitude" placeholder="Latitude" id="latitude" value="{{ $marker->latitude }}"/>
+				<input type="text" name="latitude" placeholder="Latitude" id="latitude" value="{{ $map->latitude }}"/>
 			<label for="longitude">Longitude:</label>
-				<input type="text" name="longitude" placeholder="Longitude" id="longitude" value="{{ $marker->longitude }}"/>
+				<input type="text" name="longitude" placeholder="Longitude" id="longitude" value="{{ $map->longitude }}"/>
 
-			<input type="hidden" name="zoom" id="zoom" placeholder="zoom"/>
+			<input type="text" name="zoom" id="zoom" placeholder="zoom" value="{{ $map->zoom }}" />
 			<input type="hidden" id="mapImage"/>
 
 			<input type="submit" value="Update" class="save-item">
-			<a href="location/delete-marker/{{ $marker->id }}" class="button remove-item right delete">Delete marker</a>
 
+			<a href="places/maps/delete/{{ $map->id }}" class="button remove-item">Delete map</a>
 		</form>
 
 		<script src="https://maps.googleapis.com/maps/api/js{{ !empty(config('laravel-admin.google_map_api')) ? '?key='.config('laravel-admin.google_map_api') : ''}}"></script>
@@ -73,28 +75,14 @@
 
 		function initMap() {
 			var mapDiv = document.getElementById('map');
-			var lat = {{ $marker->latitude }};
-			var lng = {{ $marker->longitude }};
+			var lat = {{ $map->latitude }};
+			var lng = {{ $map->longitude }};
 
 			map = new google.maps.Map(mapDiv, {
 				center: { lat: lat, lng: lng },
 				zoom: 12 ,
 				scrollwheel: false,
 			});
-
-			@if ($marker->latitude && $marker->longitude)
-				var marker = new google.maps.Marker({
-			    	@if ($marker->location->image)
-				    	icon: '{{ 'uploads/'.$marker->location->image }}',
-			    	@else
-				    	icon: 'images/map-marker-orange.png',
-			    	@endif
-					position: {lat: {{ $marker->latitude }}, lng: {{ $marker->longitude }} },
-					map: map,
-				});
-
-				markers.push(marker);
-			@endif
 
 			document.getElementById('locate').addEventListener('click', function() {
 		    	var address = document.getElementById("address").value;
@@ -121,11 +109,7 @@
 			deleteMarkers();		
 
 		    var marker = new google.maps.Marker({
-		    	@if ($marker->location->image)
-			    	icon: '{{ 'uploads/'.$marker->location->image }}',
-		    	@else
-			    	icon: 'images/map-marker-orange.png',
-		    	@endif
+		    	icon: 'images/map-marker-orange.png',
 		        position: latLng, 
 		        map: map
 		    });

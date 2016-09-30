@@ -2,6 +2,9 @@
 
 namespace SystemInc\LaravelAdmin\Traits;
 
+use Image;
+use Storage;
+
 trait HelpersTrait
 {
     public function sanitizeUri($uri)
@@ -37,5 +40,26 @@ trait HelpersTrait
         $navigation .= '</ul>';
 
         return $navigation;
+    }
+
+    public function saveImage($image, $path)
+    {
+        if ($image && $image->isValid()) {
+            $image_name = str_random(5);
+
+            $original = '/'.$image_name.'.'.$image->getClientOriginalExtension();
+            $storage_key = 'images/'.$path.$original;
+
+            $original_image = Image::make($image)
+                ->fit(1920, 1080, function ($constraint) {
+                    $constraint->upsize();
+                })->encode();
+
+            Storage::put($storage_key, $original_image);
+
+            return $storage_key;
+        }
+
+        return null;
     }
 }

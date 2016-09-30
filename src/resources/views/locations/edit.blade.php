@@ -7,13 +7,15 @@
 	</div>
 
 	<div class="admin-content">
-		@if (session('success'))
-		    <span class="alert alert-success">
-		        {{ session('success') }}
-		    </span>
-		@endif
+		@if (session('error'))
+	        <div class="alert alert-error no-hide">
+	            <span class="help-block">
+	                <strong>{{ session('error') }}</strong>
+	            </span>
+	        </div>
+	    @endif
 
-		<form action="locations/update/{{ $location->id }}" method="post" enctype="multipart/form-data">
+		<form action="places/locations/update/{{ $location->id }}" method="post" enctype="multipart/form-data">
 			{{ csrf_field() }}
 
 			@if ($errors->first('title'))
@@ -25,14 +27,25 @@
 			@endif 
 
 			<label>Title</label>
-			<input type="text" name="title" placeholder="Page title" value="{{ $location->title or old('title') }}">
+			<input type="text" name="title" placeholder="Location title" value="{{ $location->title or old('title') }}">
+
+			@if ($errors->first('key'))
+			    <div class="alert alert-error no-hide">
+			        <span class="help-block">
+			            <strong>{{ $errors->first('key') }}</strong>
+			        </span>
+			    </div>
+			@endif 
+
+			<label>Key</label>
+			<input type="text" name="key" placeholder="Location key" value="{{ $location->key or old('key') }}">
 
 			<label for="description">Description:</label>
 			<textarea name="description" class="htmlEditor" rows="15" data-page-name="description" data-page-id="new" id="editor-1">{{ $location->description or old('description') }}</textarea>
 			
 			<div class="input-wrap">
 				<label>Adress:</label>
-				<input type="text" name="address" placeholder="Address for finding location" id="address" value="{{ old('address') }}"/>
+				<input type="text" name="address" placeholder="Address for finding location" id="address" value="{{ $location->address }}"/>
 
 			<div id="locate" class="button dark item">Locate</div>
 
@@ -61,46 +74,50 @@
 				@endif
 			</div>
 
-			<label for="link">Link:</label>
-			<input type="text" name="link" placeholder="URL" value="{{ $location->link or old('link') }}">
+			<label>Thumb Image</label>
+			<div class="file-input-wrap cf">
+				@if(!empty($location->thumb_image)) 
+					<div class="small-image-preview" style="background-image: url(uploads/{{$location->thumb_image}})"></div>
+					<input type="checkbox" name="delete_thumb_image" value="Delete this file">Delete this file?
+				@else
+					<div class="fileUpload">
+						<span>Choose file</span>
+						<input type="file" name="thumb_image"/>
+					</div>
+				@endif
+			</div>
+
+			<label>Marker Image</label>
+			<div class="file-input-wrap cf">
+				@if(!empty($location->marker_image)) 
+					<div class="small-image-preview" style="background-image: url(uploads/{{$location->marker_image}})"></div>
+					<input type="checkbox" name="delete_marker_image" value="Delete this file">Delete this file?
+				@else
+					<div class="fileUpload">
+						<span>Choose file</span>
+						<input type="file" name="marker_image"/>
+					</div>
+				@endif
+			</div>
+
+			<div class="cf">
+				<label>Map</label>
+
+				<div class="select-style">
+					<select name="map_id">
+						<option value="0">Choose map</option>
+					
+						@foreach ($maps as $map)
+							<option value="{{ $map->id }}"{{ ($map->id == $location->map_id) ? "selected" : "" }}>{{ $map->title }}</option>
+						@endforeach
+					</select>
+				</div>
+			</div>
 
 			<input type="submit" value="Update" class="save-item">
 
-			<a href="locations/delete/{{ $location->id }}" class="button remove-item">Delete location</a>
+			<a href="places/locations/delete/{{ $location->id }}" class="button remove-item">Delete location</a>
 		</form>
-
-		<div class="section-header">
-			<span>Map markers</span>
-			<div class="line"></div>
-		</div>
-
-		@if (session('marker'))
-		    <div class="alert alert-error no-hide">
-		        <span class="help-block">
-		            <strong>{{ session('marker') }}</strong>
-		        </span>
-		    </div>
-		@endif
-
-		<div class="cf">
-			<div class="cf"></div>
-			<a href="locations/add-marker/{{ $location->id }}" class="button right">Add marker</a>
-			<div class="cf"></div>
-
-			@if (!empty($location->marker->first()))
-				
-				<ul class="elements-list">
-					@foreach ($location->marker as $marker)
-						<li>
-							<a href="locations/edit-marker/{{$marker->id}}"><b>{{ ucfirst($marker->title) }}</b></a>
-							<a href="locations/delete-marker/{{ $marker->id }}" class="button remove-item file list delete">Delete</a>
-						</li>
-					@endforeach
-				</ul>
-			@else
-				<p>No markers yet</p>
-			@endif
-		</div>
 
 		<script src="https://maps.googleapis.com/maps/api/js{{ !empty(config('laravel-admin.google_map_api')) ? '?key='.config('laravel-admin.google_map_api') : ''}}"></script>
 		<script>

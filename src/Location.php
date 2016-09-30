@@ -8,15 +8,15 @@ class Location extends Model
 {
     protected $fillable = [
         'title',
+        'key',
+        'map_id',
         'description',
+        'address',
         'latitude',
         'longitude',
         'image',
-        'link',
+        'thumb_image',
+        'marker_image',
+        'order_number',
     ];
-
-    public function marker()
-    {
-        return $this->hasMany('SystemInc\LaravelAdmin\LocationMarker');
-    }
 }

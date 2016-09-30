@@ -4,19 +4,19 @@ namespace SystemInc\LaravelAdmin;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LocationMarker extends Model
+class Map extends Model
 {
     protected $fillable = [
         'title',
         'key',
-        'location_id',
         'description',
+        'zoom',
         'latitude',
         'longitude',
     ];
 
     public function location()
     {
-        return $this->belongsTo('SystemInc\LaravelAdmin\Location');
+    	return $this->hasMany('SystemInc\LaravelAdmin\Location', 'map_id');
     }
 }

@@ -2,10 +2,10 @@
 
 @section('admin-content')
 	<div class="admin-header">
-		<h1>Locations</h1>
+		<h1>Maps</h1>
 		<span class="last-update"></span>
 		<div class="button-wrap">
-			<a href="places/locations/create" class="button right">Add location</a>
+			<a href="places/maps/create" class="button right">Add Map</a>
 		</div>
 	</div>
 
@@ -17,9 +17,9 @@
 		@endif
 
 		<ul class="border">
-			@foreach ($locations as $location)
-					<li><a href="places/locations/edit/{{ $location->id }}">
-						{{ ucfirst($location->title) }}</a></li>
+			@foreach ($maps as $map)
+					<li><a href="places/maps/edit/{{ $map->id }}">
+						{{ ucfirst($map->title) }}</a></li>
 			@endforeach
 		</ul>
 	</div>

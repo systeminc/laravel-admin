@@ -2,20 +2,23 @@
 
 @section('admin-content')
 	<div class="admin-header">
-		<h1>Add location marker</h1>
-		<span class="last-update">Last change: {{$location->updated_at->tz('CET')->format('d M, Y, H:i\h')}}</span>
+		<h1>Add map</h1>
+		<span class="last-update"></span>
 	</div>
 
 	<div class="admin-content">
-		@if (session('success'))
-		    <span class="alert alert-success">
-		        {{ session('success') }}
-		    </span>
-		@endif
+		@if (session('error'))
+	        <div class="alert alert-error no-hide">
+	            <span class="help-block">
+	                <strong>{{ session('error') }}</strong>
+	            </span>
+	        </div>
+	    @endif
+			
+		<form action="places/maps/save" method="post" enctype="multipart/form-data">
 
-		<form action="locations/save-marker/{{ $location->id }}" method="post">
 			{{ csrf_field() }}
-
+			
 			@if ($errors->first('title'))
 			    <div class="alert alert-error no-hide">
 			        <span class="help-block">
@@ -24,8 +27,8 @@
 			    </div>
 			@endif 
 
-			<label>Title</label>
-			<input type="text" name="title" placeholder="Marker title" value="{{ old('title') }}">
+			<label for="title">Title:</label>
+			<input type="text" name="title" placeholder="Title" value="{{ old('title') }}">
 
 			@if ($errors->first('key'))
 			    <div class="alert alert-error no-hide">
@@ -33,17 +36,17 @@
 			            <strong>{{ $errors->first('key') }}</strong>
 			        </span>
 			    </div>
-			@endif 
+			@endif 			
 
-			<label>Key</label>
-			<input type="text" name="key" placeholder="Marker key" value="{{ old('key') }}">
-
-			<label for="description">Description:</label>
-			<textarea name="description" class="htmlEditor" rows="15" data-page-name="description" data-page-id="new" id="editor-1">{{ $location->description or old('description') }}</textarea>
+			<label for="key">Key:</label>
+			<input type="text" name="key" placeholder="Key" value="{{ old('key') }}">
 			
+			<label for="description">Description:</label>
+			<textarea name="description" class="htmlEditor" rows="15" data-page-name="description" data-page-id="new" id="editor-1">{{ old('description') }}</textarea>
+					
 			<div class="input-wrap">
-				<label>Adress:</label>
-				<input type="text" name="address" placeholder="Address for finding marker location" id="address" value="{{ old('address') }}"/>
+				<label>Address for finding map</label>
+				<input type="text" name="address" placeholder="Address for finding map" id="address" value="{{ old('address') }}"/>
 
 			<div id="locate" class="button dark item">Locate</div>
 
@@ -51,18 +54,36 @@
 				<div id="map" style="width: 100%;min-height: 300px;margin-bottom: 24px;"></div>								
 			</div>
 
-			<label for="latitude">Latitude:</label>
-				<input type="text" name="latitude" placeholder="Latitude" id="latitude" value="{{ old('latitude') }}"/>
-			<label for="longitude">Longitude:</label>
-				<input type="text" name="longitude" placeholder="Longitude" id="longitude" value="{{ old('longitude') }}"/>
+			@if ($errors->first('latitude'))
+			    <div class="alert alert-error no-hide">
+			        <span class="help-block">
+			            <strong>{{ $errors->first('latitude') }}</strong>
+			        </span>
+			    </div>
+			@endif 
 
-			<input type="hidden" name="zoom" id="zoom" placeholder="zoom"/>
+			<label for="latitude">Latitude:</label>
+				<input type="text" name="latitude" placeholder="Latitude" id="latitude" value="{{ old('latitude') }}" />
+
+			@if ($errors->first('longitude'))
+			    <div class="alert alert-error no-hide">
+			        <span class="help-block">
+			            <strong>{{ $errors->first('longitude') }}</strong>
+			        </span>
+			    </div>
+			@endif 
+
+			<label for="longitude">Longitude:</label>
+				<input type="text" name="longitude" placeholder="Longitude" id="longitude" value="{{ old('longitude') }}" />
+
+			<label for="zoom">Zoom:</label>
+			<input type="text" name="zoom" id="zoom" placeholder="zoom" value="{{ old('zoom') }}"/>
 			<input type="hidden" id="mapImage"/>
 
 			<input type="submit" value="Add" class="save-item">
 		</form>
 
-		<script src="https://maps.googleapis.com/maps/api/js{{ !empty(config('laravel-admin.google_map_api')) ? '?key='.config('laravel-admin.google_map_api') : ''}}"></script>
+		<script src='https://maps.googleapis.com/maps/api/js{{ !empty(config('laravel-admin.google_map_api')) ? '?key='.config('laravel-admin.google_map_api') : ''}}'></script>
 		<script>
 
 		var map;
@@ -71,28 +92,14 @@
 
 		function initMap() {
 			var mapDiv = document.getElementById('map');
-			var lat = {{ $location->latitude }};
-			var lng = {{ $location->longitude }};
+			var lat = {{ !empty(old('latitude')) ? old('latitude') : 44.786568 }};
+			var lng = {{ !empty(old('longitude')) ? old('longitude') : 20.44892159999995 }};
 
 			map = new google.maps.Map(mapDiv, {
 				center: { lat: lat, lng: lng },
-				zoom: 12 ,
+				zoom: 4 ,
 				scrollwheel: false,
 			});
-
-			@if (old('latitude') && old('longitude'))
-				var marker = new google.maps.Marker({
-			    	@if ($location->image)
-				    	icon: '{{ 'uploads/'.$location->image }}',
-			    	@else
-				    	icon: 'images/map-marker-orange.png',
-			    	@endif
-					position: {lat: {{ old('latitude') }}, lng: {{ old('longitude') }} },
-					map: map,
-				});
-
-				markers.push(marker);
-			@endif
 
 			document.getElementById('locate').addEventListener('click', function() {
 		    	var address = document.getElementById("address").value;
@@ -119,11 +126,7 @@
 			deleteMarkers();		
 
 		    var marker = new google.maps.Marker({
-		    	@if ($location->image)
-			    	icon: '{{ 'uploads/'.$location->image }}',
-		    	@else
-			    	icon: 'images/map-marker-orange.png',
-		    	@endif
+		    	icon: 'images/map-marker-orange.png',
 		        position: latLng, 
 		        map: map
 		    });
@@ -132,7 +135,7 @@
 		    $('#longitude').val(latLng.lng());
 		    $('#zoom').val(map.getZoom());
 
-		    // setStaticMap(latLng.lat(), latLng.lng(), map.getZoom());
+		    setStaticMap(latLng.lat(), latLng.lng(), map.getZoom());
 
 		    // add marker in markers array
 		    markers.push(marker);
@@ -162,9 +165,8 @@
 			var address = document.getElementById("address").value;
 			codeAddress(address,'true',map);
 		})
-		</script>
+		</script>	
 	</div>
 
-	
 
 @stop

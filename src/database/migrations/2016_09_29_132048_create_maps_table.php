@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLocationMarkersTable extends Migration
+class CreateMapsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,16 @@ class CreateLocationMarkersTable extends Migration
      */
     public function up()
     {
-        Schema::create('location_markers', function (Blueprint $table) {
+        Schema::create('maps', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->string('key')->unique();
-            $table->integer('location_id')->unsigned();
             $table->text('description')->nullable();
+            $table->integer('zoom')->default(10);
             $table->double('latitude', 10, 8);
             $table->double('longitude', 10, 8);
             $table->timestamps();
 
-            $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
         });
     }
 
@@ -34,6 +33,6 @@ class CreateLocationMarkersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('location_markers');
+        Schema::dropIfExists('maps');
     }
 }
