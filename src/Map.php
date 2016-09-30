@@ -17,6 +17,6 @@ class Map extends Model
 
     public function location()
     {
-    	return $this->hasMany('SystemInc\LaravelAdmin\Location', 'map_id');
+        return $this->hasMany('SystemInc\LaravelAdmin\Location', 'map_id');
     }
 }

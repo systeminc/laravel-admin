@@ -5,8 +5,8 @@ namespace SystemInc\LaravelAdmin\Http\Controllers\Places;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Storage;
-use SystemInc\LaravelAdmin\Map;
 use SystemInc\LaravelAdmin\Location;
+use SystemInc\LaravelAdmin\Map;
 use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 use SystemInc\LaravelAdmin\Validations\LocationValidation;
 use Validator;
@@ -70,7 +70,7 @@ class LocationsController extends Controller
         $location->image = $this->saveImage($request->file('image'), 'locations');
         $location->thumb_image = $this->saveImage($request->file('thumb_image'), 'locations/thumb');
         $location->marker_image = $this->saveImage($request->file('marker_image'), 'locations/marker');
-        
+
         if ($request->map_id == 0) {
             $location->map_id = null;
         }
@@ -122,7 +122,7 @@ class LocationsController extends Controller
         $location->image = $this->saveImage($request->file('image'), 'locations');
         $location->thumb_image = $this->saveImage($request->file('thumb_image'), 'locations/thumb');
         $location->marker_image = $this->saveImage($request->file('marker_image'), 'locations/marker');
-       
+
         if ($request->map_id == 0) {
             $location->map_id = null;
         }

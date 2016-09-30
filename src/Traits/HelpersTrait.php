@@ -59,7 +59,5 @@ trait HelpersTrait
 
             return $storage_key;
         }
-
-        return null;
     }
 }
