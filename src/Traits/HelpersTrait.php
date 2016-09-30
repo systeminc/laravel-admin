@@ -28,7 +28,7 @@ trait HelpersTrait
 
         foreach ($pages as $page) {
             $navigation .= '<li>';
-            $navigation .= '<a href="pages/edit/'.$page->id.'"><b>'.$page->title.'</a>';
+            $navigation .= '<a href="pages/edit/'.$page->id.'">'.$page->title.'</a>';
 
             if ($page->subpages()->count()) {
                 $navigation = $this->generateNestedPageList($page->subpages(), $navigation);
