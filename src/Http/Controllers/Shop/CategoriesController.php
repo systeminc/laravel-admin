@@ -4,14 +4,16 @@ namespace SystemInc\LaravelAdmin\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Image;
 use Storage;
 use SystemInc\LaravelAdmin\ProductCategory;
+use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 use SystemInc\LaravelAdmin\Validations\CategoryValidation;
 use Validator;
 
 class CategoriesController extends Controller
 {
+    use HelpersTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -78,23 +80,7 @@ class CategoriesController extends Controller
 
         $category->fill($request->all());
 
-        $image = $request->file('thumb');
-
-        if ($image && $image->isValid()) {
-            $image_name = str_random(5);
-
-            $original = '/'.$image_name.'.'.$image->getClientOriginalExtension();
-            $dirname = 'images/categories'.$original;
-
-            $original_image = Image::make($image)
-                ->fit(1920, 1080, function ($constraint) {
-                    $constraint->upsize();
-                })->encode();
-
-            Storage::put($dirname, $original_image);
-
-            $category->thumb = $dirname;
-        }
+        $category->thumb = $this->saveImage($request->file('thumb'), 'categories');
 
         if ($request->input('delete_thumb')) {
             if (Storage::exists($category->thumb)) {
