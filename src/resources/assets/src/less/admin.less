@@ -864,14 +864,34 @@ header{
 		{
 			.transition;
 			margin-bottom: 2px;
-			background-color: lighten(@defaultTextColor, 65%);
 			
 			a{
 				padding: 15px 20px;
-				display: block;
+				width: auto;
+				display: inline-block;
 				font-size: 1.2em;
 				color: @defaultTextColor;
 				font-weight: bold;
+				border-bottom: 1px solid transparent;
+				position: relative;
+
+				&:after{
+					display: block;
+					content: '';
+					width: 0%;
+					height: 2px;
+					background-color: @defaultTextColor;
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					.transition();
+				}
+
+				&:hover{
+					&:after{
+						width: 100%;
+					}
+				}
 			}
 
 			a.remove-item{
@@ -900,9 +920,6 @@ header{
 				background-color: fade(blue, 20%);
 			}
 
-			&:hover{
-				background-color: fade(@defaultTextColor, 20%);
-			}
 		} 
 	}
 
@@ -1349,3 +1366,32 @@ header{
 		border-top: 1px solid lighten(@defaultTextColor, 62.5%);
 	}
 }
+
+
+
+.pages-list{
+
+	li > ul{
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+}//end pages list
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
