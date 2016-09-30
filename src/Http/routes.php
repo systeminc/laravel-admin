@@ -111,7 +111,7 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
                 Route::post('save', 'LocationsController@postSave');
                 Route::get('create', 'LocationsController@getCreate');
                 Route::get('', 'LocationsController@getIndex');
-            });    
+            });
 
             // locations
             Route::group(['prefix' => 'maps'], function () {
@@ -122,7 +122,7 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
                 Route::get('create', 'MapsController@getCreate');
                 Route::get('', 'MapsController@getIndex');
             });
-            
+
             Route::get('', 'PlacesController@getIndex');
         });
 
