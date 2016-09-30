@@ -14,4 +14,9 @@ class GalleryImage extends Model
         'mobile_source',
         'order_number',
     ];
+
+    public function getUrlAttribute()
+    {
+        return (new SLA())->getFile($this->source);
+    }
 }

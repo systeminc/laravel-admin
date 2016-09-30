@@ -9,9 +9,12 @@ use Image;
 use Storage;
 use SystemInc\LaravelAdmin\Gallery;
 use SystemInc\LaravelAdmin\GalleryImage;
+use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 
 class GalleriesController extends Controller
 {
+    use HelpersTrait;
+
     public function __construct()
     {
         if (config('laravel-admin.modules.galleries') == false) {
@@ -51,8 +54,15 @@ class GalleriesController extends Controller
     public function postSave(Request $request)
     {
         if (!empty($request->title) || $request->hasFile('images')) {
+            $key = $this->sanitizeElements($request->title);
+
+            if (Gallery::whereKey($key)->first()) {
+                return back()->with(['error' => 'Similar gallery exists, so we can create key('.$key.'), try deferent title']);
+            }
+
             $gallery = Gallery::create([
                 'title' => $request->title,
+                'key'   => $key,
             ]);
 
             return redirect(config('laravel-admin.route_prefix').'/galleries');
@@ -92,10 +102,16 @@ class GalleriesController extends Controller
             $this->Images($request->file('images'), $gallery->id);
         } elseif (!empty($request->title)) {
             $gallery->title = $request->title;
-            $gallery->save();
 
             $this->Images($request->file('images'), $gallery->id);
         }
+
+        if ($gallery->key !== $request->key && Gallery::whereKey($request->key)->first()) {
+            return back()->with(['error' => 'This key exists']);
+        }
+
+        $gallery->key = $this->sanitizeElements($request->key);
+        $gallery->save();
 
         return back();
     }

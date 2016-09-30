@@ -53,9 +53,13 @@ class SLA
      *
      * @return type
      */
-    public function gallery()
+    public function gallery($key = false)
     {
-        return new Gallery();
+        if ($key) {
+            return Gallery::whereKey($key)->first();
+        } else {
+            return new Gallery();
+        }
     }
 
     /**
@@ -66,6 +70,46 @@ class SLA
     public function lead()
     {
         return new Subscribe();
+    }
+
+    /**
+     * Instance of Location.
+     *
+     * @return type
+     */
+    public function locations()
+    {
+        return Location::all();
+    }
+
+    /**
+     * Instance of Location.
+     *
+     * @return type
+     */
+    public function location($key)
+    {
+        return Location::whereKey($key)->first();
+    }
+
+    /**
+     * Instance of map.
+     *
+     * @return type
+     */
+    public function maps()
+    {
+        return Map::all();
+    }
+
+    /**
+     * Instance of map.
+     *
+     * @return type
+     */
+    public function map($key)
+    {
+        return Map::whereKey($key)->first();
     }
 
     /**

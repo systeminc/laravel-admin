@@ -49,6 +49,9 @@
 				<label>Description</label>
 				<textarea name="description" data-page-name="product" data-page-id="{{$product->id}}" id="editor-{{ str_replace('.', '', $product->id) }}" class="htmlEditor" rows="15">{{old('description') ?: $product->description}}</textarea>
 
+				<label>Long Description</label>
+				<textarea name="long_description" data-page-name="product_long" data-page-id="{{$product->id}}" id="editor-{{ str_replace('.', '', $product->id) }}" class="htmlEditor" rows="15">{{old('long_description') ?: $product->long_description}}</textarea>
+
 				<div class="cf">
 					<label>Product Category</label>
 					<div class="select-style">
@@ -151,13 +154,18 @@
 		</section>
 
 		<section>
+			<section>
+				@include('admin::products.similar')
+			</section>
+		</section>
+
+		<section>
 			@if($product->gallery)
 			<section>
 				@include('admin::products.gallery')
 			</section>
 			@endif
 		</section>
-		
 		
 	</div>
 

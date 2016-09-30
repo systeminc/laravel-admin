@@ -40,8 +40,15 @@
 				@if (config('laravel-admin.modules.pages'))
 					<li><a href="pages">Pages</a></li>
 				@endif
-				@if (config('laravel-admin.modules.locations'))
-					<li><a href="locations">Locations</a></li>
+				@if (config('laravel-admin.modules.places'))
+					<li {{ Request::is('places') ? 'class="active"' : ''}}>
+						<div class="icon-menu"><div class="center cf"></div></div>
+						<a href="places">Places</a>
+						<ul class="submenu">
+							<li><a href="places/locations">Locations</a></li>
+							<li><a href="places/maps">Maps</a></li>
+						</ul>
+					</li>
 				@endif
 				@if (config('laravel-admin.modules.leads'))
 					<li><a href="leads">Leads</a></li>

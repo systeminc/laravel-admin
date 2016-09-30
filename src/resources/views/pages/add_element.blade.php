@@ -4,6 +4,7 @@
 
 	<div class="admin-header">
 		<h1>Add element in {{ $page->title }} page</h1>	
+		<span class="last-update"></span>
 	</div>
 
 	<div class="admin-content">
@@ -20,9 +21,6 @@
 			        </span>
 			    </div>
 			@endif 
-
-			<label>Key</label>
-			<input type="text" value="{{ $page->elements_prefix .'.'}}" disabled>
 
 			<label>Title</label>
 			<input type="text" name="title" placeholder="Page title" value="{{ old('title') }}">

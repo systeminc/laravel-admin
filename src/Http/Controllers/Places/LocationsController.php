@@ -1,20 +1,23 @@
 <?php
 
-namespace SystemInc\LaravelAdmin\Http\Controllers;
+namespace SystemInc\LaravelAdmin\Http\Controllers\Places;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Image;
 use Storage;
 use SystemInc\LaravelAdmin\Location;
+use SystemInc\LaravelAdmin\Map;
+use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 use SystemInc\LaravelAdmin\Validations\LocationValidation;
 use Validator;
 
 class LocationsController extends Controller
 {
+    use HelpersTrait;
+
     public function __construct()
     {
-        if (config('laravel-admin.modules.locations') == false) {
+        if (config('laravel-admin.modules.places') == false) {
             return redirect(config('laravel-admin.route_prefix'))->with('error', 'This modules is disabled in config/laravel-admin.php')->send();
         }
     }
@@ -38,7 +41,9 @@ class LocationsController extends Controller
      */
     public function getCreate()
     {
-        return view('admin::locations.create');
+        $maps = Map::all();
+
+        return view('admin::locations.create', compact('maps'));
     }
 
     /**
@@ -62,26 +67,18 @@ class LocationsController extends Controller
         $location = new Location();
         $location->fill($data);
 
-        $image = $request->file('image');
+        $location->image = $this->saveImage($request->file('image'), 'locations');
+        $location->thumb_image = $this->saveImage($request->file('thumb_image'), 'locations/thumb');
+        $location->marker_image = $this->saveImage($request->file('marker_image'), 'locations/marker');
 
-        if ($image && $image->isValid()) {
-            $image_name = str_random(5);
-
-            $original = '/'.$image_name.'.'.$image->getClientOriginalExtension();
-            $dirname = 'images/locations'.$original;
-
-            $original_image = Image::make($image)
-                ->fit(1920, 1080, function ($constraint) {
-                    $constraint->upsize();
-                })->encode();
-
-            Storage::put($dirname, $original_image);
-
-            $location->image = $dirname;
+        if ($request->map_id == 0) {
+            $location->map_id = null;
         }
+
+        $location->key = $this->sanitizeUri($request->key);
         $location->save();
 
-        return redirect(config('laravel-admin.route_prefix').'/locations')->with('success', 'Saved successfully');
+        return redirect(config('laravel-admin.route_prefix').'/places/locations')->with('success', 'Saved successfully');
     }
 
     /**
@@ -95,7 +92,9 @@ class LocationsController extends Controller
     {
         $location = Location::find($location_id);
 
-        return view('admin::locations.edit', compact('location'));
+        $maps = Map::all();
+
+        return view('admin::locations.edit', compact('location', 'maps'));
     }
 
     /**
@@ -111,7 +110,7 @@ class LocationsController extends Controller
         $data = $request->all();
 
         // validation
-        $validation = Validator::make($data, LocationValidation::rules(), LocationValidation::messages());
+        $validation = Validator::make($data, LocationValidation::rules($location_id), LocationValidation::messages());
 
         if ($validation->fails()) {
             return back()->withInput()->withErrors($validation);
@@ -120,23 +119,15 @@ class LocationsController extends Controller
         $location = Location::find($location_id);
         $location->fill($data);
 
-        $image = $request->file('image');
+        $location->image = $this->saveImage($request->file('image'), 'locations');
+        $location->thumb_image = $this->saveImage($request->file('thumb_image'), 'locations/thumb');
+        $location->marker_image = $this->saveImage($request->file('marker_image'), 'locations/marker');
 
-        if ($image && $image->isValid()) {
-            $image_name = str_random(5);
-
-            $original = '/'.$image_name.'.'.$image->getClientOriginalExtension();
-            $dirname = 'images/locations'.$original;
-
-            $original_image = Image::make($image)
-                ->fit(1920, 1080, function ($constraint) {
-                    $constraint->upsize();
-                })->encode();
-
-            Storage::put($dirname, $original_image);
-
-            $location->image = $dirname;
+        if ($request->map_id == 0) {
+            $location->map_id = null;
         }
+
+        $location->key = $this->sanitizeUri($request->key);
 
         if ($request->input('delete_image')) {
             if (Storage::exists($location->image)) {
@@ -144,6 +135,21 @@ class LocationsController extends Controller
             }
             $location->image = null;
         }
+
+        if ($request->input('delete_thumb_image')) {
+            if (Storage::exists($location->thumb_image)) {
+                Storage::delete($location->thumb_image);
+            }
+            $location->thumb_image = null;
+        }
+
+        if ($request->input('delete_marker_image')) {
+            if (Storage::exists($location->marker_image)) {
+                Storage::delete($location->marker_image);
+            }
+            $location->marker_image = null;
+        }
+
         $location->save();
 
         return back()->with('success', 'Saved successfully');
@@ -164,8 +170,16 @@ class LocationsController extends Controller
             Storage::delete($location->image);
         }
 
+        if (!empty($location->thumb_image)) {
+            Storage::delete($location->thumb_image);
+        }
+
+        if (!empty($location->marker_image)) {
+            Storage::delete($location->marker_image);
+        }
+
         $location->delete();
 
-        return redirect(config('laravel-admin.route_prefix').'/locations')->with('success', 'Deleted successfully');
+        return redirect(config('laravel-admin.route_prefix').'/places/locations')->with('success', 'Deleted successfully');
     }
 }

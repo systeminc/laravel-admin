@@ -31,9 +31,11 @@ class PagesController extends Controller
      */
     public function getIndex()
     {
-        $pages = Page::all();
+        $pages = Page::whereParentId(null)->get();
 
-        return view('admin::pages.index', compact('pages'));
+        $navigation = $this->generateNestedPageList($pages);
+
+        return view('admin::pages.index', compact('pages', 'navigation'));
     }
 
     /**
@@ -241,13 +243,16 @@ class PagesController extends Controller
     {
         $element = PageElement::find($element_id);
 
+        $keys = explode('.', $element->key);
+        $key = $keys[1];
+
         if (empty($element->content) || $element->page_element_type_id !== 3) {
             $mime = null;
         } else {
             $mime = Storage::mimeType($element->content);
         }
 
-        return view('admin::pages.edit-element', compact('element', 'mime'));
+        return view('admin::pages.edit-element', compact('element', 'mime', 'key'));
     }
 
     /**
@@ -302,8 +307,10 @@ class PagesController extends Controller
             return back()->withInput()->withErrors(['content' => 'Content is required']);
         }
 
+        $key = $this->sanitizeElements($request->key);
+
         $element->update([
-            'key'     => $element->page->elements_prefix.'.'.$title,
+            'key'     => $element->page->elements_prefix.'.'.$key,
             'title'   => $request->title,
             'content' => !empty($content) ? $content : $request->content,
         ]);

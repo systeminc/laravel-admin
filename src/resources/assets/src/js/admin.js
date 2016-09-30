@@ -52,6 +52,10 @@ $(function(){
     	$(this).siblings('.submenu').slideToggle();
     })
 
+    $('.input-box-wrap .button').click(function(){
+    	$('.input-popup').fadeToggle();
+    })
+
 });
 
 $(window).on("load", function(){
@@ -114,7 +118,7 @@ function codeAddress(address, proposal, resultsMap) {
 				deleteMarkers();
 
 				var marker = new google.maps.Marker({
-			    	icon: '../images/map-marker-orange.png',
+			    	icon: 'images/map-marker-orange.png',
 					map: resultsMap,
 					position: results[0].geometry.location
 				});

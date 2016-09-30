@@ -11,6 +11,17 @@
 			{{ csrf_field() }}
 			<label for="title">Title:</label>
 			<input type="text" name="title" value="{{ $gallery->title }}">	
+			
+			@if (session('error'))
+		        <div class="alert alert-error no-hide">
+		            <span class="help-block">
+		                <strong>{{ session('error') }}</strong>
+		            </span>
+		        </div>
+		    @endif
+			
+			<label for="key">Key:</label>
+			<input type="text" name="key" value="{{ $gallery->key }}">	
 
 			@if (session('message'))
 				<span class="alert alert-error">{{ session('message') }}</span>

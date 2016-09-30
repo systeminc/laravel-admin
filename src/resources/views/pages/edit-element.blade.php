@@ -20,7 +20,16 @@
 			@endif 
 		
 			<label>Key</label>
-			<input type="text" value="{{ $element->key }}" disabled>
+			<div class="input-box-wrap">
+				<input type="text" value="{{ $element->key }}" disabled>
+				<div class="button">change</div>
+				
+				<div class="input-popup">
+					<p>If you change this you need to change in code as well</p>
+					<input type="text" name="key" value="{{ $key }}">
+				</div>
+			</div>
+
 		
 			<label>Title</label>
 			<input type="text" name="title" placeholder="Page title" value="{{ $element->title or old('title') }}">

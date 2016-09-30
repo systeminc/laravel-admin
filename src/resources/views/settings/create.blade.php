@@ -4,7 +4,7 @@
 
 	<div class="admin-header">
 		<h1>Add admin</h1>
-		<span class="last-update">Last change: 06 Sep, 2016, 11:38h</span>
+		<span class="last-update"></span>
 
 	</div>
 

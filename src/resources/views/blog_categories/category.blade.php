@@ -4,7 +4,7 @@
 
 	<div class="admin-header">
 		<h1>Category Info</h1>
-		<span class="last-update">{{ empty($category->updated_at) ? "" : 'Last change:'.$category->updated_at->tz('CET')->format('d M Y, H:i\h') }}</span>
+		<span class="last-update">{{ empty($category->updated_at) ? "" : 'Last change: '.$category->updated_at->tz('CET')->format('d M Y, H:i\h') }}</span>
 		<div class="button-wrap">
 			<a href="shop/categories/new" class="button right">Add new</a>
 		</div>
@@ -45,7 +45,7 @@
 				@endif 		
 
 			<label>URI</label>
-			<input type="text" name="uri" value="{{$category->uri or old('uri')}}" disabled>
+			<input type="text" name="uri" value="{{$category->uri or old('uri')}}">
 
 			<label>Excerpt</label>
 			<textarea name="excerpt" class="htmlEditorTools" rows="5">{{$category->excerpt or old('excerpt')}}</textarea>

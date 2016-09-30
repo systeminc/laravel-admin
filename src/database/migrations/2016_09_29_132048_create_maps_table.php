@@ -2,8 +2,9 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateLocationsTable extends Migration
+class CreateMapsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +13,14 @@ class CreateLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('locations', function (Blueprint $table) {
+        Schema::create('maps', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->string('key')->unique();
             $table->text('description')->nullable();
+            $table->integer('zoom')->default(10);
             $table->double('latitude', 10, 8);
             $table->double('longitude', 10, 8);
-            $table->string('image')->nullable();
-            $table->string('link')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateLocationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('locations');
+        Schema::dropIfExists('maps');
     }
 }

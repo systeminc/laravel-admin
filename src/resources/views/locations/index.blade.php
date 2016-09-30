@@ -5,7 +5,7 @@
 		<h1>Locations</h1>
 		<span class="last-update"></span>
 		<div class="button-wrap">
-			<a href="locations/create" class="button right">Add location</a>
+			<a href="places/locations/create" class="button right">Add location</a>
 		</div>
 	</div>
 
@@ -18,7 +18,7 @@
 
 		<ul class="border">
 			@foreach ($locations as $location)
-					<li><a href="locations/edit/{{ $location->id }}">
+					<li><a href="places/locations/edit/{{ $location->id }}">
 						{{ ucfirst($location->title) }}</a></li>
 			@endforeach
 		</ul>

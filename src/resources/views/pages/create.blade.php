@@ -4,6 +4,7 @@
 
 	<div class="admin-header">
 		<h1>Create Page</h1>
+		<span class="last-update"></span>
 	</div>
 
 	<div class="admin-content">
@@ -70,7 +71,7 @@
 					<select name="parent_id">
 						<option value="">Choose parent page</option>
 					
-						@foreach ($pages as $key => $parent)
+						@foreach ($pages as $parent)
 							
 							<option value="{{ $parent->id }}" {{ $parent->id == $page_id ? 'selected="selected"' : '' }}>{{ $parent->title }}</option>
 							

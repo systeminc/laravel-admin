@@ -4,6 +4,7 @@
 	
 	<div class="admin-header">
 		<h1>Leads</h1>
+		<span class="last-update"></span>
 		<div class="button-wrap">
 			<a href="leads/settings" class="button right">Settings</a>
 			<a href="leads/email-leads" class="button right">Email leeds</a>

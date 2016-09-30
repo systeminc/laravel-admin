@@ -18,6 +18,7 @@ class Product extends Model
         'url_id',
         'excerpt',
         'description',
+        'long_description',
         'thumb',
         'animation',
         'video',
@@ -44,5 +45,10 @@ class Product extends Model
     public function comments()
     {
         return $this->hasMany('SystemInc\LaravelAdmin\ProductComment')->orderBy('created_at', 'desc');
+    }
+
+    public function similar()
+    {
+        return $this->hasMany('SystemInc\LaravelAdmin\SimilarProduct')->orderBy('created_at', 'desc');
     }
 }

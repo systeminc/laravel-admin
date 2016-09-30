@@ -26,7 +26,7 @@ elixir(function(mix) {
     mix.less(
     	[
 	    	'login.less', 
-            '../bower_components/jquery-ui/jquery-ui.min.css',
+            '../bower_components/jquery-ui/themes/base/jquery-ui.css',
             'admin.less'
     	],
     	'resources/assets/dist/css/admin.css'
@@ -34,12 +34,12 @@ elixir(function(mix) {
 
     mix.scripts(
 	    [
-	    	'bower_components/jquery/dist/jquery.js',
-	    	'bower_components/jquery-ui/jquery-ui.js',
-	    	'bower_components/tinymce/tinymce.js',
-	    	'js/tinymce-init.js',
-	    	'js/global.js',
-	    	'js/admin.js'
+            'bower_components/jquery/dist/jquery.js',
+            'bower_components/jquery-ui/jquery-ui.js',
+	    	'js/admin.js',
+            'bower_components/tinymce/tinymce.js',
+            'js/tinymce-init.js',
+            'js/global.js'
     	],
     	'resources/assets/dist/js/admin.js'
     );
