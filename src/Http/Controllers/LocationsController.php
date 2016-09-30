@@ -169,6 +169,10 @@ class LocationsController extends Controller
             Storage::delete($location->image);
         }
 
+        foreach (LocationMarker::whereLocationId($location_id)->get() as $marker) {
+            $marker->delete();
+        }
+
         $location->delete();
 
         return redirect(config('laravel-admin.route_prefix').'/locations')->with('success', 'Deleted successfully');

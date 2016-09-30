@@ -120,16 +120,6 @@
 				scrollwheel: false,
 			});
 
-			@if ($location->latitude && $location->longitude)
-				var marker = new google.maps.Marker({
-					icon: 'images/map-marker-orange.png',
-					position: {lat: {{ $location->latitude }}, lng: {{ $location->longitude }} },
-					map: map,
-				});
-
-				markers.push(marker);
-			@endif
-
 			document.getElementById('locate').addEventListener('click', function() {
 		    	var address = document.getElementById("address").value;
 				codeAddress(address,'true',map);
