@@ -57,7 +57,6 @@ class BlogController extends Controller
     public function getPostEdit($post_id)
     {
         $post = BlogPost::find($post_id);
-
         $categories = BlogCategory::all();
 
         return view('admin::blog.post', compact('post', 'categories'));
@@ -98,8 +97,10 @@ class BlogController extends Controller
             if (Storage::exists($post->thumb)) {
                 Storage::delete($post->thumb);
             }
+            
             $post->thumb = null;
         }
+        
         $post->save();
 
         return redirect($request->segment(1).'/blog/post-edit/'.$post->id)->with('success', 'Saved successfully');
