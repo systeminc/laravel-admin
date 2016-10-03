@@ -26,6 +26,8 @@ class CreatePageElementTypesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::drop('page_element_types');
+        Schema::enableForeignKeyConstraints();
     }
 }

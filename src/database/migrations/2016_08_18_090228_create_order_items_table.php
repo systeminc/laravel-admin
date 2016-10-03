@@ -30,6 +30,8 @@ class CreateOrderItemsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::drop('order_items');
+        Schema::enableForeignKeyConstraints();
     }
 }

@@ -31,6 +31,8 @@ class CreateSimilarProductsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('similar_products');
+        Schema::enableForeignKeyConstraints();
     }
 }

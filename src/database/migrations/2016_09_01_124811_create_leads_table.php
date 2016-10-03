@@ -27,6 +27,8 @@ class CreateLeadsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::drop('leads');
+        Schema::enableForeignKeyConstraints();
     }
 }

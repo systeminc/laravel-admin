@@ -28,6 +28,8 @@ class CreateLeadMailedsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::drop('lead_maileds');
+        Schema::enableForeignKeyConstraints();
     }
 }
