@@ -50,7 +50,7 @@ For instance, if you use Vagrant, you will have to do `vagrant ssh` first, go to
 
 ## Usage
 
-STILL TODO
+Visit wiki for more
 
 #BLOG
 
