@@ -83,7 +83,7 @@
 			</div>
 
 			<input type="submit" value="Update" class="save-item">
-			<a href="pages/delete/{{ $page->id }}" class="button remove-item">Delete page</a>
+			<a href="pages/delete/{{ $page->id }}" class="button delete remove-item">Delete page</a>
 		</form>
 
 		<div>
@@ -101,7 +101,7 @@
 					@foreach ($elements as $element)
 						<li>
 							<a href="pages/edit-element/{{$element->id}}"><b>{{ ucfirst($element->title) }} - {{$element->key}}</b></a>
-							<a href="pages/delete-element/{{ $element->id }}" class="button remove-item file list">Delete Element</a>
+							<a href="pages/delete-element/{{ $element->id }}" class="button remove-item file delete list">Delete</a>
 						</li>
 					@endforeach
 				</ul>
