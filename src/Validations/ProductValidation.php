@@ -9,7 +9,7 @@ class ProductValidation
      *
      * @return array
      */
-    public static function rules($product_id = "")
+    public static function rules($product_id = '')
     {
         return [
         'title'       => 'required',
