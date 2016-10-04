@@ -32,6 +32,8 @@ class CreateBlogPostCommentsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::drop('blog_post_comments');
+        Schema::enableForeignKeyConstraints();
     }
 }

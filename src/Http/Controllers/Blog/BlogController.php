@@ -87,6 +87,7 @@ class BlogController extends Controller
             $post->thumb = null;
         }
 
+        $post->uri_id = str_slug($request->uri_id);
         $post->save();
 
         return redirect($request->segment(1).'/blog/post-edit/'.$post->id)->with('success', 'Saved successfully');

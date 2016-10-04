@@ -31,6 +31,8 @@ class CreateProductCommentsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::drop('product_comments');
+        Schema::enableForeignKeyConstraints();
     }
 }

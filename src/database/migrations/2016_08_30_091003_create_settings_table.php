@@ -27,6 +27,8 @@ class CreateSettingsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::drop('settings');
+        Schema::enableForeignKeyConstraints();
     }
 }

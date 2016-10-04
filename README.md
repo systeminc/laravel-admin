@@ -7,6 +7,7 @@ This is **Laravel Admin**, CRUD (create, read, update and delete) package that c
 - **Pages** (page elements, galleries, subpages)
 - **Blog** (posts, comments)
 - **Shop** (products, categories, comments, orders, stock)
+- **Places** (maps,locations)
 
 Once you have your administration panel up, you can easily put all of those elements wherever you want in you application files. For usage documentation see **Usage section** bellow.
 
@@ -50,7 +51,7 @@ For instance, if you use Vagrant, you will have to do `vagrant ssh` first, go to
 
 ## Usage
 
-Visit [wiki](https://github.com/systeminc/laravel-admin/wiki/Blog) for more 
+Visit [wiki](https://github.com/systeminc/laravel-admin/wiki/Blog) 
 
 ## Contributing
 

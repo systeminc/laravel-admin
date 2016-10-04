@@ -75,7 +75,7 @@ class LocationsController extends Controller
             $location->map_id = null;
         }
 
-        $location->key = $this->sanitizeUri($request->key);
+        $location->key = str_slug($request->key);
         $location->save();
 
         return redirect(config('laravel-admin.route_prefix').'/places/locations')->with('success', 'Saved successfully');
@@ -127,7 +127,7 @@ class LocationsController extends Controller
             $location->map_id = null;
         }
 
-        $location->key = $this->sanitizeUri($request->key);
+        $location->key = str_slug($request->key);
 
         if ($request->input('delete_image')) {
             if (Storage::exists($location->image)) {

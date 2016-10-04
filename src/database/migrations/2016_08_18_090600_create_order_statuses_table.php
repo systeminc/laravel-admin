@@ -26,6 +26,8 @@ class CreateOrderStatusesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::drop('order_statuses');
+        Schema::enableForeignKeyConstraints();
     }
 }

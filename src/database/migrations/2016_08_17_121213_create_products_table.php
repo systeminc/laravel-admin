@@ -43,6 +43,8 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::drop('products');
+        Schema::enableForeignKeyConstraints();
     }
 }
