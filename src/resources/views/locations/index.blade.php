@@ -16,11 +16,14 @@
 		    </span>
 		@endif
 
-		@if (!empty($maps->first()))
+		@if (!empty($locations->first()))
 			<ul class="border">
 				@foreach ($locations as $location)
-					<li><a href="places/locations/edit/{{ $location->id }}">
-							{{ ucfirst($location->title) }}</a></li>
+					<li>
+						<a href="places/locations/edit/{{ $location->id }}">
+							{{ ucfirst($location->title) }}
+						</a>
+					</li>
 				@endforeach
 			</ul>
 		@endif
