@@ -77,13 +77,39 @@ class SLA
      *
      * @return type
      */
+    public function locations()
+    {
+        return Location::all();
+    }
+
+    /**
+     * Instance of Location.
+     *
+     * @return type
+     */
     public function location($key)
     {
-        if ($key) {
-            return LocationMarker::whereKey($key)->first();
-        } else {
-            return new Location();
-        }
+        return Location::whereKey($key)->first();
+    }
+
+    /**
+     * Instance of map.
+     *
+     * @return type
+     */
+    public function maps()
+    {
+        return Map::all();
+    }
+
+    /**
+     * Instance of map.
+     *
+     * @return type
+     */
+    public function map($key)
+    {
+        return Map::whereKey($key)->first();
     }
 
     /**

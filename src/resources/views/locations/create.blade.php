@@ -8,10 +8,14 @@
 
 	<div class="admin-content">
 		@if (session('error'))
-			<span class="alert alert-error">{{ session('error') }}</span>
-		@endif
+	        <div class="alert alert-error no-hide">
+	            <span class="help-block">
+	                <strong>{{ session('error') }}</strong>
+	            </span>
+	        </div>
+	    @endif
 			
-		<form action="locations/save" method="post" enctype="multipart/form-data">
+		<form action="places/locations/save" method="post" enctype="multipart/form-data">
 
 			{{ csrf_field() }}
 			
@@ -25,6 +29,17 @@
 
 			<label for="title">Title:</label>
 			<input type="text" name="title" placeholder="Title" value="{{ old('title') }}">
+
+			@if ($errors->first('key'))
+			    <div class="alert alert-error no-hide">
+			        <span class="help-block">
+			            <strong>{{ $errors->first('key') }}</strong>
+			        </span>
+			    </div>
+			@endif 			
+
+			<label for="key">Key:</label>
+			<input type="text" name="key" placeholder="Key" value="{{ old('key') }}">
 			
 			<label for="description">Description:</label>
 			<textarea name="description" class="htmlEditor" rows="15" data-page-name="description" data-page-id="new" id="editor-1">{{ old('description') }}</textarea>
@@ -39,8 +54,25 @@
 				<div id="map" style="width: 100%;min-height: 300px;margin-bottom: 24px;"></div>								
 			</div>
 
+			@if ($errors->first('latitude'))
+			    <div class="alert alert-error no-hide">
+			        <span class="help-block">
+			            <strong>{{ $errors->first('latitude') }}</strong>
+			        </span>
+			    </div>
+			@endif 
+
 			<label for="latitude">Latitude:</label>
 				<input type="text" name="latitude" placeholder="Latitude" id="latitude" />
+
+			@if ($errors->first('longitude'))
+			    <div class="alert alert-error no-hide">
+			        <span class="help-block">
+			            <strong>{{ $errors->first('longitude') }}</strong>
+			        </span>
+			    </div>
+			@endif 
+
 			<label for="longitude">Longitude:</label>
 				<input type="text" name="longitude" placeholder="Longitude" id="longitude" />
 
@@ -54,9 +86,36 @@
 					<input type="file" name="image"/>
 				</div>
 			</div>
+			
+			<label>Thumb Image</label>
+			<div class="file-input-wrap cf">
+				<div class="fileUpload">
+					<span>Choose file</span>
+					<input type="file" name="thumb_image"/>
+				</div>
+			</div>
 
-			<label for="link">Link:</label>
-			<input type="text" name="link" placeholder="URL" value="{{ old('link') }}">
+			<label>Marker Image</label>
+			<div class="file-input-wrap cf">
+				<div class="fileUpload">
+					<span>Choose file</span>
+					<input type="file" name="marker_image"/>
+				</div>
+			</div>
+
+			<div class="cf">
+				<label>Map</label>
+
+				<div class="select-style">
+					<select name="map_id">
+						<option value="0">Choose map</option>
+					
+						@foreach ($maps as $map)
+							<option value="{{ $map->id }}">{{ $map->title }}</option>
+						@endforeach
+					</select>
+				</div>
+			</div>
 		
 			<input type="submit" value="Add" class="save-item">
 		</form>

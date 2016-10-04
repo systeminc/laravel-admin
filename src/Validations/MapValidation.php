@@ -2,20 +2,20 @@
 
 namespace SystemInc\LaravelAdmin\Validations;
 
-class LocationMarkerValidation
+class MapValidation
 {
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
-    public static function rules($page_id = '')
+    public static function rules($map_id = '')
     {
         return [
         'title'        => 'required',
         'latitude'     => 'required',
         'longitude'    => 'required',
-        'key'          => 'required|unique:location_markers,key,'.$page_id,
+        'key'          => 'required|unique:maps,key,'.$map_id,
         ];
     }
 

@@ -11,7 +11,9 @@
 	</div>
 
 	<div class="admin-content">
-		{!! $navigation !!}
+		<div class="pages-list">
+			{!! $navigation !!}
+		</div>
 	</div>
 
 @stop

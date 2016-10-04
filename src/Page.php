@@ -3,9 +3,12 @@
 namespace SystemInc\LaravelAdmin;
 
 use Illuminate\Database\Eloquent\Model;
+use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 
 class Page extends Model
 {
+    use HelpersTrait;
+
     protected $fillable = [
         'title',
         'elements_prefix',
@@ -24,6 +27,11 @@ class Page extends Model
     public function element($key)
     {
         return PageElement::whereKey($key)->first();
+    }
+
+    public function menu()
+    {
+        return $this->generateNestedPageList(self::all());
     }
 
     public function tree()

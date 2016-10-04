@@ -38,7 +38,7 @@ return [
         'galleries' => true,
         'pages'     => true,
         'leads'     => true,
-        'locations' => true,
+        'places'    => true,
         'shop'      => true,
         'settings'  => true,
     ],

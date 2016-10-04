@@ -4,14 +4,16 @@ namespace SystemInc\LaravelAdmin\Http\Controllers\Blog;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Image;
 use Storage;
 use SystemInc\LaravelAdmin\BlogCategory;
 use SystemInc\LaravelAdmin\BlogPost;
 use SystemInc\LaravelAdmin\BlogPostComment;
+use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 
 class BlogController extends Controller
 {
+    use HelpersTrait;
+
     public function __construct()
     {
         if (config('laravel-admin.modules.blog') == false) {
@@ -57,7 +59,6 @@ class BlogController extends Controller
     public function getPostEdit($post_id)
     {
         $post = BlogPost::find($post_id);
-
         $categories = BlogCategory::all();
 
         return view('admin::blog.post', compact('post', 'categories'));
@@ -76,30 +77,16 @@ class BlogController extends Controller
         $post = BlogPost::find($post_id);
         $post->update($request->all());
 
-        $image = $request->file('thumb');
-
-        if ($image && $image->isValid()) {
-            $image_name = str_random(5);
-
-            $original = '/'.$image_name.'.'.$image->getClientOriginalExtension();
-            $dirname = 'images/blog'.$original;
-
-            $original_image = Image::make($image)
-                ->fit(1920, 1080, function ($constraint) {
-                    $constraint->upsize();
-                })->encode();
-
-            Storage::put($dirname, $original_image);
-
-            $post->thumb = $dirname;
-        }
+        $post->thumb = $this->saveImage($request->file('thumb'), 'blog');
 
         if ($request->input('delete_thumb')) {
             if (Storage::exists($post->thumb)) {
                 Storage::delete($post->thumb);
             }
+
             $post->thumb = null;
         }
+
         $post->save();
 
         return redirect($request->segment(1).'/blog/post-edit/'.$post->id)->with('success', 'Saved successfully');

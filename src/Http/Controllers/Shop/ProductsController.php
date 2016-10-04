@@ -4,17 +4,19 @@ namespace SystemInc\LaravelAdmin\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Image;
 use Storage;
 use SystemInc\LaravelAdmin\Gallery;
 use SystemInc\LaravelAdmin\Product;
 use SystemInc\LaravelAdmin\ProductCategory;
 use SystemInc\LaravelAdmin\SimilarProduct;
+use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 use SystemInc\LaravelAdmin\Validations\ProductValidation;
 use Validator;
 
 class ProductsController extends Controller
 {
+    use HelpersTrait;
+
     /**
      * Display a listing of the products.
      *
@@ -87,23 +89,7 @@ class ProductsController extends Controller
         $product = Product::find($product_id);
         $product->update($request->all());
 
-        $image = $request->file('thumb');
-
-        if ($image && $image->isValid()) {
-            $image_name = str_random(5);
-
-            $original = '/'.$image_name.'.'.$image->getClientOriginalExtension();
-            $dirname = 'images/products'.$original;
-
-            $original_image = Image::make($image)
-                ->fit(1920, 1080, function ($constraint) {
-                    $constraint->upsize();
-                })->encode();
-
-            Storage::put($dirname, $original_image);
-
-            $product->thumb = $dirname;
-        }
+        $product->thumb = $this->saveImage($request->file('thumb'), 'products');
 
         if ($request->input('delete_thumb')) {
             if (Storage::exists($product->thumb)) {

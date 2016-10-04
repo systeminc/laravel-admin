@@ -9,12 +9,13 @@ class LocationValidation
      *
      * @return array
      */
-    public static function rules()
+    public static function rules($location_id = '')
     {
         return [
         'title'        => 'required',
         'latitude'     => 'required',
         'longitude'    => 'required',
+        'key'          => 'required|unique:locations,key,'.$location_id,
         ];
     }
 
