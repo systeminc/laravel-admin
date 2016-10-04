@@ -24,7 +24,7 @@ trait HelpersTrait
 
     public function generateNestedPageList($pages, $navigation = '')
     {
-        $navigation .= '<ul>';
+        $navigation .= '<ul class="border">';
 
         foreach ($pages as $page) {
             $navigation .= '<li>';

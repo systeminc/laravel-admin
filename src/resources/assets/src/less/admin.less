@@ -871,30 +871,12 @@ header{
 			a{
 				padding: 15px 20px;
 				width: auto;
-				display: inline-block;
+				display: block;
 				font-size: 1.2em;
 				color: @defaultTextColor;
 				font-weight: bold;
-				border-bottom: 1px solid transparent;
 				position: relative;
 
-				&:after{
-					display: block;
-					content: '';
-					width: 0%;
-					height: 2px;
-					background-color: @defaultTextColor;
-					position: absolute;
-					bottom: 0;
-					left: 0;
-					.transition();
-				}
-
-				&:hover{
-					&:after{
-						width: 100%;
-					}
-				}
 			}
 
 			a.remove-item{
@@ -935,14 +917,7 @@ header{
 		}
 
 		ul{
-			margin: 0;
-
-			li > ul{
-				li{
-					padding-left: 15px;
-				}
-			}
-			
+			margin: 0;			
 		}
 
 	}
@@ -1388,20 +1363,33 @@ header{
 
 	li > ul{
 		padding-left: 20px;
-		padding-right: 20px;
+		// padding-right: 20px;
 	}
 
-}//end pages list
+	ul{
+		li{
 
+			&:hover{
+				background: transparent !important;
+			}
+			
+			a{
+				padding: 15px 20px;
+				display: block;
+				font-size: 1.2em;
+				color: @defaultTextColor;
+				font-weight: bold;
+				position: relative;
+				.transition();
 
+				&:hover{
+					background: lighten(@defaultTextColor, 62.5%);
+				}
+			}
+		}
+	}
 
-
-
-
-
-
-
-
+}
 
 
 
