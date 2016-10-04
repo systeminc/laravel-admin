@@ -75,7 +75,7 @@ class PagesController extends Controller
         }
 
         $page->elements_prefix = $this->sanitizeElements($request->elements_prefix);
-        $page->uri_key = $this->sanitizeUri($request->uri_key);
+        $page->uri_key = str_slug($request->uri_key);
 
         $page->save();
 
@@ -119,7 +119,7 @@ class PagesController extends Controller
         $page->fill($data);
 
         $page->elements_prefix = $elements_prefix;
-        $page->uri_key = $this->sanitizeUri($request->uri_key);
+        $page->uri_key = str_slug($request->uri_key);
 
         $page->save();
 

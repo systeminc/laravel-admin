@@ -13,8 +13,7 @@ class ProductValidation
     {
         return [
         'title'       => 'required',
-        'uri_id'      => 'required|unique:products,uri_id,'.$product_id,
-        'description' => 'required',
+        'url_id'      => 'required|unique:products,url_id,'.$product_id,
         ];
     }
 

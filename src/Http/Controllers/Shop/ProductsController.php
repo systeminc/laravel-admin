@@ -122,7 +122,7 @@ class ProductsController extends Controller
             }
             $product->pdf = null;
         }
-        $product->url_id = $this->sanitizeUri($request->url_id);
+        $product->url_id = str_slug($request->url_id);
         $product->save();
 
         return redirect($request->segment(1).'/shop/products/edit/'.$product->id)->with('success', 'Saved successfully');
