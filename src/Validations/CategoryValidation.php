@@ -13,7 +13,7 @@ class CategoryValidation
     {
         return [
         'title'        => 'required',
-        'uri'          => 'required',
+        'slug'          => 'required',
         ];
     }
 

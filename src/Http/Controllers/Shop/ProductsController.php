@@ -38,7 +38,7 @@ class ProductsController extends Controller
     {
         $product = new Product();
         $product->title = 'New product';
-        $product->url_id = 'new-product-'.time();
+        $product->slug = 'new-product-'.time();
         $product->save();
 
         $gallery = new Gallery();
@@ -122,7 +122,7 @@ class ProductsController extends Controller
             }
             $product->pdf = null;
         }
-        $product->url_id = str_slug($request->url_id);
+        $product->slug = str_slug($request->slug);
         $product->save();
 
         return redirect($request->segment(1).'/shop/products/edit/'.$product->id)->with('success', 'Saved successfully');

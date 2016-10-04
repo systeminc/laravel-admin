@@ -24,16 +24,16 @@
 				<label>Title</label>
 				<input type="text" name="title" value="{{old('title') ?: $product->title}}">
 
-				@if ($errors->first('url_id'))
+				@if ($errors->first('slug'))
 				    <div class="alert alert-error no-hide">
 				        <span class="help-block">
-				            <strong>{{ $errors->first('url_id') }}</strong>
+				            <strong>{{ $errors->first('slug') }}</strong>
 				        </span>
 				    </div>
 				@endif 
 
-				<label>URL ID</label>
-				<input type="text" name="url_id" value="{{old('url_id') ?: $product->url_id}}">
+				<label>Slug</label>
+				<input type="text" name="slug" value="{{old('slug') ?: $product->slug}}">
 
 				<label>Excerpt</label>
 				<textarea name="excerpt" rows="5">{{old('excerpt') ?: $product->excerpt}}</textarea>

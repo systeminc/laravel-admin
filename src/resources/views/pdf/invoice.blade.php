@@ -34,11 +34,8 @@
                                 <td style="vertical-align: top">Location: </td>
                             </tr>
                             <tr>
-                                <td>
-                                    telephone:
-                                </td>
-                                <td align="right">
-                                </td>
+                                <td>Address:</td>
+                                <td align="right"></td>
                             </tr>
                             <tr>
                                 <td>
@@ -78,26 +75,18 @@
                 <col style="width: 50%">
                 <col style="width: 50%">  
                 <tr>
-                    <td colspan="2">Desctiption</td>
-                </tr> 
-                <tr>
-                    <td colspan="2" style="font-size:24px">"Laravel Admin" </td>
-                </tr>                    
-                <tr>
                     <td width="50%">
-                        <span style="letter-spacing:-1px;">Belgrade</span>
+                        company prefix <br>
+                        <span colspan="2" style="font-size:24px">"Laravel Admin" </span>
                     </td>
-                    <td width="50%">identification number: </td>                        
-                </tr>
-                <tr>
-                    <td>tel: </td>
-                    <td>PIB: </td>                        
-                </tr>
-                <tr>
-                    <td>current account: </td>
-                    <td>
-
+                    <td width="50%">
+                        &nbsp; <br>
+                        Tax ID: <br>
+                        Company number: <br>
                     </td>                        
+                </tr>
+                <tr>
+                    <td colspan="2"></td>                        
                 </tr>                        
             </table>
             <hr />
@@ -119,7 +108,6 @@
                             Date of order:   {{$order->created_at->format('d.m.Y')}}<br>
                             Date of purchase:  {{$order->date_of_purchase ? $order->date_of_purchase->format('d.m.Y') : ''}}<br>
                             Term of payment:  {{$order->term_of_payment}}<br>
-                            Parity:  {{$order->parity}}
                         @endif
                     </td>
                     <td style="border: 1px solid black; padding:10px;">
@@ -230,7 +218,7 @@
     </tr>
     <tr>
         <td style="text-align: center; padding: 20px 0;">
-            <strong>Laravel Admin is not responsible for any consequential damage, including loss or recovery <br /> of data, or any other damage made by using or working with Laravel Admin products</strong>
+            <strong>Laravel Admin is not responsible for any consequential damage</strong>
         </td>
     </tr>
     <tr>
@@ -246,10 +234,6 @@
                     <td>d</td>
                 </tr>
                 <tr>
-                    <td>Account No:</td>
-                    <td>d</td>
-                </tr>
-                <tr>
                     <td>Swift:</td>
                     <td>s</td>
                 </tr>
@@ -258,12 +242,8 @@
                     <td>s</td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td>s</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Belgrade, Serbia</td>
+                    <td>Account No:</td>
+                    <td>d</td>
                 </tr>
             </table>
 

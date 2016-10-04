@@ -33,16 +33,16 @@
 			<label>Subtitle</label>
 			<input type="text" name="subtitle" value="{{$category->subtitle or old('subtitle')}}">
 
-				@if ($errors->first('uri'))
+				@if ($errors->first('slug'))
 				    <div class="alert alert-error no-hide">
 				        <span class="help-block">
-				            <strong>{{ $errors->first('uri') }}</strong>
+				            <strong>{{ $errors->first('slug') }}</strong>
 				        </span>
 				    </div>
 				@endif 		
 
-			<label>URI</label>
-			<input type="text" name="uri" value="{{$category->uri or old('uri')}}">
+			<label>Slug</label>
+			<input type="text" name="slug" value="{{$category->slug or old('slug')}}">
 
 			<label>Excerpt</label>
 			<textarea name="excerpt" class="htmlEditorTools" rows="5">{{$category->excerpt or old('excerpt')}}</textarea>
@@ -110,7 +110,7 @@
 <script>
 	
 	$('input[name="title"]').keyup(function() {
-		$('input[name="uri"]').val($(this).val().replace(' ', '-'));
+		$('input[name="slug"]').val($(this).val().replace(' ', '-'));
 	})
 </script>
 @stop

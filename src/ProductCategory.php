@@ -13,7 +13,7 @@ class ProductCategory extends Model
         'excerpt',
         'description',
         'menu_order',
-        'uri',
+        'slug',
         'seo_title',
         'seo_description',
         'seo_keywords',
