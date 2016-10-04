@@ -18,8 +18,11 @@ class CreateOrderItemsTable extends Migration
             $table->integer('product_id')->unsigned();
             $table->integer('quantity')->default(1);
             $table->integer('discount')->default(0);
-            $table->integer('custom_price');
+            $table->integer('custom_price')->default(0);
             $table->timestamps();
+
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 

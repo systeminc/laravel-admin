@@ -40,7 +40,7 @@
 			@foreach ($comments as &$comment)
 
 				<li class="cf @if(!$comment->approved)disapproved @endif">
-					<a class="article-title" href="blog/post-edit/{{$comment->article->id}}" target="_blank">{{$comment->article->title}}</a>
+					<a class="article-title" href="blog/post-edit/{{$comment->post->id}}" target="_blank">{{$comment->post->title}}</a>
 					<div class="name">{{$comment->name}} / {{$comment->email}}</div>
 					<p>{{$comment->content}}</p>
 					<div class="created_at">{{$comment->created_at->format('Y-m-d H:i')}}h</div>
