@@ -41,6 +41,34 @@ return [
         'places'    => true,
         'shop'      => true,
         'settings'  => true,
-    ],
+    ],    
 
+    /*
+    |--------------------------------------------------------------------------
+    | Invoice
+    |--------------------------------------------------------------------------
+    |
+    | Set you billing info for invoice.pdf
+    |
+    */
+
+    'invoice' => [
+        'location'       => '',
+        'address'        => '',
+        'skype'          => '',
+        'website'        => '',
+        'email'          => '',
+        'company_prefix' => '',
+        'company_name'   => '',
+        'company_number' => '',
+        'tax_id'         => '',
+        'disclaimer'     => '',
+        'beneficiary'    => '',
+        'IBAN'           => '',
+        'swift'          => '',
+        'bank'           => '',
+        'account_no'     => '',
+        'small_note'     => '',
+        'signee'         => '',
+    ],
 ];

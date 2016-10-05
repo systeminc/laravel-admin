@@ -22,6 +22,7 @@ class AdminServiceProvider extends ServiceProvider
         $auth_config = array_merge_recursive($this->app['config']['auth'], require __DIR__.'/config/auth.php');
         $this->app['config']->set('auth', $auth_config);
 
+
         $this->loadViewsFrom(__DIR__.'/resources/views/', 'admin');
     }
 
@@ -52,4 +53,6 @@ class AdminServiceProvider extends ServiceProvider
         $loader->alias('Image', \Intervention\Image\Facades\Image::class);
         $loader->alias('PDF', \Barryvdh\DomPDF\Facade::class);
     }
+
+
 }
