@@ -63,10 +63,9 @@ class UpdateCommand extends Command
         $replaceConfig = array_replace_recursive(require __DIR__.'/../config/laravel-admin.php', config('laravel-admin'));
 
         foreach ($package_config as $key => $value) {
-
             if (!isset($client_config[$key])) {
-		        File::put(base_path('config/laravel-admin.php'), ("<?php \r\n\r\nreturn " . preg_replace(['/$([ ])/','/[ ]([ ])/'], '	', var_export($replaceConfig, true)) . ";"));
- 	        	$this->info('Config file ("config/laravel-admin.php") is merged, please see changes for new feature');
+                File::put(base_path('config/laravel-admin.php'), ("<?php \r\n\r\nreturn ".preg_replace(['/$([ ])/', '/[ ]([ ])/'], '	', var_export($replaceConfig, true)).';'));
+                $this->info('Config file ("config/laravel-admin.php") is merged, please see changes for new feature');
             }
         }
 

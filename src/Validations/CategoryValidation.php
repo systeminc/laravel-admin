@@ -12,7 +12,7 @@ class CategoryValidation
     public static function rules()
     {
         return [
-        'title'        => 'required',
+        'title'         => 'required',
         'slug'          => 'required',
         ];
     }
