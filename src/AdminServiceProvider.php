@@ -53,6 +53,4 @@ class AdminServiceProvider extends ServiceProvider
         $loader->alias('Image', \Intervention\Image\Facades\Image::class);
         $loader->alias('PDF', \Barryvdh\DomPDF\Facade::class);
     }
-
-
 }

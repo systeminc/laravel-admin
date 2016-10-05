@@ -59,7 +59,7 @@ class Page extends Model
         return [
             'id'       => $this->id,
             'title'    => $this->title,
-            'slug'  => $this->slug,
+            'slug'     => $this->slug,
             'subpages' => $tree,
             ];
     }

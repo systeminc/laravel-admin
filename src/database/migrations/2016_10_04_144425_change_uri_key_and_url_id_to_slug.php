@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class ChangeUriKeyAndUrlIdToSlug extends Migration
 {
@@ -16,7 +16,7 @@ class ChangeUriKeyAndUrlIdToSlug extends Migration
         Schema::table('blog_posts', function (Blueprint $table) {
             $table->renameColumn('uri_id', 'slug');
         });
-        
+
         Schema::table('blog_categories', function (Blueprint $table) {
             $table->renameColumn('uri', 'slug');
         });
