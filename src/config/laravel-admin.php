@@ -62,6 +62,7 @@ return [
         'company_name'   => '',
         'company_number' => '',
         'tax_id'         => '',
+        'vat'            => '',
         'disclaimer'     => '',
         'beneficiary'    => '',
         'IBAN'           => '',

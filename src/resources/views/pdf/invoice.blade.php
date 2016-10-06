@@ -158,14 +158,14 @@
                     @endif
 
                     <tr >
-                        <td>{{$key+1}}</td>
+                        <td style="text-align: center">{{$key+1}}</td>
                         <td style="width:300px">{{$item->product->title}}</td>
                         <td>pcs</td>
                         <td style="text-align: center">{{$item->quantity}}</td>                            
-                        <td style="text-align: right">{{$item->custom_price ?: $item->product->price}}{{$order->currency_sign}}</td>
-                        <td style="text-align: right">{{$item->discount}}{{$order->currency_sign}}</td>
-                        <td style="text-align: right">{{$item->custom_price ? ($item->custom_price - $item->discount) : ($item->product->price * $item->quantity - $item->discount)}}{{$order->currency_sign}}</td>
-                        <td style="text-align: right">0%</td>                            
+                        <td style="text-align: right">{{$item->custom_price ?: $item->product->price}} {{$order->currency}}</td>
+                        <td style="text-align: right">{{$item->discount}} {{$order->currency}}</td>
+                        <td style="text-align: right">{{$item->custom_price ? ($item->custom_price - $item->discount) : ($item->product->price * $item->quantity - $item->discount)}} {{$order->currency}}</td>
+                        <td style="text-align: right">{{ empty(config('laravel-admin.invoice.vat')) ? '0%' : config('laravel-admin.invoice.vat')."%" }}</td>                            
                     </tr>
 
                 @endforeach
@@ -173,33 +173,33 @@
 
                 @if ($order->shipment_price)
                      <tr >
-                        <td>{{$order->items->count()}}</td>
+                        <td style="text-align: center">{{$order->items->count()+1}}</td>
                         <td>Shipping</td>
                         <td>pcs</td>
                         <td style="text-align: center">1</td>                            
-                        <td style="text-align: right">{{$order->shipment_price}}{{$order->currency_sign}}</td>
-                        <td style="text-align: right">0{{$order->currency_sign}}</td>
-                        <td style="text-align: right">{{$order->shipment_price}}{{$order->currency_sign}}</td>
-                        <td style="text-align: right">0%</td>                            
+                        <td style="text-align: right">{{$order->shipment_price}} {{$order->currency}}</td>
+                        <td style="text-align: right">0 {{$order->currency}}</td>
+                        <td style="text-align: right">{{$order->shipment_price}} {{$order->currency}}</td>
+                        <td style="text-align: right">{{ empty(config('laravel-admin.invoice.vat')) ? '0%' : config('laravel-admin.invoice.vat')."%" }}</td>                            
                     </tr>               
                 @endif
                 
                 <tr>
                     <td colspan="4" class="no-border" style="border-right: 1px solid black"></td>
                     <td colspan="2">Total without VAT :</td>
-                    <td style="text-align: right">{{$order->total_price}}{{$order->currency_sign}}</td>
+                    <td style="text-align: right">{{$order->total_price}} {{$order->currency}}</td>
                     <td></td>
                 </tr>
                 <tr>
                     <td colspan="4" class="no-border" style="border-right: 1px solid black"></td>
                     <td colspan="2">VAT amount :</td>
-                    <td style="text-align: right">0,00{{$order->currency_sign}}</td>
+                    <td style="text-align: right">{{ $order->total_price * (empty(config('laravel-admin.invoice.vat')) ? '0' : config('laravel-admin.invoice.vat'))/100 }} {{$order->currency}}</td>
                     <td></td>
                 </tr>
                 <tr>
                     <td class="no-border" style="border-right: 1px solid black" colspan="4"></td>
                     <td colspan="2"><strong>Total for payment :</strong></td>
-                    <td style="text-align: right">{{$order->total_price}}{{$order->currency_sign}}</td>
+                    <td style="text-align: right">{{$order->total_price + $order->total_price * (empty(config('laravel-admin.invoice.vat')) ? '0' : config('laravel-admin.invoice.vat'))/100 }} {{$order->currency}}</td>
                     <td></td>
                 </tr>                        
             </table>
