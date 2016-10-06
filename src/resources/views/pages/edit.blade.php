@@ -138,10 +138,11 @@
 
 			@if (!empty($page->child($page->id)))
 				
-				<ul class="sortable cf" data-link="ajax/{{ $page->id }}/change-subpages-order">
+				<ul class="sortable elements-list cf" data-link="ajax/{{ $page->id }}/change-subpages-order">
 					@foreach ($page->child($page->id) as $key => $child)
 						<li class="items-order" data-id="{{$child['id']}}">
 							<a href="pages/edit/{{$child['id']}}"><b>{{ ucfirst($child['title']) }} - {{$child['uri_key']}}</a>
+							<a href="pages/delete/{{ $child['id'] }}" class="button remove-item file delete list">Delete</a>
 						</li>
 					@endforeach
 				</ul>
