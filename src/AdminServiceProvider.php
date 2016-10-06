@@ -22,6 +22,7 @@ class AdminServiceProvider extends ServiceProvider
         $auth_config = array_merge_recursive($this->app['config']['auth'], require __DIR__.'/config/auth.php');
         $this->app['config']->set('auth', $auth_config);
 
+
         $this->loadViewsFrom(__DIR__.'/resources/views/', 'admin');
     }
 

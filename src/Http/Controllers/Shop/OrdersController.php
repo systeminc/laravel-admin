@@ -80,14 +80,14 @@ class OrdersController extends Controller
 
         $order->update($request->all());
 
-        if (empty($request->input('valid_until'))) {
+        if (empty($request->valid_until)) {
             $order->valid_until = null;
         }
-        if (empty($request->input('date_of_purchase'))) {
+        if (empty($request->date_of_purchase)) {
             $order->date_of_purchase = null;
         }
 
-        if (empty($request->get('show_shipping_address'))) {
+        if (empty($request->show_shipping_address)) {
             $order->show_shipping_address = 0;
         }
 
@@ -116,12 +116,19 @@ class OrdersController extends Controller
     public function postAddItem(Request $request, $order_id)
     {
         $order = Order::find($order_id);
-        $product = Product::find($request->input('product_id'));
+        $product = Product::find($request->product_id);
 
-        $item = OrderItem::create([
-            'order_id'   => $order->id,
-            'product_id' => $product->id,
+        $item = OrderItem::whereProductId($request->product_id)->first();
+
+        if ($item) {
+            $item->quantity += 1;
+        } else {
+            $item = OrderItem::create([
+                'order_id'     => $order->id,
+                'product_id'   => $product->id,
+                'custom_price' => 0,
             ]);
+        }
 
         $item->save();
 
@@ -162,9 +169,9 @@ class OrdersController extends Controller
     {
         $item = OrderItem::find($item_id);
 
-        $item->quantity = $request->input('quantity');
-        $item->discount = $request->input('discount');
-        $item->custom_price = $request->input('custom_price');
+        $item->quantity = $request->quantity;
+        $item->discount = $request->discount;
+        $item->custom_price = $request->custom_price;
 
         $item->save();
 

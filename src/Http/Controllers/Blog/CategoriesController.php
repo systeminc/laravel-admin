@@ -89,9 +89,8 @@ class CategoriesController extends Controller
 
             $category->thumb = null;
         }
-        //REPLACE URI
-        $uri = strtolower($request->title);
-        $category->uri = str_replace(' ', '-', $uri);
+        //REPLACE slug
+        $category->slug = str_slug($request->title);
 
         $category->save();
 

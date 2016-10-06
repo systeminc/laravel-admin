@@ -12,7 +12,7 @@ class Page extends Model
     protected $fillable = [
         'title',
         'elements_prefix',
-        'uri_key',
+        'slug',
         'description',
         'keyword',
         'parent_id',
@@ -36,7 +36,7 @@ class Page extends Model
 
     public function tree()
     {
-        $pages = self::whereParentId(null)->orderBy('order_number')->get(['id', 'title', 'uri_key']);
+        $pages = self::whereParentId(null)->orderBy('order_number')->get(['id', 'title', 'slug']);
 
         $tree = [];
 
@@ -59,19 +59,19 @@ class Page extends Model
         return [
             'id'       => $this->id,
             'title'    => $this->title,
-            'uri_key'  => $this->uri_key,
+            'slug'     => $this->slug,
             'subpages' => $tree,
             ];
     }
 
     public function subpages()
     {
-        return $this->whereParentId($this->id)->get(['id', 'title', 'uri_key']);
+        return $this->whereParentId($this->id)->get(['id', 'title', 'slug']);
     }
 
     public function child($parent_id)
     {
-        $pages = self::whereParentId($parent_id)->orderBy('order_number')->get(['id', 'title', 'uri_key']);
+        $pages = self::whereParentId($parent_id)->orderBy('order_number')->get(['id', 'title', 'slug']);
 
         $tree = [];
 

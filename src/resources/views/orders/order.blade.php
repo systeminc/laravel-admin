@@ -35,7 +35,7 @@
 			</div>
 
 			<label>Total Price</label>
-			<input type="text" value="{{$order->total_price}}{{$order->currency}}" disabled>
+			<input type="text" value="{{$order->total_price + $order->total_price * (empty(config('laravel-admin.invoice.vat')) ? '0' : config('laravel-admin.invoice.vat'))/100 }} {{$order->currency}}" disabled>
 
 			@if ($errors->first('shipment_price'))
 			    <div class="alert alert-error no-hide">

@@ -19,8 +19,8 @@
 			<label>Title</label>
 			<input type="text" name="title" value="{{$post->title}}">
 
-			<label>URI ID</label>
-			<input type="text" name="uri_id" value="{{$post->uri_id}}">
+			<label>Slug</label>
+			<input type="text" name="slug" value="{{$post->slug}}">
 
 			<label>Excerpt</label>
 			<textarea name="excerpt" rows="5">{{$post->excerpt}}</textarea>

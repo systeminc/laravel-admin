@@ -57,27 +57,16 @@ class UpdateCommand extends Command
         $this->line('');
         $this->line('Updating Configuration...');
 
-        $config_changed = false;
-
-        $config = require __DIR__.'/../config/laravel-admin.php';
-        $config_file = File::get(__DIR__.'/../config/laravel-admin.php');
-
+        $package_config = require __DIR__.'/../config/laravel-admin.php';
         $client_config = require base_path('config/laravel-admin.php');
 
-        foreach (config('laravel-admin') as $key => $value) {
-            $config_file = str_replace($config[$key], $value, $config_file);
+        $replaceConfig = array_replace_recursive(require __DIR__.'/../config/laravel-admin.php', config('laravel-admin'));
 
-            //CHECK IS CONFIG MERGE WITH CLIENT
-            if (!isset($client_config[$key]) && !$config_changed) {
-                $config_changed = true;
+        foreach ($package_config as $key => $value) {
+            if (!isset($client_config[$key])) {
+                File::put(base_path('config/laravel-admin.php'), ("<?php \r\n\r\nreturn ".preg_replace(['/$([ ])/', '/[ ]([ ])/'], '	', var_export($replaceConfig, true)).';'));
+                $this->info('Config file ("config/laravel-admin.php") is merged, please see changes for new feature');
             }
-        }
-
-        File::put(base_path('config/laravel-admin.php'), $config_file);
-
-        //IF CONFIG ARE MERGE WARM USER
-        if ($config_changed) {
-            $this->info('Config file ("config/laravel-admin.php") is merged, please see changes for new feature');
         }
 
         $this->line('Updating Configuration Done!');

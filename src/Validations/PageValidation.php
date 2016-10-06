@@ -14,7 +14,7 @@ class PageValidation
         return [
         'title'                 => 'required',
         'elements_prefix'       => 'required|unique:pages,elements_prefix,'.$page_id,
-        'uri_key'               => 'required|unique:pages,uri_key,'.$page_id,
+        'slug'                  => 'required|unique:pages,slug,'.$page_id,
         'description'           => 'required',
         ];
     }

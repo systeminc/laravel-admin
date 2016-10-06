@@ -27,43 +27,29 @@
             <table style="width: 100%;">
                 <tr>
                     <td style="width: 60%">
+                        <img src="{{ (!empty(SystemInc\LaravelAdmin\Setting::first()) && SystemInc\LaravelAdmin\Setting::first()->source !== null) ? url('/').'/'.config('laravel-admin.route_prefix').'/uploads/'.SystemInc\LaravelAdmin\Setting::first()->source : url('/').'/'.config('laravel-admin.route_prefix').'/images/logo.png' }}">
                     </td>
                     <td style="width: 40%">
                         <table>
                             <tr>
-                                <td style="vertical-align: top">Location: </td>
+                                <td>{{ empty(config('laravel-admin.invoice.location')) ? '' : 'Location:' }}</td>
+                                <td align="right">{{ empty(config('laravel-admin.invoice.location')) ? '' : config('laravel-admin.invoice.location') }}</td>
                             </tr>
                             <tr>
-                                <td>
-                                    telephone:
-                                </td>
-                                <td align="right">
-                                </td>
+                                <td>{{ empty(config('laravel-admin.invoice.address')) ? '' : 'Address:' }}</td>
+                                <td align="right">{{ empty(config('laravel-admin.invoice.address')) ? '' : config('laravel-admin.invoice.address') }}</td>
                             </tr>
                             <tr>
-                                <td>
-                                    skype :                              
-                                </td>
-                                <td align="right">
-
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    website :        
-                                </td>
-                                <td align="right">
-                                    system-inc.com
-                                </td>
+                                <td>{{ empty(config('laravel-admin.invoice.skype')) ? '' : 'Skype:' }}</td>
+                                <td align="right">{{ empty(config('laravel-admin.invoice.skype')) ? '' : config('laravel-admin.invoice.skype') }}</td>
                             </tr>
                             <tr>
-                                <td>
-                                    e-mail:  
-                                </td>
-                                <td align="right">
-                                    office@system-inc.com
-                                </td>
+                                <td>{{ empty(config('laravel-admin.invoice.website')) ? '' : 'Website:' }}</td>
+                                <td align="right">{{ empty(config('laravel-admin.invoice.website')) ? '' : config('laravel-admin.invoice.website') }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ empty(config('laravel-admin.invoice.email')) ? '' : 'Email:' }}</td>
+                                <td align="right">{{ empty(config('laravel-admin.invoice.email')) ? '' : config('laravel-admin.invoice.email') }}</td>
                             </tr>                          
                         </table>
                     </td>
@@ -78,26 +64,18 @@
                 <col style="width: 50%">
                 <col style="width: 50%">  
                 <tr>
-                    <td colspan="2">Desctiption</td>
-                </tr> 
-                <tr>
-                    <td colspan="2" style="font-size:24px">"Laravel Admin" </td>
-                </tr>                    
-                <tr>
                     <td width="50%">
-                        <span style="letter-spacing:-1px;">Belgrade</span>
+                        {{ empty(config('laravel-admin.invoice.company_prefix')) ? '' : config('laravel-admin.invoice.company_prefix') }} <br>
+                        <span colspan="2" style="font-size:24px">{{ empty(config('laravel-admin.invoice.company_name')) ? '' : '"'.config('laravel-admin.invoice.company_name').'"' }}</span>
                     </td>
-                    <td width="50%">identification number: </td>                        
-                </tr>
-                <tr>
-                    <td>tel: </td>
-                    <td>PIB: </td>                        
-                </tr>
-                <tr>
-                    <td>current account: </td>
-                    <td>
-
+                    <td width="50%">
+                        &nbsp; <br>
+                        {{ empty(config('laravel-admin.invoice.tax_id')) ? '' : 'Tax ID: '.config('laravel-admin.invoice.tax_id') }} <br>
+                        {{ empty(config('laravel-admin.invoice.company_number')) ? '' : 'Company number: '.config('laravel-admin.invoice.company_number') }} <br>
                     </td>                        
+                </tr>
+                <tr>
+                    <td colspan="2"></td>                        
                 </tr>                        
             </table>
             <hr />
@@ -119,7 +97,6 @@
                             Date of order:   {{$order->created_at->format('d.m.Y')}}<br>
                             Date of purchase:  {{$order->date_of_purchase ? $order->date_of_purchase->format('d.m.Y') : ''}}<br>
                             Term of payment:  {{$order->term_of_payment}}<br>
-                            Parity:  {{$order->parity}}
                         @endif
                     </td>
                     <td style="border: 1px solid black; padding:10px;">
@@ -181,14 +158,14 @@
                     @endif
 
                     <tr >
-                        <td>{{$key+1}}</td>
+                        <td style="text-align: center">{{$key+1}}</td>
                         <td style="width:300px">{{$item->product->title}}</td>
                         <td>pcs</td>
                         <td style="text-align: center">{{$item->quantity}}</td>                            
-                        <td style="text-align: right">{{$item->custom_price ?: $item->product->price}}{{$order->currency_sign}}</td>
-                        <td style="text-align: right">{{$item->discount}}{{$order->currency_sign}}</td>
-                        <td style="text-align: right">{{$item->custom_price ? ($item->custom_price - $item->discount) : ($item->product->price * $item->quantity - $item->discount)}}{{$order->currency_sign}}</td>
-                        <td style="text-align: right">0%</td>                            
+                        <td style="text-align: right">{{$item->custom_price ?: $item->product->price}} {{$order->currency}}</td>
+                        <td style="text-align: right">{{$item->discount}} {{$order->currency}}</td>
+                        <td style="text-align: right">{{$item->custom_price ? ($item->custom_price - $item->discount) : ($item->product->price * $item->quantity - $item->discount)}} {{$order->currency}}</td>
+                        <td style="text-align: right">{{ empty(config('laravel-admin.invoice.vat')) ? '0%' : config('laravel-admin.invoice.vat')."%" }}</td>                            
                     </tr>
 
                 @endforeach
@@ -196,33 +173,33 @@
 
                 @if ($order->shipment_price)
                      <tr >
-                        <td>{{$order->items->count()}}</td>
+                        <td style="text-align: center">{{$order->items->count()+1}}</td>
                         <td>Shipping</td>
                         <td>pcs</td>
                         <td style="text-align: center">1</td>                            
-                        <td style="text-align: right">{{$order->shipment_price}}{{$order->currency_sign}}</td>
-                        <td style="text-align: right">0{{$order->currency_sign}}</td>
-                        <td style="text-align: right">{{$order->shipment_price}}{{$order->currency_sign}}</td>
-                        <td style="text-align: right">0%</td>                            
+                        <td style="text-align: right">{{$order->shipment_price}} {{$order->currency}}</td>
+                        <td style="text-align: right">0 {{$order->currency}}</td>
+                        <td style="text-align: right">{{$order->shipment_price}} {{$order->currency}}</td>
+                        <td style="text-align: right">{{ empty(config('laravel-admin.invoice.vat')) ? '0%' : config('laravel-admin.invoice.vat')."%" }}</td>                            
                     </tr>               
                 @endif
                 
                 <tr>
                     <td colspan="4" class="no-border" style="border-right: 1px solid black"></td>
                     <td colspan="2">Total without VAT :</td>
-                    <td style="text-align: right">{{$order->total_price}}{{$order->currency_sign}}</td>
+                    <td style="text-align: right">{{$order->total_price}} {{$order->currency}}</td>
                     <td></td>
                 </tr>
                 <tr>
                     <td colspan="4" class="no-border" style="border-right: 1px solid black"></td>
                     <td colspan="2">VAT amount :</td>
-                    <td style="text-align: right">0,00{{$order->currency_sign}}</td>
+                    <td style="text-align: right">{{ $order->total_price * (empty(config('laravel-admin.invoice.vat')) ? '0' : config('laravel-admin.invoice.vat'))/100 }} {{$order->currency}}</td>
                     <td></td>
                 </tr>
                 <tr>
                     <td class="no-border" style="border-right: 1px solid black" colspan="4"></td>
                     <td colspan="2"><strong>Total for payment :</strong></td>
-                    <td style="text-align: right">{{$order->total_price}}{{$order->currency_sign}}</td>
+                    <td style="text-align: right">{{$order->total_price + $order->total_price * (empty(config('laravel-admin.invoice.vat')) ? '0' : config('laravel-admin.invoice.vat'))/100 }} {{$order->currency}}</td>
                     <td></td>
                 </tr>                        
             </table>
@@ -230,7 +207,7 @@
     </tr>
     <tr>
         <td style="text-align: center; padding: 20px 0;">
-            <strong>Laravel Admin is not responsible for any consequential damage, including loss or recovery <br /> of data, or any other damage made by using or working with Laravel Admin products</strong>
+            <strong>{{ empty(config('laravel-admin.invoice.disclaimer')) ? '' : config('laravel-admin.invoice.disclaimer') }}</strong>
         </td>
     </tr>
     <tr>
@@ -238,32 +215,24 @@
           
             <table>
                 <tr>
-                    <td>Beneficiary:</td>
-                    <td>Laravel Admin </td>
+                    <td>{{ empty(config('laravel-admin.invoice.beneficiary')) ? '' : 'Beneficiary:' }}</td>
+                    <td>{{ empty(config('laravel-admin.invoice.beneficiary')) ? '' : config('laravel-admin.invoice.beneficiary') }}</td>
                 </tr>
                  <tr>
-                    <td>IBAN:</td>
-                    <td>d</td>
+                    <td>{{ empty(config('laravel-admin.invoice.IBAN')) ? '' : 'IBAN:' }}</td>
+                    <td>{{ empty(config('laravel-admin.invoice.IBAN')) ? '' : config('laravel-admin.invoice.IBAN') }}</td>
                 </tr>
                 <tr>
-                    <td>Account No:</td>
-                    <td>d</td>
+                    <td>{{ empty(config('laravel-admin.invoice.swift')) ? '' : 'Swift:' }}</td>
+                    <td>{{ empty(config('laravel-admin.invoice.swift')) ? '' : config('laravel-admin.invoice.swift') }}</td>
                 </tr>
                 <tr>
-                    <td>Swift:</td>
-                    <td>s</td>
+                    <td>{{ empty(config('laravel-admin.invoice.bank')) ? '' : 'Bank:' }}</td>
+                    <td>{{ empty(config('laravel-admin.invoice.bank')) ? '' : config('laravel-admin.invoice.bank') }}</td>
                 </tr>
                 <tr>
-                    <td>Bank:</td>
-                    <td>s</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>s</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Belgrade, Serbia</td>
+                    <td>{{ empty(config('laravel-admin.invoice.account_no')) ? '' : 'Account No:' }}</td>
+                    <td>{{ empty(config('laravel-admin.invoice.account_no')) ? '' : config('laravel-admin.invoice.account_no') }}</td>
                 </tr>
             </table>
 
@@ -279,7 +248,7 @@
     @else
         <tr>
             <td style="text-align: center; padding:20px 0;">
-                <strong>some text</strong>
+                <strong>{{ empty(config('laravel-admin.invoice.small_note')) ? '' : config('laravel-admin.invoice.small_note') }}</strong>
             </td>
         </tr>
         <tr>
@@ -293,7 +262,7 @@
                     <tr>
                         <td style="width: 60%"></td>
                         <td  style="width: 30%; text-align: center;">
-                            <strong>M.P.</strong>
+                            <strong>{{ empty(config('laravel-admin.invoice.signee')) ? '' : config('laravel-admin.invoice.signee') }}</strong>
                         </td>
                         <td style="width: 10%"></td>
                     </tr>
