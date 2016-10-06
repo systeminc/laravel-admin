@@ -47,8 +47,8 @@
 			<label>Elements Prefix</label>
 			<input type="text" name="elements_prefix" placeholder="Elements Prefix" value="{{ $page->elements_prefix }}">
 
-			<label>URI key</label>
-			<input type="text" name="slug" placeholder="Url id" value="{{ $page->slug }}">
+			<label>Slug</label>
+			<input type="text" name="slug" placeholder="Slug" value="{{ $page->slug }}">
 
 			<label>Keyword</label>
 			<input type="text" name="keyword" placeholder="Keyword" value="{{ $page->keyword }}">

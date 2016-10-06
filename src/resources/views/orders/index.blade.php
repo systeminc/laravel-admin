@@ -39,11 +39,11 @@
 					<td>{{$order->total_price + $order->total_price * (empty(config('laravel-admin.invoice.vat')) ? '0' : config('laravel-admin.invoice.vat'))/100 }} {{$order->currency}}</td>
 					<td style="font-weight: bold">{{$order->invoice_number ?: ''}}</td>
 					<td class="actions">
-						<a href="shop/orders/preview-proforma/{{$order->id}}" class="button">Preview</a>
+						<a href="shop/orders/preview-proforma/{{$order->id}}" target="_blank" class="button">Preview</a>
 						<a href="shop/orders/send-proforma/{{$order->id}}" class="confirm-action button">Send</a>
 					</td>
 					<td class="actions">
-						<a href="shop/orders/preview-invoice/{{$order->id}}" class="button">Preview</a>
+						<a href="shop/orders/preview-invoice/{{$order->id}}" target="_blank" class="button">Preview</a>
 						<a href="shop/orders/send-invoice/{{$order->id}}" class="confirm-action button">Send</a>
 						<a href="shop/orders/print-invoice/{{$order->id}}" class="button">Print</a>
 					</td>
