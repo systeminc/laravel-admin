@@ -30,6 +30,17 @@
 			<label for="title">Title:</label>
 			<input type="text" name="title" placeholder="Title" value="{{ old('title') }}">
 
+			@if ($errors->first('url'))
+			    <div class="alert alert-error no-hide">
+			        <span class="help-block">
+			            <strong>{{ $errors->first('url') }}</strong>
+			        </span>
+			    </div>
+			@endif 			
+
+			<label for="url">Url:</label>
+			<input type="text" name="url" placeholder="Url" value="{{ old('url') }}">
+			
 			@if ($errors->first('key'))
 			    <div class="alert alert-error no-hide">
 			        <span class="help-block">
