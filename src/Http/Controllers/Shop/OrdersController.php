@@ -63,7 +63,6 @@ class OrdersController extends Controller
             return back()->withInput()->withErrors($validation);
         }
 
-
         $order = Order::find($order_id);
         $old_order_status_id = $order->order_status_id;
 
