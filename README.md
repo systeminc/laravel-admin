@@ -4,12 +4,17 @@
 
 This is **Laravel Admin**, CRUD (create, read, update and delete) package that can help you get your administration panel in minutes. At this moment we support these modules:
 
-- **Pages** (page elements, galleries, subpages)
+- **Pages** (page elements, subpages, images, html editor)
+- **Galleries** (images, change order)
 - **Blog** (posts, comments)
 - **Shop** (products, categories, comments, orders, stock)
-- **Places** (maps,locations)
+- **Places** (locations, maps)
+- **Leads** (contacts, subscriptions)
+- **Multiple admins**
 
 Once you have your administration panel up, you can easily put all of those elements wherever you want in you application files. For usage documentation see **Usage section** bellow.
+
+Supports Laravel 5.x.
 
 ---
 
