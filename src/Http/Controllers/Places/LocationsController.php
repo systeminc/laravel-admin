@@ -126,7 +126,7 @@ class LocationsController extends Controller
         if ($request->hasFile('thumb_image')) {
             $location->thumb_image = $this->saveImage($request->file('thumb_image'), 'locations/thumb');
         }
-        
+
         if ($request->hasFile('marker_image')) {
             $location->marker_image = $this->saveImage($request->file('marker_image'), 'locations/marker');
         }
