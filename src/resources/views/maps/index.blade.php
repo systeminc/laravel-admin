@@ -15,13 +15,15 @@
 		        {{ session('success') }}
 		    </span>
 		@endif
-
-		<ul class="border">
-			@foreach ($maps as $map)
+		
+		@if (!empty($maps->first()))
+			<ul class="border">
+				@foreach ($maps as $map)
 					<li><a href="places/maps/edit/{{ $map->id }}">
-						{{ ucfirst($map->title) }}</a></li>
-			@endforeach
-		</ul>
+							{{ ucfirst($map->title) }}</a></li>
+				@endforeach
+			</ul>
+		@endif
 	</div>
 	
 @stop

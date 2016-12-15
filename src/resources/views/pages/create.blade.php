@@ -39,16 +39,16 @@
 			<label>Elements Prefix</label>
 			<input type="text" name="elements_prefix" placeholder="Elements Prefix" value="{{ old('elements_prefix') }}">
 
-			@if ($errors->first('uri_key'))
+			@if ($errors->first('slug'))
 			    <div class="alert alert-error no-hide">
 			        <span class="help-block">
-			            <strong>{{ $errors->first('uri_key') }}</strong>
+			            <strong>{{ $errors->first('slug') }}</strong>
 			        </span>
 			    </div>
 			@endif 
 
-			<label>URI key</label>
-			<input type="text" name="uri_key" placeholder="Url id" value="{{ old('uri_key') }}">
+			<label>Slug</label>
+			<input type="text" name="slug" placeholder="Slug" value="{{ old('slug') }}">
 
 			<label>Keyword</label>
 			<input type="text" name="keyword" placeholder="Keyword" value="{{ old('keyword') }}">

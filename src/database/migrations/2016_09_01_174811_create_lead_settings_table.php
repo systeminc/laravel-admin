@@ -29,6 +29,8 @@ class CreateLeadSettingsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::drop('lead_settings');
+        Schema::enableForeignKeyConstraints();
     }
 }

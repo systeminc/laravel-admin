@@ -8,6 +8,7 @@ class Location extends Model
 {
     protected $fillable = [
         'title',
+        'url',
         'key',
         'map_id',
         'description',

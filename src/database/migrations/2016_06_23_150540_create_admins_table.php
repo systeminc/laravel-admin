@@ -30,6 +30,8 @@ class CreateAdminsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::drop('admins');
+        Schema::enableForeignKeyConstraints();
     }
 }

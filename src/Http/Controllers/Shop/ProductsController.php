@@ -38,6 +38,7 @@ class ProductsController extends Controller
     {
         $product = new Product();
         $product->title = 'New product';
+        $product->slug = 'new-product-'.time();
         $product->save();
 
         $gallery = new Gallery();
@@ -80,7 +81,7 @@ class ProductsController extends Controller
     public function postSave(Request $request, $product_id)
     {
         // validation
-        $validation = Validator::make($request->all(), ProductValidation::rules(), ProductValidation::messages());
+        $validation = Validator::make($request->all(), ProductValidation::rules($product_id), ProductValidation::messages());
 
         if ($validation->fails()) {
             return back()->withInput()->withErrors($validation);
@@ -121,6 +122,7 @@ class ProductsController extends Controller
             }
             $product->pdf = null;
         }
+        $product->slug = str_slug($request->slug);
         $product->save();
 
         return redirect($request->segment(1).'/shop/products/edit/'.$product->id)->with('success', 'Saved successfully');

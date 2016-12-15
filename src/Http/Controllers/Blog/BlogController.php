@@ -43,7 +43,7 @@ class BlogController extends Controller
     {
         $post = new BlogPost();
         $post->title = 'New Article';
-        $post->uri_id = 'new-post-'.time();
+        $post->slug = 'new-post-'.time();
         $post->save();
 
         return redirect($request->segment(1).'/blog/post-edit/'.$post->id);
@@ -87,6 +87,7 @@ class BlogController extends Controller
             $post->thumb = null;
         }
 
+        $post->slug = str_slug($request->slug);
         $post->save();
 
         return redirect($request->segment(1).'/blog/post-edit/'.$post->id)->with('success', 'Saved successfully');

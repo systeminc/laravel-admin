@@ -24,9 +24,13 @@ class Blog
      *
      * @return type
      */
-    public function posts()
+    public function posts($url_key = false)
     {
-        return new BlogPost();
+        if ($url_key) {
+            return BlogPost::whereUriId($url_key)->first();
+        } else {
+            return new BlogPost();
+        }
     }
 
     /**

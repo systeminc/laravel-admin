@@ -44,13 +44,19 @@ Start package installation by running instal command below:
 php artisan laravel-admin:instal
 ```
 
+If our package update throws composer, please update dependency running commend below:
+
+```php
+php artisan laravel-admin:update
+```
+
 Note that this installation uses migrations, so you must run it from machine that has access to your database. 
 
 For instance, if you use Vagrant, you will have to do `vagrant ssh` first, go to your project directory, and run this instal command. The same way you run your standard Laravel's migration command. 
 
 ## Usage
 
-TODO
+Visit [wiki](https://github.com/systeminc/laravel-admin/wiki/Blog) 
 
 ## Contributing
 

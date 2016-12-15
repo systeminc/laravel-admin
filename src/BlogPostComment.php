@@ -14,7 +14,7 @@ class BlogPostComment extends Model
         'approved',
     ];
 
-    public function article()
+    public function post()
     {
         return $this->belongsTo('SystemInc\LaravelAdmin\BlogPost', 'blog_post_id');
     }

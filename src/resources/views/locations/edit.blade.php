@@ -29,6 +29,17 @@
 			<label>Title</label>
 			<input type="text" name="title" placeholder="Location title" value="{{ $location->title or old('title') }}">
 
+			@if ($errors->first('url'))
+			    <div class="alert alert-error no-hide">
+			        <span class="help-block">
+			            <strong>{{ $errors->first('url') }}</strong>
+			        </span>
+			    </div>
+			@endif 
+
+			<label>Url</label>
+			<input type="text" name="url" placeholder="Url" value="{{ $location->url or old('url') }}">
+
 			@if ($errors->first('key'))
 			    <div class="alert alert-error no-hide">
 			        <span class="help-block">

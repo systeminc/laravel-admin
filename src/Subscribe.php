@@ -20,11 +20,13 @@ class Subscribe
 
         $setting = LeadSetting::first();
 
-        Mail::send('admin::mail.welcome', ['setting' => $setting], function ($m) use ($subscriber, $setting, $request) {
-            $m->from('noreply@'.$setting->mailer_name, $setting->mailer_name);
+        if (!empty($request->email) && !empty($request->full_name)) {
+            Mail::send('admin::mail.welcome', ['setting' => $setting], function ($m) use ($subscriber, $setting, $request) {
+                $m->from('noreply@'.$setting->mailer_name, $setting->mailer_name);
 
-            $m->to($request->email, $request->full_name)->subject($setting->thank_you_subject);
-        });
+                $m->to($request->email, $request->full_name)->subject($setting->thank_you_subject);
+            });
+        }
 
         return true;
     }

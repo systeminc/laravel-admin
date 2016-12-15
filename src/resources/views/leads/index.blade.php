@@ -19,7 +19,7 @@
 				<tr onclick="document.location='leads/edit/{{$lead->id}}'" style="cursor:pointer">
 					<td>{{ $lead->updated_at }}</td>
 					<td>{{ $json->email }}</td>
-					<td><a href="leads/delete/{{ $lead->id }}" class="button remove-item" style="margin:0">Delete lead</a></td>
+					<td><a href="leads/delete/{{ $lead->id }}" class="button remove-item delete" style="margin:0">Delete lead</a></td>
 				</tr>
 
 			@endforeach

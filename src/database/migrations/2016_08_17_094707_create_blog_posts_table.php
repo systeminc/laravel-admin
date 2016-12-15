@@ -34,6 +34,8 @@ class CreateBlogPostsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::drop('blog_posts');
+        Schema::enableForeignKeyConstraints();
     }
 }

@@ -63,7 +63,7 @@ class MapsController extends Controller
         $map = new Map();
         $map->fill($data);
 
-        $map->key = $this->sanitizeUri($request->key);
+        $map->key = str_slug($request->key);
         $map->save();
 
         return redirect(config('laravel-admin.route_prefix').'/places/maps')->with('success', 'Saved successfully');
@@ -105,7 +105,7 @@ class MapsController extends Controller
         $map = Map::find($map_id);
         $map->fill($data);
 
-        $map->key = $this->sanitizeUri($request->key);
+        $map->key = str_slug($request->key);
         $map->save();
 
         return back()->with('success', 'Saved successfully');

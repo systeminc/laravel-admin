@@ -3,7 +3,8 @@ $(function(){
 	// Delete confirmation
 	$("a.delete").click(function(e) {
 		e.preventDefault();
-
+		e.stopPropagation();
+		
 		if ( confirm("Are you sure you want delete?") ){
 			window.location = $(this).attr("href");
 		}
