@@ -10,6 +10,7 @@ This is **Laravel Admin**, CRUD (create, read, update and delete) package that c
 - **Shop** (products, categories, comments, orders, stock)
 - **Places** (locations, maps)
 - **Leads** (contacts, subscriptions)
+- **Multiple admins**
 
 Once you have your administration panel up, you can easily put all of those elements wherever you want in you application files. For usage documentation see **Usage section** bellow.
 
