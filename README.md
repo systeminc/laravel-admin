@@ -43,6 +43,7 @@ Start package installation by running instal command below:
 ```php
 php artisan laravel-admin:instal
 ```
+If you want to instal package again from scratch, just delete the `config/laravel-admin.php` file and run install command again.
 
 If our package update throws composer, please update dependency running commend below:
 
