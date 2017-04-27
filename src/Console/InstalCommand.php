@@ -5,6 +5,7 @@ namespace SystemInc\LaravelAdmin\Console;
 use Artisan;
 use File;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 use SystemInc\LaravelAdmin\Admin;
 
 class InstalCommand extends Command
@@ -89,7 +90,7 @@ class InstalCommand extends Command
         Admin::create([
             'name'     => $name,
             'email'    => $email,
-            'password' => bcrypt($password),
+            'password' => Hash::make($password),
         ]);
 
         require __DIR__.'/../database/seeds/DatabaseSeeder.php';
