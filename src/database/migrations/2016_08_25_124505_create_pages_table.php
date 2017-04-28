@@ -16,8 +16,8 @@ class CreatePagesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('uri_key');
-            $table->text('description');
-            $table->text('keyword');
+            $table->text('description')->nullable();
+            $table->text('keyword')->nullable();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('order_number')->default(0);
             $table->timestamps();
