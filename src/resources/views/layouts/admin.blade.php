@@ -20,6 +20,14 @@
 
 		<div class="header-menu cf">
 			<ul class="cf">
+				@if (config('laravel-admin.modules.pages'))
+					<li><a href="pages">Pages</a></li>
+				@endif
+				@if (config('laravel-admin.modules.galleries'))
+					<li>
+						<a href="galleries">Galleries</a>
+					</li>
+				@endif
 				@if (config('laravel-admin.modules.blog'))
 					<li {{ Request::is('blog') ? 'class="active"' : ''}}>
 						<a href="blog">Blog</a>
@@ -28,14 +36,6 @@
 							<li><a href="blog/categories">Categories</a></li>
 						</ul>
 					</li>
-				@endif
-				@if (config('laravel-admin.modules.galleries'))
-					<li>
-						<a href="galleries">Galleries</a>
-					</li>
-				@endif
-				@if (config('laravel-admin.modules.pages'))
-					<li><a href="pages">Pages</a></li>
 				@endif
 				@if (config('laravel-admin.modules.places'))
 					<li {{ Request::is('places') ? 'class="active"' : ''}}>
