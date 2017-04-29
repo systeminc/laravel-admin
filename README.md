@@ -14,7 +14,7 @@ This is **Laravel Admin**, CRUD (create, read, update and delete) package that c
 
 Once you have your administration panel up, you can easily put all of those elements wherever you want in you application files. For usage documentation see **Usage section** bellow.
 
-Supports Laravel 5.1 -> 5.3.
+Supports Laravel 5.1 -> 5.4.
 
 ---
 
