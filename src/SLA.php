@@ -45,7 +45,7 @@ class SLA
      */
     public function element($key)
     {
-        return PageElement::whereKey($key)->first();
+        return PageElement::where(['key' => $key])->first();
     }
 
     /**
@@ -56,7 +56,7 @@ class SLA
     public function gallery($key = false)
     {
         if ($key) {
-            return Gallery::whereKey($key)->first();
+            return Gallery::where(['key' => $key])->first();
         } else {
             return new Gallery();
         }
@@ -89,7 +89,7 @@ class SLA
      */
     public function location($key)
     {
-        return Location::whereKey($key)->first();
+        return Location::where(['key' => $key])->first();
     }
 
     /**
@@ -109,7 +109,7 @@ class SLA
      */
     public function map($key)
     {
-        return Map::whereKey($key)->first();
+        return Map::where(['key' => $key])->first();
     }
 
     /**

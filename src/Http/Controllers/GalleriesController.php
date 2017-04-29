@@ -56,7 +56,7 @@ class GalleriesController extends Controller
         if (!empty($request->title) || $request->hasFile('images')) {
             $key = $this->sanitizeElements($request->title);
 
-            if (Gallery::whereKey($key)->first()) {
+            if (Gallery::where(['key' => $key])->first()) {
                 return back()->with(['error' => 'Similar gallery exists, so we can create key('.$key.'), try deferent title']);
             }
 
@@ -106,7 +106,7 @@ class GalleriesController extends Controller
             $this->Images($request->file('images'), $gallery->id);
         }
 
-        if ($gallery->key !== $request->key && Gallery::whereKey($request->key)->first()) {
+        if ($gallery->key !== $request->key && Gallery::where(['key' => $request->key])->first()) {
             return back()->with(['error' => 'This key exists']);
         }
 

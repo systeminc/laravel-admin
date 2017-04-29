@@ -26,7 +26,7 @@ class Page extends Model
 
     public function element($key)
     {
-        return PageElement::whereKey($key)->first();
+        return PageElement::where(['key' => $key])->first();
     }
 
     public function menu()
