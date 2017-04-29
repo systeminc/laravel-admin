@@ -45,7 +45,7 @@ php artisan laravel-admin:instal
 ```
 If you want to instal package again from scratch, just delete the `config/laravel-admin.php` file and run install command again.
 
-If our package update throws composer, please update dependency running commend below:
+If our package update throws composer error, try updating dependencies manually with commend below:
 
 ```php
 php artisan laravel-admin:update
