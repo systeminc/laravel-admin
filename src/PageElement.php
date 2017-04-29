@@ -19,4 +19,9 @@ class PageElement extends Model
     {
         return $this->belongsTo('SystemInc\LaravelAdmin\Page');
     }
+
+    public function getContentAttribute($value)
+    {
+        return $this->page_element_type_id === 1 ? nl2br($value) : $value;
+    }
 }
