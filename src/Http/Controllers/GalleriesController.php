@@ -174,19 +174,22 @@ class GalleriesController extends Controller
                     }
 
                     $original_image = Image::make($image)
-                        ->fit(1920, 1080, function ($constraint) {
+                        ->resize(1920, 1080, function ($constraint) {
+                            $constraint->aspectRatio();
                             $constraint->upsize();
                         })->encode();
                     Storage::put($original_url, $original_image);
 
                     $thumb_image = Image::make($image)
-                        ->fit(375, 200, function ($constraint) {
+                        ->resize(375, 200, function ($constraint) {
+                            $constraint->aspectRatio();
                             $constraint->upsize();
                         })->encode();
                     Storage::put($thumb_url, $thumb_image);
 
                     $mobile_image = Image::make($image)
-                        ->fit(1024, 768, function ($constraint) {
+                        ->resize(1024, 768, function ($constraint) {
+                            $constraint->aspectRatio();
                             $constraint->upsize();
                         })->encode();
                     Storage::put($mobile_url, $mobile_image);
