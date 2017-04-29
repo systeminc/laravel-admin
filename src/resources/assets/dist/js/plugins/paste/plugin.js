@@ -80,7 +80,7 @@
 
 			target[fragments[fragments.length - 1]] = modules[id];
 		}
-		
+
 		// Expose private modules for unit tests
 		if (exports.AMDLC_TESTS) {
 			privateModules = exports.privateModules || {};
@@ -195,6 +195,21 @@ define("tinymce/pasteplugin/Utils", [
 		return text;
 	}
 
+	var getInnerFragment = function (html) {
+		var startFragment = '<!--StartFragment-->';
+		var endFragment = '<!--EndFragment-->';
+		var startPos = html.indexOf(startFragment);
+		if (startPos !== -1) {
+			var fragmentHtml = html.substr(startPos + startFragment.length);
+			var endPos = fragmentHtml.indexOf(endFragment);
+			if (endPos !== -1 && /^<\/(p|h[1-6]|li)>/i.test(fragmentHtml.substr(endPos + endFragment.length, 5))) {
+				return fragmentHtml.substr(0, endPos);
+			}
+		}
+
+		return html;
+	};
+
 	/**
 	 * Trims the specified HTML by removing all WebKit fragments, all elements wrapping the body trailing BR elements etc.
 	 *
@@ -212,8 +227,8 @@ define("tinymce/pasteplugin/Utils", [
 			return '\u00a0';
 		}
 
-		html = filter(html, [
-			/^[\s\S]*<body[^>]*>\s*|\s*<\/body[^>]*>[\s\S]*$/g, // Remove anything but the contents within the BODY element
+		html = filter(getInnerFragment(html), [
+			/^[\s\S]*<body[^>]*>\s*|\s*<\/body[^>]*>[\s\S]*$/ig, // Remove anything but the contents within the BODY element
 			/<!--StartFragment-->|<!--EndFragment-->/g, // Inner fragments (tables from excel on mac)
 			[/( ?)<span class="Apple-converted-space">\u00a0<\/span>( ?)/g, trimSpaces],
 			/<br class="Apple-interchange-newline">/g,
@@ -938,7 +953,8 @@ define("tinymce/pasteplugin/Clipboard", [
 			});
 
 			function isPlainTextFileUrl(content) {
-				return content['text/plain'].indexOf('file://') === 0;
+				var plainTextContent = content['text/plain'];
+				return plainTextContent ? plainTextContent.indexOf('file://') === 0 : false;
 			}
 
 			editor.on('drop', function(e) {
@@ -1551,7 +1567,7 @@ define("tinymce/pasteplugin/WordFilter", [
  * Quirks.js
  *
  * Released under LGPL License.
- * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
+ * Copyright (c) 1999-2017 Ephox Corp. All rights reserved
  *
  * License: http://www.tinymce.com/license
  * Contributing: http://www.tinymce.com/contributing
@@ -1577,6 +1593,12 @@ define("tinymce/pasteplugin/Quirks", [
 		function addPreProcessFilter(filterFunc) {
 			editor.on('BeforePastePreProcess', function(e) {
 				e.content = filterFunc(e.content);
+			});
+		}
+
+		function addPostProcessFilter(filterFunc) {
+			editor.on('PastePostProcess', function(e) {
+				filterFunc(e.node);
 			});
 		}
 
@@ -1696,6 +1718,12 @@ define("tinymce/pasteplugin/Quirks", [
 			return content;
 		}
 
+		function removeUnderlineAndFontInAnchor(root) {
+			editor.$('a', root).find('font,u').each(function(i, node) {
+				editor.dom.remove(node, true);
+			});
+		}
+
 		// Sniff browsers and apply fixes since we can't feature detect
 		if (Env.webkit) {
 			addPreProcessFilter(removeWebKitStyles);
@@ -1703,6 +1731,7 @@ define("tinymce/pasteplugin/Quirks", [
 
 		if (Env.ie) {
 			addPreProcessFilter(removeExplorerBrElementsAfterBlocks);
+			addPostProcessFilter(removeUnderlineAndFontInAnchor);
 		}
 	};
 });
@@ -1742,16 +1771,15 @@ define("tinymce/pasteplugin/Plugin", [
 
 		function togglePlainTextPaste() {
 			if (clipboard.pasteFormat == "text") {
-				this.active(false);
 				clipboard.pasteFormat = "html";
 				editor.fire('PastePlainTextToggle', {state: false});
 			} else {
 				clipboard.pasteFormat = "text";
-				this.active(true);
+				editor.fire('PastePlainTextToggle', {state: true});
 
 				if (!isUserInformedAboutPlainText()) {
 					var message = editor.translate('Paste is now in plain text mode. Contents will now ' +
-						'be pasted as plain text until you toggle this option off.');
+					'be pasted as plain text until you toggle this option off.');
 
 					editor.notificationManager.open({
 						text: message,
@@ -1759,11 +1787,20 @@ define("tinymce/pasteplugin/Plugin", [
 					});
 
 					userIsInformed = true;
-					editor.fire('PastePlainTextToggle', {state: true});
 				}
 			}
 
 			editor.focus();
+		}
+
+		function stateChange() {
+			var self = this;
+
+			self.active(clipboard.pasteFormat === 'text');
+
+			editor.on('PastePlainTextToggle', function (e) {
+				self.active(e.state);
+			});
 		}
 
 		// draw back if power version is requested and registered
@@ -1824,21 +1861,24 @@ define("tinymce/pasteplugin/Plugin", [
 			});
 		}
 
+		editor.addCommand('mceTogglePlainTextPaste', togglePlainTextPaste);
+
 		editor.addButton('pastetext', {
 			icon: 'pastetext',
 			tooltip: 'Paste as text',
 			onclick: togglePlainTextPaste,
-			active: self.clipboard.pasteFormat == "text"
+			onPostRender: stateChange
 		});
 
 		editor.addMenuItem('pastetext', {
 			text: 'Paste as text',
 			selectable: true,
 			active: clipboard.pasteFormat,
-			onclick: togglePlainTextPaste
+			onclick: togglePlainTextPaste,
+			onPostRender: stateChange
 		});
 	});
 });
 
 expose(["tinymce/pasteplugin/Utils"]);
-})(this);
+})(window);
