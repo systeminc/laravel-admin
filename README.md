@@ -66,6 +66,29 @@ Contributions to the Laravel Admin library are welcome. Please note the followin
 - Follow [PSR-2](http://www.php-fig.org/psr/psr-2/) coding standards.
 - Write tests for new functions and added features
 
+
+composer install
+```
+$ composer install
+```
+
+npm install
+```
+$ npm --prefix ./src install
+```
+
+bower install
+```
+$ cd src/resources/assets/src
+$ bower install
+```
+
+build
+```
+$ cd src
+$ gulp --production
+```
+
 ## License
 
 This Laravel Admin is open-source software licensed under the [MIT license](http://opensource.org/licenses/MIT)

@@ -13,9 +13,6 @@
 @append
 
 @section('body')
-
-	<div class="loader"></div>
-
 	<header class="cf">
 		<div class="header-top">
 			<a href="" class="logo"><img src="{{ (!empty(SystemInc\LaravelAdmin\Setting::first()) && SystemInc\LaravelAdmin\Setting::first()->source !== null) ? 'uploads/'.SystemInc\LaravelAdmin\Setting::first()->source : 'images/logo.png' }}" alt="SystemInc Laravel admin logo"></a>
@@ -91,5 +88,4 @@
 	<div class="admin-content-wrap cf">
 		@yield('admin-content')
 	</div>
-
 @append

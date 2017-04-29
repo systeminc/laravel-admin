@@ -1,0 +1,16 @@
+{
+  "name": "laravel-admin",
+  "version": "1.0.1",
+  "description": "CMS for Laravel framework",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "laravel-elixir": "^6.0.0-15"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

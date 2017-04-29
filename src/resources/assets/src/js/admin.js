@@ -63,8 +63,6 @@ $(window).on("load", function(){
 
     hideAlert();
 
-    $('.loader').fadeOut(1000);
-
     $( ".sortable" ).sortable({
 	  	stop: function( event, ui ) {
 			var order = [];
@@ -103,7 +101,6 @@ $(window).on("load", function(){
 			$('.copy.clicked').removeClass('clicked');
 		},1000)
 	})
-
 
 });
 
