@@ -5,7 +5,7 @@
 @errorColor: rgba(242, 68, 27, 0.3);
 @red: #E91A40;
 @defaultTextColor: #4A4A4A;
-@hover-color: #7ED321;
+@green: #7ED321;
 @white: #fff;
 
 body{
@@ -118,7 +118,7 @@ body{
 		}
 
 		&:hover{
-			background: @hover-color url("../images/delete.png") no-repeat 95% 50%;
+			background: @red url("../images/delete.png") no-repeat 95% 50%;
 		}
 
 	}
@@ -132,7 +132,7 @@ body{
 		background: @defaultTextColor url("../images/save.png") no-repeat 95% 50%;
 
 		&:hover{
-			background: @hover-color url("../images/save.png") no-repeat 95% 50%;
+			background: @green url("../images/save.png") no-repeat 95% 50%;
 		}
 	}
 
@@ -148,7 +148,7 @@ body{
 
 	&:hover{
 		color: @white;
-		background: @hover-color;
+		background: @green;
 	}
 }
 
@@ -176,7 +176,7 @@ input{
 	&:hover,
 	&:focus
 	{
-		border-color: @hover-color;
+		border-color: @green;
 	}
 }
 
@@ -216,7 +216,7 @@ form{
 
 		&:hover,
 		&:focus{
-			border-color: @hover-color;
+			border-color: @green;
 		}
 	}
 
@@ -256,7 +256,7 @@ form{
 	background: lighten(@defaultTextColor, 30%) url("../images/upload.png") no-repeat 95% 50%;
 
 	&:hover{
-		background: @hover-color url("../images/upload.png") no-repeat 95% 50%;
+		background: @green url("../images/upload.png") no-repeat 95% 50%;
 	}
 
 	span{
@@ -330,7 +330,7 @@ form{
 				color: @white;
 
 				&:hover{
-					background: @hover-color;
+					background: @green;
 				}
 			}
 		}
@@ -807,7 +807,7 @@ header{
 
 			    .remove-image{
 		    	    margin: 5px;
-			        background: @errorColor;
+			        background: rgba(102, 102, 102, 0.8);
 				    padding: 5px 8px;
 				    float: left;
 				    line-height: 1em;
@@ -984,7 +984,7 @@ header{
 				background: lighten(@defaultTextColor, 30%);
 
 				&:hover{
-					background-color: @hover-color;
+					background-color: @green;
 				}
 			}
 		}
@@ -1311,7 +1311,7 @@ header{
 	.transition();
 
 	&:hover{
-		background: @hover-color url("../images/arrow-down.png") no-repeat 95% 50%;
+		background: @green url("../images/arrow-down.png") no-repeat 95% 50%;
 	}
 	
 	select {
