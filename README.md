@@ -65,6 +65,8 @@ Contributions to the Laravel Admin library are welcome. Please note the followin
 
 - Follow [PSR-2](http://www.php-fig.org/psr/psr-2/) coding standards.
 - Write tests for new functions and added features
+- use development branch
+- use `gulp --production` for assets
 
 
 composer install
