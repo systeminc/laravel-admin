@@ -27,15 +27,15 @@ class PageElement extends Model
             case 1:
                 return nl2br($value);
                 break;
-            
+
             case 2:
                 return $value;
                 break;
-            
+
             case 3:
                 return SLA::getFile($value);
                 break;
-            
+
             default:
                 return false;
                 break;
