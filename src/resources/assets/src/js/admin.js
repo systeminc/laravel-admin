@@ -1,11 +1,11 @@
 $(function(){
 
 	// Delete confirmation
-	$("a.delete").click(function(e) {
+	$("a.delete, a.remove-item").click(function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 		
-		if ( confirm("Are you sure you want delete?") ){
+		if ( confirm("Are you sure you want to delete?") ){
 			window.location = $(this).attr("href");
 		}
 
