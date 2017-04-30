@@ -3,6 +3,7 @@
 namespace SystemInc\LaravelAdmin;
 
 use Illuminate\Database\Eloquent\Model;
+use SystemInc\LaravelAdmin\Facades\SLA;
 
 class PageElement extends Model
 {
@@ -22,6 +23,22 @@ class PageElement extends Model
 
     public function getContentAttribute($value)
     {
-        return $this->page_element_type_id === 1 ? nl2br($value) : $value;
+        switch ($this->page_element_type_id) {
+            case 1:
+                return nl2br($value);
+                break;
+            
+            case 2:
+                return $value;
+                break;
+            
+            case 3:
+                return SLA::getFile($value);
+                break;
+            
+            default:
+                return false;
+                break;
+        }
     }
 }

@@ -210,7 +210,7 @@ class PagesController extends Controller
             $file = $request->file('content');
 
             if ($file && $file->isValid()) {
-                $dirname = 'pages/'.$request->elements_prefix.'/'.$title.'/'.$file->getClientOriginalName();
+                $dirname = 'pages/'.$request->elements_prefix.'/'.$file->getClientOriginalName();
 
                 Storage::put($dirname, file_get_contents($file));
 
@@ -295,7 +295,7 @@ class PagesController extends Controller
             $file = $request->file('content');
 
             if ($file->isValid()) {
-                $dirname = 'pages/'.$element->page->elements_prefix.'/'.$title.'/'.$file->getClientOriginalName();
+                $dirname = 'pages/'.$element->page->elements_prefix.'/'.$file->getClientOriginalName();
 
                 Storage::put($dirname, file_get_contents($file));
 
