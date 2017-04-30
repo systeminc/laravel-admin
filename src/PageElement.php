@@ -3,8 +3,8 @@
 namespace SystemInc\LaravelAdmin;
 
 use Illuminate\Database\Eloquent\Model;
-use SystemInc\LaravelAdmin\Facades\SLA;
 use Illuminate\Support\Facades\Request;
+use SystemInc\LaravelAdmin\Facades\SLA;
 
 class PageElement extends Model
 {
@@ -32,15 +32,15 @@ class PageElement extends Model
             case 1:
                 return nl2br($value);
                 break;
-            
+
             case 2:
                 return $value;
                 break;
-            
+
             case 3:
                 return SLA::getFile($value);
                 break;
-            
+
             default:
                 return false;
                 break;
