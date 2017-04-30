@@ -17,7 +17,8 @@ class PageElement extends Model
         'order_number',
     ];
 
-    public function __toString(){
+    public function __toString()
+    {
         return $this->content;
     }
 
