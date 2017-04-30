@@ -31,9 +31,17 @@ class SLA
      *
      * @return type
      */
-    public function page()
+    public function page($page_query = null)
     {
-        return new Page();
+        if (is_string($page_query)) {
+            return Page::where(['slug' => $page_query])->first();
+        }
+        else if (is_int($page_query)) {
+            return Page::where(['id' => $page_query])->first();
+        }
+        else{
+            return new Page();
+        }
     }
 
     /**

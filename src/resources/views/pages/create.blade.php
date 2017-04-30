@@ -50,8 +50,8 @@
 			<label>Slug</label>
 			<input type="text" name="slug" placeholder="Slug" value="{{ old('slug') }}">
 
-			<label>Keyword</label>
-			<input type="text" name="keyword" placeholder="Keyword" value="{{ old('keyword') }}">
+			<label>Keywords</label>
+			<input type="text" name="keywords" placeholder="Keywords" value="{{ old('keywords') }}">
 
 			@if ($errors->first('description'))
 			    <div class="alert alert-error no-hide">

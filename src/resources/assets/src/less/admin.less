@@ -131,6 +131,13 @@ body{
 		padding: 16px;
 		background: @defaultTextColor url("../images/save.png") no-repeat 95% 50%;
 
+		@media @1024{
+			& + .remove-item{
+				margin-left: 0;
+				margin-right: 0;
+			}
+		}
+
 		&:hover{
 			background: @green url("../images/save.png") no-repeat 95% 50%;
 		}
@@ -451,7 +458,8 @@ header{
 
 			&.active{
 				&:hover{
-					background: none;
+					background: lighten(@defaultTextColor, 62.5%);
+					
 					a{
 						font-weight: normal;
 					}

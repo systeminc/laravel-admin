@@ -17,6 +17,10 @@ class PageElement extends Model
         'order_number',
     ];
 
+    public function __toString(){
+        return $this->content;
+    }
+
     public function page()
     {
         return $this->belongsTo('SystemInc\LaravelAdmin\Page');
