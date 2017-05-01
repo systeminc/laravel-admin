@@ -16,9 +16,7 @@ Once you have your administration panel up, you can easily put all of those elem
 
 Supports Laravel 5.1 -> 5.4.
 
-![Alt text](/screens/1.jpg?raw=true "Pages")
-![Alt text](/screens/2.jpg?raw=true "Page")
-![Alt text](/screens/3.jpg?raw=true "Gallery")
+<img src="/screens/1.png?raw=true" width="250"> <img src="/screens/2.png?raw=true" width="250"> <img src="/screens/3.png?raw=true" width="250"> 
 
 ---
 
