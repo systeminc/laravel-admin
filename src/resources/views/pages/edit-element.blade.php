@@ -56,7 +56,7 @@
 
 				@if (strstr($mime, 'image') !== false)
 					<div class="cf" style="position: relative">
-						<img src="uploads/{{ $element->content }}" alt="" width="200" class="left">
+						<img src="uploads/{{ $element->content }}" alt="" style="max-width: 200px" class="left">
 						<div class="cf">
 							<input type="hidden" name="content" value="{{ $element->content }}">
 							<a href="pages/delete-element-file/{{ $element->id }}" class="button remove-item file image left">Delete file</a>

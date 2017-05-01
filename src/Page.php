@@ -14,7 +14,7 @@ class Page extends Model
         'elements_prefix',
         'slug',
         'description',
-        'keyword',
+        'keywords',
         'parent_id',
         'order_number',
     ];
@@ -26,7 +26,7 @@ class Page extends Model
 
     public function element($key)
     {
-        return PageElement::whereKey($key)->first();
+        return PageElement::where(['key' => $key])->first();
     }
 
     public function menu()
@@ -66,19 +66,11 @@ class Page extends Model
 
     public function subpages()
     {
-        return $this->whereParentId($this->id)->get(['id', 'title', 'slug']);
+        return $this->whereParentId($this->id)->orderBy('order_number')->get();
     }
 
-    public function child($parent_id)
+    public function getMeta()
     {
-        $pages = self::whereParentId($parent_id)->orderBy('order_number')->get(['id', 'title', 'slug']);
-
-        $tree = [];
-
-        foreach ($pages as $page) {
-            $tree[] = $page->getTreeBranch();
-        }
-
-        return $tree;
+        return $this->whereId($this->id)->first(['title', 'description', 'keywords'])->toArray();
     }
 }

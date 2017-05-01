@@ -5,7 +5,7 @@
 @errorColor: rgba(242, 68, 27, 0.3);
 @red: #E91A40;
 @defaultTextColor: #4A4A4A;
-@hover-color: #7ED321;
+@green: #7ED321;
 @white: #fff;
 
 body{
@@ -118,7 +118,7 @@ body{
 		}
 
 		&:hover{
-			background: @hover-color url("../images/delete.png") no-repeat 95% 50%;
+			background: @red url("../images/delete.png") no-repeat 95% 50%;
 		}
 
 	}
@@ -131,8 +131,15 @@ body{
 		padding: 16px;
 		background: @defaultTextColor url("../images/save.png") no-repeat 95% 50%;
 
+		@media @1024{
+			& + .remove-item{
+				margin-left: 0;
+				margin-right: 0;
+			}
+		}
+
 		&:hover{
-			background: @hover-color url("../images/save.png") no-repeat 95% 50%;
+			background: @green url("../images/save.png") no-repeat 95% 50%;
 		}
 	}
 
@@ -148,7 +155,7 @@ body{
 
 	&:hover{
 		color: @white;
-		background: @hover-color;
+		background: @green;
 	}
 }
 
@@ -176,7 +183,7 @@ input{
 	&:hover,
 	&:focus
 	{
-		border-color: @hover-color;
+		border-color: @green;
 	}
 }
 
@@ -216,7 +223,7 @@ form{
 
 		&:hover,
 		&:focus{
-			border-color: @hover-color;
+			border-color: @green;
 		}
 	}
 
@@ -256,7 +263,7 @@ form{
 	background: lighten(@defaultTextColor, 30%) url("../images/upload.png") no-repeat 95% 50%;
 
 	&:hover{
-		background: @hover-color url("../images/upload.png") no-repeat 95% 50%;
+		background: @green url("../images/upload.png") no-repeat 95% 50%;
 	}
 
 	span{
@@ -330,7 +337,7 @@ form{
 				color: @white;
 
 				&:hover{
-					background: @hover-color;
+					background: @green;
 				}
 			}
 		}
@@ -371,7 +378,7 @@ header{
 
 		img{
 			max-width: 140px;
-			max-height: 30px;
+			max-height: 50px;
 			display: block;
 		}	
 	}
@@ -451,7 +458,8 @@ header{
 
 			&.active{
 				&:hover{
-					background: none;
+					background: lighten(@defaultTextColor, 62.5%);
+					
 					a{
 						font-weight: normal;
 					}
@@ -894,7 +902,7 @@ header{
 			}
 
 			&.items-order{
-				// transition: none;
+				transition: none;
 			}
 
 			&.green{
@@ -984,7 +992,7 @@ header{
 				background: lighten(@defaultTextColor, 30%);
 
 				&:hover{
-					background-color: @hover-color;
+					background-color: @green;
 				}
 			}
 		}
@@ -1311,7 +1319,7 @@ header{
 	.transition();
 
 	&:hover{
-		background: @hover-color url("../images/arrow-down.png") no-repeat 95% 50%;
+		background: @green url("../images/arrow-down.png") no-repeat 95% 50%;
 	}
 	
 	select {

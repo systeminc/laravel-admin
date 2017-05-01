@@ -56,7 +56,7 @@ class GalleriesController extends Controller
         if (!empty($request->title) || $request->hasFile('images')) {
             $key = $this->sanitizeElements($request->title);
 
-            if (Gallery::whereKey($key)->first()) {
+            if (Gallery::where(['key' => $key])->first()) {
                 return back()->with(['error' => 'Similar gallery exists, so we can create key('.$key.'), try deferent title']);
             }
 
@@ -106,7 +106,7 @@ class GalleriesController extends Controller
             $this->Images($request->file('images'), $gallery->id);
         }
 
-        if ($gallery->key !== $request->key && Gallery::whereKey($request->key)->first()) {
+        if ($gallery->key !== $request->key && Gallery::where(['key' => $request->key])->first()) {
             return back()->with(['error' => 'This key exists']);
         }
 
@@ -174,19 +174,22 @@ class GalleriesController extends Controller
                     }
 
                     $original_image = Image::make($image)
-                        ->fit(1920, 1080, function ($constraint) {
+                        ->resize(1920, 1080, function ($constraint) {
+                            $constraint->aspectRatio();
                             $constraint->upsize();
                         })->encode();
                     Storage::put($original_url, $original_image);
 
                     $thumb_image = Image::make($image)
-                        ->fit(375, 200, function ($constraint) {
+                        ->resize(375, 200, function ($constraint) {
+                            $constraint->aspectRatio();
                             $constraint->upsize();
                         })->encode();
                     Storage::put($thumb_url, $thumb_image);
 
                     $mobile_image = Image::make($image)
-                        ->fit(1024, 768, function ($constraint) {
+                        ->resize(1024, 768, function ($constraint) {
+                            $constraint->aspectRatio();
                             $constraint->upsize();
                         })->encode();
                     Storage::put($mobile_url, $mobile_image);

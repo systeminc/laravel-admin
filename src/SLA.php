@@ -31,9 +31,15 @@ class SLA
      *
      * @return type
      */
-    public function page()
+    public function page($page_query = null)
     {
-        return new Page();
+        if (is_string($page_query)) {
+            return Page::where(['slug' => $page_query])->first();
+        } elseif (is_int($page_query)) {
+            return Page::where(['id' => $page_query])->first();
+        } else {
+            return new Page();
+        }
     }
 
     /**
@@ -45,7 +51,7 @@ class SLA
      */
     public function element($key)
     {
-        return PageElement::whereKey($key)->first();
+        return PageElement::where(['key' => $key])->first();
     }
 
     /**
@@ -56,7 +62,7 @@ class SLA
     public function gallery($key = false)
     {
         if ($key) {
-            return Gallery::whereKey($key)->first();
+            return Gallery::where(['key' => $key])->first();
         } else {
             return new Gallery();
         }
@@ -89,7 +95,7 @@ class SLA
      */
     public function location($key)
     {
-        return Location::whereKey($key)->first();
+        return Location::where(['key' => $key])->first();
     }
 
     /**
@@ -109,7 +115,7 @@ class SLA
      */
     public function map($key)
     {
-        return Map::whereKey($key)->first();
+        return Map::where(['key' => $key])->first();
     }
 
     /**

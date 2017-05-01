@@ -14,7 +14,7 @@ This is **Laravel Admin**, CRUD (create, read, update and delete) package that c
 
 Once you have your administration panel up, you can easily put all of those elements wherever you want in you application files. For usage documentation see **Usage section** bellow.
 
-Supports Laravel 5.1 -> 5.3.
+Supports Laravel 5.1 -> 5.4.
 
 ---
 
@@ -45,7 +45,7 @@ php artisan laravel-admin:instal
 ```
 If you want to instal package again from scratch, just delete the `config/laravel-admin.php` file and run install command again.
 
-If our package update throws composer, please update dependency running commend below:
+If our package update throws composer error, try updating dependencies manually with commend below:
 
 ```php
 php artisan laravel-admin:update
