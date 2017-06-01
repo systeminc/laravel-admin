@@ -11,6 +11,7 @@ notifications:
   
 install:
   - composer self-update
+  - composer install --dev
   - travis_retry composer install --no-interaction --prefer-source
 
 before_script: git reset --hard HEAD
