@@ -12,6 +12,11 @@
 		    <span class="alert alert-error">
 		        {{ session('error') }}
 		    </span>
+		@endif		
+		@if (session('success'))
+		    <span class="alert alert-success">
+		        {{ session('success') }}
+		    </span>
 		@endif
 		
 		<form action="pages/update/{{ $page->id }}" method="post">
@@ -95,10 +100,10 @@
 				<div class="line"></div>
 			</div>
 
-			@if (!empty($elements->first()))
+			@if (!empty($page->elements->first()))
 				
 				<ul class="elements-list">
-					@foreach ($elements as $element)
+					@foreach ($page->elements as $element)
 						<li>
 							<a href="pages/edit-element/{{$element->id}}"><b>{{ ucfirst($element->title) }} - {{$element->key}}</b></a>
 							<a href="pages/delete-element/{{ $element->id }}" class="button remove-item file delete list">Delete</a>

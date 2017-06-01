@@ -66,7 +66,8 @@ class GalleriesController extends Controller
             ]);
 
             return redirect(config('laravel-admin.route_prefix').'/galleries');
-        } else {
+        }
+        else {
             return back()->with('error', 'Title is required');
         }
     }
@@ -81,9 +82,8 @@ class GalleriesController extends Controller
     public function getEdit($gallery_id)
     {
         $gallery = Gallery::find($gallery_id);
-        $images = $gallery->images;
 
-        return view('admin::galleries.edit', compact('gallery', 'images'));
+        return view('admin::galleries.edit', compact('gallery'));
     }
 
     /**
@@ -98,18 +98,13 @@ class GalleriesController extends Controller
     {
         $gallery = Gallery::find($gallery_id);
 
-        if ($request->title == $gallery->title) {
-            $this->Images($request->file('images'), $gallery->id);
-        } elseif (!empty($request->title)) {
-            $gallery->title = $request->title;
-
-            $this->Images($request->file('images'), $gallery->id);
-        }
-
         if ($gallery->key !== $request->key && Gallery::where(['key' => $request->key])->first()) {
             return back()->with(['error' => 'This key exists']);
         }
 
+        $this->uploadImages($request->file('images'), $gallery->id);
+
+        $gallery->title = !empty($request->title) ? $request->title : $gallery->title;
         $gallery->key = $this->sanitizeElements($request->key);
         $gallery->save();
 
@@ -148,7 +143,7 @@ class GalleriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public static function Images($images, $gallery_id)
+    private function uploadImages($images, $gallery_id)
     {
         if (is_array($images)) {
             foreach (array_filter($images) as $image) {
@@ -159,48 +154,19 @@ class GalleriesController extends Controller
                     $thumb = '/thumb/'.$gallery_id.'-'.$image_name.'.'.$image->getClientOriginalExtension();
                     $mobile = '/mobile/'.$gallery_id.'-'.$image_name.'.'.$image->getClientOriginalExtension();
 
-                    $original_url = 'images/galleries'.$original;
-                    $thumb_url = 'images/galleries'.$thumb;
-                    $mobile_url = 'images/galleries'.$mobile;
+                    $original_path = storage_path('images/galleries'.$original);
 
-                    $original_path = storage_path($original_url);
-
-                    if (!File::isDirectory(storage_path('images/galleries/thumb/'))) {
-                        File::makeDirectory(storage_path('images/galleries/thumb/'), 493, true);
-                    }
-
-                    if (!File::isDirectory(storage_path('images/galleries/mobile/'))) {
-                        File::makeDirectory(storage_path('images/galleries/mobile/'), 493, true);
-                    }
-
-                    $original_image = Image::make($image)
-                        ->resize(1920, 1080, function ($constraint) {
-                            $constraint->aspectRatio();
-                            $constraint->upsize();
-                        })->encode();
-                    Storage::put($original_url, $original_image);
-
-                    $thumb_image = Image::make($image)
-                        ->resize(375, 200, function ($constraint) {
-                            $constraint->aspectRatio();
-                            $constraint->upsize();
-                        })->encode();
-                    Storage::put($thumb_url, $thumb_image);
-
-                    $mobile_image = Image::make($image)
-                        ->resize(1024, 768, function ($constraint) {
-                            $constraint->aspectRatio();
-                            $constraint->upsize();
-                        })->encode();
-                    Storage::put($mobile_url, $mobile_image);
+                    $original_image = $this->resizeImage(1920, 1080, 'images/galleries/', 'images/galleries'.$original, $image);
+                    $thumb_image = $this->resizeImage(375, 200, 'images/galleries/thumb/', 'images/galleries'.$thumb, $image);
+                    $mobile_image = $this->resizeImage(1024, 768, 'images/galleries/mobile/', 'images/galleries'.$mobile, $image);
                 }
 
                 GalleryImage::create([
                     'gallery_id'        => $gallery_id,
-                    'source'            => $original_url,
+                    'source'            => $original_image,
                     'path_source'       => $original_path,
-                    'thumb_source'      => $thumb_url,
-                    'mobile_source'     => $mobile_url,
+                    'thumb_source'      => $thumb_image,
+                    'mobile_source'     => $mobile_image,
                 ]);
             }
 

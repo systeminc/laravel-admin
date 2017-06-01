@@ -36,19 +36,8 @@ class ProductsController extends Controller
      */
     public function getNew(Request $request)
     {
-        $product = new Product();
-        $product->title = 'New product';
-        $product->slug = 'new-product-'.time();
-        $product->save();
-
-        $gallery = new Gallery();
-        $gallery->title = 'product '.$product->id;
-        $gallery->key = 'product'.$product->id;
-        $gallery->product_id = $product->id;
-        $gallery->save();
-
-        $product->gallery_id = $gallery->id;
-        $product->save();
+        $product = $this->createNewProduct();
+        $this->createNewGalleryForProduct($product);
 
         return redirect($request->segment(1).'/shop/products/edit/'.$product->id);
     }
@@ -90,38 +79,18 @@ class ProductsController extends Controller
         $product = Product::find($product_id);
         $product->update($request->all());
 
-        $product->thumb = $this->saveImage($request->file('thumb'), 'products');
+        if ($request->hasFile('thumb')) $product->thumb = $this->saveImage($request->file('thumb'), 'products');
+        if ($request->hasFile('pdf'))   $product->pdf = $this->uploadPdf($request->file('pdf'), 'products');
 
-        if ($request->input('delete_thumb')) {
-            if (Storage::exists($product->thumb)) {
-                Storage::delete($product->thumb);
-            }
+
+        if (!empty($request->delete_thumb)) {
+            if (Storage::exists($product->thumb)) Storage::delete($product->thumb);
+
             $product->thumb = null;
         }
 
-        // PDF
-        if ($request->file('pdf') && $request->file('pdf')->isValid()) {
-            $filename = $request->file('pdf')->getClientOriginalName();
-            $dirname = 'pdf';
+        if (!empty($request->delete_pdf)) $product->pdf = $this->removePdf($product->pdf);
 
-            // if pdf name exists
-            $i = 1;
-            while (Storage::exists($dirname.'/'.$filename)) {
-                $fileParts = pathinfo($filename);
-                $filename = rtrim($fileParts['filename'], '_'.($i - 1))."_$i.".$fileParts['extension'];
-                $i++;
-            }
-
-            $request->file('pdf')->move(storage_path('app/'.$dirname), $filename);
-            $product->pdf = $dirname.'/'.$filename;
-        }
-
-        if ($request->input('delete_pdf')) {
-            if (Storage::exists($product->pdf)) {
-                Storage::delete($product->pdf);
-            }
-            $product->pdf = null;
-        }
         $product->slug = str_slug($request->slug);
         $product->save();
 
@@ -190,5 +159,35 @@ class ProductsController extends Controller
         SimilarProduct::find($similar_id)->delete();
 
         return back();
+    }
+
+    /**
+     * Create new product
+     */
+    private function createNewProduct()
+    {
+        $product = new Product();
+        $product->title = 'New product';
+        $product->slug = 'new-product-'.time();
+        $product->save();
+
+        return $product;
+    }
+
+    /**
+     * Create new gallery for single product
+     */
+    private function createNewGalleryForProduct($product)
+    {
+        $gallery = new Gallery();
+        $gallery->title = 'product '.$product->id;
+        $gallery->key = 'product'.$product->id;
+        $gallery->product_id = $product->id;
+        $gallery->save();
+
+        $product->gallery_id = $gallery->id;
+        $product->save();
+
+        return true;
     }
 }

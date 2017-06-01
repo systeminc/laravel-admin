@@ -62,11 +62,7 @@ class LeadsController extends Controller
 
         $setting = LeadSetting::first();
 
-        if (!empty($setting->id)) {
-            $setting->update($data);
-        } else {
-            LeadSetting::create($data);
-        }
+        !empty($setting->id) ? $setting->update($data) : LeadSetting::create($data);
 
         return back();
     }
@@ -82,27 +78,13 @@ class LeadsController extends Controller
     {
         if (!is_array($request->receivers)) {
             return back()->withInput()->with(['error' => 'Please select receivers']);
-        } else {
+        }
+        else {
             if (empty($request->subject) || empty($request->body)) {
                 return back()->withInput()->with(['error' => 'Please fill all message data']);
             }
 
-            $url = explode('.', $request->root());
-            $url_count = count($url) - 1;
-
-            foreach ($request->receivers as $receiver) {
-                Mail::send('admin::mail.leads', ['body' => $request->body], function ($m) use ($receiver, $url, $url_count, $request) {
-                    $m->from('noreply@'.$url[$url_count - 1].'.'.$url[$url_count], $url[$url_count - 1].'.'.$url[$url_count]);
-
-                    $m->to($receiver, $receiver)->subject($request->subject);
-                });
-
-                LeadMailed::create([
-                    'email'   => $receiver,
-                    'subject' => $request->subject,
-                    'body'    => $request->body,
-                ]);
-            }
+            $this->emailLeeds($request);
 
             return back()->with(['success' => 'Mailing done']);
         }
@@ -113,5 +95,29 @@ class LeadsController extends Controller
         $mail = LeadMailed::find($email_id);
 
         return view('admin::leads.edit_mail', compact('mail'));
+    }
+
+    /**
+     * Email leads
+     */
+    private function emailLeeds($request)
+    {
+        $url = explode('.', $request->root());
+        $url_count = count($url) - 1;
+
+        foreach ($request->receivers as $receiver) {
+            Mail::send('admin::mail.leads', ['body' => $request->body], function ($m) use ($receiver, $url, $url_count, $request) {
+                $m->from('noreply@'.$url[$url_count - 1].'.'.$url[$url_count], $url[$url_count - 1].'.'.$url[$url_count]);
+
+                $m->to($receiver, $receiver)->subject($request->subject);
+            });
+
+            LeadMailed::create([
+                'email'   => $receiver,
+                'subject' => $request->subject,
+                'body'    => $request->body,
+            ]);
+        }
+        return true;
     }
 }

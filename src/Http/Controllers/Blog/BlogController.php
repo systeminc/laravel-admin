@@ -41,10 +41,7 @@ class BlogController extends Controller
      */
     public function getPostNew(Request $request)
     {
-        $post = new BlogPost();
-        $post->title = 'New Article';
-        $post->slug = 'new-post-'.time();
-        $post->save();
+        $post = $this->addNewBlogPost();
 
         return redirect($request->segment(1).'/blog/post-edit/'.$post->id);
     }
@@ -77,12 +74,10 @@ class BlogController extends Controller
         $post = BlogPost::find($post_id);
         $post->update($request->all());
 
-        $post->thumb = $this->saveImage($request->file('thumb'), 'blog');
+        if ($request->hasFile('thumb')) $post->thumb = $this->saveImage($request->file('thumb'), 'blog');
 
         if ($request->input('delete_thumb')) {
-            if (Storage::exists($post->thumb)) {
-                Storage::delete($post->thumb);
-            }
+            if (Storage::exists($post->thumb)) Storage::delete($post->thumb);
 
             $post->thumb = null;
         }
@@ -133,5 +128,19 @@ class BlogController extends Controller
         $post->save();
 
         return back();
+    }
+
+
+    /**
+     * Create new blog post
+     */
+    private function addNewBlogPost()
+    {
+        $post = new BlogPost();
+        $post->title = 'New Article';
+        $post->slug = 'new-post-'.time();
+        $post->save();
+
+        return $post;
     }
 }

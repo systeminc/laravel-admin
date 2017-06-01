@@ -27,10 +27,10 @@
 				<span class="alert alert-error">{{ session('message') }}</span>
 			@endif
 
-			@if ( count($images) )
+			@if ( count($gallery->images) )
 				<div class="gallery-wrap">
 					<ul class="image-list sortable cf" data-link="ajax/{{ $gallery->title }}/change-gallery-order">
-						@foreach ($images as $image)
+						@foreach ($gallery->images as $image)
 							<li class="items-order" data-id="{{$image->id}}">
 								<div class="buttons">
 									<div onclick="ajaxDeleteGalleryImage('ajax/{{ $gallery->id }}/delete-gallery-images/{{ $image->id }}', '{{$image->id}}')" class="button remove-image delete">Delete</div>

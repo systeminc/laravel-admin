@@ -79,27 +79,15 @@ class OrdersController extends Controller
 
         $order->update($request->all());
 
-        if (empty($request->valid_until)) {
-            $order->valid_until = null;
-        }
-        if (empty($request->date_of_purchase)) {
-            $order->date_of_purchase = null;
-        }
-
-        if (empty($request->show_shipping_address)) {
-            $order->show_shipping_address = 0;
-        }
+        $order->valid_until = empty($request->valid_until) ? null : $request->valid_until;
+        $order->date_of_purchase = empty($request->date_of_purchase) ? null : $request->date_of_purchase;
+        $order->show_shipping_address = empty($request->show_shipping_address) ? null : $request->show_shipping_address;
 
         $order->recalculateTotalPrice();
         $order->save();
 
         // deduct delivered products from stock
-        if ($order->order_status_id == 5 && $order->order_status_id != $old_order_status_id) {
-            foreach ($order->items as $item) {
-                $item->product->stock--;
-                $item->product->save();
-            }
-        }
+        $this->removeFromStock();
 
         return back()->with('success', 'Saved successfully');
     }
@@ -288,5 +276,18 @@ class OrdersController extends Controller
         $order->save();
 
         return PDF::loadView('admin::pdf.invoice', compact('order', 'type'))->download($type.'-'.$order_id.'.pdf');
+    }
+
+    /**
+     * Remove from stock
+     */
+    private function removeFromStock()
+    {
+        if ($order->order_status_id == 5 && $order->order_status_id != $old_order_status_id) {
+            foreach ($order->items as $item) {
+                $item->product->stock--;
+                $item->product->save();
+            }
+        }
     }
 }

@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Storage;
 use SystemInc\LaravelAdmin\Admin;
 use SystemInc\LaravelAdmin\Setting;
+use SystemInc\LaravelAdmin\Validations\AdminValidation;
+use SystemInc\LaravelAdmin\Validations\AdminValidationWithoutPassword;
 
 class SettingsController extends Controller
 {
@@ -58,11 +60,7 @@ class SettingsController extends Controller
 
         $setting = Setting::first();
 
-        if (!empty($setting->id)) {
-            $setting->update($data);
-        } else {
-            Setting::create($data);
-        }
+        !empty($setting->id) ? $setting->update($data) : Setting::create($data);
 
         return back();
     }
@@ -115,15 +113,13 @@ class SettingsController extends Controller
      */
     public function postUpdateAdmin(Request $request, $admin_id)
     {
+        $validation = Validator::make($request->all(), AdminValidationWithoutPassword::rules($admin_id), AdminValidationWithoutPassword::messages());
+
+        if ($validation->fails()) {
+            return back()->withInput()->withErrors($validation);
+        }
+
         $admin = Admin::find($admin_id);
-
-        if (empty($request->name) || empty($request->email)) {
-            return back()->with(['error' => "Can't leave empty fields"]);
-        }
-
-        if (Admin::whereEmail($request->email)->first()) {
-            return back()->with(['error' => "Admin with $request->email exist"]);
-        }
 
         $admin->name = $request->name;
         $admin->email = $request->email;
@@ -152,12 +148,11 @@ class SettingsController extends Controller
      */
     public function postCreateAdmin(Request $request)
     {
-        if (empty($request->name) || empty($request->email) || empty($request->password)) {
-            return back()->with(['error' => "Can't leave empty fields"]);
-        }
+        // validation
+        $validation = Validator::make($request->all(), AdminValidation::rules(), AdminValidation::messages());
 
-        if (Admin::whereEmail($request->email)->first()) {
-            return back()->with(['error' => "Admin with $request->email exist"]);
+        if ($validation->fails()) {
+            return back()->withInput()->withErrors($validation);
         }
 
         Admin::create([

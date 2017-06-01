@@ -15,11 +15,11 @@ class AdminServiceProvider extends ServiceProvider
     public function boot()
     {
         if (!$this->app->routesAreCached()) {
-            require __DIR__.'/Http/routes.php';
+            include __DIR__.'/Http/routes.php';
         }
 
         // Merge auth configurations
-        $auth_config = array_merge_recursive($this->app['config']['auth'], require __DIR__.'/config/auth.php');
+        $auth_config = array_merge_recursive($this->app['config']['auth'], include __DIR__.'/config/auth.php');
         $this->app['config']->set('auth', $auth_config);
 
         $this->loadViewsFrom(__DIR__.'/resources/views/', 'admin');
@@ -34,13 +34,19 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->app->singleton('sla', 'SystemInc\LaravelAdmin\SLA');
 
-        $this->app->singleton('command.laravel-admin.instal', function () {
-            return new Console\InstalCommand();
-        });
+        $this->app->singleton(
+            'command.laravel-admin.instal',
+            function () {
+                return new Console\InstalCommand();
+            }
+        );
 
-        $this->app->singleton('command.laravel-admin.update', function () {
-            return new Console\UpdateCommand();
-        });
+        $this->app->singleton(
+            'command.laravel-admin.update',
+            function () {
+                return new Console\UpdateCommand();
+            }
+        );
 
         $this->commands(['command.laravel-admin.instal']);
         $this->commands(['command.laravel-admin.update']);
