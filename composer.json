@@ -35,6 +35,9 @@
         "post-package-update": [
             "php artisan laravel-admin:update"
         ]
+    },
+    "require-dev": {
+        "orchestra/testbench": "^3.3",
+        "phpunit/phpunit": "~4.0"
     }
-
 }
