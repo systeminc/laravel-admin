@@ -8,7 +8,9 @@ sudo: false
 
 notifications:
   email: false
-  
+
 before_script:
   - travis_retry composer self-update
   - travis_retry composer install --dev --no-interaction
+  
+script: vendor/bin/phpunit
