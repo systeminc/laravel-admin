@@ -16,6 +16,8 @@ Once you have your administration panel up, you can easily put all of those elem
 
 Supports Laravel 5.1 -> 5.4.
 
+<img src="/screens/1.png?raw=true" width="250"> . . . <img src="/screens/2.png?raw=true" width="250"> . . . <img src="/screens/3.png?raw=true" width="250"> 
+
 ---
 
 ## Installation
