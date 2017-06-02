@@ -10,7 +10,7 @@
      stopOnFailure="false"
      syntaxCheck="false">
   <testsuites>
-    <testsuite name="Rollbar Test Suite">
+    <testsuite name="Laravel Admin Test Suite">
       <directory suffix=".php">./tests/</directory>
     </testsuite>
   </testsuites>
