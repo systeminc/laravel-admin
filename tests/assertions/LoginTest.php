@@ -1,11 +1,14 @@
 <?php 
 
-use SystemInc\LaravelAdmin\Admin;
-
-class LoginTest extends TestCase
+class LoginTest extends \LaravelAdminTestCase
 {
-    public function test()
+	public function setUp()
     {
-        //TODO
+    	// 
+    }
+
+    public function testAssertionFolder()
+    {
+        $this->assertTrue(true);
     }
 }

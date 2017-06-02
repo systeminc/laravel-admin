@@ -25,10 +25,12 @@
     },
 
     "require": {
+        "laravel/framework": "^5.2",
         "intervention/image": "^2.3",
         "barryvdh/laravel-dompdf": "^0.7.0",
         "doctrine/dbal": "^2.5",
-        "php": ">=5.5.9"
+        "php": ">=5.5.9",
+        "fzaninotto/faker": "^1.6"
     },
     
     "scripts": {
@@ -37,7 +39,6 @@
         ]
     },
     "require-dev": {
-        "laravel/framework": "5.4.*",
         "phpunit/phpunit": "~5.7"
     }
 }
