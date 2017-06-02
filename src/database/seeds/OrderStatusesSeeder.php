@@ -15,25 +15,32 @@ class OrderStatusesSeeder extends Seeder
     public function run()
     {
         OrderStatus::create([
-            'title' => 'Order Created',
+            'id' => -2,
+            'title' => 'Refunded',
         ]);
         OrderStatus::create([
-            'title' => 'Order Received',
+            'id' => -1,
+            'title' => 'Not Accepted',
         ]);
         OrderStatus::create([
-            'title' => 'Proforma Sent',
+            'id' => 0,
+            'title' => 'Created',
         ]);
         OrderStatus::create([
+            'id' => 1,
+            'title' => 'Accepted',
+        ]);
+        OrderStatus::create([
+            'id' => 2,
             'title' => 'Paid',
         ]);
         OrderStatus::create([
-            'title' => 'Invoice Sent',
+            'id' => 3,
+            'title' => 'Shipped',
         ]);
         OrderStatus::create([
+            'id' => 4,
             'title' => 'Delivered',
-        ]);
-        OrderStatus::create([
-            'title' => 'Packed',
         ]);
     }
 }
