@@ -25,6 +25,7 @@
     },
 
     "require": {
+         "laravel/framework": "5.4.*",
         "intervention/image": "^2.3",
         "barryvdh/laravel-dompdf": "^0.7.0",
         "doctrine/dbal": "^2.5",
@@ -37,7 +38,7 @@
         ]
     },
     "require-dev": {
-        "laravel/framework": "5.4.*",
+       
         "phpunit/phpunit": "~5.7"
     }
 }
