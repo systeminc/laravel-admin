@@ -13,7 +13,7 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id');
             $table->integer('invoice_number');
             $table->integer('order_status_id')->default(1);
             $table->integer('shipment_price');
@@ -41,7 +41,7 @@ class CreateOrdersTable extends Migration
             $table->string('parity')->nullable();
             $table->string('term_of_payment')->nullable();
             $table->text('footnote')->nullable();
-            $table->integer('show_shipping_address')->default(0);
+            $table->integer('show_shipping_address')->default(0)->nullable();
             $table->timestamps();
         });
     }
