@@ -6,7 +6,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Illuminate\Support\Facades\Schema;
-use SystemInc\LaravelAdmin\Database\Seeds\DatabaseSeeder;
+use SystemInc\LaravelAdmin\Database\Seeds\DatabaseSeeder as DatabaseSeeder;
 use Orchestra\Testbench\TestCase;
 
 abstract class LaravelAdminTestCase extends TestCase
