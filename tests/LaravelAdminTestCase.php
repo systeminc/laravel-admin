@@ -6,8 +6,9 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Illuminate\Support\Facades\Schema;
+use SystemInc\LaravelAdmin\Database\Seeds\DatabaseSeeder;
 
-abstract class LaravelAdminTestCase extends Orchestra\Testbench\TestCase
+abstract class LaravelAdminTestCase extends \Orchestra\Testbench\TestCase
 {
     protected function getEnvironmentSetUp($app)
     {
@@ -38,7 +39,7 @@ abstract class LaravelAdminTestCase extends Orchestra\Testbench\TestCase
         ]);
 
         // require_once __DIR__.'/../src/database/seeds/DatabaseSeeder.php';
-        $seeder = new SystemInc\LaravelAdmin\Database\Seeds\DatabaseSeeder();
+        $seeder = new DatabaseSeeder();
         $seeder->run();
 
         $this->withFactories(__DIR__.'/../src/database/factories');
