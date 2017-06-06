@@ -17,7 +17,7 @@ install:
   - travis_retry composer install --no-interaction --prefer-source
 
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS laravel-admin-test;'
+  - mysql -e 'CREATE DATABASE laravel-admin-test;'
 
 before_script: git reset --hard HEAD
 
