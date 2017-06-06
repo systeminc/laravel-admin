@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Illuminate\Support\Facades\Schema;
 
 abstract class LaravelAdminTestCase extends Orchestra\Testbench\TestCase
 {
@@ -27,6 +28,8 @@ abstract class LaravelAdminTestCase extends Orchestra\Testbench\TestCase
     public function setUp()
     {
         parent::setUp();
+
+        Schema::defaultStringLength(191);
 
         Artisan::call('migrate', [
             '--path'  => '../../../../src/database/migrations', 
