@@ -1,5 +1,7 @@
 <?php 
 
+namespace SystemInc\LaravelAdmin\Tests;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Console\Output\BufferedOutput;
