@@ -25,7 +25,7 @@
     <env name="SESSION_DRIVER" value="array"/>
     <env name="QUEUE_DRIVER" value="sync"/>
     <env name="DB_CONNECTION" value="mysql"/>
-    <env name="DB_DATABASE" value="laravel-admin-test"/>
+    <env name="DB_DATABASE" value="laravel_admin_test"/>
     <env name="DB_USERNAME" value="travis"/>
     <env name="DB_PASSWORD" value=""/>
     <!-- <env name="DB_USERNAME" value="homestead"/>
