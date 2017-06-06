@@ -1,12 +1,12 @@
 <?php 
 
-namespace SystemInc\LaravelAdmin\Tests\Assertions;
+namespace SystemInc\LaravelAdmin\Tests\Unit;
 
 use SystemInc\LaravelAdmin\Tests\LaravelAdminTestCase;
 
-class LoginTest extends LaravelAdminTestCase
+class AdminTest extends LaravelAdminTestCase
 {
-    public function testAssertionFolder()
+    public function testUnitFolder()
     {
         $this->assertTrue(true);
     }
