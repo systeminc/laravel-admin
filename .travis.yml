@@ -6,12 +6,18 @@ php:
 
 sudo: false
 
+services:
+  - mysql
+
 notifications:
   email: false
   
 install:
   - composer self-update
   - travis_retry composer install --no-interaction --prefer-source
+
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS laravel-admin-test;'
 
 before_script: git reset --hard HEAD
 

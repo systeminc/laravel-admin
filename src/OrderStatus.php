@@ -14,5 +14,5 @@ class OrderStatus extends Model
 	const SHIPPED = 3;
 	const DELIVERED = 4;
 
-    protected $fillable = ['title'];
+    protected $fillable = ['id', 'title'];
 }

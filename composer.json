@@ -30,7 +30,9 @@
         "barryvdh/laravel-dompdf": "^0.7.0",
         "doctrine/dbal": "^2.5",
         "php": ">=5.5.9",
-        "fzaninotto/faker": "^1.6"
+        "fzaninotto/faker": "^1.6",
+        "orchestra/testbench": "^3.4",
+        "mockery/mockery": "^0.9.9"
     },
     
     "scripts": {
