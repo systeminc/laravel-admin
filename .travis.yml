@@ -22,4 +22,4 @@ before_install:
 
 before_script: git reset --hard HEAD
 
-script: phpunit
+script: vendor/bin/phpunit
