@@ -1,6 +1,10 @@
 <?php 
 
-class AdminTest extends \LaravelAdminTestCase
+namespace SystemInc\LaravelAdmin\Tests\Unit;
+
+use SystemInc\LaravelAdmin\Tests\LaravelAdminTestCase;
+
+class AdminTest extends LaravelAdminTestCase
 {
     public function testUnitFolder()
     {
