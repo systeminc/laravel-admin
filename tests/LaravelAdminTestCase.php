@@ -34,6 +34,8 @@ abstract class LaravelAdminTestCase extends Orchestra\Testbench\TestCase
         Artisan::call('migrate', [
             '--path'  => '../../../../src/database/migrations', 
         ]);
+        
+        dump(__DIR__.'/../src/database/seeds/DatabaseSeeder.php');
 
         require_once __DIR__.'/../src/database/seeds/DatabaseSeeder.php';
         $seeder = new \DatabaseSeeder();
