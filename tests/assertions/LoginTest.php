@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace SystemInc\LaravelAdmin\Tests\Assertions;
 

@@ -78,8 +78,7 @@ class LeadsController extends Controller
     {
         if (!is_array($request->receivers)) {
             return back()->withInput()->with(['error' => 'Please select receivers']);
-        }
-        else {
+        } else {
             if (empty($request->subject) || empty($request->body)) {
                 return back()->withInput()->with(['error' => 'Please fill all message data']);
             }
@@ -98,7 +97,7 @@ class LeadsController extends Controller
     }
 
     /**
-     * Email leads
+     * Email leads.
      */
     private function emailLeeds($request)
     {
@@ -118,6 +117,7 @@ class LeadsController extends Controller
                 'body'    => $request->body,
             ]);
         }
+
         return true;
     }
 }

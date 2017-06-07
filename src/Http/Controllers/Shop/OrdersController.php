@@ -26,46 +26,46 @@ class OrdersController extends Controller
 
         if ($request->has('filter')) {
             $filters = array_filter($request->input('filter'), 'strlen');
-            
+
             foreach ($filters as $filter_name => $filter_value) {
                 switch ($filter_name) {
-                    case "search":
+                    case 'search':
                         $query->where($filters['search_column'], 'like', '%'.$filter_value.'%');
                         break;
 
-                    case "date_from":
+                    case 'date_from':
                         $query->where('created_at', '>', $filter_value);
                         break;
 
-                    case "date_to":
+                    case 'date_to':
                         $query->where('created_at', '<', $filter_value);
                         break;
 
-                    case "tool_id":
+                    case 'tool_id':
                         $query->whereHas('items', function ($sub_query) use ($filter_value) {
                             $sub_query->where('tool_id', $filter_value);
                         });
                         break;
 
-                    case "tool_category_id":
+                    case 'tool_category_id':
                         $query->whereHas('items.tool', function ($sub_query) use ($filter_value) {
                             $sub_query->where('tool_category_id', $filter_value);
                         });
                         break;
 
-                    case "total_price":
+                    case 'total_price':
                         $query->where('total_price', $filters['price_comparison_sign'], $filter_value);
                         break;
 
-                    case "payment_type":
+                    case 'payment_type':
                         $query->where('payment_type', $filter_value);
                         break;
 
-                    case "currency":
+                    case 'currency':
                         $query->where('currency', $filter_value);
                         break;
 
-                    case "order_status_id":
+                    case 'order_status_id':
                         $query->where('order_status_id', $filter_value);
 
                     default:
@@ -338,7 +338,7 @@ class OrdersController extends Controller
     }
 
     /**
-     * Remove from stock
+     * Remove from stock.
      */
     private function removeFromStock($order)
     {

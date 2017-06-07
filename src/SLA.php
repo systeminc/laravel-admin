@@ -33,10 +33,10 @@ class SLA
     {
         if (is_string($page_query)) {
             return Page::where(['slug' => $page_query])->first();
-        } 
-        else if (is_int($page_query)) {
+        } elseif (is_int($page_query)) {
             return Page::where(['id' => $page_query])->first();
-        } 
+        }
+
         return new Page();
     }
 
@@ -61,7 +61,8 @@ class SLA
     {
         if ($key) {
             return Gallery::where(['key' => $key])->first();
-        } 
+        }
+
         return new Gallery();
     }
 

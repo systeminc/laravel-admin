@@ -3,7 +3,6 @@
 namespace SystemInc\LaravelAdmin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use File;
 use Illuminate\Http\Request;
 use Image;
 use Storage;
@@ -66,8 +65,7 @@ class GalleriesController extends Controller
             ]);
 
             return redirect(config('laravel-admin.route_prefix').'/galleries');
-        }
-        else {
+        } else {
             return back()->with('error', 'Title is required');
         }
     }

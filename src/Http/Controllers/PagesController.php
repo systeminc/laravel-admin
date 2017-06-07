@@ -8,9 +8,9 @@ use Storage;
 use SystemInc\LaravelAdmin\Page;
 use SystemInc\LaravelAdmin\PageElement;
 use SystemInc\LaravelAdmin\PageElementType;
+use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 use SystemInc\LaravelAdmin\Validations\PageElementValidation;
 use SystemInc\LaravelAdmin\Validations\PageValidation;
-use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 use Validator;
 
 class PagesController extends Controller
@@ -68,8 +68,9 @@ class PagesController extends Controller
         $page = new Page();
         $page->fill($request->all());
 
-
-        if (empty($request->parent_id)) $page->parent_id = null;
+        if (empty($request->parent_id)) {
+            $page->parent_id = null;
+        }
 
         $page->elements_prefix = $this->sanitizeElements($request->elements_prefix);
         $page->slug = str_slug($request->slug);
@@ -292,7 +293,7 @@ class PagesController extends Controller
     }
 
     /**
-     * Rename element prefix if is changed
+     * Rename element prefix if is changed.
      */
     private function checkIfIsChangedElementPrefixAndUpdatePrefix($elements_prefix, $page)
     {
@@ -305,11 +306,12 @@ class PagesController extends Controller
                 PageElement::find($element->id)->update($element->toArray());
             }
         }
+
         return true;
     }
 
     /**
-     * Handle with file element
+     * Handle with file element.
      */
     private function handleFileElement($file, $elements_prefix)
     {
@@ -320,6 +322,5 @@ class PagesController extends Controller
 
             return $dirname;
         }
-        return null;
     }
 }
