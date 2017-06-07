@@ -20,13 +20,17 @@
 
     "autoload": {
         "classmap": [
-            "database"
+            "src/database"
         ],
         "psr-4": {
             "SystemInc\\LaravelAdmin\\": "src/"
         }
     },
-
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "require": {
         "laravel/framework": "^5.2",
         "intervention/image": "^2.3",
