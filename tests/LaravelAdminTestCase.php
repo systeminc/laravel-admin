@@ -1,21 +1,19 @@
-<?php 
+<?php
 
 namespace SystemInc\LaravelAdmin\Tests;
 
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Artisan;
-use Symfony\Component\Console\Output\BufferedOutput;
 use Illuminate\Support\Facades\Schema;
-use SystemInc\LaravelAdmin\Database\Seeds\DatabaseSeeder as DatabaseSeeder;
 use Orchestra\Testbench\TestCase;
+use SystemInc\LaravelAdmin\Database\Seeds\DatabaseSeeder as DatabaseSeeder;
 
 abstract class LaravelAdminTestCase extends TestCase
 {
     protected function getEnvironmentSetUp($app)
     {
         // Setup default database
-    }    
-    
+    }
+
     protected function getPackageProviders($app)
     {
         return ['SystemInc\LaravelAdmin\AdminServiceProvider'];
@@ -24,8 +22,8 @@ abstract class LaravelAdminTestCase extends TestCase
     protected function getPackageAliases($app)
     {
         return [
-            'SLA' => SystemInc\LaravelAdmin\Facades\SLA::class,
-            'config' => Illuminate\Config\Repository::class
+            'SLA'    => SystemInc\LaravelAdmin\Facades\SLA::class,
+            'config' => Illuminate\Config\Repository::class,
         ];
     }
 
@@ -36,7 +34,7 @@ abstract class LaravelAdminTestCase extends TestCase
         Schema::defaultStringLength(191);
 
         Artisan::call('migrate', [
-            '--path'  => '../../../../src/database/migrations', 
+            '--path'  => '../../../../src/database/migrations',
         ]);
 
         // require_once __DIR__.'/../src/database/seeds/DatabaseSeeder.php';
@@ -48,10 +46,10 @@ abstract class LaravelAdminTestCase extends TestCase
 
     public function tearDown()
     {
-        Artisan::call('migrate:reset',[
-            '--path'  => '../../../../src/database/migrations', 
+        Artisan::call('migrate:reset', [
+            '--path'  => '../../../../src/database/migrations',
         ]);
 
         parent::tearDown();
-    }    
+    }
 }

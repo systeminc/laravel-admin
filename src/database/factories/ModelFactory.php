@@ -13,9 +13,9 @@
 
 $factory->define(SystemInc\LaravelAdmin\Admin::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->safeEmail,
-        'password' => bcrypt('secret'),
+        'name'           => $faker->name,
+        'email'          => $faker->safeEmail,
+        'password'       => bcrypt('secret'),
         'remember_token' => str_random(10),
     ];
 });

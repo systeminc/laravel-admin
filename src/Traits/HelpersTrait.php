@@ -8,7 +8,7 @@ use Storage;
 trait HelpersTrait
 {
     /**
-     * Sanitize elements
+     * Sanitize elements.
      */
     protected function sanitizeElements($element)
     {
@@ -16,7 +16,7 @@ trait HelpersTrait
     }
 
     /**
-     * Generate nasted page list
+     * Generate nasted page list.
      */
     protected function generateNestedPageList($pages, $navigation = '')
     {
@@ -39,7 +39,7 @@ trait HelpersTrait
     }
 
     /**
-     * Save image
+     * Save image.
      */
     protected function saveImage($image, $path)
     {
@@ -61,7 +61,7 @@ trait HelpersTrait
     }
 
     /**
-     * Handle image upload and resize
+     * Handle image upload and resize.
      */
     protected function resizeImage($width, $height, $path, $output_path, $image)
     {
@@ -70,7 +70,7 @@ trait HelpersTrait
         }
 
         $image = Image::make($image)->orientate()
-            ->resize($width,  $height, function ($constraint) {
+            ->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             })->encode();
@@ -80,9 +80,11 @@ trait HelpersTrait
     }
 
     /**
-     * Upload pdf
-     * @param pdf $file 
-     * @param string|path  'pdf/'.$storage_path 
+     * Upload pdf.
+     *
+     * @param pdf $file
+     * @param string|path  'pdf/'.$storage_path
+     *
      * @return type
      */
     public static function uploadPdf($file, $storage_path)
@@ -91,7 +93,6 @@ trait HelpersTrait
             $dirname = 'pdf/'.$storage_path.'/'.$file->getClientOriginalName();
 
             if (!Storage::exists('pdf/'.$storage_path)) {
-
                 if (!Storage::exists('pdf')) {
                     Storage::makeDirectory('pdf');
                 }
@@ -102,23 +103,24 @@ trait HelpersTrait
             Storage::put($dirname, file_get_contents($file));
 
             return $dirname;
-        } 
-        return null;
+        }
     }
 
     /**
-     * Remove pdf
-     * @param source $file 
+     * Remove pdf.
+     *
+     * @param source $file
+     *
      * @return type
      */
     public static function removePdf($file)
     {
         if (Storage::exists($file)) {
             Storage::delete($file);
-                
-            return null;
-        } 
+
+            return;
+        }
+
         return $file;
     }
-
 }

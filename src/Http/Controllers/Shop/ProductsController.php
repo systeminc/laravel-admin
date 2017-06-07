@@ -79,17 +79,24 @@ class ProductsController extends Controller
         $product = Product::find($product_id);
         $product->update($request->all());
 
-        if ($request->hasFile('thumb')) $product->thumb = $this->saveImage($request->file('thumb'), 'products');
-        if ($request->hasFile('pdf'))   $product->pdf = $this->uploadPdf($request->file('pdf'), 'products');
-
+        if ($request->hasFile('thumb')) {
+            $product->thumb = $this->saveImage($request->file('thumb'), 'products');
+        }
+        if ($request->hasFile('pdf')) {
+            $product->pdf = $this->uploadPdf($request->file('pdf'), 'products');
+        }
 
         if (!empty($request->delete_thumb)) {
-            if (Storage::exists($product->thumb)) Storage::delete($product->thumb);
+            if (Storage::exists($product->thumb)) {
+                Storage::delete($product->thumb);
+            }
 
             $product->thumb = null;
         }
 
-        if (!empty($request->delete_pdf)) $product->pdf = $this->removePdf($product->pdf);
+        if (!empty($request->delete_pdf)) {
+            $product->pdf = $this->removePdf($product->pdf);
+        }
 
         $product->slug = str_slug($request->slug);
         $product->save();
@@ -162,7 +169,7 @@ class ProductsController extends Controller
     }
 
     /**
-     * Create new product
+     * Create new product.
      */
     private function createNewProduct()
     {
@@ -175,7 +182,7 @@ class ProductsController extends Controller
     }
 
     /**
-     * Create new gallery for single product
+     * Create new gallery for single product.
      */
     private function createNewGalleryForProduct($product)
     {

@@ -162,22 +162,22 @@ class LocationsController extends Controller
     }
 
     /**
-     * Delete image from one location
+     * Delete image from one location.
      */
-    private function deleteImage() 
+    private function deleteImage()
     {
         if ($request->input('delete_image')) {
-            Storage::exists($location->image) ? Storage::delete($location->image) : "";
+            Storage::exists($location->image) ? Storage::delete($location->image) : '';
             $location->image = null;
         }
 
         if ($request->input('delete_thumb_image')) {
-            Storage::exists($location->thumb_image) ? Storage::delete($location->thumb_image) : "";
+            Storage::exists($location->thumb_image) ? Storage::delete($location->thumb_image) : '';
             $location->thumb_image = null;
         }
 
         if ($request->input('delete_marker_image')) {
-            Storage::exists($location->marker_image) ? Storage::delete($location->marker_image) : "";
+            Storage::exists($location->marker_image) ? Storage::delete($location->marker_image) : '';
             $location->marker_image = null;
         }
     }

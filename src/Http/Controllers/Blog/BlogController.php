@@ -74,10 +74,14 @@ class BlogController extends Controller
         $post = BlogPost::find($post_id);
         $post->update($request->all());
 
-        if ($request->hasFile('thumb')) $post->thumb = $this->saveImage($request->file('thumb'), 'blog');
+        if ($request->hasFile('thumb')) {
+            $post->thumb = $this->saveImage($request->file('thumb'), 'blog');
+        }
 
         if ($request->input('delete_thumb')) {
-            if (Storage::exists($post->thumb)) Storage::delete($post->thumb);
+            if (Storage::exists($post->thumb)) {
+                Storage::delete($post->thumb);
+            }
 
             $post->thumb = null;
         }
@@ -130,9 +134,8 @@ class BlogController extends Controller
         return back();
     }
 
-
     /**
-     * Create new blog post
+     * Create new blog post.
      */
     private function addNewBlogPost()
     {
