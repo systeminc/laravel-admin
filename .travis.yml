@@ -6,13 +6,6 @@ php:
 
 sudo: false
 
-os:
-  - osx
-
-matrix:
-  allow_failures:
-    - os: osx
-    
 services:
   - mysql
 

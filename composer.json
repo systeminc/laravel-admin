@@ -19,6 +19,9 @@
     ],
 
     "autoload": {
+        "classmap": [
+            "database"
+        ],
         "psr-4": {
             "SystemInc\\LaravelAdmin\\": "src/"
         }
