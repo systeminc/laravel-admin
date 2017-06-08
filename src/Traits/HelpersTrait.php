@@ -58,6 +58,7 @@ trait HelpersTrait
 
             return $storage_key;
         }
+        return false;
     }
 
     /**
@@ -104,6 +105,7 @@ trait HelpersTrait
 
             return $dirname;
         }
+        return false;
     }
 
     /**
@@ -120,7 +122,6 @@ trait HelpersTrait
 
             return;
         }
-
         return $file;
     }
 }

@@ -19,3 +19,13 @@ $factory->define(SystemInc\LaravelAdmin\Admin::class, function (Faker\Generator 
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(SystemInc\LaravelAdmin\Page::class, function (Faker\Generator $faker) {
+    return [
+        'title'           => $faker->sentence,
+        'elements_prefix' => $faker->name,
+        'slug'			  => $faker->sentence,
+        'description'	  => $faker->text,
+        'keywords'	  	  => $faker->title,
+    ];
+});

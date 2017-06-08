@@ -22,7 +22,7 @@ abstract class LaravelAdminTestCase extends TestCase
     protected function getPackageAliases($app)
     {
         return [
-            'SLA'    => SystemInc\LaravelAdmin\Facades\SLA::class,
+            'SLA'    => \SystemInc\LaravelAdmin\Facades\SLA::class,
             'config' => Illuminate\Config\Repository::class,
         ];
     }
@@ -37,7 +37,6 @@ abstract class LaravelAdminTestCase extends TestCase
             '--path'  => '../../../../src/database/migrations',
         ]);
 
-        // require_once __DIR__.'/../src/database/seeds/DatabaseSeeder.php';
         $seeder = new DatabaseSeeder();
         $seeder->run();
 

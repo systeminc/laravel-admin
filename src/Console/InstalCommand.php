@@ -7,11 +7,19 @@ use File;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 use SystemInc\LaravelAdmin\Admin;
+use SystemInc\LaravelAdmin\Database\Seeds\DatabaseSeeder as DatabaseSeeder;
 
 class InstalCommand extends Command
 {
     protected $name = 'laravel-admin:instal';
     protected $description = 'Instal Laravel Administration Essentials';
+
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'laravel-admin:instal {prefix?} {admin?} {email?} {password?}';
 
     public function handle()
     {
@@ -52,19 +60,29 @@ class InstalCommand extends Command
 
         $prefix = '';
 
-        while (str_replace('-', '', $prefix) == '') {
-            $prefix = $this->ask('Route prefix', $config['route_prefix']);
-            $prefix = trim(preg_replace('/[^a-z-]/', '', $prefix), '-');
+        if (!empty($this->argument('prefix'))) {
+            $prefix = trim(preg_replace('/[^a-z-]/', '', $this->argument('prefix')), '-');
+        }
+        else {
+            while (str_replace('-', '', $prefix) == '') {
+                $prefix = $this->ask('Route prefix', $config['route_prefix']);
+                $prefix = trim(preg_replace('/[^a-z-]/', '', $prefix), '-');
+            }
         }
 
-        $name = $this->ask('Admin name', 'Admin');
+        $name = !empty($this->argument('admin')) ? $this->argument('admin') : $this->ask('Admin name', 'Admin');
 
-        $email = $this->ask('Admin email', 'admin@example.com');
+        $email = !empty($this->argument('email')) ? $this->argument('email') : $this->ask('Admin email', 'admin@example.com');
 
         $password = '';
 
-        while (empty($password)) {
-            $password = $this->ask('Admin password');
+        if (!empty($this->argument('password'))) {
+            $prefix = $this->argument('password');
+        }
+        else {
+            while (empty($password)) {
+                $password = $this->ask('Admin password');
+            }
         }
 
         $config_file = File::get(__DIR__.'/../config/laravel-admin.php');
@@ -93,8 +111,7 @@ class InstalCommand extends Command
             'password' => Hash::make($password),
         ]);
 
-        require __DIR__.'/../database/seeds/DatabaseSeeder.php';
-        $seeder = new \DatabaseSeeder();
+        $seeder = new DatabaseSeeder();
         $seeder->run();
 
         $this->line('Seeding Done!');
