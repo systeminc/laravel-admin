@@ -33,14 +33,6 @@
 			<label>Title</label>
 			<input type="text" name="title" placeholder="Page title" value="{{ $page->title }}">
 
-			@if ($errors->first('slug'))
-			    <div class="alert alert-error no-hide">
-			        <span class="help-block">
-			            <strong>{{ $errors->first('slug') }}</strong>
-			        </span>
-			    </div>
-			@endif 
-
 			@if ($errors->first('elements_prefix'))
 			    <div class="alert alert-error no-hide">
 			        <span class="help-block">
@@ -51,6 +43,14 @@
 
 			<label>Elements Prefix</label>
 			<input type="text" name="elements_prefix" placeholder="Elements Prefix" value="{{ $page->elements_prefix }}">
+
+			@if ($errors->first('slug'))
+			    <div class="alert alert-error no-hide">
+			        <span class="help-block">
+			            <strong>{{ $errors->first('slug') }}</strong>
+			        </span>
+			    </div>
+			@endif 
 
 			<label>Slug</label>
 			<input type="text" name="slug" placeholder="Slug" value="{{ $page->slug }}">

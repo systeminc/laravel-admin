@@ -8,7 +8,7 @@
 	</div>
 
 	<div class="admin-content">
-		<form action="pages/update-element/{{ $element->id }}" method="post" enctype="multipart/form-data">
+		<form action="galleries/images/update-element/{{ $element->id }}" method="post" enctype="multipart/form-data">
 			{{ csrf_field() }}
 		
 			@if ($errors->first('title'))
@@ -26,7 +26,7 @@
 				
 				<div class="input-popup">
 					<p>If you change this you need to change in code as well</p>
-					<input type="text" name="key" value="{{ $key }}">
+					<input type="text" name="key" value="{{ $element->key }}">
 				</div>
 			</div>
 
@@ -59,7 +59,7 @@
 						<img src="uploads/{{ $element->content }}" alt="" style="max-width: 200px; width: 100%; background-color: #ddd;" class="left">
 						<div class="cf">
 							<input type="hidden" name="content" value="{{ $element->content }}">
-							<a href="pages/delete-element-file/{{ $element->id }}" class="button remove-item file image left">Delete file</a>
+							<a href="galleries/images/delete-element-file/{{ $element->id }}" class="button remove-item file image left">Delete file</a>
 						</div>
 					</div>
 				@elseif ($mime !== null)
@@ -67,7 +67,7 @@
 						<a href="uploads/{{ $element->content }}" download class="button item left">{{ $element->title }}</a>
 						<div class="cf">
 							<input type="hidden" name="content" value="{{ $element->content }}">
-							<a href="pages/delete-element-file/{{ $element->id }}" class="button remove-item file left">Delete file</a>
+							<a href="galleries/images/delete-element-file/{{ $element->id }}" class="button remove-item file left">Delete file</a>
 						</div>
 					</div>
 				@endif
@@ -84,7 +84,7 @@
 
 			<input type="submit" value="Update" class="save-item">
 			
-			<a href="pages/delete-element/{{ $element->id }}" class="button remove-item">Delete Element</a>
+			<a href="galleries/images/delete-element/{{ $element->id }}" class="button remove-item">Delete Element</a>
 		</form>
 	</div>
 
