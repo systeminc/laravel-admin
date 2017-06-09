@@ -62,8 +62,7 @@ class InstalCommand extends Command
 
         if (!empty($this->argument('prefix'))) {
             $prefix = trim(preg_replace('/[^a-z-]/', '', $this->argument('prefix')), '-');
-        }
-        else {
+        } else {
             while (str_replace('-', '', $prefix) == '') {
                 $prefix = $this->ask('Route prefix', $config['route_prefix']);
                 $prefix = trim(preg_replace('/[^a-z-]/', '', $prefix), '-');
@@ -78,8 +77,7 @@ class InstalCommand extends Command
 
         if (!empty($this->argument('password'))) {
             $prefix = $this->argument('password');
-        }
-        else {
+        } else {
             while (empty($password)) {
                 $password = $this->ask('Admin password');
             }

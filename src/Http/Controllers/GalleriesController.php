@@ -169,7 +169,7 @@ class GalleriesController extends Controller
     }
 
     /**
-     * Post save Element
+     * Post save Element.
      *
      * @param Request $request
      * @param int     $image_id
@@ -336,5 +336,5 @@ class GalleriesController extends Controller
 
             return $dirname;
         }
-    }    
+    }
 }
