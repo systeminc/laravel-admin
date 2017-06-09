@@ -49,10 +49,9 @@ trait HelpersTrait
             $original = '/'.$image_name.'.'.$image->getClientOriginalExtension();
             $storage_key = 'images/'.$path.$original;
 
-            if ( $image->getClientOriginalExtension() === 'svg') {
+            if ($image->getClientOriginalExtension() === 'svg') {
                 Storage::put($storage_key, file_get_contents($image));
-            }
-            else {
+            } else {
                 $original_image = Image::make($image)->orientate()
                     ->fit(1920, 1080, function ($constraint) {
                         $constraint->upsize();
@@ -60,8 +59,10 @@ trait HelpersTrait
 
                 Storage::put($storage_key, $original_image);
             }
+
             return $storage_key;
         }
+
         return false;
     }
 
@@ -74,10 +75,9 @@ trait HelpersTrait
             Storage::makeDirectory($path, 493, true);
         }
 
-        if ( $image->getClientOriginalExtension() === 'svg') {
+        if ($image->getClientOriginalExtension() === 'svg') {
             Storage::put($output_path, file_get_contents($image));
-        }
-        else {
+        } else {
             $image = Image::make($image)->orientate()
                 ->resize($width, $height, function ($constraint) {
                     $constraint->aspectRatio();
@@ -114,6 +114,7 @@ trait HelpersTrait
 
             return $dirname;
         }
+
         return false;
     }
 
@@ -131,11 +132,12 @@ trait HelpersTrait
 
             return;
         }
+
         return $file;
     }
 
     /**
-     *  Sanitize slug leave "/"
+     *  Sanitize slug leave "/".
      */
     public function sanitizeSlug($slug)
     {

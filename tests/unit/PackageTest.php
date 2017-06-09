@@ -2,22 +2,19 @@
 
 namespace SystemInc\LaravelAdmin\Tests\Unit;
 
+use Illuminate\Database\Eloquent\Collection;
 use SLA;
-use SystemInc\LaravelAdmin\AdminServiceProvider;
 use SystemInc\LaravelAdmin\Blog;
-use SystemInc\LaravelAdmin\BlogPost;
 use SystemInc\LaravelAdmin\BlogCategory;
+use SystemInc\LaravelAdmin\BlogPost;
 use SystemInc\LaravelAdmin\BlogPostComment;
 use SystemInc\LaravelAdmin\Gallery;
-use SystemInc\LaravelAdmin\Location;
+use SystemInc\LaravelAdmin\Order;
 use SystemInc\LaravelAdmin\Page;
 use SystemInc\LaravelAdmin\Product;
-use SystemInc\LaravelAdmin\ProductComment;
 use SystemInc\LaravelAdmin\ProductCategory;
-use SystemInc\LaravelAdmin\Order;
+use SystemInc\LaravelAdmin\ProductComment;
 use SystemInc\LaravelAdmin\Tests\LaravelAdminTestCase;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\View\View;
 
 class PackageTest extends LaravelAdminTestCase
 {
@@ -28,7 +25,7 @@ class PackageTest extends LaravelAdminTestCase
 
     public function testDefaultConfig()
     {
-        $this->assertArraySubset(['route_prefix' => 'administration','google_map_api' => ''], require __DIR__.'/../../src/config/laravel-admin.php');
+        $this->assertArraySubset(['route_prefix' => 'administration', 'google_map_api' => ''], require __DIR__.'/../../src/config/laravel-admin.php');
     }
 
     public function testUnitFolder()
@@ -75,6 +72,7 @@ class PackageTest extends LaravelAdminTestCase
     {
         $this->assertInstanceOf(Collection::class, SLA::locations());
     }
+
     public function testSLAFacadeHaveMapsCollection()
     {
         $this->assertInstanceOf(Collection::class, SLA::maps());
@@ -106,7 +104,7 @@ class PackageTest extends LaravelAdminTestCase
     }
 
     public function testServiceProvider()
-    {     
+    {
         $this->assertTrue($this->app->bound('sla'));
         $this->assertTrue($this->app->bound('command.laravel-admin.instal'));
         $this->assertTrue($this->app->bound('command.laravel-admin.update'));
