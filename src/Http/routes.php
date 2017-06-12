@@ -93,8 +93,16 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
 
         // galleries
         Route::group(['prefix' => 'galleries'], function () {
+            Route::any('images/new-element/{image_id}', 'GalleriesController@getCreateElement');
+            Route::post('images/add-element/{image_id}', 'GalleriesController@postCreateElement');
+            Route::post('images/update-element/{element_id}', 'GalleriesController@postUpdateElement');
+            Route::get('images/delete-element-file/{element_id}', 'GalleriesController@getDeleteElementFile');
+            Route::get('images/edit-element/{element_id}', 'GalleriesController@getEditElement');
+            Route::get('images/delete-element/{element_id}', 'GalleriesController@getDeleteElement');
             Route::post('save', 'GalleriesController@postSave');
             Route::post('update/{gallery_id}', 'GalleriesController@postUpdate');
+            Route::post('image/{gallery_id}/{image_id}', 'GalleriesController@postImageUpdate');
+            Route::get('image/{gallery_id}/{image_id}', 'GalleriesController@getImage');
             Route::get('delete/{gallery_id}', 'GalleriesController@getDelete');
             Route::get('edit/{gallery_id}', 'GalleriesController@getEdit');
             Route::get('create', 'GalleriesController@getCreate');
@@ -128,6 +136,8 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
 
         // ajax
         Route::group(['prefix' => 'ajax'], function () {
+            Route::post('{image_id}/change-gallery-image-element-order', 'AjaxController@postChangeGalleryImageElementOrder');
+            Route::post('{page_id}/change-page-element-order', 'AjaxController@postChangePageElementOrder');
             Route::post('{page_id}/change-subpages-order', 'AjaxController@postChangeSubpagesOrder');
             Route::post('{type}/change-gallery-order', 'AjaxController@postChangeGalleryOrder');
             Route::post('{type}/delete-gallery-images/{id}', 'AjaxController@postDeleteGalleryImages');

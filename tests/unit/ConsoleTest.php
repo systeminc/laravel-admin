@@ -16,11 +16,11 @@ class ConsoleTest extends LaravelAdminTestCase
     {
         $this->assertTrue(0 < $this->artisan('laravel-admin:instal', ['prefix' => 'administration', 'admin' => 'admin', 'email' => 'admin@example.com', 'password' => '123']));
     }
-    
+
     public function testUpdate()
     {
-		Artisan::call('laravel-admin:update');
-		$console_output = trim( Artisan::output() );
+        Artisan::call('laravel-admin:update');
+        $console_output = trim(Artisan::output());
 
         $this->assertEquals('Instal first Laravel Admin with laravel-admin:instal', $console_output);
     }

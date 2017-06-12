@@ -49,15 +49,20 @@ trait HelpersTrait
             $original = '/'.$image_name.'.'.$image->getClientOriginalExtension();
             $storage_key = 'images/'.$path.$original;
 
-            $original_image = Image::make($image)->orientate()
-                ->fit(1920, 1080, function ($constraint) {
-                    $constraint->upsize();
-                })->encode();
+            if ($image->getClientOriginalExtension() === 'svg') {
+                Storage::put($storage_key, file_get_contents($image));
+            } else {
+                $original_image = Image::make($image)->orientate()
+                    ->fit(1920, 1080, function ($constraint) {
+                        $constraint->upsize();
+                    })->encode();
 
-            Storage::put($storage_key, $original_image);
+                Storage::put($storage_key, $original_image);
+            }
 
             return $storage_key;
         }
+
         return false;
     }
 
@@ -66,16 +71,20 @@ trait HelpersTrait
      */
     protected function resizeImage($width, $height, $path, $output_path, $image)
     {
-        if (!Storage::isDirectory($path)) {
+        if (!Storage::files($path)) {
             Storage::makeDirectory($path, 493, true);
         }
 
-        $image = Image::make($image)->orientate()
-            ->resize($width, $height, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            })->encode();
-        Storage::put($output_path, $image);
+        if ($image->getClientOriginalExtension() === 'svg') {
+            Storage::put($output_path, file_get_contents($image));
+        } else {
+            $image = Image::make($image)->orientate()
+                ->resize($width, $height, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->encode();
+            Storage::put($output_path, $image);
+        }
 
         return $output_path;
     }
@@ -105,6 +114,7 @@ trait HelpersTrait
 
             return $dirname;
         }
+
         return false;
     }
 
@@ -122,6 +132,15 @@ trait HelpersTrait
 
             return;
         }
+
         return $file;
+    }
+
+    /**
+     *  Sanitize slug leave "/".
+     */
+    public function sanitizeSlug($slug)
+    {
+        return trim(strtolower(preg_replace(['/[^a-zA-Z0-9-\/]/', '/\/+/', '/-+/'], ['', '/', '-'], $slug)), '-');
     }
 }

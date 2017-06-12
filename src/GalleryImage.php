@@ -20,4 +20,9 @@ class GalleryImage extends Model
     {
         return LaravelAdminFacade::getFile($this->source);
     }
+
+    public function getAllElements()
+    {
+        return $this->hasMany(GalleryElement::class, 'image_id')->orderBy('order_number');
+    }
 }

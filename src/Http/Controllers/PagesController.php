@@ -73,7 +73,7 @@ class PagesController extends Controller
         }
 
         $page->elements_prefix = $this->sanitizeElements($request->elements_prefix);
-        $page->slug = str_slug($request->slug);
+        $page->slug = $this->sanitizeSlug($request->slug);
 
         $page->save();
 
@@ -110,7 +110,7 @@ class PagesController extends Controller
         $page->fill($data);
 
         $page->elements_prefix = $elements_prefix;
-        $page->slug = str_slug($request->slug);
+        $page->slug = $this->sanitizeSlug($request->slug);
         $page->save();
 
         return back();
