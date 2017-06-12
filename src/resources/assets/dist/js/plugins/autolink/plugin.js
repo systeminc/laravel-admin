@@ -197,11 +197,6 @@ tinymce.PluginManager.add('autolink', function(editor) {
 
 			editor.selection.setRng(rng);
 			editor.execCommand('createlink', false, matches[1] + matches[2]);
-
-			if (editor.settings.default_link_target) {
-				editor.dom.setAttrib(editor.selection.getNode(), 'target', editor.settings.default_link_target);
-			}
-
 			editor.selection.moveToBookmark(bookmark);
 			editor.nodeChanged();
 		}

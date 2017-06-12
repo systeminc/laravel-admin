@@ -11,45 +11,29 @@
 /*global tinymce:true */
 
 tinymce.PluginManager.add('contextmenu', function(editor) {
-	var menu, visibleState, contextmenuNeverUseNative = editor.settings.contextmenu_never_use_native;
-
-	var isNativeOverrideKeyEvent = function (e) {
-		return e.ctrlKey && !contextmenuNeverUseNative;
-	};
-
-	var isMacWebKit = function () {
-		return tinymce.Env.mac && tinymce.Env.webkit;
-	};
-
-	var isContextMenuVisible = function () {
-		return visibleState === true;
-	};
-
-	/**
-	 * This takes care of a os x native issue where it expands the selection
-	 * to the word at the caret position to do "lookups". Since we are overriding
-	 * the context menu we also need to override this expanding so the behavior becomes
-	 * normalized. Firefox on os x doesn't expand to the word when using the context menu.
-	 */
-	editor.on('mousedown', function (e) {
-		if (isMacWebKit() && e.button === 2 && !isNativeOverrideKeyEvent(e)) {
-			if (editor.selection.isCollapsed()) {
-				editor.once('contextmenu', function (e) {
-					editor.selection.placeCaretAt(e.clientX, e.clientY);
-				});
-			}
-		}
-	});
+	var menu, contextmenuNeverUseNative = editor.settings.contextmenu_never_use_native;
 
 	editor.on('contextmenu', function(e) {
-		var contextmenu;
+		var contextmenu, doc = editor.getDoc();
 
-		if (isNativeOverrideKeyEvent(e)) {
+		// Block TinyMCE menu on ctrlKey
+		if (e.ctrlKey && !contextmenuNeverUseNative) {
 			return;
 		}
 
 		e.preventDefault();
-		contextmenu = editor.settings.contextmenu || 'link openlink image inserttable | cell row column deletetable';
+
+		/**
+		 * WebKit/Blink on Mac has the odd behavior of selecting the target word or line this causes
+		 * issues when for example inserting images see: #7022
+		 */
+		if (tinymce.Env.mac && tinymce.Env.webkit) {
+			if (e.button == 2 && doc.caretRangeFromPoint) {
+				editor.selection.setRng(doc.caretRangeFromPoint(e.x, e.y));
+			}
+		}
+
+		contextmenu = editor.settings.contextmenu || 'link image inserttable | cell row column deletetable';
 
 		// Render menu
 		if (!menu) {
@@ -82,17 +66,10 @@ tinymce.PluginManager.add('contextmenu', function(editor) {
 				classes: 'contextmenu'
 			}).renderTo();
 
-			menu.on('hide', function (e) {
-				if (e.control === this) {
-					visibleState = false;
-				}
-			});
-
 			editor.on('remove', function() {
 				menu.remove();
 				menu = null;
 			});
-
 		} else {
 			menu.show();
 		}
@@ -107,10 +84,5 @@ tinymce.PluginManager.add('contextmenu', function(editor) {
 		}
 
 		menu.moveTo(pos.x, pos.y);
-		visibleState = true;
 	});
-
-	return {
-		isContextMenuVisible: isContextMenuVisible
-	};
 });

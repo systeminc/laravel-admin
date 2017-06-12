@@ -113,4 +113,11 @@ tinymce.PluginManager.add('visualchars', function(editor) {
 		context: 'view',
 		prependToContext: true
 	});
+
+	editor.on('beforegetcontent', function(e) {
+		if (state && e.format != 'raw' && !e.draft) {
+			state = true;
+			toggleVisualChars(false);
+		}
+	});
 });

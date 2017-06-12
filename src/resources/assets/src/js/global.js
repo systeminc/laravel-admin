@@ -62,7 +62,7 @@ jQuery(function($){
 var blueMapStyle = [
     {
         "featureType": "landscape",
-        "stylers": [
+        "stylers": [ 
             { "color": "#003279" }
         ]
     },{
@@ -110,3 +110,23 @@ var blueMapStyle = [
         ]
     } 
 ];
+jQuery(document).ready(function($) {
+    $(document).keydown(function(e) {
+        var key = undefined;
+        var possible = [ e.key, e.keyIdentifier, e.keyCode, e.which ];
+
+        while (key === undefined && possible.length > 0)
+        {
+            key = possible.pop();
+        }
+
+        if (key && (key == '115' || key == '83' ) && (e.ctrlKey || e.metaKey) && !(e.altKey))
+        {
+            e.preventDefault();
+            $(':focus').closest('form').submit();
+            
+            return false;
+        }
+        return true;
+    });
+});
