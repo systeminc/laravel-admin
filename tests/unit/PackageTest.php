@@ -112,7 +112,8 @@ class PackageTest extends LaravelAdminTestCase
     }
 }
 
-class SLA_test extends \SystemInc\LaravelAdmin\Facades\SLA {
+class SLA_test extends \SystemInc\LaravelAdmin\Facades\SLA
+{
     public static function getFacadeName()
     {
         return parent::getFacadeAccessor();
