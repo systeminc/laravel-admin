@@ -23,6 +23,6 @@ class GalleryImage extends Model
 
     public function getAllElements()
     {
-        return $this->hasMany(GalleryElement::class, 'image_id');
+        return $this->hasMany(GalleryElement::class, 'image_id')->orderBy('order_number');
     }
 }

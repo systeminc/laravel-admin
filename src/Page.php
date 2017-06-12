@@ -21,7 +21,7 @@ class Page extends Model
 
     public function elements()
     {
-        return $this->hasMany('SystemInc\LaravelAdmin\PageElement');
+        return $this->hasMany('SystemInc\LaravelAdmin\PageElement')->orderBy('order_number');
     }
 
     public function element($key)

@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Storage;
 use SystemInc\LaravelAdmin\Gallery;
 use SystemInc\LaravelAdmin\GalleryImage;
+use SystemInc\LaravelAdmin\GalleryElement;
 use SystemInc\LaravelAdmin\Page;
+use SystemInc\LaravelAdmin\PageElement;
 
 class AjaxController extends Controller
 {
@@ -70,6 +72,48 @@ class AjaxController extends Controller
             $subpage->order_number = $order_number;
 
             $subpage->save();
+        }
+
+        return 'Success';
+    }
+
+    /**
+     * Change page element order.
+     *
+     * @param Request $request
+     * @param int     $page_id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function postChangePageElementOrder(Request $request, $page_id)
+    {
+        foreach ($request->order as $order_number => $id) {
+            $pageElement = PageElement::where(['page_id' => $page_id, 'id' => $id])->first();
+
+            $pageElement->order_number = $order_number;
+
+            $pageElement->save();
+        }
+
+        return 'Success';
+    }
+
+    /**
+     * Change gallery image element order.
+     *
+     * @param Request $request
+     * @param int     $image_id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function postChangeGalleryImageElementOrder(Request $request, $image_id)
+    {
+        foreach ($request->order as $order_number => $id) {
+            $imageElement = GalleryElement::where(['image_id' => $image_id, 'id' => $id])->first();
+
+            $imageElement->order_number = $order_number;
+
+            $imageElement->save();
         }
 
         return 'Success';
