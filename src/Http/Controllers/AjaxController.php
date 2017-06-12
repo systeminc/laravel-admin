@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Storage;
 use SystemInc\LaravelAdmin\Gallery;
-use SystemInc\LaravelAdmin\GalleryImage;
 use SystemInc\LaravelAdmin\GalleryElement;
+use SystemInc\LaravelAdmin\GalleryImage;
 use SystemInc\LaravelAdmin\Page;
 use SystemInc\LaravelAdmin\PageElement;
 
