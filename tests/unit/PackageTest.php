@@ -31,14 +31,9 @@ class PackageTest extends LaravelAdminTestCase
         $this->assertArraySubset(['route_prefix' => 'administration','google_map_api' => ''], require __DIR__.'/../../src/config/laravel-admin.php');
     }
 
-    public function testUnitFolder()
-    {
-        $this->assertTrue(true);
-    }
-
     public function testFacade()
     {
-        $this->assertEquals('SLA', SLA::class);
+        $this->assertEquals(SLA_test::getFacadeName(), 'sla');
     }
 
     public function testSLAFacadeHaveBlogModel()
@@ -116,5 +111,12 @@ class PackageTest extends LaravelAdminTestCase
     {
         $this->assertArraySubset(['provider' => 'system-admins'], $this->app->config['auth']['guards']['system-admin']);
         $this->assertArraySubset(['model' => 'SystemInc\LaravelAdmin\Admin'], $this->app->config['auth']['providers']['system-admins']);
+    }
+}
+
+class SLA_test extends \SystemInc\LaravelAdmin\Facades\SLA {
+    public static function getFacadeName()
+    {
+        return parent::getFacadeAccessor();
     }
 }
