@@ -2,7 +2,7 @@
 
 @section('styles')
     @parent
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/login.css">
 @append
 
 

@@ -86,6 +86,14 @@
 	</script>
 	
 	<div class="admin-content-wrap cf">
+		<div class="mobile-menu">
+			<div class="container" onclick="myFunction(this)">
+				<div class="bar1"></div>
+				<div class="bar2"></div>
+				<div class="bar3"></div>
+			</div>
+		</div>
+
 		@yield('admin-content')
 	</div>
 @append

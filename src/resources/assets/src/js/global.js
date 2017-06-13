@@ -110,6 +110,7 @@ var blueMapStyle = [
         ]
     } 
 ];
+
 jQuery(document).ready(function($) {
     $(document).keydown(function(e) {
         var key = undefined;
@@ -130,3 +131,9 @@ jQuery(document).ready(function($) {
         return true;
     });
 });
+
+function myFunction(x) {
+    x.classList.toggle("change");
+    $('.admin-content-wrap').toggleClass('opened-menu');
+    $('header').toggleClass('opened-menu');
+}
