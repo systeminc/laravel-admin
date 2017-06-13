@@ -51,6 +51,7 @@
 				<input type="file" name="images[]" multiple="multiple">
 			</div>
 			<a class="button remove-item" href="galleries/delete/{{ $gallery->id }}">Delete gallery</a>
+			<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 		</form>
 		
 		

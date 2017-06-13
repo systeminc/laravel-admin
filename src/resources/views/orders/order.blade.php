@@ -403,7 +403,7 @@
 			<input type="submit" value="Add new item" class="save-item">
 		</form>
 		
-		
+		<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 	</div>
 
 

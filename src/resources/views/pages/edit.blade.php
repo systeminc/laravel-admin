@@ -85,10 +85,12 @@
 						@endforeach
 					</select>
 				</div>
+
 			</div>
 
 			<input type="submit" value="Update" class="save-item">
 			<a href="pages/delete/{{ $page->id }}" class="button delete remove-item">Delete page</a>
+			<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 		</form>
 
 		<div>

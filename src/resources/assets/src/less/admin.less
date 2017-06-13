@@ -153,6 +153,31 @@ body{
 		background: @defaultTextColor;
 	}
 
+	&.back-button{
+		display: inline-block;
+		text-align: left;
+		max-width: 290px;
+		padding: 16px;
+		color: @defaultTextColor;
+		box-sizing: border-box;
+		width: 100%;
+		background-color: #eee;
+	    background-image: url(../images/back.png);
+	    background-position: 95% center;
+	    background-size: 10%;
+	    background-repeat: no-repeat;
+	    margin: 0;
+	    margin-top: 16px;
+		
+		&:hover{
+			background-color: @green;
+		    background-image: url(../images/back.png);
+		    background-position: 95% center;
+		    background-size: 10%;
+		    background-repeat: no-repeat;
+		}
+	}
+
 	&:hover{
 		color: @white;
 		background: @green;
@@ -272,6 +297,7 @@ form{
 
 	input {
 		position: absolute;
+		height: 100%;
 		top: 0;
 		right: 0;
 		margin: 0;

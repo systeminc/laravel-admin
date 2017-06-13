@@ -90,7 +90,7 @@ $ bower install
 build
 ```
 $ cd src
-$ gulp --production
+$ npm run production
 ```
 
 ## License

@@ -46,6 +46,7 @@
 			
 			</form>
 		</div>	
+		<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 		
 	</div>
 		

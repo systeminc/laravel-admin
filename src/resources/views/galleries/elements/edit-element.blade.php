@@ -85,6 +85,7 @@
 			<input type="submit" value="Update" class="save-item">
 			
 			<a href="galleries/images/delete-element/{{ $element->id }}" class="button remove-item">Delete Element</a>
+			<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 		</form>
 	</div>
 

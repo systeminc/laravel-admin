@@ -129,6 +129,7 @@
 			</div>
 		
 			<input type="submit" value="Add" class="save-item">
+			<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 		</form>
 
 		<script src='https://maps.googleapis.com/maps/api/js{{ !empty(config('laravel-admin.google_map_api')) ? '?key='.config('laravel-admin.google_map_api') : ''}}'></script>

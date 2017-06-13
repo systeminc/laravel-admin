@@ -81,6 +81,7 @@
 			</div>
 
 			<input type="submit" value="Create" class="save-item">
+			<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 		</form>
 	</div>
 
