@@ -48,8 +48,24 @@ class AdminServiceProvider extends ServiceProvider
             }
         );
 
+        $this->app->singleton(
+            'command.laravel-admin.dump',
+            function () {
+                return new Console\DumpCommand();
+            }
+        );
+
+        $this->app->singleton(
+            'command.laravel-admin.restore',
+            function () {
+                return new Console\RestoreCommand();
+            }
+        );
+
         $this->commands(['command.laravel-admin.instal']);
         $this->commands(['command.laravel-admin.update']);
+        $this->commands(['command.laravel-admin.dump']);
+        $this->commands(['command.laravel-admin.restore']);
 
         $this->app->register(\Intervention\Image\ImageServiceProvider::class);
         $this->app->register(\Barryvdh\DomPDF\ServiceProvider::class);
