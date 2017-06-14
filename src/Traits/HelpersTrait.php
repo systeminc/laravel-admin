@@ -145,7 +145,7 @@ trait HelpersTrait
     }
 
     /**
-     * Signature for console
+     * Signature for console.
      */
     public function consoleSignature()
     {

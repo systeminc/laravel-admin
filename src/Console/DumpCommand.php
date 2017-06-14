@@ -41,11 +41,11 @@ class DumpCommand extends Command
             File::makeDirectory($path, 493, true);
         }
 
-        $dumpMigration = $path .'/'.$migration; 
+        $dumpMigration = $path.'/'.$migration;
 
-        $this->info("Output path while be: ".$dumpMigration);
+        $this->info('Output path while be: '.$dumpMigration);
         $this->line('');
-        exec('mysqldump -u '.env('DB_USERNAME').' -p '.env('DB_DATABASE') .' -r '. $dumpMigration, $output, $return_var);
+        exec('mysqldump -u '.env('DB_USERNAME').' -p '.env('DB_DATABASE').' -r '.$dumpMigration, $output, $return_var);
         $this->line('');
 
         if ($return_var != 0) {

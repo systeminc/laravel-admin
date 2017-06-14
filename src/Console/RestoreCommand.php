@@ -35,15 +35,14 @@ class RestoreCommand extends Command
         $migrations = File::allFiles($path);
 
         if (count($migrations) == 0) {
-            $this->error('No migrations in: '. $path);
+            $this->error('No migrations in: '.$path);
 
             $this->consoleLastLine();
-
         } else {
             $migration = $migrations[count($migrations) - 1]->getRealPath();
 
-            $this->info('Latest migration is: '. $migrations[count($migrations) - 1]->getFilename());
-            
+            $this->info('Latest migration is: '.$migrations[count($migrations) - 1]->getFilename());
+
             $proceed = $this->ask('Databese while be droped do you want to proceed', 'No');
             $this->isInArray($proceed);
 
@@ -55,7 +54,7 @@ class RestoreCommand extends Command
             $this->line('Collecting tables...');
             $this->line('');
             exec('mysql -u '.env('DB_USERNAME').' -p --silent --skip-column-names -e "SHOW TABLES" '.$db_table, $tables, $response);
-            
+
             if ($response != 0) {
                 $this->error('Mysql Error');
 
@@ -65,16 +64,16 @@ class RestoreCommand extends Command
             $this->line('');
             $this->line('Collecting tables done');
 
-            $query = "";
+            $query = '';
 
             foreach ($tables as $key => $value) {
-                $query .= "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE `".$value."`; SET FOREIGN_KEY_CHECKS = 1;";
+                $query .= 'SET FOREIGN_KEY_CHECKS = 0; DROP TABLE `'.$value.'`; SET FOREIGN_KEY_CHECKS = 1;';
             }
-            
+
             $this->line('');
             $this->line('Droping...');
             $this->line('');
-            exec("mysql -u ".env('DB_USERNAME')." -p -v ".$db_table." -e '".$query."'", $output, $response2);
+            exec('mysql -u '.env('DB_USERNAME').' -p -v '.$db_table." -e '".$query."'", $output, $response2);
 
             if ($response2 != 0) {
                 $this->error('Mysql Error');
@@ -88,7 +87,7 @@ class RestoreCommand extends Command
             $this->line('');
             $this->line('Restoring database...');
             $this->line('');
-            exec("mysql -u ".env('DB_USERNAME')." -p ".$db_table." < ".$migration, $output, $response3);
+            exec('mysql -u '.env('DB_USERNAME').' -p '.$db_table.' < '.$migration, $output, $response3);
 
             if ($response3 != 0) {
                 $this->error('Mysql Error');
