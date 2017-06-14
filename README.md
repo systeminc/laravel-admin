@@ -25,7 +25,7 @@ Supports Laravel 5.2 -> 5.4.
 Install using composer:
 
 ```
-composer require systeminc/laravel-admin
+$ composer require systeminc/laravel-admin
 ```
 
 Add the service provider to the `'providers'` array in `config/app.php`:
@@ -43,14 +43,14 @@ If you want to use this package as a facade, add this line to the `$aliases` arr
 Start package installation by running instal command below:
 
 ```php
-php artisan laravel-admin:instal
+$ php artisan laravel-admin:instal
 ```
 If you want to instal package again from scratch, just delete the `config/laravel-admin.php` file and drop database, then run install command again.
 
 If our package update throws composer error, try updating dependencies manually with commend below:
 
 ```php
-php artisan laravel-admin:update
+$ php artisan laravel-admin:update
 ```
 
 Note that this installation uses migrations, so you must run it from machine that has access to your database. 
@@ -64,7 +64,7 @@ If you use this Laravel Admin package within a team, you will find this artisan 
 Backup database with command:
 
 ```php
-php artisan laravel-admin:dump-database
+$ php artisan laravel-admin:dump-database
 ```
 
 Your will be prompted to `Enter password:` for mysql user specified in `.env`. File will be saved in `/database/sla_dumps`.
@@ -72,7 +72,7 @@ Your will be prompted to `Enter password:` for mysql user specified in `.env`. F
 To restore database on another mashine use:
 
 ```php
-php artisan laravel-admin:restore-database
+$ php artisan laravel-admin:restore-database
 ```
 
 **WARNING** that this will be **DROP** table and restore latest migration in `database/sla_dumps` folder.
