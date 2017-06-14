@@ -1,4 +1,4 @@
-# Laravel Administration Panel
+ # Laravel Administration Panel
 
 [![Build Status](https://travis-ci.org/systeminc/laravel-admin.svg?branch=master)](https://travis-ci.org/systeminc/laravel-admin) [![StyleCI](https://styleci.io/repos/65193755/shield)](https://styleci.io/repos/65193755)
 
@@ -45,7 +45,7 @@ Start package installation by running instal command below:
 ```php
 php artisan laravel-admin:instal
 ```
-If you want to instal package again from scratch, just delete the `config/laravel-admin.php` file and run install command again.
+If you want to instal package again from scratch, just delete the `config/laravel-admin.php` file and drop database, then run install command again.
 
 If our package update throws composer error, try updating dependencies manually with commend below:
 
@@ -56,6 +56,28 @@ php artisan laravel-admin:update
 Note that this installation uses migrations, so you must run it from machine that has access to your database. 
 
 For instance, if you use Vagrant, you will have to do `vagrant ssh` first, go to your project directory, and run this instal command. The same way you run your standard Laravel's migration command. 
+
+## Database export
+
+If you use this Laravel Admin package within a team, you will find this artisan command that backups and restores database very useful.
+
+Backup database with command:
+
+```php
+php artisan laravel-admin:dump-database
+```
+
+Your will be prompted to `Enter password:` for mysql user specified in `.env`. File will be saved in `/database/sla_dumps`.
+
+To restore database on another mashine use:
+
+```php
+php artisan laravel-admin:restore-database
+```
+
+**WARNING** that this will be **DROP** table and restore latest migration in `database/sla_dumps` folder.
+Your will be prompted to proceed twice with droping database. Mysql will ask several times to `Enter password:` for mysql user specified in `.env`. 
+**We are not responsible for any data loss. Use this with caution.**
 
 ## Usage
 
