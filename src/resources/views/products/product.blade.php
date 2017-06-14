@@ -149,6 +149,7 @@
 				@if ($product->id)
 					<a class="button remove-item" href="shop/products/delete/{{$product->id}}">Delete</a>
 				@endif
+				<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 
 			</form>
 		</section>

@@ -2,8 +2,6 @@
 
 namespace SystemInc\LaravelAdmin;
 
-use Storage;
-
 class SLA
 {
     /**
@@ -37,9 +35,9 @@ class SLA
             return Page::where(['slug' => $page_query])->first();
         } elseif (is_int($page_query)) {
             return Page::where(['id' => $page_query])->first();
-        } else {
-            return new Page();
         }
+
+        return new Page();
     }
 
     /**
@@ -63,9 +61,9 @@ class SLA
     {
         if ($key) {
             return Gallery::where(['key' => $key])->first();
-        } else {
-            return new Gallery();
         }
+
+        return new Gallery();
     }
 
     /**

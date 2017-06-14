@@ -119,44 +119,14 @@ class LocationsController extends Controller
         $location = Location::find($location_id);
         $location->fill($data);
 
-        if ($request->hasFile('image')) {
-            $location->image = $this->saveImage($request->file('image'), 'locations');
-        }
+        $location->image = $request->hasFile('image') ? $this->saveImage($request->file('image'), 'locations') : null;
+        $location->thumb_image = $request->hasFile('thumb_image') ? $this->saveImage($request->file('thumb_image'), 'locations/thumb') : null;
+        $location->marker_image = $request->hasFile('marker_image') ? $this->saveImage($request->file('marker_image'), 'locations/marker') : null;
 
-        if ($request->hasFile('thumb_image')) {
-            $location->thumb_image = $this->saveImage($request->file('thumb_image'), 'locations/thumb');
-        }
-
-        if ($request->hasFile('marker_image')) {
-            $location->marker_image = $this->saveImage($request->file('marker_image'), 'locations/marker');
-        }
-
-        if ($request->map_id == 0) {
-            $location->map_id = null;
-        }
-
+        $location->map_id = $request->map_id == 0 ? null : $request->map_id;
         $location->key = str_slug($request->key);
 
-        if ($request->input('delete_image')) {
-            if (Storage::exists($location->image)) {
-                Storage::delete($location->image);
-            }
-            $location->image = null;
-        }
-
-        if ($request->input('delete_thumb_image')) {
-            if (Storage::exists($location->thumb_image)) {
-                Storage::delete($location->thumb_image);
-            }
-            $location->thumb_image = null;
-        }
-
-        if ($request->input('delete_marker_image')) {
-            if (Storage::exists($location->marker_image)) {
-                Storage::delete($location->marker_image);
-            }
-            $location->marker_image = null;
-        }
+        $this->deleteImage();
 
         $location->save();
 
@@ -189,5 +159,26 @@ class LocationsController extends Controller
         $location->delete();
 
         return redirect(config('laravel-admin.route_prefix').'/places/locations')->with('success', 'Deleted successfully');
+    }
+
+    /**
+     * Delete image from one location.
+     */
+    private function deleteImage()
+    {
+        if ($request->input('delete_image')) {
+            Storage::exists($location->image) ? Storage::delete($location->image) : '';
+            $location->image = null;
+        }
+
+        if ($request->input('delete_thumb_image')) {
+            Storage::exists($location->thumb_image) ? Storage::delete($location->thumb_image) : '';
+            $location->thumb_image = null;
+        }
+
+        if ($request->input('delete_marker_image')) {
+            Storage::exists($location->marker_image) ? Storage::delete($location->marker_image) : '';
+            $location->marker_image = null;
+        }
     }
 }

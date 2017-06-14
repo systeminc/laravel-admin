@@ -3,13 +3,16 @@
 namespace SystemInc\LaravelAdmin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use File;
 use Illuminate\Http\Request;
 use Image;
 use Storage;
 use SystemInc\LaravelAdmin\Gallery;
+use SystemInc\LaravelAdmin\GalleryElement;
 use SystemInc\LaravelAdmin\GalleryImage;
+use SystemInc\LaravelAdmin\PageElementType;
 use SystemInc\LaravelAdmin\Traits\HelpersTrait;
+use SystemInc\LaravelAdmin\Validations\PageElementValidation;
+use Validator;
 
 class GalleriesController extends Controller
 {
@@ -81,9 +84,8 @@ class GalleriesController extends Controller
     public function getEdit($gallery_id)
     {
         $gallery = Gallery::find($gallery_id);
-        $images = $gallery->images;
 
-        return view('admin::galleries.edit', compact('gallery', 'images'));
+        return view('admin::galleries.edit', compact('gallery'));
     }
 
     /**
@@ -98,18 +100,13 @@ class GalleriesController extends Controller
     {
         $gallery = Gallery::find($gallery_id);
 
-        if ($request->title == $gallery->title) {
-            $this->Images($request->file('images'), $gallery->id);
-        } elseif (!empty($request->title)) {
-            $gallery->title = $request->title;
-
-            $this->Images($request->file('images'), $gallery->id);
-        }
-
         if ($gallery->key !== $request->key && Gallery::where(['key' => $request->key])->first()) {
             return back()->with(['error' => 'This key exists']);
         }
 
+        $this->uploadImages($request->file('images'), $gallery->id);
+
+        $gallery->title = !empty($request->title) ? $request->title : $gallery->title;
         $gallery->key = $this->sanitizeElements($request->key);
         $gallery->save();
 
@@ -142,13 +139,161 @@ class GalleriesController extends Controller
     }
 
     /**
+     * Edit image.
+     *
+     * @param int $gallery_id, $image_id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getImage($gallery_id, $image_id)
+    {
+        $image = GalleryImage::find($image_id);
+        $element_types = PageElementType::all();
+
+        return view('admin::galleries.image', compact('image', 'element_types', 'gallery_id'));
+    }
+
+    /**
+     * Create element.
+     *
+     * @param Request $request
+     * @param int     $image_id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getCreateElement(Request $request, $image_id)
+    {
+        $page_element_type_id = $request->page_element_type_id;
+
+        return view('admin::galleries.elements.add_element', compact('page_element_type_id', 'image_id'));
+    }
+
+    /**
+     * Post save Element.
+     *
+     * @param Request $request
+     * @param int     $image_id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function postCreateElement(Request $request, $image_id)
+    {
+        // validation
+        $validation = Validator::make($request->all(), PageElementValidation::rules(), PageElementValidation::messages());
+
+        if ($validation->fails()) {
+            return back()->withInput()->withErrors($validation);
+        }
+        $image = GalleryImage::find($image_id);
+
+        $element = new GalleryElement();
+
+        $element->create([
+            'key'                  => $this->sanitizeElements($request->title),
+            'title'                => $request->title,
+            'content'              => $request->page_element_type_id == 3 ? $this->handleFileElement($request->file('content')) : $request->content,
+            'image_id'             => $image_id,
+            'page_element_type_id' => $request->page_element_type_id,
+        ]);
+
+        return redirect($request->segment(1).'/galleries/image/'.$image->gallery_id.'/'.$image_id)->with('success', 'Element added');
+    }
+
+    /**
+     * Edit element for page.
+     *
+     * @param int $element_id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getEditElement($element_id)
+    {
+        $element = GalleryElement::find($element_id);
+
+        $mime = empty($element->content) || $element->page_element_type_id !== 3 ? null : Storage::mimeType($element->content);
+
+        return view('admin::galleries.elements.edit-element', compact('element', 'mime'));
+    }
+
+    /**
+     * Update element.
+     *
+     * @param Request $request
+     * @param int     $element_id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function postUpdateElement(Request $request, $element_id)
+    {
+        // validation
+        $validation = Validator::make($request->all(), PageElementValidation::rules(), PageElementValidation::messages());
+
+        if ($validation->fails()) {
+            return back()->withInput()->withErrors($validation);
+        }
+
+        $element = GalleryElement::find($element_id);
+        $image = GalleryImage::find($element->image_id);
+
+        $element->update([
+            'key'     => $this->sanitizeElements($request->key),
+            'title'   => $request->title,
+            'content' => $request->hasFile('content') ? $this->handleFileElement($request->file('content')) : $request->content,
+        ]);
+
+        return redirect($request->segment(1).'/galleries/image/'.$image->gallery_id.'/'.$image->id)->with('success', 'Element updated');
+    }
+
+    /**
+     * Delete element from storage.
+     *
+     * @param Request $request
+     * @param int     $element_id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDeleteElement(Request $request, $element_id)
+    {
+        $element = GalleryElement::find($element_id);
+        $image = GalleryImage::find($element->image_id);
+
+        if ($element->page_element_type_id == 3 && !empty($element->content)) {
+            Storage::delete($element->content);
+        }
+
+        $page_id = $element->page_id;
+        $element->delete();
+
+        return redirect($request->segment(1).'/galleries/image/'.$image->gallery_id.'/'.$image->id)->with('success', 'Element Deleted');
+    }
+
+    /**
+     * Delete element's file from storage.
+     *
+     * @param int $element_id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDeleteElementFile($element_id)
+    {
+        $element = GalleryElement::find($element_id);
+
+        Storage::delete($element->content);
+
+        $element->content = null;
+        $element->save();
+
+        return back();
+    }
+
+    /**
      * Store a created images in storage.
      *
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
-    public static function Images($images, $gallery_id)
+    private function uploadImages($images, $gallery_id)
     {
         if (is_array($images)) {
             foreach (array_filter($images) as $image) {
@@ -159,52 +304,37 @@ class GalleriesController extends Controller
                     $thumb = '/thumb/'.$gallery_id.'-'.$image_name.'.'.$image->getClientOriginalExtension();
                     $mobile = '/mobile/'.$gallery_id.'-'.$image_name.'.'.$image->getClientOriginalExtension();
 
-                    $original_url = 'images/galleries'.$original;
-                    $thumb_url = 'images/galleries'.$thumb;
-                    $mobile_url = 'images/galleries'.$mobile;
+                    $original_path = storage_path('images/galleries'.$original);
 
-                    $original_path = storage_path($original_url);
-
-                    if (!File::isDirectory(storage_path('images/galleries/thumb/'))) {
-                        File::makeDirectory(storage_path('images/galleries/thumb/'), 493, true);
-                    }
-
-                    if (!File::isDirectory(storage_path('images/galleries/mobile/'))) {
-                        File::makeDirectory(storage_path('images/galleries/mobile/'), 493, true);
-                    }
-
-                    $original_image = Image::make($image)
-                        ->resize(1920, 1080, function ($constraint) {
-                            $constraint->aspectRatio();
-                            $constraint->upsize();
-                        })->encode();
-                    Storage::put($original_url, $original_image);
-
-                    $thumb_image = Image::make($image)
-                        ->resize(375, 200, function ($constraint) {
-                            $constraint->aspectRatio();
-                            $constraint->upsize();
-                        })->encode();
-                    Storage::put($thumb_url, $thumb_image);
-
-                    $mobile_image = Image::make($image)
-                        ->resize(1024, 768, function ($constraint) {
-                            $constraint->aspectRatio();
-                            $constraint->upsize();
-                        })->encode();
-                    Storage::put($mobile_url, $mobile_image);
+                    $original_image = $this->resizeImage(1920, 1080, 'images/galleries/', 'images/galleries'.$original, $image);
+                    $thumb_image = $this->resizeImage(375, 200, 'images/galleries/thumb/', 'images/galleries'.$thumb, $image);
+                    $mobile_image = $this->resizeImage(1024, 768, 'images/galleries/mobile/', 'images/galleries'.$mobile, $image);
                 }
 
                 GalleryImage::create([
                     'gallery_id'        => $gallery_id,
-                    'source'            => $original_url,
+                    'source'            => $original_image,
                     'path_source'       => $original_path,
-                    'thumb_source'      => $thumb_url,
-                    'mobile_source'     => $mobile_url,
+                    'thumb_source'      => $thumb_image,
+                    'mobile_source'     => $mobile_image,
                 ]);
             }
 
             return true;
+        }
+    }
+
+    /**
+     * Handle with file element.
+     */
+    private function handleFileElement($file)
+    {
+        if ($file && $file->isValid()) {
+            $dirname = 'elements/'.$file->getClientOriginalName();
+
+            Storage::put($dirname, file_get_contents($file));
+
+            return $dirname;
         }
     }
 }

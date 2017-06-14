@@ -7,11 +7,22 @@ use File;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 use SystemInc\LaravelAdmin\Admin;
+use SystemInc\LaravelAdmin\Database\Seeds\DatabaseSeeder as DatabaseSeeder;
+use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 
 class InstalCommand extends Command
 {
+    use HelpersTrait;
+
     protected $name = 'laravel-admin:instal';
     protected $description = 'Instal Laravel Administration Essentials';
+
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'laravel-admin:instal {prefix?} {admin?} {email?} {password?}';
 
     public function handle()
     {
@@ -21,50 +32,35 @@ class InstalCommand extends Command
             return false;
         }
 
-        $this->line('');
-        $this->line('');
-        $this->line('');
-        $this->line(' ////.           `/////      -/////////:.       -////-   `////.     :///: :///////////  .////       ');
-        $this->line(' NNNN/           yNNNNN+     oNNNNNNNNNNNs     `mNNNNN.   yNNNh    .NNNN- yNNNNNNNNNNN  +NNNN       ');
-        $this->line(' MMMM/          +NMMdMMN-    oMMMm```+MMMM.    hMMmmMMd`  `mMMN/   hMMMo  yMMMh.......  +MMMN       ');
-        $this->line(' MMMM/         -NMMy.NMMd`   oMMMNoosdMMNy    oMMM//MMMs   -NMMm` /NMMh   yMMMNdddddd/  +MMMN       ');
-        $this->line(' MMMM/        `mMMN-`oMMMy   oMMMNhNMMMd:    :NMMd..dMMN/   +MMMs`mMMm.   yMMMmyyyyyy:  +MMMN       ');
-        $this->line(' MMMM+......  yMMMNmmNMMMN+  oMMMm`.dMMNd-  `mMMMNmmNMMMN.   yMMNhMMN:    yMMMh```````  +MMMN.......');
-        $this->line(' MMMMNmmmmmm.+NMMdoooosNMMN- oMMMm  `hMMMm- hMMMyooooyMMMd`  `mMMMMMo     yMMMNmmmmmmm. +MMMMmmmmmmy');
-        $this->line(' yyyyyyyyyyy.yyyy-     oyyyo /yyys   `syyys:yyyy`    `yyyy:   -yyyys`     +yyyyyyyyyyy. :yyyyyyyyyyo');
-        $this->line('                                                                                                    ');
-        $this->line('                                                                                                    ');
-        $this->line('                  -////.      ///////:-`     :////:    :////:  `////`  -///-    `///:               ');
-        $this->line('                 -NMMMMd`    `MMMMMMMMMMd:   mMMMMM-  -MMMMMm  .MMMM-  yMMMMs   :MMMd               ');
-        $this->line('                `mMMmNMMs    `MMMM+::sNMMN:  mMMmMMh  hMMmMMm  .MMMM-  yMMMMMd. :MMMd               ');
-        $this->line('                yMMN-sMMM/   `MMMM:   sMMMh  mMMyhMM::MMhyMMm  .MMMM-  yMMMNMMN/:MMMd               ');
-        $this->line('               +MMMs `mMMN.  `MMMM:   oMMMd  mMMy-MMddMM-yMMm  .MMMM-  yMMMosMMMdMMMd               ');
-        $this->line('              -NMMMMMMMMMMd` `MMMM:  -mMMMs  mMMy hMMMMh yMMm  .MMMM-  yMMM+ :NMMMMMd               ');
-        $this->line('             `mMMMsoooodMMMs `MMMMNNNMMMNs   mMMy -MMMM- yMMm  .MMMM-  yMMM+  .hMMMMd               ');
-        $this->line('             /yyys     .yyyy.`yyyyyyyso/`    syy+  oyyo  +yys  `yyyy.  +yyy:    oyyyo               ');
-        $this->line('                                                                                                    ');
-        $this->line('');
-        $this->line(' __________________________________________________________________________________________________ ');
-        $this->line('');
+        $this->consoleSignature();
+
         $this->line('Configure...');
 
         $config = require __DIR__.'/../config/laravel-admin.php';
 
         $prefix = '';
 
-        while (str_replace('-', '', $prefix) == '') {
-            $prefix = $this->ask('Route prefix', $config['route_prefix']);
-            $prefix = trim(preg_replace('/[^a-z-]/', '', $prefix), '-');
+        if (!empty($this->argument('prefix'))) {
+            $prefix = trim(preg_replace('/[^a-z-]/', '', $this->argument('prefix')), '-');
+        } else {
+            while (str_replace('-', '', $prefix) == '') {
+                $prefix = $this->ask('Route prefix', $config['route_prefix']);
+                $prefix = trim(preg_replace('/[^a-z-]/', '', $prefix), '-');
+            }
         }
 
-        $name = $this->ask('Admin name', 'Admin');
+        $name = !empty($this->argument('admin')) ? $this->argument('admin') : $this->ask('Admin name', 'Admin');
 
-        $email = $this->ask('Admin email', 'admin@example.com');
+        $email = !empty($this->argument('email')) ? $this->argument('email') : $this->ask('Admin email', 'admin@example.com');
 
         $password = '';
 
-        while (empty($password)) {
-            $password = $this->ask('Admin password');
+        if (!empty($this->argument('password'))) {
+            $prefix = $this->argument('password');
+        } else {
+            while (empty($password)) {
+                $password = $this->ask('Admin password');
+            }
         }
 
         $config_file = File::get(__DIR__.'/../config/laravel-admin.php');
@@ -93,8 +89,7 @@ class InstalCommand extends Command
             'password' => Hash::make($password),
         ]);
 
-        require __DIR__.'/../database/seeds/DatabaseSeeder.php';
-        $seeder = new \DatabaseSeeder();
+        $seeder = new DatabaseSeeder();
         $seeder->run();
 
         $this->line('Seeding Done!');

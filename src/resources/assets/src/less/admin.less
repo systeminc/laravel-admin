@@ -82,7 +82,7 @@ body{
 	&.remove-item{
 		display: inline-block;
 		text-align: left;
-		width: 290px;
+		width: 100%; max-width: 290px;
 		color: @white;
 		box-sizing: border-box;
 		padding: 16px;
@@ -125,7 +125,7 @@ body{
 
 	&.save-item{
 		text-align: left;
-		width: 290px;
+		width: 100%; max-width: 290px;
 		color: @white;
 		box-sizing: border-box;
 		padding: 16px;
@@ -145,12 +145,37 @@ body{
 
 	&.item{
 		text-align: left;
-		width: 290px;
+		width: 100%; max-width: 290px;
 		color: @white;
 		box-sizing: border-box;
 		padding: 16px;
 		margin: 0 0 10px 0;
 		background: @defaultTextColor;
+	}
+
+	&.back-button{
+		display: inline-block;
+		text-align: left;
+		max-width: 290px;
+		padding: 16px;
+		color: @defaultTextColor;
+		box-sizing: border-box;
+		width: 100%;
+		background-color: #eee;
+	    background-image: url(../images/back.png);
+	    background-position: 95% center;
+	    background-size: 10%;
+	    background-repeat: no-repeat;
+	    margin: 0;
+	    margin-top: 16px;
+		
+		&:hover{
+			background-color: @green;
+		    background-image: url(../images/back.png);
+		    background-position: 95% center;
+		    background-size: 10%;
+		    background-repeat: no-repeat;
+		}
 	}
 
 	&:hover{
@@ -255,7 +280,7 @@ form{
 	overflow: hidden;
 	margin-bottom: 20px;
 	text-align: left;
-	width: 290px;
+	width: 100%; max-width: 290px;
 	// display: block;
 	color: @white;
 	box-sizing: border-box;
@@ -272,6 +297,7 @@ form{
 
 	input {
 		position: absolute;
+		height: 100%;
 		top: 0;
 		right: 0;
 		margin: 0;
@@ -370,6 +396,14 @@ header{
     box-shadow: 0px 2px 5px @defaultTextColor;
     z-index: 5;
 
+    .transition();
+
+    @media @768 {
+		left: -100%;
+	    width: 35%;
+
+		.transition();
+    }
 
 	.logo{
 		display: block;
@@ -643,6 +677,13 @@ header{
 	margin-left: 250px;
 	color: @defaultTextColor;
 
+	.transition();
+
+	@media @768 {
+    	margin-left: 0px;
+
+    }
+
 	.admin-header{
 		padding: 47px 75px 17px;
 		background: lighten(@defaultTextColor, 64.5%);
@@ -650,12 +691,25 @@ header{
 		h1{
 			font-size: 2.7em;
 			margin-bottom: 10px;
+
+			@media @480 {
+			    font-size: 1.8em;
+			    margin-bottom: 0px;
+			    margin-top: 20px;
+			    position: relative;
+			    top: -40px;
+			}
 		}
 
 		.last-update{
 			font-size: 12px;
 			min-height: 9px;
 		    display: inline-block;
+			
+			@media @480 {
+				position: relative;
+			    top: -20px;
+			}
 		}
 
 		.button-wrap{
@@ -663,9 +717,20 @@ header{
 			right: 20px;
 			top: 47px;
 
+			@media @480 {
+				position: relative;
+			    left: -6px;
+			    top: -40px;
+			    right: inherit;
+			}
+
 			a{
 				float: right;
 				vertical-align: top;
+				
+				@media @480 {
+					float: left;
+				}
 			}
 
 		}
@@ -673,6 +738,10 @@ header{
 
 	.admin-content{
 		padding: 30px 75px;
+
+		@media @768 {
+			padding: 30px 20px;
+		}
 
 		p{
 		    margin: 30px 0;
@@ -1306,7 +1375,7 @@ header{
 .select-style {
 	padding: 0;
 	margin: 0 auto;
-	width: 290px;
+	width: 100%; max-width: 290px;
 	overflow: hidden;
 	background-color: @white;
 	margin-bottom: 10px;
@@ -1402,11 +1471,91 @@ header{
 	}
 
 }
+.button.toggle-filters{
+	border-radius: 0;
+	margin-top: 10px;
+}
 
+.filters {
+	display: none;
+	background: #eee;
+	padding: 10px;
+    margin-top: 10px;
+	max-width: 100% !important;
 
+	input, select, label, .button{
+		display: inline-block;
+		margin: 5px 10px 5px 0;
+		width: auto !important;
 
+		&[type='checkbox']{
+			margin-right: 5px;
+		}
 
+		&[type='submit']{
+		    float: right;
+		}
+	}
 
+	li{
+		display: inline-block;
+		background: none !important;
+	}
+}
 
+.mobile-menu{
+	display: none;
+
+	@media @768 {
+	    display: block;
+	    position: absolute;
+	    right: 25px;
+	    top: 25px;
+
+		.container {
+		    display: inline-block;
+		    cursor: pointer;
+		}
+
+		.bar1, .bar2, .bar3 {
+		    width: 35px;
+		    height: 5px;
+		    background-color: #333;
+		    margin: 6px 0;
+		    transition: 0.4s;
+		}
+
+		/* Rotate first bar */
+		.change .bar1 {
+		    -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+		    transform: rotate(-45deg) translate(-9px, 6px) ;
+		}
+
+		/* Fade out the second bar */
+		.change .bar2 {
+		    opacity: 0;
+		}
+
+		/* Rotate last bar */
+		.change .bar3 {
+		    -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
+		    transform: rotate(45deg) translate(-8px, -8px) ;
+		}
+	}
+}
+
+header.opened-menu{
+	left: 0;
+
+	.transition();
+}
+
+div.opened-menu{
+	@media @768 {
+		margin-left: 35%;
+	}
+
+	.transition();
+}
 
 

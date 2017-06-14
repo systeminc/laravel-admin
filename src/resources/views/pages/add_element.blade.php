@@ -56,6 +56,7 @@
 
 			<div class="cf">
 				<input type="submit" value="Insert" class="save-item">
+				<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 			</div>
 		</form>
 	</div>

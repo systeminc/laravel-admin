@@ -77,6 +77,7 @@
 			@if ($post->id)
 				<a class="button remove-item" href="blog/post-delete/{{$post->id}}">Delete</a>
 			@endif
+			<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 
 		</form>
 		

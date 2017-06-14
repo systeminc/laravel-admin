@@ -12,6 +12,11 @@
 		    <span class="alert alert-error">
 		        {{ session('error') }}
 		    </span>
+		@endif		
+		@if (session('success'))
+		    <span class="alert alert-success">
+		        {{ session('success') }}
+		    </span>
 		@endif
 		
 		<form action="pages/update/{{ $page->id }}" method="post">
@@ -28,14 +33,6 @@
 			<label>Title</label>
 			<input type="text" name="title" placeholder="Page title" value="{{ $page->title }}">
 
-			@if ($errors->first('slug'))
-			    <div class="alert alert-error no-hide">
-			        <span class="help-block">
-			            <strong>{{ $errors->first('slug') }}</strong>
-			        </span>
-			    </div>
-			@endif 
-
 			@if ($errors->first('elements_prefix'))
 			    <div class="alert alert-error no-hide">
 			        <span class="help-block">
@@ -46,6 +43,14 @@
 
 			<label>Elements Prefix</label>
 			<input type="text" name="elements_prefix" placeholder="Elements Prefix" value="{{ $page->elements_prefix }}">
+
+			@if ($errors->first('slug'))
+			    <div class="alert alert-error no-hide">
+			        <span class="help-block">
+			            <strong>{{ $errors->first('slug') }}</strong>
+			        </span>
+			    </div>
+			@endif 
 
 			<label>Slug</label>
 			<input type="text" name="slug" placeholder="Slug" value="{{ $page->slug }}">
@@ -80,10 +85,12 @@
 						@endforeach
 					</select>
 				</div>
+
 			</div>
 
 			<input type="submit" value="Update" class="save-item">
 			<a href="pages/delete/{{ $page->id }}" class="button delete remove-item">Delete page</a>
+			<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 		</form>
 
 		<div>
@@ -95,11 +102,11 @@
 				<div class="line"></div>
 			</div>
 
-			@if (!empty($elements->first()))
+			@if (!empty($page->elements->first()))
 				
-				<ul class="elements-list">
-					@foreach ($elements as $element)
-						<li>
+				<ul class="elements-list sortable" data-link="ajax/{{ $page->id }}/change-page-element-order">
+					@foreach ($page->elements as $element)
+						<li class="items-order" data-id="{{$element->id}}">
 							<a href="pages/edit-element/{{$element->id}}"><b>{{ ucfirst($element->title) }} - {{$element->key}}</b></a>
 							<a href="pages/delete-element/{{ $element->id }}" class="button remove-item file delete list">Delete</a>
 						</li>

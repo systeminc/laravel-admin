@@ -2,14 +2,14 @@
 
 @section('styles')
     @parent
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/login.css">
 @append
 
 
 @section('body')
 
     <div class="logo-login">
-        <img src="images/logo.png">
+        <a href="" class="logo"><img src="{{ (!empty(SystemInc\LaravelAdmin\Setting::first()) && SystemInc\LaravelAdmin\Setting::first()->source !== null) ? 'uploads/'.SystemInc\LaravelAdmin\Setting::first()->source : 'images/logo.png' }}" alt="SystemInc Laravel admin logo"></a>
     </div>
 
     <div class="login-form">

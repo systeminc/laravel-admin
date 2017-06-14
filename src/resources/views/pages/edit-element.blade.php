@@ -56,7 +56,7 @@
 
 				@if (strstr($mime, 'image') !== false)
 					<div class="cf" style="position: relative">
-						<img src="uploads/{{ $element->content }}" alt="" style="max-width: 200px" class="left">
+						<img src="uploads/{{ $element->content }}" alt="" style="max-width: 200px; width: 100%; background-color: #ddd;" class="left">
 						<div class="cf">
 							<input type="hidden" name="content" value="{{ $element->content }}">
 							<a href="pages/delete-element-file/{{ $element->id }}" class="button remove-item file image left">Delete file</a>
@@ -85,6 +85,7 @@
 			<input type="submit" value="Update" class="save-item">
 			
 			<a href="pages/delete-element/{{ $element->id }}" class="button remove-item">Delete Element</a>
+			<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 		</form>
 	</div>
 

@@ -3,7 +3,7 @@
 namespace SystemInc\LaravelAdmin;
 
 use Illuminate\Database\Eloquent\Model;
-use SystemInc\LaravelAdmin\Facades\SLA;
+use SystemInc\LaravelAdmin\Facades\SLA as LaravelAdminFacade;
 
 class GalleryImage extends Model
 {
@@ -18,6 +18,11 @@ class GalleryImage extends Model
 
     public function getUrlAttribute()
     {
-        return SLA::getFile($this->source);
+        return LaravelAdminFacade::getFile($this->source);
+    }
+
+    public function getAllElements()
+    {
+        return $this->hasMany(GalleryElement::class, 'image_id')->orderBy('order_number');
     }
 }

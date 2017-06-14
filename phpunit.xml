@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit backupGlobals="false"
-         backupStaticAttributes="false"
-         bootstrap="vendor/autoload.php"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="true"
-         syntaxCheck="true"
->
-    <testsuites>
-        <testsuite name="Test Suite">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
+     backupStaticAttributes="false"
+     bootstrap="./vendor/autoload.php"
+     colors="true"
+     convertErrorsToExceptions="true"
+     convertNoticesToExceptions="true"
+     convertWarningsToExceptions="true"
+     processIsolation="false"
+     stopOnFailure="false">
+  <testsuites>
+    <testsuite name="Laravel Admin Test Suite">
+      <directory suffix=".php">./tests/</directory>
+    </testsuite>
+  </testsuites>
+  <filter>
+    <whitelist processUncoveredFilesFromWhitelist="true">
+      <directory suffix=".php">./src</directory>
+    </whitelist>
+  </filter>
+  <php>
+    <env name="APP_ENV" value="testing"/>
+    <env name="CACHE_DRIVER" value="array"/>
+    <env name="SESSION_DRIVER" value="array"/>
+    <env name="QUEUE_DRIVER" value="sync"/>
+    <env name="DB_CONNECTION" value="mysql"/>
+    <env name="DB_DATABASE" value="laravel_admin_test"/>
+    <env name="DB_USERNAME" value="root"/>
+    <env name="DB_PASSWORD" value=""/>
+    <!-- <env name="DB_USERNAME" value="homestead"/>
+    <env name="DB_PASSWORD" value="secret"/> -->
+  </php>  
 </phpunit>

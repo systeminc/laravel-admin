@@ -41,7 +41,7 @@ class CreateOrdersTable extends Migration
             $table->string('parity')->nullable();
             $table->string('term_of_payment')->nullable();
             $table->text('footnote')->nullable();
-            $table->integer('show_shipping_address')->default(0);
+            $table->integer('show_shipping_address')->default(0)->nullable();
             $table->timestamps();
         });
     }

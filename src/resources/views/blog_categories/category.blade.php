@@ -104,6 +104,7 @@
 			@if ($category->id)
 				<a class="button remove-item" href="blog/categories/delete/{{$category->id}}">Delete</a>
 			@endif
+			<a href="{{ url()->previous() }}" class="button back-button">Back</a>			
 		</form>
 		
 		<script>

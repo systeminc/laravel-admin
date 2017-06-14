@@ -2,7 +2,7 @@
   "name": "laravel-admin",
   "homepage": "https://github.com/systeminc/laravel-admin",
   "dependencies": {
-  	"tinymce": "^4.4.1",
+  	"tinymce": "4.4.1",
     "jquery-ui": "^1.12.0",
     "jquery": "^3.1.0"
   }

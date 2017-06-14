@@ -1,4 +1,4 @@
-# Laravel Administration Panel
+ # Laravel Administration Panel
 
 [![Build Status](https://travis-ci.org/systeminc/laravel-admin.svg?branch=master)](https://travis-ci.org/systeminc/laravel-admin) [![StyleCI](https://styleci.io/repos/65193755/shield)](https://styleci.io/repos/65193755)
 
@@ -14,7 +14,7 @@ This is **Laravel Admin**, CRUD (create, read, update and delete) package that c
 
 Once you have your administration panel up, you can easily put all of those elements wherever you want in you application files. For usage documentation see **Usage section** bellow.
 
-Supports Laravel 5.1 -> 5.4.
+Supports Laravel 5.2 -> 5.4.
 
 <img src="/screens/1.png?raw=true" width="250"> . . . <img src="/screens/2.png?raw=true" width="250"> . . . <img src="/screens/3.png?raw=true" width="250"> 
 
@@ -25,7 +25,7 @@ Supports Laravel 5.1 -> 5.4.
 Install using composer:
 
 ```
-composer require systeminc/laravel-admin
+$ composer require systeminc/laravel-admin
 ```
 
 Add the service provider to the `'providers'` array in `config/app.php`:
@@ -42,20 +42,42 @@ If you want to use this package as a facade, add this line to the `$aliases` arr
 
 Start package installation by running instal command below:
 
-```php
-php artisan laravel-admin:instal
 ```
-If you want to instal package again from scratch, just delete the `config/laravel-admin.php` file and run install command again.
+$ php artisan laravel-admin:instal
+```
+If you want to instal package again from scratch, just delete the `config/laravel-admin.php` file and drop database, then run install command again.
 
 If our package update throws composer error, try updating dependencies manually with commend below:
 
-```php
-php artisan laravel-admin:update
+```
+$ php artisan laravel-admin:update
 ```
 
 Note that this installation uses migrations, so you must run it from machine that has access to your database. 
 
 For instance, if you use Vagrant, you will have to do `vagrant ssh` first, go to your project directory, and run this instal command. The same way you run your standard Laravel's migration command. 
+
+## Database export
+
+If you use this Laravel Admin package within a team, you will find this artisan command that backups and restores database very useful.
+
+Backup database with command:
+
+```
+$ php artisan laravel-admin:dump-database
+```
+
+Your will be prompted to `Enter password:` for mysql user specified in `.env`. File will be saved in `/database/sla_dumps`.
+
+To restore database on another mashine use:
+
+```
+$ php artisan laravel-admin:restore-database
+```
+
+**WARNING** that this will be **DROP** table and restore latest migration in `database/sla_dumps` folder.
+Your will be prompted to proceed twice with droping database. Mysql will ask several times to `Enter password:` for mysql user specified in `.env`. 
+**We are not responsible for any data loss. Use this with caution.**
 
 ## Usage
 
@@ -90,7 +112,7 @@ $ bower install
 build
 ```
 $ cd src
-$ gulp --production
+$ npm run production
 ```
 
 ## License

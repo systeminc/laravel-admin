@@ -64,6 +64,7 @@
 			<input type="submit" value="Update" class="save-item">
 
 			<a href="places/maps/delete/{{ $map->id }}" class="button remove-item">Delete map</a>
+			<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 		</form>
 
 		<script src="https://maps.googleapis.com/maps/api/js{{ !empty(config('laravel-admin.google_map_api')) ? '?key='.config('laravel-admin.google_map_api') : ''}}"></script>

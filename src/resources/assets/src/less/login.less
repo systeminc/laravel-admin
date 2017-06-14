@@ -1,6 +1,13 @@
 @import "reset.less";
 @import "global.less";
 
+@successColor: rgba(126, 211, 33, 0.3);
+@errorColor: rgba(242, 68, 27, 0.3);
+@red: #E91A40;
+@defaultTextColor: #4A4A4A;
+@green: #7ED321;
+@white: #fff;
+
 body{
 	background: #f2f2f4;
 }
@@ -23,14 +30,14 @@ body{
 	margin: auto;
 	text-align: center;
 	position: relative;
-	top: 50%;
+	top: 40%;
 	transform: translateY(-100%);
 	padding-left: 20px;
 	padding-right: 20px;
 	box-sizing: border-box;
 
 	@media @768{
-		margin-top: 140px;
+		margin-top: 100px;
 		transform: none;
 		top: 0;
 	}
@@ -195,6 +202,100 @@ body{
 	}
 }//end signup form
 
+.button{
+	border: none;
+	border-radius: 0px;
+	padding: 10px;
+	color: @defaultTextColor;
+	background: #ddd;
+	cursor: pointer;
+	min-width: 100px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	line-height: 15px;
+	font-weight: normal;
+
+	.transition();
+
+	&.remove-item{
+		display: inline-block;
+		text-align: left;
+		width: 290px;
+		color: @white;
+		box-sizing: border-box;
+		padding: 16px;
+		background: lighten(@defaultTextColor, 30%) url("../images/delete.png") no-repeat 95% 50%;
+		vertical-align: top;
+
+		&.file{
+			min-width: 50px;
+		    width: 80px;
+		    padding: 3px 4px;
+		    background-size: contain !important;
+		    background-origin: content-box !important;
+		    line-height: 16px;
+		    font-size: 11px;
+		    left: 192px;
+		    top: 10px;
+		    position: absolute;
+
+		    &.image{
+			    left: 10px;
+			    box-shadow: 0px 0px 8px #fff;
+
+		    }
+
+		    &.list{
+		    	color: @white;
+		    	top: 12px;
+		    	left: auto;
+		    	right: 0;
+		    	width: 70px;
+		    	padding: 3px 3px 3px 5px;
+		    }
+		}
+
+		&:hover{
+			background: @red url("../images/delete.png") no-repeat 95% 50%;
+		}
+
+	}
+
+	&.save-item{
+		text-align: left;
+		width: 290px;
+		color: @white;
+		box-sizing: border-box;
+		padding: 16px;
+		background: @defaultTextColor url("../images/save.png") no-repeat 95% 50%;
+
+		@media @1024{
+			& + .remove-item{
+				margin-left: 0;
+				margin-right: 0;
+			}
+		}
+
+		&:hover{
+			background: @green url("../images/save.png") no-repeat 95% 50%;
+		}
+	}
+
+	&.item{
+		text-align: left;
+		width: 290px;
+		color: @white;
+		box-sizing: border-box;
+		padding: 16px;
+		margin: 0 0 10px 0;
+		background: @defaultTextColor;
+	}
+
+	&:hover{
+		color: @white;
+		background: @green;
+	}
+}
 
 
 

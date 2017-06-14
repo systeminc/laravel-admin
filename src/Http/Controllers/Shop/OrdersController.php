@@ -20,9 +20,68 @@ class OrdersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getIndex()
+    public function getIndex(Request $request)
     {
-        $orders = Order::orderBy('created_at', 'desc')->paginate(15);
+        $query = Order::whereRaw('1=1');
+
+        if ($request->has('filter')) {
+            $filters = array_filter($request->input('filter'), 'strlen');
+
+            foreach ($filters as $filter_name => $filter_value) {
+                switch ($filter_name) {
+                    case 'search':
+                        $query->where($filters['search_column'], 'like', '%'.$filter_value.'%');
+                        break;
+
+                    case 'date_from':
+                        $query->where('created_at', '>', $filter_value);
+                        break;
+
+                    case 'date_to':
+                        $query->where('created_at', '<', $filter_value);
+                        break;
+
+                    case 'tool_id':
+                        $query->whereHas('items', function ($sub_query) use ($filter_value) {
+                            $sub_query->where('tool_id', $filter_value);
+                        });
+                        break;
+
+                    case 'tool_category_id':
+                        $query->whereHas('items.tool', function ($sub_query) use ($filter_value) {
+                            $sub_query->where('tool_category_id', $filter_value);
+                        });
+                        break;
+
+                    case 'total_price':
+                        $query->where('total_price', $filters['price_comparison_sign'], $filter_value);
+                        break;
+
+                    case 'payment_type':
+                        $query->where('payment_type', $filter_value);
+                        break;
+
+                    case 'currency':
+                        $query->where('currency', $filter_value);
+                        break;
+
+                    case 'order_status_id':
+                        $query->where('order_status_id', $filter_value);
+
+                    default:
+                        continue;
+                        break;
+                }
+            }
+        }
+
+        $query->orderBy('created_at', 'desc');
+
+        if ($request->has('print_pdf')) {
+            return @PDF::loadView('admin::pdf.orders', ['orders' => $query->get()])->download('orders.pdf');
+        }
+
+        $orders = $query->paginate(15);
 
         return view('admin::orders.index', compact('orders'));
     }
@@ -79,27 +138,15 @@ class OrdersController extends Controller
 
         $order->update($request->all());
 
-        if (empty($request->valid_until)) {
-            $order->valid_until = null;
-        }
-        if (empty($request->date_of_purchase)) {
-            $order->date_of_purchase = null;
-        }
-
-        if (empty($request->show_shipping_address)) {
-            $order->show_shipping_address = 0;
-        }
+        $order->valid_until = empty($request->valid_until) ? null : $request->valid_until;
+        $order->date_of_purchase = empty($request->date_of_purchase) ? null : $request->date_of_purchase;
+        $order->show_shipping_address = empty($request->show_shipping_address) ? null : $request->show_shipping_address;
 
         $order->recalculateTotalPrice();
         $order->save();
 
         // deduct delivered products from stock
-        if ($order->order_status_id == 5 && $order->order_status_id != $old_order_status_id) {
-            foreach ($order->items as $item) {
-                $item->product->stock--;
-                $item->product->save();
-            }
-        }
+        $this->removeFromStock($order);
 
         return back()->with('success', 'Saved successfully');
     }
@@ -288,5 +335,18 @@ class OrdersController extends Controller
         $order->save();
 
         return PDF::loadView('admin::pdf.invoice', compact('order', 'type'))->download($type.'-'.$order_id.'.pdf');
+    }
+
+    /**
+     * Remove from stock.
+     */
+    private function removeFromStock($order)
+    {
+        if ($order->order_status_id == 5 && $order->order_status_id != $old_order_status_id) {
+            foreach ($order->items as $item) {
+                $item->product->stock--;
+                $item->product->save();
+            }
+        }
     }
 }
