@@ -21,8 +21,7 @@ mix.setPublicPath('resources/assets/dist/');
     mix.copyDirectory('resources/assets/src/bower_components/tinymce/themes', 'resources/assets/dist/js/themes');
     mix.copyDirectory('resources/assets/src/images', 'resources/assets/dist/images');
 
-    mix.less('resources/assets/src/bower_components/jquery-ui/themes/base/jquery-ui.css', '../dist/css/admin.css')
-        .less('resources/assets/src/less/admin.less', '../dist/css/admin.css')
+    mix.less('resources/assets/src/less/admin.less', '../dist/css/admin.css')
         .less('resources/assets/src/less/login.less', '../dist/css/login.css')
         .options({
             processCssUrls: false
