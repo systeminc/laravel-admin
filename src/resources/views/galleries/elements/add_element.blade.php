@@ -41,7 +41,7 @@
 				@elseif ($page_element_type_id == 2 || old('page_element_type_id') == 2)
 				
 					<label>Content</label>
-					<textarea name="content" class="htmlEditor" rows="5" placeholder="Content">{{ old('content') }}</textarea>
+					<textarea name="content" class="htmlEditor" data-page-name="image_element" data-page-id="{{ $image_id }}" id="editor-{{ $image_id }}" rows="5" placeholder="Content">{{ old('content') }}</textarea>
 				
 				@elseif ($page_element_type_id == 3 || old('page_element_type_id') == 3)
 				
