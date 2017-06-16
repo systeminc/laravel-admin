@@ -42,7 +42,7 @@
 				@elseif ($page_element_type_id == 2 || old('page_element_type_id') == 2)
 				
 					<label>Content</label>
-					<textarea name="content" class="htmlEditor" rows="5" placeholder="Content">{{ old('content') }}</textarea>
+					<textarea name="content" class="htmlEditor" data-page-name="page_element" data-page-id="{{ $page->id }}" id="editor-{{ $page->id }}" rows="5" placeholder="Content">{{ old('content') }}</textarea>
 				
 				@elseif ($page_element_type_id == 3 || old('page_element_type_id') == 3)
 				
