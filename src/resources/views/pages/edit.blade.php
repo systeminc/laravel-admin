@@ -107,7 +107,7 @@
 				<ul class="elements-list sortable" data-link="ajax/{{ $page->id }}/change-page-element-order">
 					@foreach ($page->elements as $element)
 						<li class="items-order" data-id="{{$element->id}}">
-							<a href="pages/edit-element/{{$element->id}}"><b>{{ ucfirst($element->title) }} - {{$element->key}}</b></a>
+							<a href="pages/edit-element/{{$element->id}}"><b>{{ ucfirst($element->title) }} @php echo env('APP_ENV') == 'local' ? ' - '.$element->key : '' @endphp</b></a>
 							<a href="pages/delete-element/{{ $element->id }}" class="button remove-item file delete list">Delete</a>
 						</li>
 					@endforeach
