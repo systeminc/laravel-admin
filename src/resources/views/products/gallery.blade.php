@@ -4,10 +4,10 @@
 </div>
 <br><br>
 
-<form style="max-width: 100%;" action="galleries/update/{{ $product->gallery->title }}" class="images" method="post" enctype="multipart/form-data">
+<form style="max-width: 100%;" action="galleries/update/{{ $product->gallery->id }}" class="images" method="post" enctype="multipart/form-data">
 	{{ csrf_field() }}
 	<label for="title">Title:</label>
-	<input type="text" name="title" value="{{ $product->gallery->title }}">	
+	<input type="text" name="title" value="{{ $product->title or $product->gallery->title }}">	
 	
 	@if( count($product->gallery->images) )
 		<div class="gallery-wrap"> 
