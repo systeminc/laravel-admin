@@ -32,5 +32,4 @@ class AddSeoToProductTable extends Migration
             $table->dropColumn('seo_keywords');
         });
     }
-
 }
