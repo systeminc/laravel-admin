@@ -19,6 +19,14 @@
 			});
 		
 			$(".thumb img").click(function(event) {
+				$('form').before('<p class="message">Image added</p>');
+				
+				setTimeout(function() {
+					$('.message').fadeOut();
+				}, 1000);
+
+				$(this).fadeOut('fast').fadeIn('fast');
+
 				window.parent.tinyMCE.get("{{$editor_id}}").execCommand('mceInsertContent',false,'<img style="position: relative; float: left;" src="'+$(this).attr("src")+'">');
 			});
 		
@@ -41,6 +49,10 @@
 
 	<style>
 
+		.close:hover{
+			color: red;
+		}
+		
 		.close{
 			display: block; 
 			text-align: right; 
@@ -48,6 +60,19 @@
 			top: 5px; 
 			right: 5px;
 			font-size: 16px;
+		}
+
+		.message {
+		    padding: 15px;
+		    border: 1px solid transparent;
+		    border-radius: 4px;    
+		    color: #3c763d;
+		    background-color: #dff0d8;
+		    border-color: #d6e9c6;
+		    width: 60%;
+		    text-align: center;
+		    display: block;
+		    margin: auto;
 		}
 
 		form {
@@ -104,7 +129,7 @@
 				<div style="max-width: 500px; min-width:500px; overflow-y:auto; height:300px;">
 
 					@foreach ($images as $image) 
-						<div href="" class="thumb">
+						<div class="thumb">
 							<div class="delete-image" data-path='{{$image}}'>x</div>
 							<img src="../{{ config('laravel-admin.route_prefix') }}/uploads/{{$image}}">
 						</div>						
