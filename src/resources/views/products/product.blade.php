@@ -104,6 +104,15 @@
 
 				<label>Stock</label>
 				<input type="text" name="stock" value="{{old('stock') ?: $product->stock}}">
+				
+				<label>Seo title</label>
+				<input type="text" name="seo_title" value="{{old('seo_title') ?: $product->seo_title}}">
+				
+				<label>Seo description</label>
+				<input type="text" name="seo_description" value="{{old('seo_description') ?: $product->seo_description}}">
+
+				<label>Seo keywords</label>
+				<input type="text" name="seo_keywords" value="{{old('seo_keywords') ?: $product->seo_keywords}}">
 
 				<div class="cf">
 					<label>Menu Order</label>
