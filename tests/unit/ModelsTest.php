@@ -151,7 +151,7 @@ class ModelsTest extends LaravelAdminTestCase
     {
         $product = new Product();
 
-        $this->assertArraySubset(['product_category_id', 'brand_id', 'title', 'slug', 'excerpt', 'description', 'long_description', 'thumb', 'animation', 'video', 'pdf', 'gallery_id', 'price', 'shipment_price', 'menu_order', 'visible', 'featured', 'stock'], $product->getFillable());
+        $this->assertArraySubset(['product_category_id', 'brand_id', 'title', 'slug', 'excerpt', 'description', 'long_description', 'thumb', 'animation', 'video', 'pdf', 'gallery_id', 'price', 'shipment_price', 'menu_order', 'visible', 'featured', 'stock', 'seo_title', 'seo_description', 'seo_keywords'], $product->getFillable());
     }
 
     public function testFillablefieldsProductCategoryModel()

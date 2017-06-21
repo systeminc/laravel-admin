@@ -30,6 +30,9 @@ class Product extends Model
         'visible',
         'featured',
         'stock',
+        'seo_title',
+        'seo_description',
+        'seo_keywords',
     ];
 
     public function category()

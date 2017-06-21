@@ -4,10 +4,10 @@
 </div>
 <br><br>
 
-<form style="max-width: 100%;" action="galleries/update/{{ $product->gallery->title }}" class="images" method="post" enctype="multipart/form-data">
+<form style="max-width: 100%;" action="galleries/update/{{ $product->gallery->id }}" class="images" method="post" enctype="multipart/form-data">
 	{{ csrf_field() }}
 	<label for="title">Title:</label>
-	<input type="text" name="title" value="{{ $product->gallery->title }}">	
+	<input type="text" name="title" value="{{ $product->title or $product->gallery->title }}">	
 	
 	@if( count($product->gallery->images) )
 		<div class="gallery-wrap"> 
@@ -17,7 +17,9 @@
 						<div class="buttons">
 							<div onclick="ajaxDeleteGalleryImage('ajax/{{ $product->gallery->title }}/delete-gallery-images/{{ $image->id }}', '{{$image->id}}')" class="button remove-image delete">Delete</div>
 						</div>
-						<img src="uploads/{{$image->source}}" />
+						<a href="galleries/image/{{ $product->gallery->id }}/{{ $image->id }}">
+							<img src="uploads/{{$image->source}}" />
+						</a>					
 					</li>
 				@endforeach
 			</ul>
