@@ -90,6 +90,19 @@
 					@endif
 				</div>
 
+				<label>Image</label>
+				<div class="file-input-wrap cf">
+					@if(!empty($product->image)) 
+						<div class="small-image-preview" style="background-image: url(uploads/{{$product->image}})"></div>
+						<input type="checkbox" name="delete_image">Delete this file?
+					@else
+						<div class="fileUpload">
+							<span>Choose file</span>
+							<input type="file" name="image"/>
+						</div>
+					@endif
+				</div>
+
 				<label>Animation Link</label>
 				<input type="text" name="animation" value="{{old('animation') ?: $product->animation}}">
 
@@ -161,6 +174,12 @@
 				<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 
 			</form>
+		</section>
+
+		<section>
+			<section>
+				@include('admin::products.variation')
+			</section>
 		</section>
 
 		<section>

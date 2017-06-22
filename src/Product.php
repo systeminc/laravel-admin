@@ -20,6 +20,7 @@ class Product extends Model
         'description',
         'long_description',
         'thumb',
+        'image',
         'animation',
         'video',
         'pdf',
@@ -53,5 +54,10 @@ class Product extends Model
     public function similar()
     {
         return $this->hasMany('SystemInc\LaravelAdmin\SimilarProduct')->orderBy('created_at', 'desc');
+    }
+
+    public function variations()
+    {
+        return $this->hasMany('SystemInc\LaravelAdmin\ProductVariation')->orderBy('created_at', 'desc');
     }
 }
