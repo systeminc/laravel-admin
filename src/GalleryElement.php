@@ -4,7 +4,7 @@ namespace SystemInc\LaravelAdmin;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
-use SystemInc\LaravelAdmin\Facades\SLA;
+use SystemInc\LaravelAdmin\Facades\SLA as SystemLaravelAdmin;
 
 class GalleryElement extends Model
 {
@@ -43,7 +43,7 @@ class GalleryElement extends Model
                 break;
 
             case 3:
-                return SLA::getFile($value);
+                return SystemLaravelAdmin::getFile($value);
                 break;
 
             default:
