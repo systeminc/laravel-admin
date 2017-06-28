@@ -7,9 +7,22 @@
 	</div>
 
 	<div class="admin-content">
-		<div class="image-wrap" >
-			<img style="max-width: 100%" src="uploads/{{$image->source}}" />
+		<div class="cf" style="position: relative">
+			<img src="uploads/{{ $image->source }}" alt="" style="max-width: 200px; width: 100%; background-color: #ddd;" class="left">
 		</div>
+		
+		<br>
+		<h2>Replace image</h2>
+
+		<form style="max-width: 100%;" action="galleries/update/{{ $image->gallery->id }}/{{ $image->id }}" method="post" enctype="multipart/form-data">
+			{{ csrf_field() }}
+		    <div class="fileUpload cf">
+				<span>Add replacement image</span>
+				<input type="file" name="images[]">
+			</div>
+			<input type="hidden" name="key" value="{{ $image->gallery->key }}">	
+			<input type="hidden" name="title" value="{{ $image->gallery->title }}">	
+		</form>
 
 		<div class="cf">
 			<div class="section-header">
@@ -59,6 +72,11 @@
 		else {
 			$(this).closest("form").submit();
 		}
+	});
+
+	$(".fileUpload input").change(function(e) {
+		e.preventDefault();
+		$(this).parents('form').submit();
 	});
 </script>
 @stop
