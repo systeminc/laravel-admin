@@ -96,7 +96,7 @@ class GalleriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function postUpdate(Request $request, $gallery_id)
+    public function postUpdate(Request $request, $gallery_id, $image_id = false)
     {
         $gallery = Gallery::find($gallery_id);
 
@@ -104,7 +104,7 @@ class GalleriesController extends Controller
             return back()->with(['error' => 'This key exists']);
         }
 
-        $this->uploadImages($request->file('images'), $gallery->id);
+        $this->uploadImages($request->file('images'), $gallery->id, $image_id);
 
         $gallery->title = !empty($request->title) ? $request->title : $gallery->title;
         $gallery->key = $this->sanitizeElements($request->key);
@@ -293,7 +293,7 @@ class GalleriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private function uploadImages($images, $gallery_id)
+    private function uploadImages($images, $gallery_id, $image_id = false)
     {
         if (is_array($images)) {
             foreach (array_filter($images) as $image) {
@@ -311,13 +311,19 @@ class GalleriesController extends Controller
                     $mobile_image = $this->resizeImage(1024, 768, 'images/galleries/mobile/', 'images/galleries'.$mobile, $image);
                 }
 
-                GalleryImage::create([
+                $data = [
                     'gallery_id'        => $gallery_id,
                     'source'            => $original_image,
                     'path_source'       => $original_path,
                     'thumb_source'      => $thumb_image,
-                    'mobile_source'     => $mobile_image,
-                ]);
+                    'mobile_source'     => $mobile_image
+                ];
+
+                if ($image_id) {
+                    GalleryImage::find($image_id)->update($data);
+                } else {
+                    GalleryImage::create($data);
+                }
             }
 
             return true;

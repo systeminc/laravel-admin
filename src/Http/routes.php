@@ -106,7 +106,7 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
             Route::get('images/edit-element/{element_id}', 'GalleriesController@getEditElement');
             Route::get('images/delete-element/{element_id}', 'GalleriesController@getDeleteElement');
             Route::post('save', 'GalleriesController@postSave');
-            Route::post('update/{gallery_id}', 'GalleriesController@postUpdate');
+            Route::post('update/{gallery_id}/{image_id?}', 'GalleriesController@postUpdate');
             Route::post('image/{gallery_id}/{image_id}', 'GalleriesController@postImageUpdate');
             Route::get('image/{gallery_id}/{image_id}', 'GalleriesController@getImage');
             Route::get('delete/{gallery_id}', 'GalleriesController@getDelete');
