@@ -35,6 +35,9 @@
 				<label>Slug</label>
 				<input type="text" name="slug" value="{{old('slug') ?: $product->slug}}">
 
+				<label>SKU</label>
+				<input type="text" name="sku" value="{{old('sku') ?: $product->sku}}">
+
 				<label>Excerpt</label>
 				<textarea name="excerpt" rows="5">{{old('excerpt') ?: $product->excerpt}}</textarea>
 

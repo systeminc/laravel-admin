@@ -77,6 +77,7 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
                 Route::post('edit-item/{item_id}', 'OrdersController@postEditItem');
                 Route::post('add-item/{item_id}', 'OrdersController@postAddItem');
                 Route::post('save/{order_id}', 'OrdersController@postSave');
+                Route::get('view-item/{item_id}', 'OrdersController@getViewItem');
                 Route::get('print-invoice/{order_id}', 'OrdersController@getPrintInvoice');
                 Route::get('send-invoice/{order_id}', 'OrdersController@getSendInvoice');
                 Route::get('send-proforma/{order_id}', 'OrdersController@getSendProforma');

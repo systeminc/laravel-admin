@@ -31,6 +31,7 @@ class Product extends Model
         'visible',
         'featured',
         'stock',
+        'sku',
         'seo_title',
         'seo_description',
         'seo_keywords',
@@ -59,5 +60,10 @@ class Product extends Model
     public function variations()
     {
         return $this->hasMany('SystemInc\LaravelAdmin\ProductVariation')->orderBy('created_at', 'desc');
+    }
+
+    public function getVariationsByGroup($group)
+    {
+        return $this->hasMany('SystemInc\LaravelAdmin\ProductVariation')->whereGroup($group)->orderBy('created_at', 'desc')->get();
     }
 }

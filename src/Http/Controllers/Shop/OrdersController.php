@@ -8,6 +8,7 @@ use Mail;
 use PDF;
 use SystemInc\LaravelAdmin\Order;
 use SystemInc\LaravelAdmin\OrderItem;
+use SystemInc\LaravelAdmin\OrderItemVariation;
 use SystemInc\LaravelAdmin\OrderStatus;
 use SystemInc\LaravelAdmin\Product;
 use SystemInc\LaravelAdmin\Validations\UpdatedOrderValidation;
@@ -348,5 +349,14 @@ class OrdersController extends Controller
                 $item->product->save();
             }
         }
+    }
+
+    public function getViewItem($item_id)
+    {
+        $orderItem = OrderItem::find($item_id);
+        
+        $variation = OrderItemVariation::whereOrderItemId($item_id)->get();
+
+        return view('admin::orders.item', compact('orderItem', 'variation'));
     }
 }
