@@ -359,7 +359,9 @@
 					<form action="shop/orders/edit-item/{{$item->id}}" method="post" class="order-items-form">
 						<input type="hidden" name="_token" value="{{csrf_token()}}">
 				
-						<span class="title">{{$item->product->title}}</span>
+						<a href="shop/orders/view-item/{{ $item->id }}">
+							<span class="title">{{$item->product->title}}</span>
+						</a>
 						
 						<div class="cf">
 							<label>Quantity</label>
@@ -376,7 +378,7 @@
 							</div>
 							
 							<div class="action-wrap">
-								<input type="submit" value="Save" class="save-item button">
+								<input type="submit" value="Save" class="save-item button" style="max-width: 100px;">
 								<a href="shop/orders/delete-item/{{$item->id}}" class="confirm-action button remove-item">Delete</a>
 							</div>
 						</div>

@@ -42,6 +42,11 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
 
             // products
             Route::group(['prefix' => 'products'], function () {
+                Route::post('save-variation/{product_id}', 'ProductsController@postSaveVariation');
+                Route::post('update-variation/{variation_id}', 'ProductsController@postUpdateVariation');
+                Route::get('delete-variation/{variation_id}', 'ProductsController@getDeleteVariation');
+                Route::get('edit-variation/{variation_id}', 'ProductsController@getEditVariation');
+                Route::get('add-variation/{product_id}', 'ProductsController@getAddVariation');
                 Route::get('delete-similar/{similar_id}', 'ProductsController@getDeleteSimilar');
                 Route::post('add-similar/{product_id}', 'ProductsController@postAddSimilar');
                 Route::post('save/{product_id}', 'ProductsController@postSave');
@@ -72,6 +77,7 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
                 Route::post('edit-item/{item_id}', 'OrdersController@postEditItem');
                 Route::post('add-item/{item_id}', 'OrdersController@postAddItem');
                 Route::post('save/{order_id}', 'OrdersController@postSave');
+                Route::get('view-item/{item_id}', 'OrdersController@getViewItem');
                 Route::get('print-invoice/{order_id}', 'OrdersController@getPrintInvoice');
                 Route::get('send-invoice/{order_id}', 'OrdersController@getSendInvoice');
                 Route::get('send-proforma/{order_id}', 'OrdersController@getSendProforma');

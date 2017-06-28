@@ -71,6 +71,19 @@
 				@endif
 			</div>
 
+			<label>Image</label>
+			<div class="file-input-wrap cf">
+				@if(!empty($category->image)) 
+					<div class="small-image-preview" style="background-image: url(uploads/{{$category->image}})"></div>
+					<input type="checkbox" name="delete_image">Delete this file?
+				@else
+					<div class="fileUpload">
+						<span>Choose file</span>
+						<input type="file" name="image"/>
+					</div>
+				@endif
+			</div>
+
 			<label>Menu Order</label>
 			
 			<div class="select-style">

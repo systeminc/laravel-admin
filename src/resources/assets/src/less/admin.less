@@ -865,6 +865,7 @@ header{
 			img{
 				display: block;
 			    width: 100%;
+			    height: 100px;
 			}
 
 		    li{
@@ -936,6 +937,14 @@ header{
 
 				&:hover{
 					background: lighten(@defaultTextColor, 62.5%);
+				}
+
+				img {
+					width: 20%;
+				}
+
+				b {
+					display: block;
 				}
 			}
 		}
@@ -1560,3 +1569,32 @@ div.opened-menu{
 }
 
 
+.background-image{
+    width: 250px;
+    height: 250px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline-block;
+
+	&:before{
+	    content: "";
+	    display: block;
+	    padding-top: 50%;
+	}
+}
+
+.one-box {
+    width: 49%;
+    display: inline-block;
+    margin: auto;
+    vertical-align: top;
+
+    @media @1024 {
+    	display: block;
+    }
+    @media @480 {
+		margin:0;
+    }
+
+}
