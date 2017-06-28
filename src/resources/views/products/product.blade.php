@@ -35,6 +35,9 @@
 				<label>Slug</label>
 				<input type="text" name="slug" value="{{old('slug') ?: $product->slug}}">
 
+				<label>SKU</label>
+				<input type="text" name="sku" value="{{old('sku') ?: $product->sku}}">
+
 				<label>Excerpt</label>
 				<textarea name="excerpt" rows="5">{{old('excerpt') ?: $product->excerpt}}</textarea>
 
@@ -86,6 +89,19 @@
 						<div class="fileUpload">
 							<span>Choose file</span>
 							<input type="file" name="thumb"/>
+						</div>
+					@endif
+				</div>
+
+				<label>Image</label>
+				<div class="file-input-wrap cf">
+					@if(!empty($product->image)) 
+						<div class="small-image-preview" style="background-image: url(uploads/{{$product->image}})"></div>
+						<input type="checkbox" name="delete_image">Delete this file?
+					@else
+						<div class="fileUpload">
+							<span>Choose file</span>
+							<input type="file" name="image"/>
 						</div>
 					@endif
 				</div>
@@ -161,6 +177,12 @@
 				<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 
 			</form>
+		</section>
+
+		<section>
+			<section>
+				@include('admin::products.variation')
+			</section>
 		</section>
 
 		<section>

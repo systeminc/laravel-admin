@@ -80,7 +80,7 @@ class CategoriesController extends Controller
 
         $category->fill($request->all());
 
-        $category->thumb = $this->saveImage($request->file('thumb'), 'categories');
+        $category->thumb = $request->hasFile('thumb') ? $this->saveImage($request->file('thumb'), 'categories') : $category->thumb;
 
         if ($request->input('delete_thumb')) {
             if (Storage::exists($category->thumb)) {
@@ -88,6 +88,16 @@ class CategoriesController extends Controller
             }
 
             $category->thumb = null;
+        }
+
+        $category->image = $request->hasFile('image') ? $this->saveImage($request->file('image'), 'categories') : $category->image;
+
+        if ($request->input('delete_image')) {
+            if (Storage::exists($category->image)) {
+                Storage::delete($category->image);
+            }
+
+            $category->image = null;
         }
         //REPLACE slug
         $category->slug = str_slug($request->title);
