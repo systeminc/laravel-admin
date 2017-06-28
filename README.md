@@ -28,7 +28,9 @@ Install using composer:
 $ composer require systeminc/laravel-admin
 ```
 
-Add the service provider to the `'providers'` array in `config/app.php`:
+For Laravel 5.5 support Auto Discovery Packages.
+
+Add the service provider to the `'providers'` array in `config/app.php` for Laravel 5.4 and lower:
 
 ```php
 SystemInc\LaravelAdmin\AdminServiceProvider::class,

@@ -49,5 +49,15 @@
         "fzaninotto/faker": "^1.6",
         "mockery/mockery": "^0.9.9",
         "orchestra/testbench": "^3.4"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SystemInc\\LaravelAdmin\\AdminServiceProvider"
+            ],
+            "aliases": {
+                "SLA": "SystemInc\\LaravelAdmin\\Facades\\SLA"
+            }
+        }
     }
 }

@@ -8,9 +8,11 @@ use Storage;
 use SystemInc\LaravelAdmin\Gallery;
 use SystemInc\LaravelAdmin\Product;
 use SystemInc\LaravelAdmin\ProductCategory;
+use SystemInc\LaravelAdmin\ProductVariation;
 use SystemInc\LaravelAdmin\SimilarProduct;
 use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 use SystemInc\LaravelAdmin\Validations\ProductValidation;
+use SystemInc\LaravelAdmin\Validations\ProductVariationValidation;
 use Validator;
 
 class ProductsController extends Controller
@@ -82,6 +84,9 @@ class ProductsController extends Controller
         if ($request->hasFile('thumb')) {
             $product->thumb = $this->saveImage($request->file('thumb'), 'products');
         }
+        if ($request->hasFile('image')) {
+            $product->image = $this->saveImage($request->file('image'), 'products');
+        }
         if ($request->hasFile('pdf')) {
             $product->pdf = $this->uploadPdf($request->file('pdf'), 'products');
         }
@@ -92,6 +97,14 @@ class ProductsController extends Controller
             }
 
             $product->thumb = null;
+        }
+
+        if (!empty($request->delete_image)) {
+            if (Storage::exists($product->image)) {
+                Storage::delete($product->image);
+            }
+
+            $product->image = null;
         }
 
         if (!empty($request->delete_pdf)) {
@@ -196,5 +209,85 @@ class ProductsController extends Controller
         $product->save();
 
         return true;
+    }
+
+    public function getAddVariation($product_id)
+    {
+        return view('admin::products.addvariation', compact('product_id'));
+    }
+
+    public function postSaveVariation(Request $request, $product_id)
+    {
+        // validation
+        $validation = Validator::make($request->all(), ProductVariationValidation::rules(), ProductVariationValidation::messages());
+
+        if ($validation->fails()) {
+            return back()->withInput()->withErrors($validation);
+        }
+
+        $variation = new ProductVariation();
+
+        $variation->fill($request->all());
+
+        if ($request->hasFile('image')) {
+            $variation->image = $this->saveImage($request->file('image'), 'products');
+        }
+
+        $variation->price = !empty($request->price) ? $request->price : 0;
+        $variation->product_id = $product_id;
+        $variation->save();
+
+        return redirect($request->segment(1).'/shop/products/edit/'.$product_id)->with('success', 'Added variation');
+    }
+
+    public function getEditVariation($variation_id)
+    {
+        $variation = ProductVariation::find($variation_id);
+
+        return view('admin::products.editvariation', compact('variation'));
+    }
+
+    public function postUpdateVariation(Request $request, $variation_id)
+    {
+        // validation
+        $validation = Validator::make($request->all(), ProductVariationValidation::rules(), ProductVariationValidation::messages());
+
+        if ($validation->fails()) {
+            return back()->withInput()->withErrors($validation);
+        }
+
+        $variation = ProductVariation::find($variation_id);
+        $variation->update($request->all());
+
+        if ($request->hasFile('image')) {
+            $variation->image = $this->saveImage($request->file('image'), 'products');
+        }
+
+        if (!empty($request->delete_image)) {
+            if (Storage::exists($variation->image)) {
+                Storage::delete($variation->image);
+            }
+
+            $variation->image = null;
+        }
+        $variation->price = !empty($request->price) ? $request->price : 0;
+        $variation->save();
+
+        return back()->with('success', 'Saved variation');
+    }
+
+    public function getDeleteVariation($variation_id)
+    {
+        $variation = ProductVariation::find($variation_id);
+
+        if (!empty($variation->image)) {
+            if (Storage::exists($variation->image)) {
+                Storage::delete($variation->image);
+            }
+        }
+
+        $variation->delete();
+
+        return back()->with('success', 'Deleted variation');
     }
 }

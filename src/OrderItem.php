@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderItem extends Model
 {
-    public $timestamps = false;
-
     protected $fillable = [
         'order_id',
         'product_id',
@@ -24,5 +22,10 @@ class OrderItem extends Model
     public function product()
     {
         return $this->belongsTo('SystemInc\LaravelAdmin\Product')->withTrashed();
+    }
+
+    public function variations()
+    {
+        return $this->hasMany('SystemInc\LaravelAdmin\OrderItemVariation');
     }
 }

@@ -151,14 +151,14 @@ class ModelsTest extends LaravelAdminTestCase
     {
         $product = new Product();
 
-        $this->assertArraySubset(['product_category_id', 'brand_id', 'title', 'slug', 'excerpt', 'description', 'long_description', 'thumb', 'animation', 'video', 'pdf', 'gallery_id', 'price', 'shipment_price', 'menu_order', 'visible', 'featured', 'stock', 'seo_title', 'seo_description', 'seo_keywords'], $product->getFillable());
+        $this->assertArraySubset(['product_category_id', 'brand_id', 'title', 'slug', 'excerpt', 'description', 'long_description', 'thumb', 'image', 'animation', 'video', 'pdf', 'gallery_id', 'price', 'shipment_price', 'menu_order', 'visible', 'featured', 'stock', 'sku', 'seo_title', 'seo_description', 'seo_keywords'], $product->getFillable());
     }
 
     public function testFillablefieldsProductCategoryModel()
     {
         $product_category = new ProductCategory();
 
-        $this->assertArraySubset(['title', 'subtitle', 'thumb', 'excerpt', 'description', 'menu_order', 'slug', 'seo_title', 'seo_description', 'seo_keywords'], $product_category->getFillable());
+        $this->assertArraySubset(['title', 'subtitle', 'thumb', 'image', 'excerpt', 'description', 'menu_order', 'slug', 'seo_title', 'seo_description', 'seo_keywords'], $product_category->getFillable());
     }
 
     public function testFillablefieldsProductCommentModel()

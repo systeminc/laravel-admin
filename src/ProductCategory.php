@@ -10,6 +10,7 @@ class ProductCategory extends Model
         'title',
         'subtitle',
         'thumb',
+        'image',
         'excerpt',
         'description',
         'menu_order',
