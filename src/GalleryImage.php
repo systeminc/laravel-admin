@@ -25,4 +25,9 @@ class GalleryImage extends Model
     {
         return $this->hasMany(GalleryElement::class, 'image_id')->orderBy('order_number');
     }
+
+    public function gallery()
+    {
+        return $this->belongsTo(Gallery::class);
+    }
 }
