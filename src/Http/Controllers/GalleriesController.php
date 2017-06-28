@@ -316,7 +316,7 @@ class GalleriesController extends Controller
                     'source'            => $original_image,
                     'path_source'       => $original_path,
                     'thumb_source'      => $thumb_image,
-                    'mobile_source'     => $mobile_image
+                    'mobile_source'     => $mobile_image,
                 ];
 
                 if ($image_id) {
