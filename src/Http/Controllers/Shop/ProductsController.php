@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Storage;
 use SystemInc\LaravelAdmin\Gallery;
 use SystemInc\LaravelAdmin\Product;
-use SystemInc\LaravelAdmin\ProductVariation;
 use SystemInc\LaravelAdmin\ProductCategory;
+use SystemInc\LaravelAdmin\ProductVariation;
 use SystemInc\LaravelAdmin\SimilarProduct;
 use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 use SystemInc\LaravelAdmin\Validations\ProductValidation;
@@ -258,7 +258,7 @@ class ProductsController extends Controller
 
         $variation = ProductVariation::find($variation_id);
         $variation->update($request->all());
-        
+
         if ($request->hasFile('image')) {
             $variation->image = $this->saveImage($request->file('image'), 'products');
         }

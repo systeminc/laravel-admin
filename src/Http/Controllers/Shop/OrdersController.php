@@ -354,7 +354,7 @@ class OrdersController extends Controller
     public function getViewItem($item_id)
     {
         $orderItem = OrderItem::find($item_id);
-        
+
         $variation = OrderItemVariation::whereOrderItemId($item_id)->get();
 
         return view('admin::orders.item', compact('orderItem', 'variation'));
