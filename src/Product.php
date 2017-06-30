@@ -64,6 +64,6 @@ class Product extends Model
 
     public function getVariationsByGroup($group)
     {
-        return $this->hasMany('SystemInc\LaravelAdmin\ProductVariation')->whereGroup($group)->orderBy('created_at', 'desc')->get();
+        return $this->hasMany('SystemInc\LaravelAdmin\ProductVariation')->whereGroup($group)->get();
     }
 }
