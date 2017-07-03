@@ -61,7 +61,7 @@
 			<label>Thumbnail</label>
 			<div class="file-input-wrap cf">
 				@if(!empty($category->thumb)) 
-					<div class="small-image-preview" style="background-image: url(uploads/{{$category->thumb}})"></div>
+					<div class="small-image-preview" style="background-image: url({{ asset('storage') .'/'. $category->thumb}})"></div>
 					<input type="checkbox" name="delete_thumb">Delete this file?
 				@else
 					<div class="fileUpload">
@@ -74,7 +74,7 @@
 			<label>Image</label>
 			<div class="file-input-wrap cf">
 				@if(!empty($category->image)) 
-					<div class="small-image-preview" style="background-image: url(uploads/{{$category->image}})"></div>
+					<div class="small-image-preview" style="background-image: url({{ asset('storage') .'/'. $category->image}})"></div>
 					<input type="checkbox" name="delete_image">Delete this file?
 				@else
 					<div class="fileUpload">

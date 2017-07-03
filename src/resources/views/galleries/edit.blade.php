@@ -36,7 +36,7 @@
 									<div onclick="ajaxDeleteGalleryImage('ajax/{{ $gallery->id }}/delete-gallery-images/{{ $image->id }}', '{{$image->id}}')" class="button remove-image delete">Delete</div>
 								</div>
 								<a href="galleries/image/{{ $gallery->id }}/{{ $image->id }}">
-									<img src="uploads/{{$image->source}}" />
+									<img src="{{ asset('storage') .'/'. $image->source}}" />
 								</a>
 							</li>
 						@endforeach

@@ -125,6 +125,6 @@ class SLA
      */
     public function getFile($filename)
     {
-        return config('laravel-admin.route_prefix').'/uploads/'.$filename;
+        return asset('storage') .'/'. $filename;
     }
 }

@@ -129,7 +129,7 @@ class GalleriesController extends Controller
         }
 
         foreach ($gallery->images as $image) {
-            Storage::delete($image->source, $image->thumb_source, $image->mobile_source);
+            Storage::delete('public/'.$image->source, 'public/'.$image->thumb_source, 'public/'.$image->mobile_source);
 
             $image->delete();
         }
@@ -210,7 +210,7 @@ class GalleriesController extends Controller
     {
         $element = GalleryElement::find($element_id);
 
-        $mime = empty($element->content) || $element->page_element_type_id !== 3 ? null : Storage::mimeType($element->content);
+        $mime = empty($element->content) || $element->page_element_type_id !== 3 ? null : Storage::mimeType('public/'.$element->content);
 
         return view('admin::galleries.elements.edit-element', compact('element', 'mime'));
     }
@@ -258,7 +258,7 @@ class GalleriesController extends Controller
         $image = GalleryImage::find($element->image_id);
 
         if ($element->page_element_type_id == 3 && !empty($element->content)) {
-            Storage::delete($element->content);
+            Storage::delete('public/'.$element->content);
         }
 
         $page_id = $element->page_id;
@@ -278,7 +278,7 @@ class GalleriesController extends Controller
     {
         $element = GalleryElement::find($element_id);
 
-        Storage::delete($element->content);
+        Storage::delete('public/'.$element->content);
 
         $element->content = null;
         $element->save();
@@ -304,7 +304,7 @@ class GalleriesController extends Controller
                     $thumb = '/thumb/'.$gallery_id.'-'.$image_name.'.'.$image->getClientOriginalExtension();
                     $mobile = '/mobile/'.$gallery_id.'-'.$image_name.'.'.$image->getClientOriginalExtension();
 
-                    $original_path = storage_path('images/galleries'.$original);
+                    $original_path = storage_path('public/images/galleries'.$original);
 
                     $original_image = $this->resizeImage(1920, 1080, 'images/galleries/', 'images/galleries'.$original, $image);
                     $thumb_image = $this->resizeImage(375, 200, 'images/galleries/thumb/', 'images/galleries'.$thumb, $image);
@@ -338,7 +338,7 @@ class GalleriesController extends Controller
         if ($file && $file->isValid()) {
             $dirname = 'elements/'.$file->getClientOriginalName();
 
-            Storage::put($dirname, file_get_contents($file));
+            Storage::put('public/'.$dirname, file_get_contents($file));
 
             return $dirname;
         }

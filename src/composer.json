@@ -1,0 +1,5 @@
+{
+    "require": {
+        "intervention/imagecache": "^2.3"
+    }
+}

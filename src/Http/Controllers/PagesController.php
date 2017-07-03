@@ -218,7 +218,7 @@ class PagesController extends Controller
         $keys = explode('.', $element->key);
         $key = $keys[1];
 
-        $mime = empty($element->content) || $element->page_element_type_id !== 3 ? null : Storage::mimeType($element->content);
+        $mime = empty($element->content) || $element->page_element_type_id !== 3 ? null : Storage::mimeType('public/'.$element->content);
 
         return view('admin::pages.edit-element', compact('element', 'mime', 'key'));
     }
@@ -234,7 +234,7 @@ class PagesController extends Controller
     {
         $element = PageElement::find($element_id);
 
-        Storage::delete($element->content);
+        Storage::delete('public/'.$element->content);
 
         $element->content = null;
         $element->save();
@@ -283,7 +283,7 @@ class PagesController extends Controller
         $element = PageElement::find($element_id);
 
         if ($element->page_element_type_id == 3 && !empty($element->content)) {
-            Storage::delete($element->content);
+            Storage::delete('public/'.$element->content);
         }
 
         $page_id = $element->page_id;
@@ -318,7 +318,7 @@ class PagesController extends Controller
         if ($file && $file->isValid()) {
             $dirname = 'pages/'.$elements_prefix.'/'.$file->getClientOriginalName();
 
-            Storage::put($dirname, file_get_contents($file));
+            Storage::put('public/'.$dirname, file_get_contents($file));
 
             return $dirname;
         }
