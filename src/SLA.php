@@ -125,6 +125,6 @@ class SLA
      */
     public function getFile($filename)
     {
-        return asset('storage') .'/'. $filename;
+        return asset('storage').'/'.$filename;
     }
 }
