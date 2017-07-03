@@ -4,6 +4,7 @@ namespace SystemInc\LaravelAdmin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use File;
+use Image;
 
 class ResourcesController extends Controller
 {
@@ -57,6 +58,12 @@ class ResourcesController extends Controller
      */
     public function images($filename)
     {
-        return response()->file($this->image_path.$filename);
+        $src = $this->image_path.$filename;
+
+        $cache_image = Image::cache(function ($image) use ($src) {
+            return $image->make($src)->greyscale();
+        }, 60);
+
+        return response()->make($cache_image, 200);
     }
 }

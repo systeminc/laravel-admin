@@ -77,10 +77,10 @@ class AdminController extends Controller
 
         $directory = 'images/tiny/'.$page_name.'/'.$page_id;
 
-        if (!Storage::exists($directory)) {
-            Storage::createDir($directory);
+        if (!Storage::exists('public/'.$directory)) {
+            Storage::createDir('public/'.$directory);
         }
-        $images = Storage::files($directory);
+        $images = Storage::files('public/'.$directory);
 
         return view('admin::tiny-images', compact('page_id', 'page_name', 'editor_id', 'images', 'directory'));
     }
@@ -104,7 +104,7 @@ class AdminController extends Controller
 
                 $original_image = Image::make($file)->encode();
 
-                Storage::put($directory.'/'.$original, $original_image);
+                Storage::put('public/'.$directory.'/'.$original, $original_image);
             }
         }
 

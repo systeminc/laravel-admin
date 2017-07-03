@@ -119,14 +119,14 @@ class LocationsController extends Controller
         $location = Location::find($location_id);
         $location->fill($data);
 
+        $this->deleteImage($request, $location);
+
         $location->image = $request->hasFile('image') ? $this->saveImage($request->file('image'), 'locations') : null;
         $location->thumb_image = $request->hasFile('thumb_image') ? $this->saveImage($request->file('thumb_image'), 'locations/thumb') : null;
         $location->marker_image = $request->hasFile('marker_image') ? $this->saveImage($request->file('marker_image'), 'locations/marker') : null;
 
         $location->map_id = $request->map_id == 0 ? null : $request->map_id;
         $location->key = str_slug($request->key);
-
-        $this->deleteImage();
 
         $location->save();
 
@@ -145,15 +145,15 @@ class LocationsController extends Controller
         $location = Location::find($location_id);
 
         if (!empty($location->image)) {
-            Storage::delete($location->image);
+            Storage::delete('public/'.$location->image);
         }
 
         if (!empty($location->thumb_image)) {
-            Storage::delete($location->thumb_image);
+            Storage::delete('public/'.$location->thumb_image);
         }
 
         if (!empty($location->marker_image)) {
-            Storage::delete($location->marker_image);
+            Storage::delete('public/'.$location->marker_image);
         }
 
         $location->delete();
@@ -164,20 +164,20 @@ class LocationsController extends Controller
     /**
      * Delete image from one location.
      */
-    private function deleteImage()
+    private function deleteImage($request, $location)
     {
         if ($request->input('delete_image')) {
-            Storage::exists($location->image) ? Storage::delete($location->image) : '';
+            Storage::exists('public/'.$location->image) ? Storage::delete('public/'.$location->image) : '';
             $location->image = null;
         }
 
         if ($request->input('delete_thumb_image')) {
-            Storage::exists($location->thumb_image) ? Storage::delete($location->thumb_image) : '';
+            Storage::exists('public/'.$location->thumb_image) ? Storage::delete('public/'.$location->thumb_image) : '';
             $location->thumb_image = null;
         }
 
         if ($request->input('delete_marker_image')) {
-            Storage::exists($location->marker_image) ? Storage::delete($location->marker_image) : '';
+            Storage::exists('public/'.$location->marker_image) ? Storage::delete('public/'.$location->marker_image) : '';
             $location->marker_image = null;
         }
     }

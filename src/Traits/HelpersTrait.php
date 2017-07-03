@@ -50,14 +50,14 @@ trait HelpersTrait
             $storage_key = 'images/'.$path.$original;
 
             if ($image->getClientOriginalExtension() === 'svg') {
-                Storage::put($storage_key, file_get_contents($image));
+                Storage::put('public/'.$storage_key, file_get_contents($image));
             } else {
                 $original_image = Image::make($image)->orientate()
                     ->fit(1920, 1080, function ($constraint) {
                         $constraint->upsize();
                     })->encode();
 
-                Storage::put($storage_key, $original_image);
+                Storage::put('public/'.$storage_key, $original_image);
             }
 
             return $storage_key;
@@ -71,19 +71,19 @@ trait HelpersTrait
      */
     protected function resizeImage($width, $height, $path, $output_path, $image)
     {
-        if (!Storage::files($path)) {
-            Storage::makeDirectory($path, 493, true);
+        if (!Storage::files('public/'.$path)) {
+            Storage::makeDirectory('public/'.$path, 493, true);
         }
 
         if ($image->getClientOriginalExtension() === 'svg') {
-            Storage::put($output_path, file_get_contents($image));
+            Storage::put('public/'.$output_path, file_get_contents($image));
         } else {
             $image = Image::make($image)->orientate()
                 ->resize($width, $height, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })->encode();
-            Storage::put($output_path, $image);
+            Storage::put('public/'.$output_path, $image);
         }
 
         return $output_path;
@@ -100,14 +100,14 @@ trait HelpersTrait
     public static function uploadPdf($file, $storage_path)
     {
         if ($file && $file->isValid()) {
-            $dirname = 'pdf/'.$storage_path.'/'.$file->getClientOriginalName();
+            $dirname = 'public/pdf/'.$storage_path.'/'.$file->getClientOriginalName();
 
-            if (!Storage::exists('pdf/'.$storage_path)) {
-                if (!Storage::exists('pdf')) {
-                    Storage::makeDirectory('pdf');
+            if (!Storage::exists('public/pdf/'.$storage_path)) {
+                if (!Storage::exists('public/pdf')) {
+                    Storage::makeDirectory('public/pdf');
                 }
 
-                Storage::makeDirectory('pdf/'.$storage_path);
+                Storage::makeDirectory('public/pdf/'.$storage_path);
             }
 
             Storage::put($dirname, file_get_contents($file));

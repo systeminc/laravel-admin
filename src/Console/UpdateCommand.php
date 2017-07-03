@@ -44,13 +44,14 @@ class UpdateCommand extends Command
 
         foreach ($package_config as $key => $value) {
             if (!isset($client_config[$key])) {
-                File::put(base_path('config/laravel-admin.php'), ("<?php \r\n\r\nreturn ".preg_replace(['/$([ ])/', '/[ ]([ ])/'], '	', var_export($replaceConfig, true)).';'));
+                File::put(base_path('config/laravel-admin.php'), ("<?php \r\n\r\nreturn ".preg_replace(['/$([ ])/', '/[ ]([ ])/'], '    ', var_export($replaceConfig, true)).';'));
                 $this->info('Config file ("config/laravel-admin.php") is merged, please see changes for new feature');
             }
         }
 
         $this->line('Updating Configuration Done!');
         $this->line('');
+        $configureFolder = Artisan::call('storage:link', []);
         $this->line('***');
         $this->line('');
         $this->info('Successfully update!');

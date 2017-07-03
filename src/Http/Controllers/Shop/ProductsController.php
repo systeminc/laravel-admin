@@ -79,6 +79,7 @@ class ProductsController extends Controller
         }
 
         $product = Product::find($product_id);
+
         $product->update($request->all());
 
         if ($request->hasFile('thumb')) {
@@ -92,16 +93,16 @@ class ProductsController extends Controller
         }
 
         if (!empty($request->delete_thumb)) {
-            if (Storage::exists($product->thumb)) {
-                Storage::delete($product->thumb);
+            if (Storage::exists('public/'.$product->thumb)) {
+                Storage::delete('public/'.$product->thumb);
             }
 
             $product->thumb = null;
         }
 
         if (!empty($request->delete_image)) {
-            if (Storage::exists($product->image)) {
-                Storage::delete($product->image);
+            if (Storage::exists('public/'.$product->image)) {
+                Storage::delete('public/'.$product->image);
             }
 
             $product->image = null;
@@ -131,11 +132,11 @@ class ProductsController extends Controller
         $gallery = Gallery::whereTitle($product->gallery->title)->first();
 
         foreach ($gallery->images as $image) {
-            Storage::delete($image->source, $image->thumb_source, $image->mobile_source);
+            Storage::delete('public/'.$image->source, 'public/'.$image->thumb_source, 'public/'.$image->mobile_source);
 
             $image->delete();
         }
-        Storage::delete($product->pdf);
+        Storage::delete('public/'.$product->pdf);
 
         $gallery->delete();
         $product->delete();
@@ -264,8 +265,8 @@ class ProductsController extends Controller
         }
 
         if (!empty($request->delete_image)) {
-            if (Storage::exists($variation->image)) {
-                Storage::delete($variation->image);
+            if (Storage::exists('public/'.$variation->image)) {
+                Storage::delete('public/'.$variation->image);
             }
 
             $variation->image = null;
@@ -281,8 +282,8 @@ class ProductsController extends Controller
         $variation = ProductVariation::find($variation_id);
 
         if (!empty($variation->image)) {
-            if (Storage::exists($variation->image)) {
-                Storage::delete($variation->image);
+            if (Storage::exists('public/'.$variation->image)) {
+                Storage::delete('public/'.$variation->image);
             }
         }
 

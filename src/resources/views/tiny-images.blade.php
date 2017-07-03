@@ -131,7 +131,7 @@
 					@foreach ($images as $image) 
 						<div class="thumb">
 							<div class="delete-image" data-path='{{$image}}'>x</div>
-							<img src="../{{ config('laravel-admin.route_prefix') }}/uploads/{{$image}}">
+							<img src="{{ asset('storage') .'/'. trim($image, 'public')}}">
 						</div>						
 					@endforeach
 

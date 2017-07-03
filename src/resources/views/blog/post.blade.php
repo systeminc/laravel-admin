@@ -43,7 +43,7 @@
 			<label>Thumbnail</label>
 			<div class="file-input-wrap cf">
 				@if(!empty($post->thumb)) 
-					<div class="small-image-preview" style="background-image: url(uploads/{{$post->thumb}})"></div>
+					<div class="small-image-preview" style="background-image: url({{ asset('storage') .'/'. $post->thumb}})"></div>
 					<input type="checkbox" name="delete_thumb">Delete this file?
 				@else
 					<div class="fileUpload">

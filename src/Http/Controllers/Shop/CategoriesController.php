@@ -83,8 +83,8 @@ class CategoriesController extends Controller
         $category->thumb = $request->hasFile('thumb') ? $this->saveImage($request->file('thumb'), 'categories') : $category->thumb;
 
         if ($request->input('delete_thumb')) {
-            if (Storage::exists($category->thumb)) {
-                Storage::delete($category->thumb);
+            if (Storage::exists('public/'.$category->thumb)) {
+                Storage::delete('public/'.$category->thumb);
             }
 
             $category->thumb = null;
@@ -93,8 +93,8 @@ class CategoriesController extends Controller
         $category->image = $request->hasFile('image') ? $this->saveImage($request->file('image'), 'categories') : $category->image;
 
         if ($request->input('delete_image')) {
-            if (Storage::exists($category->image)) {
-                Storage::delete($category->image);
+            if (Storage::exists('public/'.$category->image)) {
+                Storage::delete('public/'.$category->image);
             }
 
             $category->image = null;
