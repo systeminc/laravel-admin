@@ -60,7 +60,7 @@ class ResourcesController extends Controller
     {
         $src = $this->image_path.$filename;
 
-        $cache_image = Image::cache(function($image) use($src) {
+        $cache_image = Image::cache(function ($image) use ($src) {
             return $image->make($src)->greyscale();
         }, 60);
 
