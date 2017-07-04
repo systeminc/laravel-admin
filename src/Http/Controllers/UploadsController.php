@@ -16,11 +16,14 @@ class UploadsController extends Controller
      */
     public function Index($filename)
     {
-        if (Storage::exists($filename)) {
-            $file = Storage::get($filename);
-            $mime = Storage::mimeType($filename);
+        if (Storage::exists('public/'.$filename)) {
+            $file = asset('storage').'/'.$filename;
 
-            return response()->make($file, 200)->header('Content-Type', $mime);
+            $imginfo = getimagesize($file);
+            header("Content-type: {$imginfo['mime']}");
+            readfile($file);
+
+            return readfile($file);
         } else {
             abort(404);
         }
