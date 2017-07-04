@@ -59,6 +59,16 @@ Note that this installation uses migrations, so you must run it from machine tha
 
 For instance, if you use Vagrant, you will have to do `vagrant ssh` first, go to your project directory, and run this instal command. The same way you run your standard Laravel's migration command. 
 
+## Important 
+
+If you use v1.4 and greater of this plugin please run this command on you project that you working with.
+
+```
+$ php artisan storage:link
+```
+
+This will be link storage folder to public folder and add ability to cache image. If you have some file in `storage/app`, please move it manualy to the `storage/app/public` dir.
+
 ## Database export
 
 If you use this Laravel Admin package within a team, you will find this artisan command that backups and restores database very useful.
