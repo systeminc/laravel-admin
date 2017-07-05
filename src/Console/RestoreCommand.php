@@ -23,7 +23,7 @@ class RestoreCommand extends Command
     public function handle()
     {
         if (empty(config('laravel-admin'))) {
-            $this->error('Instal first Laravel Admin with laravel-admin:instal');
+            $this->error('First instal Laravel Admin with laravel-admin:instal');
 
             return false;
         }
@@ -43,7 +43,7 @@ class RestoreCommand extends Command
 
             $this->info('Latest migration is: '.$migrations[count($migrations) - 1]->getFilename());
 
-            $proceed = $this->ask('Databese while be droped do you want to proceed', 'No');
+            $proceed = $this->ask('Database will be droped! Do you want to proceed?', 'No');
             $this->isInArray($proceed);
 
             $drop = $this->ask('Drop database and restore latest migration?', 'No');
@@ -71,7 +71,7 @@ class RestoreCommand extends Command
             }
 
             $this->line('');
-            $this->line('Droping...');
+            $this->line('Dropping...');
             $this->line('');
             exec('mysql -u '.env('DB_USERNAME').' -p -v '.$db_table." -e '".$query."'", $output, $response2);
 
@@ -82,7 +82,7 @@ class RestoreCommand extends Command
             }
 
             $this->line('');
-            $this->line('Droping done');
+            $this->line('Dropping done');
 
             $this->line('');
             $this->line('Restoring database...');
