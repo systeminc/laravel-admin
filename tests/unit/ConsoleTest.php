@@ -2,7 +2,6 @@
 
 namespace SystemInc\LaravelAdmin\Tests\Unit;
 
-use Illuminate\Support\Facades\Artisan;
 use SystemInc\LaravelAdmin\Tests\LaravelAdminTestCase;
 
 class ConsoleTest extends LaravelAdminTestCase
