@@ -23,14 +23,14 @@ class DumpCommand extends Command
     public function handle()
     {
         if (empty(config('laravel-admin'))) {
-            $this->error('Instal first Laravel Admin with laravel-admin:instal');
+            $this->error('First instal Laravel Admin with laravel-admin:instal');
 
             return false;
         }
 
         $this->consoleSignature();
 
-        $this->line('Dumping...');
+        $this->line('Dumpping...');
         $this->line('');
 
         $migration = 'sla_'.date('Y_m_d_His').'.sql';
@@ -43,7 +43,7 @@ class DumpCommand extends Command
 
         $dumpMigration = $path.'/'.$migration;
 
-        $this->info('Output path while be: '.$dumpMigration);
+        $this->info('Output path will be: '.$dumpMigration);
         $this->line('');
         exec('mysqldump -u '.env('DB_USERNAME').' -p '.env('DB_DATABASE').' -r '.$dumpMigration, $output, $return_var);
         $this->line('');
@@ -51,9 +51,9 @@ class DumpCommand extends Command
         if ($return_var != 0) {
             File::delete($dumpMigration);
 
-            $this->error('Dumping error!');
+            $this->error('Dumpping error!');
         } else {
-            $this->line('Dumping Done!');
+            $this->line('Dumpping Done!');
         }
 
         $this->line('');
