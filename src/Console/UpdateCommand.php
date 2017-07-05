@@ -17,7 +17,7 @@ class UpdateCommand extends Command
     public function handle()
     {
         if (empty(config('laravel-admin'))) {
-            $this->error('Instal first Laravel Admin with laravel-admin:instal');
+            $this->error('First instal Laravel Admin with laravel-admin:instal');
 
             return false;
         }
@@ -31,7 +31,7 @@ class UpdateCommand extends Command
             '--quiet' => true,
             ]);
 
-        $this->line('Migrating Done!');
+        $this->line('Migration Done!');
         $this->line('');
         $this->line('***');
         $this->line('');
