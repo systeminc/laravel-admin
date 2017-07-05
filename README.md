@@ -59,15 +59,15 @@ Note that this installation uses migrations, so you must run it from machine tha
 
 For instance, if you use Vagrant, you will have to do `vagrant ssh` first, go to your project directory, and run this instal command. The same way you run your standard Laravel's migration command. 
 
-## Important 
+## Image cache 
 
-If you use v1.4 and greater of this plugin please run this command on you project that you working with.
+If you use Laravel Admin v1.4 or greater, please run this command on you project that you working with. This will link `public` directory to `storage/app/public` in order for cache images to work.
 
 ```
 $ php artisan storage:link
 ```
 
-This will be link storage folder to public folder and add ability to cache image. If you have some file in `storage/app`, please move it manualy to the `storage/app/public` dir.
+If you already have files in `storage/app` from older version of Laravel Admin, please move it manualy to the `storage/app/public` directory.
 
 ## Database export
 
