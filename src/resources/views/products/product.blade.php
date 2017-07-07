@@ -38,6 +38,9 @@
 				<label>SKU</label>
 				<input type="text" name="sku" value="{{old('sku') ?: $product->sku}}">
 
+				<label>Max Quantity</label>
+				<input type="text" name="max_quantity" value="{{old('max_quantity') ?: $product->max_quantity}}">
+
 				<label>Excerpt</label>
 				<textarea name="excerpt" rows="5">{{old('excerpt') ?: $product->excerpt}}</textarea>
 
