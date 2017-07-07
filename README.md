@@ -59,20 +59,12 @@ Note that this installation uses migrations, so you must run it from machine tha
 
 For instance, if you use Vagrant, you will have to do `vagrant ssh` first, go to your project directory, and run this instal command. The same way you run your standard Laravel's migration command. 
 
-## Change log
-
-Bellow is changes per version:
-
-- `V1.4` Added abillity to cache image,
-- `V1.4.1` Fixes,
-- `V1.4.2` Order Price Fix,
-- `V1.4.3` Added abillity to extend `Package`, including routes, views, and layout see `Extends` section for more,
 
 ## Extends
 
-- To extend single order item view add blade in you project `resources\view\sla\order\item.blade.php`. Available variable is `$orderItem`.
-- To extend package navigations view add blade in you project `resources\view\sla\layout\admin.blade.php`. Use `<li><a href="">SLA</a></li>`.
-- To extend router create new file in `/routes/sla-routes.php` and point it to you contoroller. This will be under choosen `prefix` and `secure` with Admin's credentials.
+- To extend `order item` view in admin panel, in order to customize and show more details about your `order item` that are custom to your bisnis model, add blade template `resources\view\sla\order\item.blade.php` in you project. `order item` data is available within `$orderItem` variable.
+- To extend admin package navigations view add blade in you project `resources\view\sla\layout\navigation.blade.php`. Use unordered list `<ul>`.
+- To extend admin router with your own controllers create new file in `/routes/sla-routes.php` and point it to you contoroller. This will be under choosen `prefix` and secured with Admin's credentials.
 
 
 ## Image cache 
