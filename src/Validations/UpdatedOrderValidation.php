@@ -17,7 +17,7 @@ class UpdatedOrderValidation
             'shipment_price'          => 'numeric',
             'currency'                => 'in:EUR,USD',
             'billing_name'            => 'required|string',
-            'billing_email'           => 'required|email'
+            'billing_email'           => 'required|email',
         ];
     }
 
