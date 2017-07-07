@@ -195,7 +195,11 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
         Route::post('delete-tiny-image', 'AdminController@postDeleteTinyImage');
         Route::get('logout', 'AdminController@getLogout');
         Route::get('', 'AdminController@getIndex');
+    });
+});
 
+Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_prefix'), 'namespace' => 'App\Http\Controllers'], function () {
+    Route::group(['middleware' => [SystemInc\LaravelAdmin\Http\Middleware\AuthenticateAdmin::class]], function () {
         if (File::exists('../routes/sla-routes.php')) {
             require app_path('../routes/sla-routes.php');
         }

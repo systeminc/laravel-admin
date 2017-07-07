@@ -64,7 +64,7 @@
 					</li>
 				@endif
 				
-				@includeIf('sla.layout.admin')
+				@includeIf('sla.layout.navigation')
 				
 			</ul>
 			<ul class="account cf">
