@@ -64,6 +64,8 @@
 					</li>
 				@endif
 				
+				@includeIf('sla.layout.admin')
+				
 			</ul>
 			<ul class="account cf">
 				@if (config('laravel-admin.modules.settings'))
