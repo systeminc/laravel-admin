@@ -141,7 +141,7 @@ class OrdersController extends Controller
 
         $order->valid_until = empty($request->valid_until) ? null : $request->valid_until;
         $order->date_of_purchase = empty($request->date_of_purchase) ? null : $request->date_of_purchase;
-        $order->show_shipping_address = empty($request->show_shipping_address) ? null : $request->show_shipping_address;
+        $order->show_shipping_address = empty($request->show_shipping_address) ? false : $request->show_shipping_address;
 
         $order->recalculateTotalPrice();
         $order->save();
