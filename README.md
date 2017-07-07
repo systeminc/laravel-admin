@@ -59,6 +59,22 @@ Note that this installation uses migrations, so you must run it from machine tha
 
 For instance, if you use Vagrant, you will have to do `vagrant ssh` first, go to your project directory, and run this instal command. The same way you run your standard Laravel's migration command. 
 
+## Change log
+
+Bellow is changes per version:
+
+- `V1.4` Added abillity to cache image,
+- `V1.4.1` Fixes,
+- `V1.4.2` Order Price Fix,
+- `V1.4.3` Added abillity to extend `Package`, including routes, views, and layout see `Extends` section for more,
+
+## Extends
+
+- To extend single order item view add blade in you project `resources\view\sla\order\item.blade.php`. Available variable is `$orderItem`.
+- To extend package navigations view add blade in you project `resources\view\sla\layout\admin.blade.php`. Use `<li><a href="">SLA</a></li>`.
+- To extend router create new file in `/routes/sla-routes.php` and point it to you contoroller. This will be under choosen `prefix` and `secure` with Admin's credentials.
+
+
 ## Image cache 
 
 If you use Laravel Admin v1.4 or greater, please run this command on you project that you working with. This will link `public` directory to `storage/app/public` in order for cache images to work.
