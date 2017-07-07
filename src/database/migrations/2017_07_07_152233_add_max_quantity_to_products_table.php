@@ -13,7 +13,7 @@ class AddMaxQuantityToProductsTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('quantity')->default(10);
+            $table->string('max_quantity')->default(10);
         });
     }
 
@@ -25,7 +25,7 @@ class AddMaxQuantityToProductsTable extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('quantity');
+            $table->dropColumn('max_quantity');
         });
     }
 }
