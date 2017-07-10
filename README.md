@@ -64,7 +64,8 @@ For instance, if you use Vagrant, you will have to do `vagrant ssh` first, go to
 
 - To extend `order item` view in admin panel, in order to customize and show more details about your `order item` that are custom to your bisnis model, add blade template `resources\view\sla\order\item.blade.php` in you project. `order item` data is available within `$orderItem` variable.
 - To extend admin package navigations view add blade in you project `resources\view\sla\layout\navigation.blade.php`. Use unordered list `<ul>`.
-- To extend admin router with your own controllers create new file in `/routes/sla-routes.php` and point it to you controller. This will be under choosen `prefix` and secured with Admin's credentials.
+- To extend admin router with your own controllers create new file in `/routes/sla-routes.php` and point it to you controller. This will be under choosen `prefix` and secured with Admin's credentials. To keep `view` in same layout visit this [example](https://github.com/systeminc/laravel-admin/wiki/Extended-view) 
+
 
 
 ## Image cache 
