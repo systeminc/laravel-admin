@@ -62,9 +62,11 @@
 							<li><a href="shop/stock">Stock</a></li>
 						</ul>
 					</li>
-				@endif
-				
+				@endif	
 			</ul>
+			
+			@includeIf('sla.layout.navigation')
+			
 			<ul class="account cf">
 				@if (config('laravel-admin.modules.settings'))
 					<li class="settings cf"><a href="settings">Settings</a></li>

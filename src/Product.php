@@ -35,6 +35,7 @@ class Product extends Model
         'seo_title',
         'seo_description',
         'seo_keywords',
+        'max_quantity',
     ];
 
     public function category()
