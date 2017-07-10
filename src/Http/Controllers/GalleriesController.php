@@ -32,7 +32,7 @@ class GalleriesController extends Controller
      */
     public function getIndex()
     {
-        $galleries = Gallery::all();
+        $galleries = Gallery::whereNull('product_id')->get();
 
         return view('admin::galleries.index', compact('galleries'));
     }
