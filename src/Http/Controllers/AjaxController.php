@@ -10,6 +10,8 @@ use SystemInc\LaravelAdmin\GalleryElement;
 use SystemInc\LaravelAdmin\GalleryImage;
 use SystemInc\LaravelAdmin\Page;
 use SystemInc\LaravelAdmin\PageElement;
+use SystemInc\LaravelAdmin\Product;
+use SystemInc\LaravelAdmin\ProductCategory;
 
 class AjaxController extends Controller
 {
@@ -114,6 +116,46 @@ class AjaxController extends Controller
             $imageElement->order_number = $order_number;
 
             $imageElement->save();
+        }
+
+        return 'Success';
+    }
+
+    /**
+     * Change Product category order.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function postChangeProductCategoryOrder(Request $request)
+    {
+        foreach ($request->order as $order_number => $id) {
+            $productCategory = ProductCategory::find($id);
+
+            $productCategory->order_number = $order_number;
+
+            $productCategory->save();
+        }
+
+        return 'Success';
+    }
+
+    /**
+     * Change product order.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function postChangeProductOrder(Request $request)
+    {
+        foreach ($request->order as $order_number => $id) {
+            $product = Product::find($id);
+
+            $product->order_number = $order_number;
+
+            $product->save();
         }
 
         return 'Success';

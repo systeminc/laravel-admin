@@ -147,6 +147,8 @@ Route::group(['middleware' => ['web'], 'prefix' => config('laravel-admin.route_p
             Route::post('{page_id}/change-subpages-order', 'AjaxController@postChangeSubpagesOrder');
             Route::post('{type}/change-gallery-order', 'AjaxController@postChangeGalleryOrder');
             Route::post('{type}/delete-gallery-images/{id}', 'AjaxController@postDeleteGalleryImages');
+            Route::post('change-product-categories-order', 'AjaxController@postChangeProductCategoryOrder');
+            Route::post('change-product-order', 'AjaxController@postChangeProductOrder');
         });
 
         // leads

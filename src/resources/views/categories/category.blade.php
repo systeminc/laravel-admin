@@ -71,6 +71,21 @@
 				@endif
 			</div>
 
+			@if(!empty($category->thumb))
+				<label>Thumbnail hover</label>
+				<div class="file-input-wrap cf">
+					@if(!empty($category->thumb_hover)) 
+						<div class="small-image-preview" style="background-image: url({{ asset('storage') .'/'. $category->thumb_hover}})"></div>
+						<input type="checkbox" name="delete_thumb_hover">Delete this file?
+					@else
+						<div class="fileUpload">
+							<span>Choose file</span>
+							<input type="file" name="thumb_hover"/>
+						</div>
+					@endif
+				</div>
+			@endif
+
 			<label>Image</label>
 			<div class="file-input-wrap cf">
 				@if(!empty($category->image)) 
@@ -84,19 +99,21 @@
 				@endif
 			</div>
 
-			<label>Menu Order</label>
-			
-			<div class="select-style">
-				<select name="menu_order">
-					@foreach ($categories as $key => $value)
-						<option value="{{$key}}" @if($key==$category->menu_order) selected @endif>{{$key}}</option>
-					@endforeach
-				
-					@if (empty($category->id))
-						<option value="0" selected>0</option>
+			@if(!empty($category->image)) 
+				<label>Image hover</label>
+				<div class="file-input-wrap cf">
+					@if(!empty($category->image_hover)) 
+						<div class="small-image-preview" style="background-image: url({{ asset('storage') .'/'. $category->image_hover}})"></div>
+						<input type="checkbox" name="delete_image_hover">Delete this file?
+					@else
+						<div class="fileUpload">
+							<span>Choose file</span>
+							<input type="file" name="image_hover"/>
+						</div>
 					@endif
-				</select>
-			</div>
+				</div>
+			@endif
+
 			<div class="cf"></div>
 			<br>
 
