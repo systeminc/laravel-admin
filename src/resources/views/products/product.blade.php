@@ -96,6 +96,21 @@
 					@endif
 				</div>
 
+				@if(!empty($product->thumb)) 
+					<label>Thumbnail hover</label>
+					<div class="file-input-wrap cf">
+						@if(!empty($product->thumb_hover)) 
+							<div class="small-image-preview" style="background-image: url({{ asset('storage') .'/'. $product->thumb_hover}})"></div>
+							<input type="checkbox" name="delete_thumb_hover">Delete this file?
+						@else
+							<div class="fileUpload">
+								<span>Choose file</span>
+								<input type="file" name="thumb_hover"/>
+							</div>
+						@endif
+					</div>
+				@endif
+
 				<label>Image</label>
 				<div class="file-input-wrap cf">
 					@if(!empty($product->image)) 
@@ -108,6 +123,21 @@
 						</div>
 					@endif
 				</div>
+
+				@if(!empty($product->image)) 
+					<label>Image hover</label>
+					<div class="file-input-wrap cf">
+						@if(!empty($product->image_hover)) 
+							<div class="small-image-preview" style="background-image: url({{ asset('storage') .'/'. $product->image_hover}})"></div>
+							<input type="checkbox" name="delete_image_hover">Delete this file?
+						@else
+							<div class="fileUpload">
+								<span>Choose file</span>
+								<input type="file" name="image_hover"/>
+							</div>
+						@endif
+					</div>
+				@endif
 
 				<label>Animation Link</label>
 				<input type="text" name="animation" value="{{old('animation') ?: $product->animation}}">

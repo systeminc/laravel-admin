@@ -11,9 +11,9 @@
 	</div>
 
 	<div class="admin-content">
-		<ul class="border">
+		<ul class="border sortable" data-link="ajax/change-product-order">
 			@foreach ($products as &$product)
-				<li><a href="shop/products/edit/{{$product->id}}"><b>{{$product->title}}</a></li>
+				<li class="items-order" data-id="{{$product->id}}"><a href="shop/products/edit/{{$product->id}}"><b>{{$product->title}}</b></a></li>
 			@endforeach
 		</ul>
 		

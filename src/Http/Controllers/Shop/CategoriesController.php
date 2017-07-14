@@ -21,7 +21,7 @@ class CategoriesController extends Controller
      */
     public function getIndex()
     {
-        $categories = ProductCategory::orderBy('title')->get();
+        $categories = ProductCategory::orderBy('order_number')->get();
 
         return view('admin::categories.index', compact('categories'));
     }
@@ -98,6 +98,26 @@ class CategoriesController extends Controller
             }
 
             $category->image = null;
+        }
+
+        $category->thumb_hover = $request->hasFile('thumb_hover') ? $this->saveImage($request->file('thumb_hover'), 'categories') : $category->thumb_hover;
+
+        if ($request->input('delete_thumb_hover')) {
+            if (Storage::exists('public/'.$category->thumb_hover)) {
+                Storage::delete('public/'.$category->thumb_hover);
+            }
+
+            $category->thumb_hover = null;
+        }
+
+        $category->image_hover = $request->hasFile('image_hover') ? $this->saveImage($request->file('image_hover'), 'categories') : $category->image_hover;
+
+        if ($request->input('delete_image_hover')) {
+            if (Storage::exists('public/'.$category->image_hover)) {
+                Storage::delete('public/'.$category->image_hover);
+            }
+
+            $category->image_hover = null;
         }
         //REPLACE slug
         $category->slug = str_slug($request->title);

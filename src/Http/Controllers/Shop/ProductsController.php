@@ -26,7 +26,7 @@ class ProductsController extends Controller
      */
     public function getIndex()
     {
-        $products = Product::orderBy('id', 'desc')->get();
+        $products = Product::orderBy('order_number')->get();
 
         return view('admin::products.products', compact('products'));
     }
@@ -82,14 +82,15 @@ class ProductsController extends Controller
 
         $product->update($request->all());
 
+        if ($request->hasFile('pdf')) {
+            $product->pdf = $this->uploadPdf($request->file('pdf'), 'products');
+        }
+
         if ($request->hasFile('thumb')) {
             $product->thumb = $this->saveImage($request->file('thumb'), 'products');
         }
         if ($request->hasFile('image')) {
             $product->image = $this->saveImage($request->file('image'), 'products');
-        }
-        if ($request->hasFile('pdf')) {
-            $product->pdf = $this->uploadPdf($request->file('pdf'), 'products');
         }
 
         if (!empty($request->delete_thumb)) {
@@ -106,6 +107,29 @@ class ProductsController extends Controller
             }
 
             $product->image = null;
+        }
+
+        if ($request->hasFile('thumb_hover')) {
+            $product->thumb_hover = $this->saveImage($request->file('thumb_hover'), 'products');
+        }
+        if ($request->hasFile('image_hover')) {
+            $product->image_hover = $this->saveImage($request->file('image_hover'), 'products');
+        }
+
+        if (!empty($request->delete_thumb_hover)) {
+            if (Storage::exists('public/'.$product->thumb_hover)) {
+                Storage::delete('public/'.$product->thumb_hover);
+            }
+
+            $product->thumb_hover = null;
+        }
+
+        if (!empty($request->delete_image_hover)) {
+            if (Storage::exists('public/'.$product->image_hover)) {
+                Storage::delete('public/'.$product->image_hover);
+            }
+
+            $product->image_hover = null;
         }
 
         if (!empty($request->delete_pdf)) {
