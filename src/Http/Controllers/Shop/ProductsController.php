@@ -156,11 +156,20 @@ class ProductsController extends Controller
         $gallery = Gallery::whereTitle($product->gallery->title)->first();
 
         foreach ($gallery->images as $image) {
-            Storage::delete('public/'.$image->source, 'public/'.$image->thumb_source, 'public/'.$image->mobile_source);
+            Storage::delete(
+                Storage::exists('public/'.$image->source) ? 'public/'.$image->source : '',
+                Storage::exists('public/'.$image->thumb_source) ? 'public/'.$image->thumb_source : '',
+                Storage::exists('public/'.$image->mobile_source) ? 'public/'.$image->mobile_source : ''
+            );
 
             $image->delete();
         }
-        Storage::delete('public/'.$product->pdf);
+        Storage::exists('public/'.$product->pdf) ? 'public/'.$product->pdf : '';
+
+        Storage::exists('public/'.$product->image) ? 'public/'.$product->image : '';
+        Storage::exists('public/'.$product->image_hover) ? 'public/'.$product->image_hover : '';
+        Storage::exists('public/'.$product->thumb) ? 'public/'.$product->thumb : '';
+        Storage::exists('public/'.$product->thumb_hover) ? 'public/'.$product->thumb_hover : '';
 
         $gallery->delete();
         $product->delete();
