@@ -164,21 +164,6 @@
 				<input type="text" name="seo_keywords" value="{{old('seo_keywords') ?: $product->seo_keywords}}">
 
 				<div class="cf">
-					<label>Menu Order</label>
-					<div class="select-style">
-						<select name="menu_order">
-							@foreach ($products as $key => &$value)
-								<option value="{{$key}}" @if($key==$product->menu_order) selected @endif>{{$key}}</option>
-							@endforeach
-						
-							@if (empty($product->id))
-								<option value="{{$key++}}" selected>{{$key}}</option>
-							@endif
-						</select>
-					</div>
-				</div>
-
-				<div class="cf">
 					<label>Visible</label>
 					<div class="select-style">
 						<select name="visible">
