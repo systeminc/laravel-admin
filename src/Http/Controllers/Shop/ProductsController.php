@@ -177,7 +177,6 @@ class ProductsController extends Controller
         return redirect($request->segment(1).'/shop/products/')->with('success', 'Item deleted');
     }
 
-
     /**
      * Add similar product.
      *
