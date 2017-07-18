@@ -121,9 +121,9 @@ class LocationsController extends Controller
 
         $this->deleteImage($request, $location);
 
-        $location->image = $request->hasFile('image') ? $this->saveImage($request->file('image'), 'locations') : null;
-        $location->thumb_image = $request->hasFile('thumb_image') ? $this->saveImage($request->file('thumb_image'), 'locations/thumb') : null;
-        $location->marker_image = $request->hasFile('marker_image') ? $this->saveImage($request->file('marker_image'), 'locations/marker') : null;
+        $location->image = $request->hasFile('image') ? $this->saveImage($request->file('image'), 'locations') : $location->image;
+        $location->thumb_image = $request->hasFile('thumb_image') ? $this->saveImage($request->file('thumb_image'), 'locations/thumb') : $location->thumb_image;
+        $location->marker_image = $request->hasFile('marker_image') ? $this->saveImage($request->file('marker_image'), 'locations/marker') : $location->marker_image;
 
         $location->map_id = $request->map_id == 0 ? null : $request->map_id;
         $location->key = str_slug($request->key);
