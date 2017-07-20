@@ -218,7 +218,7 @@ class PagesController extends Controller
         $keys = explode('.', $element->key);
         $key = $keys[1];
 
-        $mime = empty($element->content) || $element->page_element_type_id !== 3 ? null : Storage::mimeType('public/'.$element->content);
+        $mime = empty($element->content) || $element->page_element_type_id != 3 ? null : Storage::mimeType('public/'.$element->content);
 
         return view('admin::pages.edit-element', compact('element', 'mime', 'key'));
     }
@@ -297,7 +297,7 @@ class PagesController extends Controller
      */
     private function checkIfIsChangedElementPrefixAndUpdatePrefix($elements_prefix, $page)
     {
-        if ($page->elements_prefix !== $elements_prefix) {
+        if ($page->elements_prefix != $elements_prefix) {
             foreach (PageElement::wherePageId($page->id)->get() as $element) {
                 $element_key = explode('.', $element->key);
 

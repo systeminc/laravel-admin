@@ -78,7 +78,7 @@
 					
 						@foreach ($pages as $key => $parent)
 							
-							@if ($parent->id !== $page->id)
+							@if ($parent->id != $page->id)
 								<option value="{{ $parent->id }}" {{ $parent->id == $page->parent_id ? 'selected="selected"' : '' }}>{{ $parent->title }}</option>
 							@endif
 							

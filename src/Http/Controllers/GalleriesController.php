@@ -100,7 +100,7 @@ class GalleriesController extends Controller
     {
         $gallery = Gallery::find($gallery_id);
 
-        if ($gallery->key !== $request->key && Gallery::where(['key' => $request->key])->first()) {
+        if ($gallery->key != $request->key && Gallery::where(['key' => $request->key])->first()) {
             return back()->with(['error' => 'This key exists']);
         }
 
@@ -210,7 +210,7 @@ class GalleriesController extends Controller
     {
         $element = GalleryElement::find($element_id);
 
-        $mime = empty($element->content) || $element->page_element_type_id !== 3 ? null : Storage::mimeType('public/'.$element->content);
+        $mime = empty($element->content) || $element->page_element_type_id != 3 ? null : Storage::mimeType('public/'.$element->content);
 
         return view('admin::galleries.elements.edit-element', compact('element', 'mime'));
     }
