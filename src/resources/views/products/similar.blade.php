@@ -32,7 +32,7 @@
 		<div class="select-style">
 			<select name="product_similar_id">
 				@foreach ($products as $product_similar)
-					@if ($product->id !== $product_similar->id)
+					@if ($product->id != $product_similar->id)
 						<option value="{{ $product_similar->id }}">{{ $product_similar->title }}</option>
 					@endif
 				@endforeach

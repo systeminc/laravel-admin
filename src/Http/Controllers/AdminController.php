@@ -99,7 +99,7 @@ class AdminController extends Controller
         $allowed = ['jpg', 'jpeg', 'gif', 'png'];
 
         foreach ($request->file('files') as $file) {
-            if ($file->isValid() && in_array($file->getClientOriginalExtension(), $allowed) && strpos($directory, 'images/tiny') !== false) {
+            if ($file->isValid() && in_array($file->getClientOriginalExtension(), $allowed) && strpos($directory, 'images/tiny') != false) {
                 $original = $this->cleanSpecialChars($file->getClientOriginalName());
 
                 $original_image = Image::make($file)->encode();
@@ -122,7 +122,7 @@ class AdminController extends Controller
     {
         $path = $request->get('path');
 
-        if (Storage::exists($path) && strpos($path, 'images/tiny') !== false) {
+        if (Storage::exists($path) && strpos($path, 'images/tiny') != false) {
             Storage::delete($path);
         }
 
