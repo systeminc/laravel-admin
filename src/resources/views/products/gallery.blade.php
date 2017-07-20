@@ -8,6 +8,7 @@
 	{{ csrf_field() }}
 	<label for="title">Title:</label>
 	<input type="text" name="title" value="{{ $product->title or $product->gallery->title }}">	
+	<input type="hidden" name="key" value="{{ $product->gallery->key }}">	
 	
 	@if( count($product->gallery->images) )
 		<div class="gallery-wrap"> 

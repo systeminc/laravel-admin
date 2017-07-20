@@ -13,9 +13,9 @@ class AddSeoToProductTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('seo_title');
-            $table->string('seo_description');
-            $table->string('seo_keywords');
+            $table->string('seo_title')->nullable();
+            $table->string('seo_description')->nullable();
+            $table->string('seo_keywords')->nullable();
         });
     }
 
