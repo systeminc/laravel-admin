@@ -336,7 +336,7 @@ class GalleriesController extends Controller
     private function handleFileElement($file)
     {
         if ($file && $file->isValid()) {
-            $dirname = 'elements/'.$file->getClientOriginalName();
+            $dirname = 'elements/'.$this->cleanSpecialChars($file->getClientOriginalName());
 
             Storage::put('public/'.$dirname, file_get_contents($file));
 
