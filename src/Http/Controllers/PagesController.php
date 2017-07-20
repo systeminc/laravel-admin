@@ -316,7 +316,7 @@ class PagesController extends Controller
     private function handleFileElement($file, $elements_prefix)
     {
         if ($file && $file->isValid()) {
-            $dirname = 'pages/'.$elements_prefix.'/'.$file->getClientOriginalName();
+            $dirname = 'pages/'.$elements_prefix.'/'.$this->cleanSpecialChars($file->getClientOriginalName());
 
             Storage::put('public/'.$dirname, file_get_contents($file));
 
