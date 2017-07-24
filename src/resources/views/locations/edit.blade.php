@@ -80,7 +80,7 @@
 				@else
 					<div class="fileUpload">
 						<span>Choose file</span>
-						<input type="file" name="image"/>
+						<input type="file" name="image" class="upload"/>
 					</div>
 				@endif
 			</div>
@@ -93,7 +93,7 @@
 				@else
 					<div class="fileUpload">
 						<span>Choose file</span>
-						<input type="file" name="thumb_image"/>
+						<input type="file" name="thumb_image" class="upload"/>
 					</div>
 				@endif
 			</div>
@@ -106,7 +106,7 @@
 				@else
 					<div class="fileUpload">
 						<span>Choose file</span>
-						<input type="file" name="marker_image"/>
+						<input type="file" name="marker_image" class="upload"/>
 					</div>
 				@endif
 			</div>

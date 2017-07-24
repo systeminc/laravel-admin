@@ -74,8 +74,10 @@ class BlogController extends Controller
         $post = BlogPost::find($post_id);
         $post->update($request->all());
 
+        $original_size = is_array($request->original_size) ? $request->original_size : [];
+
         if ($request->hasFile('thumb')) {
-            $post->thumb = $this->saveImage($request->file('thumb'), 'blog');
+            $post->thumb = $this->saveImage($request->file('thumb'), 'blog', in_array('thumb', $original_size));
         }
 
         if ($request->input('delete_thumb')) {

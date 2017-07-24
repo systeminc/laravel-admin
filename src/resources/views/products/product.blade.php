@@ -87,11 +87,11 @@
 				<div class="file-input-wrap cf">
 					@if(!empty($product->thumb)) 
 						<div class="small-image-preview" style="background-image: url({{ asset('storage') .'/'. $product->thumb}})"></div>
-						<input type="checkbox" name="delete_thumb">Delete this file?
+						<input type="checkbox" name="delete_thumb" >Delete this file?
 					@else
 						<div class="fileUpload">
 							<span>Choose file</span>
-							<input type="file" name="thumb"/>
+							<input type="file" name="thumb" class="upload"/>
 						</div>
 					@endif
 				</div>
@@ -105,7 +105,7 @@
 						@else
 							<div class="fileUpload">
 								<span>Choose file</span>
-								<input type="file" name="thumb_hover"/>
+								<input type="file" name="thumb_hover" class="upload"/>
 							</div>
 						@endif
 					</div>
@@ -119,7 +119,7 @@
 					@else
 						<div class="fileUpload">
 							<span>Choose file</span>
-							<input type="file" name="image"/>
+							<input type="file" name="image" class="upload"/>
 						</div>
 					@endif
 				</div>
@@ -133,7 +133,7 @@
 						@else
 							<div class="fileUpload">
 								<span>Choose file</span>
-								<input type="file" name="image_hover"/>
+								<input type="file" name="image_hover" class="upload"/>
 							</div>
 						@endif
 					</div>

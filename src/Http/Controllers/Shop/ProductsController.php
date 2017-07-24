@@ -78,6 +78,8 @@ class ProductsController extends Controller
             return back()->withInput()->withErrors($validation);
         }
 
+        $original_size = is_array($request->original_size) ? $request->original_size : [];
+
         $product = Product::find($product_id);
 
         $product->update($request->all());
@@ -87,10 +89,10 @@ class ProductsController extends Controller
         }
 
         if ($request->hasFile('thumb')) {
-            $product->thumb = $this->saveImage($request->file('thumb'), 'products');
+            $product->thumb = $this->saveImage($request->file('thumb'), 'products', in_array('thumb', $original_size));
         }
         if ($request->hasFile('image')) {
-            $product->image = $this->saveImage($request->file('image'), 'products');
+            $product->image = $this->saveImage($request->file('image'), 'products', in_array('image', $original_size));
         }
 
         if (!empty($request->delete_thumb)) {
@@ -110,10 +112,10 @@ class ProductsController extends Controller
         }
 
         if ($request->hasFile('thumb_hover')) {
-            $product->thumb_hover = $this->saveImage($request->file('thumb_hover'), 'products');
+            $product->thumb_hover = $this->saveImage($request->file('thumb_hover'), 'products', in_array('thumb_hover', $original_size));
         }
         if ($request->hasFile('image_hover')) {
-            $product->image_hover = $this->saveImage($request->file('image_hover'), 'products');
+            $product->image_hover = $this->saveImage($request->file('image_hover'), 'products', in_array('image_hover', $original_size));
         }
 
         if (!empty($request->delete_thumb_hover)) {
@@ -263,8 +265,10 @@ class ProductsController extends Controller
 
         $variation->fill($request->all());
 
+        $original_size = is_array($request->original_size) ? $request->original_size : [];
+
         if ($request->hasFile('image')) {
-            $variation->image = $this->saveImage($request->file('image'), 'products');
+            $variation->image = $this->saveImage($request->file('image'), 'products', in_array('image', $original_size));
         }
 
         $variation->price = !empty($request->price) ? $request->price : 0;
@@ -293,8 +297,10 @@ class ProductsController extends Controller
         $variation = ProductVariation::find($variation_id);
         $variation->update($request->all());
 
+        $original_size = is_array($request->original_size) ? $request->original_size : [];
+
         if ($request->hasFile('image')) {
-            $variation->image = $this->saveImage($request->file('image'), 'products');
+            $variation->image = $this->saveImage($request->file('image'), 'products', in_array('image', $original_size));
         }
 
         if (!empty($request->delete_image)) {

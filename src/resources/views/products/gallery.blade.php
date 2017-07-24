@@ -34,7 +34,7 @@
 </form>
 
 <script>
-	$(".fileUpload input").change(function(event) {
+	$(".images .fileUpload input").change(function(event) {
 		$(this).closest('form').submit();
 	});
 </script>

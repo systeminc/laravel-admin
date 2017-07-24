@@ -57,6 +57,9 @@ $(function(){
     	$('.input-popup').fadeToggle();
     })
 
+    $(".upload").change(function(){
+        readImageFromInput(this);
+    });
 });
 
 $(window).on("load", function(){
@@ -177,4 +180,20 @@ function ajaxDeleteGalleryImage(url, id) {
 			}
 		});
 	}
+}
+
+function readImageFromInput(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function (e) {
+        	$(input).parent().parent().find('.small-image-preview').remove();
+        	$(input).parent().parent().find('[type=checkbox]').remove();
+        	$(input).parent().parent().find('label').remove();
+            $(input).parent().parent().append('<div class="small-image-preview" style="background-image: url('+e.target.result+')"></div>');
+            $(input).parent().parent().append('<label>Keep original size: 	<input type="checkbox" name="original_size[]" value="'+$(input).attr('name')+'"></label>');
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+    }
 }

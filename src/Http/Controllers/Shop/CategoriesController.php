@@ -72,6 +72,8 @@ class CategoriesController extends Controller
             return back()->withInput()->withErrors($validation);
         }
 
+        $original_size = is_array($request->original_size) ? $request->original_size : [];
+
         if ($category_id == 'new') {
             $category = new ProductCategory();
         } else {
@@ -80,7 +82,7 @@ class CategoriesController extends Controller
 
         $category->fill($request->all());
 
-        $category->thumb = $request->hasFile('thumb') ? $this->saveImage($request->file('thumb'), 'categories') : $category->thumb;
+        $category->thumb = $request->hasFile('thumb') ? $this->saveImage($request->file('thumb'), 'categories', in_array('thumb', $original_size)) : $category->thumb;
 
         if ($request->input('delete_thumb')) {
             if (Storage::exists('public/'.$category->thumb)) {
@@ -90,7 +92,7 @@ class CategoriesController extends Controller
             $category->thumb = null;
         }
 
-        $category->image = $request->hasFile('image') ? $this->saveImage($request->file('image'), 'categories') : $category->image;
+        $category->image = $request->hasFile('image') ? $this->saveImage($request->file('image'), 'categories', in_array('image', $original_size)) : $category->image;
 
         if ($request->input('delete_image')) {
             if (Storage::exists('public/'.$category->image)) {
@@ -100,7 +102,7 @@ class CategoriesController extends Controller
             $category->image = null;
         }
 
-        $category->thumb_hover = $request->hasFile('thumb_hover') ? $this->saveImage($request->file('thumb_hover'), 'categories') : $category->thumb_hover;
+        $category->thumb_hover = $request->hasFile('thumb_hover') ? $this->saveImage($request->file('thumb_hover'), 'categories', in_array('thumb_hover', $original_size)) : $category->thumb_hover;
 
         if ($request->input('delete_thumb_hover')) {
             if (Storage::exists('public/'.$category->thumb_hover)) {
@@ -110,7 +112,7 @@ class CategoriesController extends Controller
             $category->thumb_hover = null;
         }
 
-        $category->image_hover = $request->hasFile('image_hover') ? $this->saveImage($request->file('image_hover'), 'categories') : $category->image_hover;
+        $category->image_hover = $request->hasFile('image_hover') ? $this->saveImage($request->file('image_hover'), 'categories', in_array('image_hover', $original_size)) : $category->image_hover;
 
         if ($request->input('delete_image_hover')) {
             if (Storage::exists('public/'.$category->image_hover)) {
