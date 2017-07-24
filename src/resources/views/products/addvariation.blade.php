@@ -48,7 +48,7 @@
 				<div class="file-input-wrap cf">
 					<div class="fileUpload">
 						<span>Choose file</span>
-						<input type="file" name="image"/>
+						<input type="file" name="image" class="upload"/>
 					</div>
 				</div>
 			</div>

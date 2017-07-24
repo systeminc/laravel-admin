@@ -48,7 +48,7 @@
 				@else
 					<div class="fileUpload">
 						<span>Choose file</span>
-						<input type="file" name="thumb"/>
+						<input type="file" name="thumb" class="upload" />
 					</div>
 				@endif
 			</div>

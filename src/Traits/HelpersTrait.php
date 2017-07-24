@@ -41,7 +41,7 @@ trait HelpersTrait
     /**
      * Save image.
      */
-    protected function saveImage($image, $path)
+    protected function saveImage($image, $path, $keepOriginal = false)
     {
         if ($image && $image->isValid()) {
             $image_name = str_random(5);
@@ -51,6 +51,10 @@ trait HelpersTrait
 
             if ($image->getClientOriginalExtension() === 'svg') {
                 Storage::put('public/'.$storage_key, file_get_contents($image));
+            } else if ($keepOriginal) {
+                $original_image = Image::make($image)->orientate()->encode();
+
+                Storage::put('public/'.$storage_key, $original_image);
             } else {
                 $original_image = Image::make($image)->orientate()
                     ->fit(1920, 1080, function ($constraint) {
