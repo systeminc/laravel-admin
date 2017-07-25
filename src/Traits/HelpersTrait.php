@@ -52,11 +52,11 @@ trait HelpersTrait
             if ($image->getClientOriginalExtension() === 'svg') {
                 Storage::put('public/'.$storage_key, file_get_contents($image));
             } else if ($keepOriginal) {
-                $original_image = Image::make($image)->orientate()->encode();
+                $original_image = Image::make($image)->orientate()->interlace()->encode();
 
                 Storage::put('public/'.$storage_key, $original_image);
             } else {
-                $original_image = Image::make($image)->orientate()
+                $original_image = Image::make($image)->orientate()->interlace()
                     ->fit(1920, 1080, function ($constraint) {
                         $constraint->upsize();
                     })->encode();
@@ -86,7 +86,7 @@ trait HelpersTrait
                 ->resize($width, $height, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
-                })->encode();
+                })->interlace()->encode();
             Storage::put('public/'.$output_path, $image);
         }
 
