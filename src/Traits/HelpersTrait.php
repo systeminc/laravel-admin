@@ -51,7 +51,6 @@ trait HelpersTrait
 
             if ($image->getClientOriginalExtension() === 'svg') {
                 Storage::put('public/'.$storage_key, file_get_contents($image));
-
             } elseif ($keepOriginal) {
                 $original_image = Image::make($image)->orientate()->interlace()->encode();
 
