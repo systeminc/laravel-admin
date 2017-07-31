@@ -15,6 +15,7 @@ class LocationValidation
         'title'        => 'required',
         'latitude'     => 'required',
         'longitude'    => 'required',
+        'url'          => 'required',
         'key'          => 'required|unique:locations,key,'.$location_id,
         ];
     }
