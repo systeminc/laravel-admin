@@ -2,6 +2,9 @@
 
 namespace SystemInc\LaravelAdmin;
 
+use Image;
+use Storage;
+
 class SLA
 {
     /**
@@ -119,12 +122,38 @@ class SLA
     /**
      * Get file from storage(Image, PDF,...).
      *
-     * @param string $filename
+     * @param string      $filename
+     * @param bool|number $width
+     * @param bool|number $height
      *
      * @return string
      */
-    public function getFile($filename)
+    public function getFile($filename, $width = false, $height = false)
     {
+        if ($width || $height) {
+            $fileWithoutExtension = explode('.', $filename);
+
+            $newFile = $fileWithoutExtension[0].'_'.
+                        (!empty($width) ? 'w'.$width : null).
+                        (!empty($height) && !empty($width) ? '_' : '').
+                        (!empty($height) ? 'h'.$height : null).'.'.
+                        $fileWithoutExtension[count($fileWithoutExtension) - 1];
+
+            if (is_file('storage/'.$newFile)) {
+                return asset('storage').'/'.$newFile;
+            } else {
+                $image = Image::make('storage/'.$filename)->orientate()
+                ->resize((!empty($width) ? $width : null), (!empty($height) ? $height : null), function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->interlace()->encode();
+
+                Storage::put('public/'.$newFile, $image);
+
+                return asset('storage').'/'.$newFile;
+            }
+        }
+
         return asset('storage').'/'.$filename;
     }
 }

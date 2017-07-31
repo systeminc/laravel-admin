@@ -335,7 +335,12 @@ class GalleriesController extends Controller
      */
     private function handleFileElement($file)
     {
+        $imagesExtension = ['jpg', 'jpeg', 'gif', 'png'];
+
         if ($file && $file->isValid()) {
+            if (in_array($file->getClientOriginalExtension(), $imagesExtension)) {
+                return $this->resizeImage(1920, 1080, 'images/galleryelements', 'images/galleryelements/'.$this->cleanSpecialChars($file->getClientOriginalName()), $file);
+            }
             $dirname = 'elements/'.$this->cleanSpecialChars($file->getClientOriginalName());
 
             Storage::put('public/'.$dirname, file_get_contents($file));
