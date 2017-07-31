@@ -319,7 +319,7 @@ class PagesController extends Controller
 
         if ($file && $file->isValid()) {
             if (in_array($file->getClientOriginalExtension(), $imagesExtension)) {
-                return $this->resizeImage(1920, 1080, 'images/galleryelements', 'images/galleryelements'.$this->cleanSpecialChars($file->getClientOriginalName()), $file);
+                return $this->resizeImage(1920, 1080, 'images/galleryelements', 'images/galleryelements/'.$this->cleanSpecialChars($file->getClientOriginalName()), $file);
             }
             $dirname = 'pages/'.$elements_prefix.'/'.$this->cleanSpecialChars($file->getClientOriginalName());
 
