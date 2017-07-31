@@ -105,7 +105,7 @@ class AdminController extends Controller
             if ($file->isValid() && in_array($file->getClientOriginalExtension(), $allowed) && strpos($directory, 'images/tiny') !== false) {
                 $original = $this->cleanSpecialChars($file->getClientOriginalName());
 
-                $original_image = Image::make($file)->encode();
+                $original_image = Image::make($file)->interlace()->encode();
 
                 Storage::put('public/'.$directory.'/'.$original, $original_image);
             }
