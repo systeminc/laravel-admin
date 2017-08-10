@@ -49,6 +49,8 @@ class RestoreCommand extends Command
             $drop = $this->ask('Drop database and restore latest migration?', 'No');
             $this->isInArray($drop);
 
+            $this->info('You will be prompted for MySQL database password for three actions.');
+
             $db_table = env('DB_DATABASE');
 
             $this->line('Collecting tables...');
