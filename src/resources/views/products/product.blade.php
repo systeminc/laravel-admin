@@ -163,6 +163,50 @@
 				<label>Seo keywords</label>
 				<input type="text" name="seo_keywords" value="{{old('seo_keywords') ?: $product->seo_keywords}}">
 
+				@if ($errors->first('length'))
+				    <div class="alert alert-error no-hide">
+				        <span class="help-block">
+				            <strong>{{ $errors->first('length') }}</strong>
+				        </span>
+				    </div>
+				@endif 
+
+				<label>Product length</label>
+				<input type="text" name="length" value="{{old('length') ?: $product->length}}">
+
+				@if ($errors->first('width'))
+				    <div class="alert alert-error no-hide">
+				        <span class="help-block">
+				            <strong>{{ $errors->first('width') }}</strong>
+				        </span>
+				    </div>
+				@endif 
+
+				<label>Product width</label>
+				<input type="text" name="width" value="{{old('width') ?: $product->width}}">
+
+				@if ($errors->first('height'))
+				    <div class="alert alert-error no-hide">
+				        <span class="help-block">
+				            <strong>{{ $errors->first('height') }}</strong>
+				        </span>
+				    </div>
+				@endif 
+
+				<label>Product height</label>
+				<input type="text" name="height" value="{{old('height') ?: $product->height}}">
+
+				@if ($errors->first('weight'))
+				    <div class="alert alert-error no-hide">
+				        <span class="help-block">
+				            <strong>{{ $errors->first('weight') }}</strong>
+				        </span>
+				    </div>
+				@endif 
+				
+				<label>Product weight</label>
+				<input type="text" name="weight" value="{{old('weight') ?: $product->weight}}">
+
 				<div class="cf">
 					<label>Visible</label>
 					<div class="select-style">

@@ -14,6 +14,10 @@ class ProductValidation
         return [
         'title'       => 'required',
         'slug'        => 'required|unique:products,slug,'.$product_id,
+        'length'      => 'nullable|numeric',
+        'width'       => 'nullable|numeric',
+        'height'      => 'nullable|numeric',
+        'weight'      => 'nullable|numeric',
         ];
     }
 
