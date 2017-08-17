@@ -39,6 +39,10 @@ class Product extends Model
         'thumb_hover',
         'image_hover',
         'order_number',
+        'length',
+        'width',
+        'height',
+        'weight',
     ];
 
     public function category()
