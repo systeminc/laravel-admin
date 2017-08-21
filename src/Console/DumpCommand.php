@@ -33,7 +33,7 @@ class DumpCommand extends Command
         $this->line('Dumpping...');
         $this->line('');
 
-        $migration = 'sla_'.date('Y_m_d_His').'.sql';
+        $migration = 'sla_'.gmdate('Y_m_d_His').'.sql';
 
         $path = app_path('../database/sla_dumps');
 

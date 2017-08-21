@@ -39,9 +39,9 @@ class RestoreCommand extends Command
 
             $this->consoleLastLine();
         } else {
-            $migration = $migrations[count($migrations) - 1]->getRealPath();
+            $latest_migration = end($migrations);
 
-            $this->info('Latest migration is: '.$migrations[count($migrations) - 1]->getFilename());
+            $this->info('Latest migration is: '.$latest_migration->getFilename());
 
             $proceed = $this->ask('Database will be droped! Do you want to proceed?', 'No');
             $this->isInArray($proceed);
@@ -89,7 +89,7 @@ class RestoreCommand extends Command
             $this->line('');
             $this->line('Restoring database...');
             $this->line('');
-            exec('mysql -u '.env('DB_USERNAME').' -p '.$db_table.' < '.$migration, $output, $response3);
+            exec('mysql -u '.env('DB_USERNAME').' -p '.$db_table.' < '.$latest_migration->getRealPath(), $output, $response3);
 
             if ($response3 != 0) {
                 $this->error('Mysql Error');
