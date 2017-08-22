@@ -32,7 +32,10 @@ class RestoreCommand extends Command
 
         $path = app_path('../database/sla_dumps');
 
-        $migrations = File::allFiles($path);
+        $migrations = array_sort(File::allFiles($path), function($file)
+        {
+            return $file->getFilename();
+        });
 
         if (count($migrations) == 0) {
             $this->error('No migrations in: '.$path);
