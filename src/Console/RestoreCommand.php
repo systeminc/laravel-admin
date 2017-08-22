@@ -32,8 +32,7 @@ class RestoreCommand extends Command
 
         $path = app_path('../database/sla_dumps');
 
-        $migrations = array_sort(File::allFiles($path), function ($file)
-        {
+        $migrations = array_sort(File::allFiles($path), function ($file) {
             return $file->getFilename();
         });
 
