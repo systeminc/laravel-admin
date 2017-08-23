@@ -254,6 +254,9 @@
 			</div>
 			<br><br>
 
+			<label>Shipment id</label>
+			<input type="text" name="shipment_id" value="{{old('shipment_id') ?: $order->shipment_id}}">
+
 			@if ($errors->first('shipping_name'))
 			    <div class="alert alert-error no-hide">
 			        <span class="help-block">
