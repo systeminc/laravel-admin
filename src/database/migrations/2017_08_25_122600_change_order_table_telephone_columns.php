@@ -13,9 +13,11 @@ class ChangeOrderTableTelephoneColumns extends Migration
      */
     public function up()
     {
+        Schema::getConnection()->getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+
         Schema::table('orders', function (Blueprint $table) {
-            $table->renameColumn('billing_telephone', 'billing_phone');
-            $table->renameColumn('shipping_telephone', 'shipping_phone');
+            $table->renameColumn('billing_telephone', 'billing_phone')->change();
+            $table->renameColumn('shipping_telephone', 'shipping_phone')->change();
         });
     }
 
@@ -26,9 +28,11 @@ class ChangeOrderTableTelephoneColumns extends Migration
      */
     public function down()
     {
+        Schema::getConnection()->getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+
         Schema::table('orders', function (Blueprint $table) {
-            $table->renameColumn('billing_phone', 'billing_telephone');
-            $table->renameColumn('shipping_phone', 'shipping_telephone');
+            $table->renameColumn('billing_phone', 'billing_telephone')->change();
+            $table->renameColumn('shipping_phone', 'shipping_telephone')->change();
         });
     }
 }
