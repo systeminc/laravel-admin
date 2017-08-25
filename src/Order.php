@@ -19,7 +19,7 @@ class Order extends Model
         'note',
         'billing_name',
         'billing_email',
-        'billing_telephone',
+        'billing_phone',
         'billing_address',
         'billing_city',
         'billing_country',
@@ -27,7 +27,7 @@ class Order extends Model
         'billing_contact_person',
         'shipping_name',
         'shipping_email',
-        'shipping_telephone',
+        'shipping_phone',
         'shipping_address',
         'shipping_city',
         'shipping_country',
@@ -37,6 +37,7 @@ class Order extends Model
         'term_of_payment',
         'footnote',
         'show_shipping_address',
+        'shipment_id',
     ];
 
     public function status()
