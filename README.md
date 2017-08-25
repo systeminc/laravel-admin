@@ -14,7 +14,7 @@ This is **Laravel Admin**, CRUD (create, read, update and delete) package that c
 
 Once you have your administration panel up, you can easily put all of those elements wherever you want in you application files. For usage documentation see **Usage section** bellow.
 
-Supports Laravel 5.2. -> 5.4.
+Supports Laravel 5.2 -> 5.4
 
 <img src="/screens/1.png?raw=true" width="250"> . . . <img src="/screens/2.png?raw=true" width="250"> . . . <img src="/screens/3.png?raw=true" width="250"> 
 
@@ -28,7 +28,8 @@ Install using composer:
 $ composer require systeminc/laravel-admin
 ```
 
-For Laravel 5.5 support Auto Discovery Packages.
+In Laravel 5.5, with Package Auto Discovery it should all be set automatically.
+For < 5.5, follow these instructions after composer finishes package installation:
 
 Add the service provider to the `'providers'` array in `config/app.php` for Laravel 5.4 and lower:
 
