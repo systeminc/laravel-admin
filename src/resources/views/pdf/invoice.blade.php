@@ -106,7 +106,7 @@
                             {{$order->billing_address}}<br>
                             {{$order->billing_postcode}} {{$order->billing_city}}<br>
                             {{$order->billing_country}}<br>
-                            {{$order->billing_telephone}}<br>
+                            {{$order->billing_phone}}<br>
                             {{$order->billing_email}}<br>        
 
                         @if ($order->show_shipping_address)
@@ -116,7 +116,7 @@
                             {{$order->shipping_address}}<br>
                             {{$order->shipping_postcode}} {{$order->shipping_city}}<br>
                             {{$order->shipping_country}}<br>
-                            {{$order->shipping_telephone}}<br>
+                            {{$order->shipping_phone}}<br>
                             {{$order->shipping_email}}<br>        
                         @endif
                     </td>

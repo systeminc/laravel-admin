@@ -123,8 +123,7 @@
 
 			<label>Footer text</label>
 			<input type="text" name="footnote" value="{{old('footnote') ?: $order->footnote}}">
-{{-- {{dd($errors->first('note'))}} --}}
-{{-- {{dd($errors->first('billing_telephone'))}} --}}
+
 			@if ($errors->first('note'))
 			    <div class="alert alert-error no-hide">
 			        <span class="help-block">
@@ -180,16 +179,16 @@
 
 			<label>Billing Email</label>
 			<input type="text" name="billing_email" value="{{old('billing_email') ?: $order->billing_email}}">
-			@if ($errors->first('billing_telephone'))
+			@if ($errors->first('billing_phone'))
 			    <div class="alert alert-error no-hide">
 			        <span class="help-block">
-			            <strong>{{ $errors->first('billing_telephone') }}</strong>
+			            <strong>{{ $errors->first('billing_phone') }}</strong>
 			        </span>
 			    </div>
 			@endif 
 
-			<label>Billing Telephone</label>
-			<input type="text" name="billing_telephone" value="{{old('billing_telephone') ?: $order->billing_telephone}}">
+			<label>Billing Phone</label>
+			<input type="text" name="billing_phone" value="{{old('billing_phone') ?: $order->billing_phone}}">
 
 			@if ($errors->first('billing_address'))
 			    <div class="alert alert-error no-hide">
@@ -279,16 +278,16 @@
 			<label>Shipping Email</label>
 			<input type="text" name="shipping_email" value="{{old('shipping_email') ?: $order->shipping_email}}">
 
-			@if ($errors->first('shipping_telephone'))
+			@if ($errors->first('shipping_phone'))
 			    <div class="alert alert-error no-hide">
 			        <span class="help-block">
-			            <strong>{{ $errors->first('shipping_telephone') }}</strong>
+			            <strong>{{ $errors->first('shipping_phone') }}</strong>
 			        </span>
 			    </div>
 			@endif 
 
-			<label>Shipping Telephone</label>
-			<input type="text" name="shipping_telephone" value="{{old('shipping_telephone') ?: $order->shipping_telephone}}">
+			<label>Shipping Phone</label>
+			<input type="text" name="shipping_phone" value="{{old('shipping_phone') ?: $order->shipping_phone}}">
 
 			@if ($errors->first('shipping_address'))
 			    <div class="alert alert-error no-hide">
