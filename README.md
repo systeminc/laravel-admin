@@ -101,6 +101,20 @@ $ php artisan laravel-admin:restore-database
 Your will be prompted to proceed twice with droping database. Mysql will ask several times to `Enter password:` for mysql user specified in `.env`. 
 **We are not responsible for any data loss. Use this with caution.**
 
+## Bash alias
+You can create Laravel Admin alias, i.e. in your Homestead environment by adding this function to your bash profile (` vi ~/.bash_aliases `):
+
+```
+function sla() {
+    php artisan laravel-admin:"$1"
+}
+```
+
+Then if you want to do `php artisan laravel-admin:update`, just type:
+```
+$ sla update
+```
+
 ## Usage
 
 Visit [wiki](https://github.com/systeminc/laravel-admin/wiki/Blog) 
