@@ -23,6 +23,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->app['config']->set('auth', $auth_config);
 
         $this->loadViewsFrom(__DIR__.'/resources/views/', 'admin');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
     }
 
     /**
