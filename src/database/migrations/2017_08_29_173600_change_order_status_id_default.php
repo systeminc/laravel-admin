@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangeOrderStatusesId extends Migration
+class ChangePriceColumnTypeToDecimalForTables extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ChangeOrderStatusesId extends Migration
      */
     public function up()
     {
-        Schema::table('order_statuses', function (Blueprint $table) {
-            $table->string('id')->change();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->integer('order_status_id')->default(0)->change();
         });
     }
 
@@ -25,8 +25,8 @@ class ChangeOrderStatusesId extends Migration
      */
     public function down()
     {
-        Schema::table('order_statuses', function (Blueprint $table) {
-            $table->increments('id')->change();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->integer('order_status_id')->default(1)->change();
         });
     }
 }
