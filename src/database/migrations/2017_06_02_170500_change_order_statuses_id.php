@@ -26,7 +26,7 @@ class ChangeOrderStatusesId extends Migration
     public function down()
     {
         Schema::table('order_statuses', function (Blueprint $table) {
-            $table->increments('id')->change();
+            $table->integer('id')->change();
         });
     }
 }
