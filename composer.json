@@ -35,9 +35,9 @@
         "laravel/framework": "^5.2",
         "intervention/image": "^2.3",
         "intervention/imagecache": "^2.3",
-        "barryvdh/laravel-dompdf": "^0.7.0",
+        "barryvdh/laravel-dompdf": "^0.8.1",
         "doctrine/dbal": "^2.5",
-        "php": ">=5.5.9"
+        "php": ">=5.6"
     },
     
     "scripts": {
