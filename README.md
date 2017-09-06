@@ -71,7 +71,7 @@ For instance, if you use Vagrant, you will have to do `vagrant ssh` first, go to
 
 ## Image cache 
 
-If you use Laravel Admin v1.4 or greater, please run this command on you project that you working with. This will link `public` directory to `storage/app/public` in order for cache images to work.
+If you use Laravel Admin v1.4 or greater, please run this command on you project that you working with. This will link `public` directory to `storage/app/public` in order for cache images to work. Be sure to do it from within the environment you use (i.e. homestead ssh)
 
 ```
 $ php artisan storage:link
