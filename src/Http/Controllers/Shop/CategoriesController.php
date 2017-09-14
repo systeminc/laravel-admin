@@ -23,7 +23,7 @@ class CategoriesController extends Controller
     {
         $categories = ProductCategory::orderBy('order_number')->get();
 
-        return view('admin::categories.index', compact('categories'));
+        return view('admin::products.categories', compact('categories'));
     }
 
     /**
@@ -37,7 +37,7 @@ class CategoriesController extends Controller
 
         $categories = ProductCategory::all();
 
-        return view('admin::categories.category', compact('category', 'categories'));
+        return view('admin::products.category', compact('category', 'categories'));
     }
 
     /**
@@ -53,7 +53,7 @@ class CategoriesController extends Controller
 
         $categories = ProductCategory::all();
 
-        return view('admin::categories.category', compact('category', 'categories'));
+        return view('admin::products.category', compact('category', 'categories'));
     }
 
     /**

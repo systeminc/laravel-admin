@@ -117,6 +117,9 @@
 			<div class="cf"></div>
 			<br>
 
+			<label>Video</label>
+			<input type="text" name="video" value="{{$category->video or old('video')}}">
+
 			<label>SEO Title</label>
 			<input type="text" name="seo_title" value="{{$category->seo_title or old('seo_title')}}">
 
