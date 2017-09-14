@@ -21,7 +21,6 @@ class Product extends Model
         'long_description',
         'thumb',
         'image',
-        'animation',
         'video',
         'pdf',
         'gallery_id',
