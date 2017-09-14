@@ -139,10 +139,7 @@
 					</div>
 				@endif
 
-				<label>Animation Link</label>
-				<input type="text" name="animation" value="{{old('animation') ?: $product->animation}}">
-
-				<label>Video Link</label>
+				<label>Video</label>
 				<input type="text" name="video" value="{{old('video') ?: $product->video}}">
 
 				<label>Price (€)</label>

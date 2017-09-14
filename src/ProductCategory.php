@@ -13,6 +13,7 @@ class ProductCategory extends Model
         'thumb_hover',
         'image',
         'image_hover',
+        'video',
         'excerpt',
         'description',
         'order_number',

@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->integer('total_price');
             $table->datetime('valid_until');
             $table->datetime('date_of_purchase');
-            $table->string('currency')->default('EUR')->change();
+            $table->string('currency')->default('EUR');
             $table->text('note')->nullable();
             $table->string('billing_name');
             $table->string('billing_email');
