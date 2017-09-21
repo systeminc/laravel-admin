@@ -44,7 +44,7 @@
 				<p>No elements yet</p>
 			@endif
 			
-			<form action="galleries/images/new-element/{{ $image->id }}" method="post">
+			<form action="shop/product/edit//{{ $image->gallery->product->id }}" method="post">
 				{{ csrf_field() }}
 
 				<div class="select-style">

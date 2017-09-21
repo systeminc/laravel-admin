@@ -18,4 +18,9 @@ class Gallery extends Model
     {
         return $this->hasMany('SystemInc\LaravelAdmin\GalleryImage')->orderBy('order_number');
     }
+
+    public function product()
+    {
+        return $this->belongsTo('SystemInc\LaravelAdmin\Product');
+    }
 }
