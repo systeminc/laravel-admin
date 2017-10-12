@@ -8,7 +8,7 @@
 
 	<div class="admin-content">
 		<div class="cf" style="position: relative">
-			<img src="{{ asset('storage').'/'.$image->source }}" alt="" style="max-width: 200px; width: 100%; background-color: #ddd;" class="left">
+			<img src="{{ Storage::url($image->source) }}" alt="" style="max-width: 200px; width: 100%; background-color: #ddd;" class="left">
 		</div>
 		
 		<br>

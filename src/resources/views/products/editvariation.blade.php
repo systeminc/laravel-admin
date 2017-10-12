@@ -47,7 +47,7 @@
 				<label>Image</label>
 				<div class="file-input-wrap cf">
 					@if(!empty($variation->image)) 
-						<div class="small-image-preview" style="background-image: url({{ asset('storage') .'/'. $variation->image}})"></div>
+						<div class="small-image-preview" style="background-image: url({{ Storage::url($variation->image)}})"></div>
 						<input type="checkbox" name="delete_image">Delete this file?
 					@else
 						<div class="fileUpload">

@@ -10,7 +10,7 @@
 	<div class="admin-content">
 
 		<div class="one-box">
-			<div class="background-image" style="background-image: url({{ !empty($orderItem->product->thumb) ? asset('storage') .'/'. $orderItem->product->thumb : 'images/no-image.svg' }})"></div>
+			<div class="background-image" style="background-image: url({{ !empty($orderItem->product->thumb) ? Storage::url($orderItem->product->thumb) : 'images/no-image.svg' }})"></div>
 		</div>
 
 		<div class="one-box">
@@ -26,7 +26,7 @@
 		<ul class="border">
 			@foreach ($orderItem->variations as &$variation)
 				<li><a href='shop/products/edit-variation/{{ $variation->productVariation->id }}'>
-				@if (!empty($variation->productVariation->image)) <img src="{{ asset('storage') .'/'. $variation->productVariation->image}}"> @endif
+				@if (!empty($variation->productVariation->image)) <img src="{{ Storage::url($variation->productVariation->image)}}"> @endif
 				<b>
 				@if (!empty($variation->productVariation->title)) Title: {{$variation->productVariation->title}} @endif
 				@if (!empty($variation->productVariation->group)) | Group: {{$variation->productVariation->group}} @endif

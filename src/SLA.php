@@ -140,7 +140,7 @@ class SLA
                         $fileWithoutExtension[count($fileWithoutExtension) - 1];
 
             if (is_file('storage/'.$newFile)) {
-                return asset('storage').'/'.$newFile;
+                return Storage::url($newFile);
             } else {
                 $image = Image::make('storage/'.$filename)->orientate()
                 ->resize((!empty($width) ? $width : null), (!empty($height) ? $height : null), function ($constraint) {
@@ -150,10 +150,10 @@ class SLA
 
                 Storage::put($newFile, $image);
 
-                return asset('storage').'/'.$newFile;
+                return Storage::url($newFile);
             }
         }
 
-        return asset('storage').'/'.$filename;
+        return Storage::url($filename);
     }
 }
