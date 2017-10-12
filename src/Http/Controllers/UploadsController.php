@@ -16,7 +16,7 @@ class UploadsController extends Controller
      */
     public function Index($filename)
     {
-        if (Storage::exists('public/'.$filename)) {
+        if (Storage::exists($filename)) {
             $file = asset('storage').'/'.$filename;
 
             $imginfo = getimagesize($file);

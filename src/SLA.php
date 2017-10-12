@@ -148,7 +148,7 @@ class SLA
                     $constraint->upsize();
                 })->interlace()->encode();
 
-                Storage::put('public/'.$newFile, $image);
+                Storage::put($newFile, $image);
 
                 return asset('storage').'/'.$newFile;
             }

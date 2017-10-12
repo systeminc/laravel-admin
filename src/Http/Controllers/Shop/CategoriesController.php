@@ -85,8 +85,8 @@ class CategoriesController extends Controller
         $category->thumb = $request->hasFile('thumb') ? $this->saveImage($request->file('thumb'), 'categories', in_array('thumb', $original_size)) : $category->thumb;
 
         if ($request->input('delete_thumb')) {
-            if (Storage::exists('public/'.$category->thumb)) {
-                Storage::delete('public/'.$category->thumb);
+            if (Storage::exists($category->thumb)) {
+                Storage::delete($category->thumb);
             }
 
             $category->thumb = null;
@@ -95,8 +95,8 @@ class CategoriesController extends Controller
         $category->image = $request->hasFile('image') ? $this->saveImage($request->file('image'), 'categories', in_array('image', $original_size)) : $category->image;
 
         if ($request->input('delete_image')) {
-            if (Storage::exists('public/'.$category->image)) {
-                Storage::delete('public/'.$category->image);
+            if (Storage::exists($category->image)) {
+                Storage::delete($category->image);
             }
 
             $category->image = null;
@@ -105,8 +105,8 @@ class CategoriesController extends Controller
         $category->thumb_hover = $request->hasFile('thumb_hover') ? $this->saveImage($request->file('thumb_hover'), 'categories', in_array('thumb_hover', $original_size)) : $category->thumb_hover;
 
         if ($request->input('delete_thumb_hover')) {
-            if (Storage::exists('public/'.$category->thumb_hover)) {
-                Storage::delete('public/'.$category->thumb_hover);
+            if (Storage::exists($category->thumb_hover)) {
+                Storage::delete($category->thumb_hover);
             }
 
             $category->thumb_hover = null;
@@ -115,8 +115,8 @@ class CategoriesController extends Controller
         $category->image_hover = $request->hasFile('image_hover') ? $this->saveImage($request->file('image_hover'), 'categories', in_array('image_hover', $original_size)) : $category->image_hover;
 
         if ($request->input('delete_image_hover')) {
-            if (Storage::exists('public/'.$category->image_hover)) {
-                Storage::delete('public/'.$category->image_hover);
+            if (Storage::exists($category->image_hover)) {
+                Storage::delete($category->image_hover);
             }
 
             $category->image_hover = null;
