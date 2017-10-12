@@ -44,39 +44,41 @@
 				<p>No elements yet</p>
 			@endif
 			
-			<form action="galleries/images/new-element/{{ $image->id }}" method="post">
-				{{ csrf_field() }}
+				<form action="galleries/images/new-element/{{ $image->id }}" method="post">
+					{{ csrf_field() }}
 
-				<div class="select-style">
-					<select name="page_element_type_id" class="element-type">
-						<option value="0">Add element</option>
-					
-						@foreach ($element_types as $element_type)
-							<option value="{{ $element_type->id }}">{{ $element_type->title }}</option>
-						@endforeach
-					</select>
-				</div>
-			
-			</form>
-		</div>	
-		<a href="{{ url()->previous() }}" class="button back-button">Back</a>
-		
+					<div class="select-style">
+						<select name="page_element_type_id" class="element-type">
+							<option value="0">Add element</option>
+						
+							@foreach ($element_types as $element_type)
+								<option value="{{ $element_type->id }}">{{ $element_type->title }}</option>
+							@endforeach
+						</select>
+					</div>
+				</form>
+		</div>
+		@if (!empty($image->gallery->product))
+			<a href="shop/products/edit/{{ $image->gallery->product->id }}" class="button back-button">Back</a>
+		@else
+			<a href="galleries/edit/{{ $image->gallery->id }}" class="button back-button">Back</a>
+		@endif
 	</div>
-		
-<script>
-	$("body").delegate('.element-type', 'change',function(){
 
-		if ($(this).val() == 0) {
-			return false;
-		}
-		else {
-			$(this).closest("form").submit();
-		}
-	});
+	<script>
+		$("body").delegate('.element-type', 'change',function(){
 
-	$(".fileUpload input").change(function(e) {
-		e.preventDefault();
-		$(this).parents('form').submit();
-	});
-</script>
+			if ($(this).val() == 0) {
+				return false;
+			}
+			else {
+				$(this).closest("form").submit();
+			}
+		});
+
+		$(".fileUpload input").change(function(e) {
+			e.preventDefault();
+			$(this).parents('form').submit();
+		});
+	</script>
 @stop

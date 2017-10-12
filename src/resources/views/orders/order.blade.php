@@ -56,15 +56,8 @@
 			    </div>
 			@endif 
 			
-			<div class="cf">
-				<label>Currency</label>
-				<div class="select-style">
-					<select name="currency">
-						<option value="EUR" @if($order->currency=='EUR') selected @endif>EUR</option>
-						<option value="USD" @if($order->currency=='USD') selected @endif>USD</option>
-					</select>
-				</div>
-			</div>
+			<label>Currency</label>
+			<input type="text" name="currency" value="{{old('currency') ?: $order->currency}}">
 
 			<label>Proforma Invoice Valid Until</label>
 			<input type="text" name="valid_until" value="{{old('valid_until') ?: $order->valid_until->format('Y-m-d')}}" class="datepicker">
