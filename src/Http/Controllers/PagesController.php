@@ -218,7 +218,7 @@ class PagesController extends Controller
         $keys = explode('.', $element->key);
         $key = $keys[1];
 
-        $mime = empty($element->content) || $element->page_element_type_id != 3 ? null : Storage::mimeType('public/'.$element->content);
+        $mime = Storage::exists('public/'.$element->content) ? Storage::mimeType('public/'.$element->content) : null;
 
         return view('admin::pages.edit-element', compact('element', 'mime', 'key'));
     }
