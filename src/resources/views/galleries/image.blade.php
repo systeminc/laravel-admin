@@ -44,8 +44,7 @@
 				<p>No elements yet</p>
 			@endif
 			
-			@if (!empty($image->gallery->product))
-				<form action="shop/product/edit//{{ $image->gallery->product->id }}" method="post">
+				<form action="galleries/images/new-element/{{ $image->id }}" method="post">
 					{{ csrf_field() }}
 
 					<div class="select-style">
@@ -58,10 +57,12 @@
 						</select>
 					</div>
 				</form>
-			@endif
 		</div>
-
-		<a href="{{ url()->previous() }}" class="button back-button">Back</a>
+		@if (!empty($image->gallery->product))
+			<a href="shop/products/edit/{{ $image->gallery->product->id }}" class="button back-button">Back</a>
+		@else
+			<a href="galleries/edit/{{ $image->gallery->id }}" class="button back-button">Back</a>
+		@endif
 	</div>
 
 	<script>
