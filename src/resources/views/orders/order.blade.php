@@ -383,22 +383,7 @@
 		</ul>
 
 
-		<br><br>
-		<form action="shop/orders/add-item/{{$order->id}}" method="post" class="new-order-item-form">
-			<input type="hidden" name="_token" value="{{csrf_token()}}">
-
-			<div class="cf">
-				<div class="select-style">
-					<select name="product_id">
-						@foreach ($products as $product)
-							<option value="{{$product->id}}">{{$product->title}}</option>
-						@endforeach				
-					</select>
-				</div>
-			</div>
-
-			<input type="submit" value="Add new item" class="save-item">
-		</form>
+		<br>
 		
 		<a href="{{ url()->previous() }}" class="button back-button">Back</a>
 	</div>
