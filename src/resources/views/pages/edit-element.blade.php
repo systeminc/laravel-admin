@@ -32,7 +32,7 @@
 
 		
 			<label>Title</label>
-			<input type="text" name="title" placeholder="Page title" value="{{ $element->title or old('title') }}">
+			<input type="text" name="title" placeholder="Element title" value="{{ $element->title or old('title') }}">
 
 			@if ($errors->first('content'))
 			    <div class="alert alert-error no-hide">
