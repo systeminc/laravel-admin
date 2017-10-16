@@ -25,7 +25,7 @@ class AdminServiceProvider extends ServiceProvider
         // Merge filesystems configurations
         $filesystems_config = array_merge_recursive($this->app['config']['filesystems'], include __DIR__.'/config/filesystems.php');
         $this->app['config']->set('filesystems', $filesystems_config);
-        
+
         // Set default config to uploads
         if (config('filesystems.default') === 'local') {
             config(['filesystems.default' => 'uploads']);
