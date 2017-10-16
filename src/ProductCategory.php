@@ -23,7 +23,7 @@ class ProductCategory extends Model
         'seo_description',
         'seo_keywords',
     ];
-    
+
     /**
      * The "booting" method of the model.
      *
@@ -33,9 +33,9 @@ class ProductCategory extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new OrderScope);
+        static::addGlobalScope(new OrderScope());
     }
-    
+
     public function products()
     {
         return $this->hasMany('SystemInc\LaravelAdmin\Product');

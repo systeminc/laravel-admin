@@ -17,7 +17,7 @@ class PageElement extends Model
         'page_element_type_id',
         'order_number',
     ];
-    
+
     /**
      * The "booting" method of the model.
      *
@@ -27,7 +27,7 @@ class PageElement extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new OrderScope);
+        static::addGlobalScope(new OrderScope());
     }
 
     public function __toString()

@@ -26,7 +26,7 @@ class GalleryImage extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new OrderScope);
+        static::addGlobalScope(new OrderScope());
     }
 
     public function getUrlAttribute()

@@ -19,7 +19,7 @@ class Page extends Model
         'parent_id',
         'order_number',
     ];
-    
+
     /**
      * The "booting" method of the model.
      *
@@ -29,7 +29,7 @@ class Page extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new OrderScope);
+        static::addGlobalScope(new OrderScope());
     }
 
     public function elements()
