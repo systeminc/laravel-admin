@@ -3,7 +3,6 @@
 namespace SystemInc\LaravelAdmin;
 
 use Illuminate\Http\Request;
-use Mail;
 
 class Subscribe
 {

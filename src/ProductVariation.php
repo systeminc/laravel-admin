@@ -17,7 +17,7 @@ class ProductVariation extends Model
         'price',
         'order_number',
     ];
-    
+
     /**
      * The "booting" method of the model.
      *
@@ -27,6 +27,6 @@ class ProductVariation extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new OrderScope);
-    }    
+        static::addGlobalScope(new OrderScope());
+    }
 }

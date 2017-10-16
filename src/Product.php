@@ -44,7 +44,7 @@ class Product extends Model
         'height',
         'weight',
     ];
-    
+
     /**
      * The "booting" method of the model.
      *
@@ -54,7 +54,7 @@ class Product extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new OrderScope);
+        static::addGlobalScope(new OrderScope());
     }
 
     public function category()

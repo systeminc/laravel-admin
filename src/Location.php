@@ -21,7 +21,7 @@ class Location extends Model
         'marker_image',
         'order_number',
     ];
-        
+
     /**
      * The "booting" method of the model.
      *
@@ -31,6 +31,6 @@ class Location extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new OrderScope);
+        static::addGlobalScope(new OrderScope());
     }
 }
