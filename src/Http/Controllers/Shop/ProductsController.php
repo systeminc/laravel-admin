@@ -26,7 +26,7 @@ class ProductsController extends Controller
      */
     public function getIndex()
     {
-        $products = Product::orderBy('order_number')->get();
+        $products = Product::get();
 
         return view('admin::products.products', compact('products'));
     }

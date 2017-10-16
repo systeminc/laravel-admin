@@ -3,6 +3,7 @@
 namespace SystemInc\LaravelAdmin;
 
 use Illuminate\Database\Eloquent\Model;
+use SystemInc\LaravelAdmin\Scopes\OrderScope;
 
 class ProductCategory extends Model
 {
@@ -22,7 +23,19 @@ class ProductCategory extends Model
         'seo_description',
         'seo_keywords',
     ];
+    
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
 
+        static::addGlobalScope(new OrderScope);
+    }
+    
     public function products()
     {
         return $this->hasMany('SystemInc\LaravelAdmin\Product');

@@ -4,6 +4,7 @@ namespace SystemInc\LaravelAdmin;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use SystemInc\LaravelAdmin\Scopes\OrderScope;
 
 class Product extends Model
 {
@@ -43,6 +44,18 @@ class Product extends Model
         'height',
         'weight',
     ];
+    
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new OrderScope);
+    }
 
     public function category()
     {

@@ -3,6 +3,7 @@
 namespace SystemInc\LaravelAdmin;
 
 use Illuminate\Database\Eloquent\Model;
+use SystemInc\LaravelAdmin\Scopes\OrderScope;
 use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 
 class Page extends Model
@@ -18,10 +19,22 @@ class Page extends Model
         'parent_id',
         'order_number',
     ];
+    
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new OrderScope);
+    }
 
     public function elements()
     {
-        return $this->hasMany('SystemInc\LaravelAdmin\PageElement')->orderBy('order_number');
+        return $this->hasMany('SystemInc\LaravelAdmin\PageElement');
     }
 
     public function element($key)

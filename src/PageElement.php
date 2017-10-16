@@ -5,6 +5,7 @@ namespace SystemInc\LaravelAdmin;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
 use SystemInc\LaravelAdmin\Facades\SLA as SystemLaravelAdmin;
+use SystemInc\LaravelAdmin\Scopes\OrderScope;
 
 class PageElement extends Model
 {
@@ -16,6 +17,18 @@ class PageElement extends Model
         'page_element_type_id',
         'order_number',
     ];
+    
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new OrderScope);
+    }
 
     public function __toString()
     {

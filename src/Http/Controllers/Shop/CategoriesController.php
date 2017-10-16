@@ -21,7 +21,7 @@ class CategoriesController extends Controller
      */
     public function getIndex()
     {
-        $categories = ProductCategory::orderBy('order_number')->get();
+        $categories = ProductCategory::get();
 
         return view('admin::products.categories', compact('categories'));
     }
