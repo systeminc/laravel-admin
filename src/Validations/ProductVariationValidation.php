@@ -12,8 +12,8 @@ class ProductVariationValidation
     public static function rules()
     {
         return [
-        'title'       => 'required',
-        'group'       => 'required',
+        'title' => 'required',
+        'group' => 'required',
         ];
     }
 

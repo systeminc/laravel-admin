@@ -312,11 +312,11 @@ class GalleriesController extends Controller
                 }
 
                 $data = [
-                    'gallery_id'        => $gallery_id,
-                    'source'            => $original_image,
-                    'path_source'       => $original_path,
-                    'thumb_source'      => $thumb_image,
-                    'mobile_source'     => $mobile_image,
+                    'gallery_id'    => $gallery_id,
+                    'source'        => $original_image,
+                    'path_source'   => $original_path,
+                    'thumb_source'  => $thumb_image,
+                    'mobile_source' => $mobile_image,
                 ];
 
                 if ($image_id) {

@@ -12,10 +12,10 @@ class PageValidation
     public static function rules($page_id = '')
     {
         return [
-        'title'                 => 'required',
-        'elements_prefix'       => 'required|unique:pages,elements_prefix,'.$page_id,
-        'slug'                  => 'required|unique:pages,slug,'.$page_id,
-        'description'           => 'required',
+        'title'           => 'required',
+        'elements_prefix' => 'required|unique:pages,elements_prefix,'.$page_id,
+        'slug'            => 'required|unique:pages,slug,'.$page_id,
+        'description'     => 'required',
         ];
     }
 

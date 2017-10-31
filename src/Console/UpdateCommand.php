@@ -27,7 +27,7 @@ class UpdateCommand extends Command
         $this->line('Migrating...');
 
         $migrate = Artisan::call('migrate', [
-            '--path'  => 'vendor/systeminc/laravel-admin/src/database/migrations',
+            '--path' => 'vendor/systeminc/laravel-admin/src/database/migrations',
             ]);
 
         $this->line('Migration Done!');
