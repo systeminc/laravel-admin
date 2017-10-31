@@ -12,8 +12,8 @@ class AdminValidationWithoutPassword
     public static function rules($admin_id = '')
     {
         return [
-            'name'     => 'required',
-            'email'    => 'required|email|unique:pages,email,'.$admin_id,
+            'name'  => 'required',
+            'email' => 'required|email|unique:pages,email,'.$admin_id,
         ];
     }
 

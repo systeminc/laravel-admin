@@ -55,9 +55,9 @@ class LeadsController extends Controller
     public function postSettings(Request $request)
     {
         $data = [
-            'mailer_name'        => !empty($request->mailer_name) ? $request->mailer_name : null,
-            'thank_you_subject'  => !empty($request->thank_you_subject) ? $request->thank_you_subject : null,
-            'thank_you_body'     => !empty($request->thank_you_body) ? $request->thank_you_body : null,
+            'mailer_name'       => !empty($request->mailer_name) ? $request->mailer_name : null,
+            'thank_you_subject' => !empty($request->thank_you_subject) ? $request->thank_you_subject : null,
+            'thank_you_body'    => !empty($request->thank_you_body) ? $request->thank_you_body : null,
         ];
 
         $setting = LeadSetting::first();

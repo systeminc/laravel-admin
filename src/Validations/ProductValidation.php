@@ -12,12 +12,12 @@ class ProductValidation
     public static function rules($product_id = '')
     {
         return [
-        'title'       => 'required',
-        'slug'        => 'required|unique:products,slug,'.$product_id,
-        'length'      => 'nullable|numeric',
-        'width'       => 'nullable|numeric',
-        'height'      => 'nullable|numeric',
-        'weight'      => 'nullable|numeric',
+        'title'  => 'required',
+        'slug'   => 'required|unique:products,slug,'.$product_id,
+        'length' => 'nullable|numeric',
+        'width'  => 'nullable|numeric',
+        'height' => 'nullable|numeric',
+        'weight' => 'nullable|numeric',
         ];
     }
 
