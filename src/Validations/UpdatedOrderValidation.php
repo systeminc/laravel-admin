@@ -12,12 +12,12 @@ class UpdatedOrderValidation
     public static function rules()
     {
         return [
-            'invoice_number'          => 'numeric',
-            'order_status_id'         => 'exists:order_statuses,id',
-            'shipment_price'          => 'numeric',
-            'currency'                => 'required|string',
-            'billing_name'            => 'required|string',
-            'billing_email'           => 'required|email',
+            'invoice_number'  => 'numeric',
+            'order_status_id' => 'exists:order_statuses,id',
+            'shipment_price'  => 'numeric',
+            'currency'        => 'required|string',
+            'billing_name'    => 'required|string',
+            'billing_email'   => 'required|email',
         ];
     }
 
