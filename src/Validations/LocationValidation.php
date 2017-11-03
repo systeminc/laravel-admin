@@ -12,11 +12,11 @@ class LocationValidation
     public static function rules($location_id = '')
     {
         return [
-        'title'        => 'required',
-        'latitude'     => 'required',
-        'longitude'    => 'required',
-        'url'          => 'required',
-        'key'          => 'required|unique:locations,key,'.$location_id,
+        'title'     => 'required',
+        'latitude'  => 'required',
+        'longitude' => 'required',
+        'url'       => 'required',
+        'key'       => 'required|unique:locations,key,'.$location_id,
         ];
     }
 

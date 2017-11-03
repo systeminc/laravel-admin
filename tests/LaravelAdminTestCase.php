@@ -34,7 +34,7 @@ abstract class LaravelAdminTestCase extends TestCase
         Schema::defaultStringLength(191);
 
         Artisan::call('migrate', [
-            '--path'  => '../../../../src/database/migrations',
+            '--path' => '../../../../src/database/migrations',
         ]);
 
         $seeder = new DatabaseSeeder();
@@ -46,7 +46,7 @@ abstract class LaravelAdminTestCase extends TestCase
     public function tearDown()
     {
         Artisan::call('migrate:reset', [
-            '--path'  => '../../../../src/database/migrations',
+            '--path' => '../../../../src/database/migrations',
         ]);
 
         parent::tearDown();

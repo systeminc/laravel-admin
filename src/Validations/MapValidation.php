@@ -12,10 +12,10 @@ class MapValidation
     public static function rules($map_id = '')
     {
         return [
-        'title'        => 'required',
-        'latitude'     => 'required',
-        'longitude'    => 'required',
-        'key'          => 'required|unique:maps,key,'.$map_id,
+        'title'     => 'required',
+        'latitude'  => 'required',
+        'longitude' => 'required',
+        'key'       => 'required|unique:maps,key,'.$map_id,
         ];
     }
 

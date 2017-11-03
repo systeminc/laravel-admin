@@ -183,8 +183,8 @@ trait HelpersTrait
     public function cleanSpecialChars($string)
     {
         $dict = [
-            "I'm"      => 'I am',
-            'thier'    => 'their',
+            "I'm"   => 'I am',
+            'thier' => 'their',
         ];
 
         return strtolower(
@@ -206,24 +206,24 @@ trait HelpersTrait
     private function cleanString($text)
     {
         $utf8 = [
-            '/[áàâãªä]/u'   => 'a',
-            '/[ÁÀÂÃÄ]/u'    => 'A',
-            '/[ÍÌÎÏ]/u'     => 'I',
-            '/[íìîï]/u'     => 'i',
-            '/[éèêë]/u'     => 'e',
-            '/[ÉÈÊË]/u'     => 'E',
-            '/[óòôõºö]/u'   => 'o',
-            '/[ÓÒÔÕÖ]/u'    => 'O',
-            '/[úùûü]/u'     => 'u',
-            '/[ÚÙÛÜ]/u'     => 'U',
-            '/ç/'           => 'c',
-            '/Ç/'           => 'C',
-            '/ñ/'           => 'n',
-            '/Ñ/'           => 'N',
-            '/–/'           => '-', // UTF-8 hyphen to "normal" hyphen
-            '/[’‘‹›‚]/u'    => ' ', // Literally a single quote
-            '/[“”«»„]/u'    => ' ', // Double quote
-            '/ /'           => ' ', // nonbreaking space (equiv. to 0x160)
+            '/[áàâãªä]/u' => 'a',
+            '/[ÁÀÂÃÄ]/u'  => 'A',
+            '/[ÍÌÎÏ]/u'   => 'I',
+            '/[íìîï]/u'   => 'i',
+            '/[éèêë]/u'   => 'e',
+            '/[ÉÈÊË]/u'   => 'E',
+            '/[óòôõºö]/u' => 'o',
+            '/[ÓÒÔÕÖ]/u'  => 'O',
+            '/[úùûü]/u'   => 'u',
+            '/[ÚÙÛÜ]/u'   => 'U',
+            '/ç/'         => 'c',
+            '/Ç/'         => 'C',
+            '/ñ/'         => 'n',
+            '/Ñ/'         => 'N',
+            '/–/'         => '-', // UTF-8 hyphen to "normal" hyphen
+            '/[’‘‹›‚]/u'  => ' ', // Literally a single quote
+            '/[“”«»„]/u'  => ' ', // Double quote
+            '/ /'         => ' ', // nonbreaking space (equiv. to 0x160)
         ];
 
         return preg_replace(array_keys($utf8), array_values($utf8), $text);

@@ -12,8 +12,8 @@ class CategoryValidation
     public static function rules()
     {
         return [
-        'title'         => 'required',
-        'slug'          => 'required',
+        'title' => 'required',
+        'slug'  => 'required',
         ];
     }
 
