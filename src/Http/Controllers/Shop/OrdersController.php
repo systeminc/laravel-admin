@@ -153,40 +153,6 @@ class OrdersController extends Controller
     }
 
     /**
-     * Add item.
-     *
-     * @param Request $request
-     * @param int     $order_id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function postAddItem(Request $request, $order_id)
-    {
-        $order = Order::find($order_id);
-        $product = Product::find($request->product_id);
-
-        $item = OrderItem::whereProductId($request->product_id)->first();
-
-        if ($item) {
-            $item->quantity += 1;
-        } else {
-            $item = OrderItem::create([
-                'order_id'     => $order->id,
-                'product_id'   => $product->id,
-                'custom_price' => 0,
-            ]);
-        }
-
-        $item->save();
-
-        $order->items()->save($item);
-        $order->recalculateTotalPrice();
-        $order->save();
-
-        return back()->with('success', $product->title.' added');
-    }
-
-    /**
      * Delete item.
      *
      * @param Request $request
