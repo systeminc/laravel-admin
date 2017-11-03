@@ -22,10 +22,10 @@ $factory->define(SystemInc\LaravelAdmin\Admin::class, function (Faker\Generator 
 
 $factory->define(SystemInc\LaravelAdmin\Page::class, function (Faker\Generator $faker) {
     return [
-        'title'             => $faker->sentence,
-        'elements_prefix'   => $faker->name,
-        'slug'              => $faker->sentence,
-        'description'       => $faker->text,
-        'keywords'          => $faker->title,
+        'title'           => $faker->sentence,
+        'elements_prefix' => $faker->name,
+        'slug'            => $faker->sentence,
+        'description'     => $faker->text,
+        'keywords'        => $faker->title,
     ];
 });
