@@ -131,7 +131,7 @@
 					@foreach ($images as $image) 
 						<div class="thumb">
 							<div class="delete-image" data-path='{{$image}}'>x</div>
-							<img src="{{ asset('storage') .'/'. trim($image, 'public')}}">
+							<img src="{{ Storage::url($image)}}">
 						</div>						
 					@endforeach
 

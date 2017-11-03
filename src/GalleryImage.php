@@ -4,6 +4,7 @@ namespace SystemInc\LaravelAdmin;
 
 use Illuminate\Database\Eloquent\Model;
 use SystemInc\LaravelAdmin\Facades\SLA as LaravelAdminFacade;
+use SystemInc\LaravelAdmin\Scopes\OrderScope;
 
 class GalleryImage extends Model
 {
@@ -16,6 +17,18 @@ class GalleryImage extends Model
         'order_number',
     ];
 
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new OrderScope());
+    }
+
     public function getUrlAttribute()
     {
         return LaravelAdminFacade::getFile($this->source);
@@ -23,7 +36,7 @@ class GalleryImage extends Model
 
     public function getAllElements()
     {
-        return $this->hasMany(GalleryElement::class, 'image_id')->orderBy('order_number');
+        return $this->hasMany(GalleryElement::class, 'image_id');
     }
 
     public function gallery()

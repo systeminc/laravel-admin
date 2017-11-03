@@ -59,11 +59,8 @@ class ResourcesController extends Controller
     public function images($filename)
     {
         $src = $this->image_path.$filename;
+        $mime = File::mimeType($src);
 
-        $cache_image = Image::cache(function ($image) use ($src) {
-            return $image->make($src)->greyscale();
-        }, 60);
-
-        return response()->make($cache_image, 200);
+        return response()->file($src, ['Content-Type' => $mime]);
     }
 }

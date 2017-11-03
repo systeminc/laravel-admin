@@ -129,7 +129,7 @@ class GalleriesController extends Controller
         }
 
         foreach ($gallery->images as $image) {
-            Storage::delete('public/'.$image->source, 'public/'.$image->thumb_source, 'public/'.$image->mobile_source);
+            Storage::delete($image->source, $image->thumb_source, $image->mobile_source);
 
             $image->delete();
         }
@@ -210,7 +210,7 @@ class GalleriesController extends Controller
     {
         $element = GalleryElement::find($element_id);
 
-        $mime = empty($element->content) || $element->page_element_type_id != 3 ? null : Storage::mimeType('public/'.$element->content);
+        $mime = empty($element->content) || $element->page_element_type_id != 3 ? null : Storage::mimeType($element->content);
 
         return view('admin::galleries.elements.edit-element', compact('element', 'mime'));
     }
@@ -258,7 +258,7 @@ class GalleriesController extends Controller
         $image = GalleryImage::find($element->image_id);
 
         if ($element->page_element_type_id == 3 && !empty($element->content)) {
-            Storage::delete('public/'.$element->content);
+            Storage::delete($element->content);
         }
 
         $page_id = $element->page_id;
@@ -278,7 +278,7 @@ class GalleriesController extends Controller
     {
         $element = GalleryElement::find($element_id);
 
-        Storage::delete('public/'.$element->content);
+        Storage::delete($element->content);
 
         $element->content = null;
         $element->save();
@@ -343,7 +343,7 @@ class GalleriesController extends Controller
             }
             $dirname = 'elements/'.$this->cleanSpecialChars($file->getClientOriginalName());
 
-            Storage::put('public/'.$dirname, file_get_contents($file));
+            Storage::put($dirname, file_get_contents($file));
 
             return $dirname;
         }

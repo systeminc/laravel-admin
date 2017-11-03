@@ -56,7 +56,7 @@
 
 				@if (strstr($mime, 'image') != false)
 					<div class="cf" style="position: relative">
-						<img src="{{ asset('storage') .'/'.  $element->content }}" alt="" style="max-width: 200px; width: 100%; background-color: #ddd;" class="left">
+						<img src="{{ Storage::url( $element->content) }}" alt="" style="max-width: 200px; width: 100%; background-color: #ddd;" class="left">
 						<div class="cf">
 							<input type="hidden" name="content" value="{{ $element->content }}">
 							<a href="galleries/images/delete-element-file/{{ $element->id }}" class="button remove-item file image left">Delete file</a>
@@ -64,7 +64,7 @@
 					</div>
 				@elseif ($mime != null)
 					<div class="cf" style="position: relative">
-						<a href="{{ asset('storage') .'/'.  $element->content }}" download class="button item left">{{ $element->title }}</a>
+						<a href="{{ Storage::url( $element->content) }}" download class="button item left">{{ $element->title }}</a>
 						<div class="cf">
 							<input type="hidden" name="content" value="{{ $element->content }}">
 							<a href="galleries/images/delete-element-file/{{ $element->id }}" class="button remove-item file left">Delete file</a>

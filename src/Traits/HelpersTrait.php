@@ -50,18 +50,18 @@ trait HelpersTrait
             $storage_key = 'images/'.$path.$original;
 
             if ($image->getClientOriginalExtension() === 'svg') {
-                Storage::put('public/'.$storage_key, file_get_contents($image));
+                Storage::put($storage_key, file_get_contents($image));
             } elseif ($keepOriginal) {
                 $original_image = Image::make($image)->orientate()->interlace()->encode();
 
-                Storage::put('public/'.$storage_key, $original_image);
+                Storage::put($storage_key, $original_image);
             } else {
                 $original_image = Image::make($image)->orientate()->interlace()
                     ->fit(1920, 1080, function ($constraint) {
                         $constraint->upsize();
                     })->encode();
 
-                Storage::put('public/'.$storage_key, $original_image);
+                Storage::put($storage_key, $original_image);
             }
 
             return $storage_key;
@@ -75,19 +75,19 @@ trait HelpersTrait
      */
     protected function resizeImage($width, $height, $path, $output_path, $image)
     {
-        if (!Storage::files('public/'.$path)) {
-            Storage::makeDirectory('public/'.$path, 493, true);
+        if (!Storage::files($path)) {
+            Storage::makeDirectory($path, 493, true);
         }
 
         if ($image->getClientOriginalExtension() === 'svg') {
-            Storage::put('public/'.$output_path, file_get_contents($image));
+            Storage::put($output_path, file_get_contents($image));
         } else {
             $image = Image::make($image)->orientate()
                 ->resize($width, $height, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })->interlace()->encode();
-            Storage::put('public/'.$output_path, $image);
+            Storage::put($output_path, $image);
         }
 
         return $output_path;

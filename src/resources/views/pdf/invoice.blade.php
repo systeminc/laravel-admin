@@ -27,7 +27,7 @@
             <table style="width: 100%;">
                 <tr>
                     <td style="width: 60%">
-                        <img src="{{ (!empty(SystemInc\LaravelAdmin\Setting::first()) && SystemInc\LaravelAdmin\Setting::first()->source != null) ? url('/').'/'.config('laravel-admin.route_prefix').'/'.asset('storage').'/'.SystemInc\LaravelAdmin\Setting::first()->source : url('/').'/'.config('laravel-admin.route_prefix').'/images/logo.png' }}">
+                        <img src="{{ (!empty(SystemInc\LaravelAdmin\Setting::first()) && SystemInc\LaravelAdmin\Setting::first()->source != null) ? url('/').'/'.config('laravel-admin.route_prefix').'/'.Storage::url(SystemInc\LaravelAdmin\Setting::first()->source) : url('/').'/'.config('laravel-admin.route_prefix').'/images/logo.png' }}">
                     </td>
                     <td style="width: 40%">
                         <table>
