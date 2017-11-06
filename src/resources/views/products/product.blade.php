@@ -86,7 +86,7 @@
 				<label>Thumbnail</label>
 				<div class="file-input-wrap cf">
 					@if(!empty($product->thumb)) 
-						<div class="small-image-preview" style="background-image: url({{ asset('storage') .'/'. $product->thumb}})"></div>
+						<div class="small-image-preview" style="background-image: url({{ Storage::url($product->thumb)}})"></div>
 						<input type="checkbox" name="delete_thumb" >Delete this file?
 					@else
 						<div class="fileUpload">
@@ -100,7 +100,7 @@
 					<label>Thumbnail hover</label>
 					<div class="file-input-wrap cf">
 						@if(!empty($product->thumb_hover)) 
-							<div class="small-image-preview" style="background-image: url({{ asset('storage') .'/'. $product->thumb_hover}})"></div>
+							<div class="small-image-preview" style="background-image: url({{ Storage::url($product->thumb_hover)}})"></div>
 							<input type="checkbox" name="delete_thumb_hover">Delete this file?
 						@else
 							<div class="fileUpload">
@@ -114,7 +114,7 @@
 				<label>Image</label>
 				<div class="file-input-wrap cf">
 					@if(!empty($product->image)) 
-						<div class="small-image-preview" style="background-image: url({{ asset('storage') .'/'. $product->image}})"></div>
+						<div class="small-image-preview" style="background-image: url({{ Storage::url($product->image)}})"></div>
 						<input type="checkbox" name="delete_image">Delete this file?
 					@else
 						<div class="fileUpload">
@@ -128,7 +128,7 @@
 					<label>Image hover</label>
 					<div class="file-input-wrap cf">
 						@if(!empty($product->image_hover)) 
-							<div class="small-image-preview" style="background-image: url({{ asset('storage') .'/'. $product->image_hover}})"></div>
+							<div class="small-image-preview" style="background-image: url({{ Storage::url($product->image_hover)}})"></div>
 							<input type="checkbox" name="delete_image_hover">Delete this file?
 						@else
 							<div class="fileUpload">

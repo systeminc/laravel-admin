@@ -115,9 +115,9 @@ Then if you want to do `php artisan laravel-admin:update`, just type:
 $ sla update
 ```
 
-## Usage
+## Documentation
 
-Visit [wiki](https://github.com/systeminc/laravel-admin/wiki/Blog) 
+Visit [Wiki](https://github.com/systeminc/laravel-admin/wiki/) for detailed usage documentation.
 
 ## Contributing
 

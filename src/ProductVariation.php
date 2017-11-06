@@ -3,6 +3,7 @@
 namespace SystemInc\LaravelAdmin;
 
 use Illuminate\Database\Eloquent\Model;
+use SystemInc\LaravelAdmin\Scopes\OrderScope;
 
 class ProductVariation extends Model
 {
@@ -16,4 +17,16 @@ class ProductVariation extends Model
         'price',
         'order_number',
     ];
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new OrderScope());
+    }
 }

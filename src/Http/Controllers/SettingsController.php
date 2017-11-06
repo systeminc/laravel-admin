@@ -49,7 +49,7 @@ class SettingsController extends Controller
             $dirname = 'admin-panel/'.$file->getClientOriginalName();
 
             Storage::deleteDirectory('admin-panel');
-            Storage::put('public/'.$dirname, file_get_contents($file));
+            Storage::put($dirname, file_get_contents($file));
 
             $source = $dirname;
         }

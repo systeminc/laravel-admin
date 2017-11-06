@@ -9,7 +9,7 @@
 @section('body')
 
     <div class="logo-login">
-        <a href="" class="logo"><img src="{{ (!empty(SystemInc\LaravelAdmin\Setting::first()) && SystemInc\LaravelAdmin\Setting::first()->source != null) ? asset('storage').'/'.SystemInc\LaravelAdmin\Setting::first()->source : 'images/logo.png' }}" alt="SystemInc Laravel admin logo"></a>
+        <a href="" class="logo"><img src="{{ (!empty(SystemInc\LaravelAdmin\Setting::first()) && SystemInc\LaravelAdmin\Setting::first()->source != null) ? Storage::url(SystemInc\LaravelAdmin\Setting::first()->source) : 'images/logo.png' }}" alt="SystemInc Laravel admin logo"></a>
     </div>
 
     <div class="login-form">
