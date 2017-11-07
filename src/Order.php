@@ -34,7 +34,6 @@ class Order extends Model
         'shipping_postcode',
         'shipping_contact_person',
         'parity',
-        'term_of_payment',
         'footnote',
         'show_shipping_address',
         'shipment_id',
