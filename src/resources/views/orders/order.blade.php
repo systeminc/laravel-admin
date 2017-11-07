@@ -95,17 +95,6 @@
 			<label>Parity</label>
 			<input type="text" name="parity" value="{{old('parity') ?: $order->parity}}">
 
-			@if ($errors->first('term_of_payment'))
-			    <div class="alert alert-error no-hide">
-			        <span class="help-block">
-			            <strong>{{ $errors->first('term_of_payment') }}</strong>
-			        </span>
-			    </div>
-			@endif 
-
-			<label>Term of Payment</label>
-			<input type="text" name="term_of_payment" value="{{old('term_of_payment') ?: $order->term_of_payment}}">
-
 			@if ($errors->first('footnote'))
 			    <div class="alert alert-error no-hide">
 			        <span class="help-block">

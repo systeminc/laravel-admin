@@ -96,7 +96,6 @@
                             Invoice number :    {{$order->invoice_number}}<br>
                             Date of order:   {{$order->created_at->format('d.m.Y')}}<br>
                             Date of purchase:  {{$order->date_of_purchase ? $order->date_of_purchase->format('d.m.Y') : ''}}<br>
-                            Term of payment:  {{$order->term_of_payment}}<br>
                         @endif
                     </td>
                     <td style="border: 1px solid black; padding:10px;">

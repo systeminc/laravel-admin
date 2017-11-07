@@ -109,7 +109,7 @@ class ModelsTest extends LaravelAdminTestCase
     {
         $order = new Order();
 
-        $this->assertArraySubset(['invoice_number', 'order_status_id', 'shipment_price', 'total_price', 'valid_until', 'date_of_purchase', 'currency', 'note', 'billing_name', 'billing_email', 'billing_phone', 'billing_address', 'billing_city', 'billing_country', 'billing_postcode', 'billing_contact_person', 'shipping_name', 'shipping_email', 'shipping_phone', 'shipping_address', 'shipping_city', 'shipping_country', 'shipping_postcode', 'shipping_contact_person', 'parity', 'term_of_payment', 'footnote', 'show_shipping_address', 'shipment_id'], $order->getFillable());
+        $this->assertArraySubset(['invoice_number', 'order_status_id', 'shipment_price', 'total_price', 'valid_until', 'date_of_purchase', 'currency', 'note', 'billing_name', 'billing_email', 'billing_phone', 'billing_address', 'billing_city', 'billing_country', 'billing_postcode', 'billing_contact_person', 'shipping_name', 'shipping_email', 'shipping_phone', 'shipping_address', 'shipping_city', 'shipping_country', 'shipping_postcode', 'shipping_contact_person', 'parity', 'footnote', 'show_shipping_address', 'shipment_id'], $order->getFillable());
     }
 
     public function testFillablefieldsOrderItemModel()
