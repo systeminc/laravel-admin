@@ -186,9 +186,7 @@ trait HelpersTrait
             preg_replace(
                 ['#[\\s-]+#', '#[^A-Za-z0-9\. -]+#'],
                 ['-', ''],
-                // the full cleanString() can be download from http://www.unexpectedit.com/php/php-clean-string-of-utf8-chars-convert-to-similar-ascii-char
                 $this->cleanString(urldecode($string))
-                )
             )
         );
     }
