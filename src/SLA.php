@@ -128,32 +128,39 @@ class SLA
      *
      * @return string
      */
-    public function getFile($filename, $width = false, $height = false)
+    public function getFile($path, $width = null, $height = null)
     {
+        if (!Storage::exists($path)) {
+            return false;
+        } 
+
         if ($width || $height) {
-            $fileWithoutExtension = explode('.', $filename);
+            list($dirname, $basename, $extension, $filename) = array_values(pathinfo($path));
 
-            $newFile = $fileWithoutExtension[0].'_'.
-                        (!empty($width) ? 'w'.$width : null).
-                        (!empty($height) && !empty($width) ? '_' : '').
-                        (!empty($height) ? 'h'.$height : null).'.'.
-                        $fileWithoutExtension[count($fileWithoutExtension) - 1];
+            $width_modifier = empty($width) ? '' : "_$width";
+            $height_modifier = empty($height) ? '' : "_$height";
 
-            if (is_file('storage/'.$newFile)) {
-                return Storage::url($newFile);
-            } else {
-                $image = Image::make('storage/'.$filename)->orientate()
-                ->resize((!empty($width) ? $width : null), (!empty($height) ? $height : null), function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                })->interlace()->encode();
+            $new_path = $dirname . DIRECTORY_SEPARATOR . $filename . $width_modifier . $height_modifier . '.' . $extension;
 
-                Storage::put($newFile, $image);
+            if (Storage::exists($new_path)) {
+                return Storage::url($new_path);
+            } 
+            else {
+                $image = Image::make(Storage::get($path))
+                    ->orientate()
+                    ->resize($width, $height, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    })
+                    ->interlace()
+                    ->encode();
 
-                return Storage::url($newFile);
+                Storage::put($new_path, $image);
+
+                return Storage::url($new_path);
             }
         }
 
-        return Storage::url($filename);
+        return Storage::url($path);
     }
 }
