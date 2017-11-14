@@ -104,14 +104,14 @@ trait HelpersTrait
     public static function uploadPdf($file, $storage_path)
     {
         if ($file && $file->isValid()) {
-            $dirname = 'public/pdf/'.$storage_path.'/'.$file->getClientOriginalName();
+            $dirname = 'pdf/'.$storage_path.'/'.$file->getClientOriginalName();
 
-            if (!Storage::exists('public/pdf/'.$storage_path)) {
-                if (!Storage::exists('public/pdf')) {
-                    Storage::makeDirectory('public/pdf');
-                }
+            if (!Storage::exists('pdf')) {
+                Storage::makeDirectory('pdf');
+            }
 
-                Storage::makeDirectory('public/pdf/'.$storage_path);
+            if (!Storage::exists('pdf/'.$storage_path)) {
+                Storage::makeDirectory('pdf/'.$storage_path);
             }
 
             Storage::put($dirname, file_get_contents($file));
@@ -182,23 +182,11 @@ trait HelpersTrait
 
     public function cleanSpecialChars($string)
     {
-        $dict = [
-            "I'm"   => 'I am',
-            'thier' => 'their',
-        ];
-
         return strtolower(
             preg_replace(
                 ['#[\\s-]+#', '#[^A-Za-z0-9\. -]+#'],
                 ['-', ''],
-                // the full cleanString() can be download from http://www.unexpectedit.com/php/php-clean-string-of-utf8-chars-convert-to-similar-ascii-char
-                $this->cleanString(
-                  str_replace(// preg_replace to support more complicated replacements
-                      array_keys($dict),
-                      array_values($dict),
-                      urldecode($string)
-                  )
-                )
+                $this->cleanString(urldecode($string))
             )
         );
     }
