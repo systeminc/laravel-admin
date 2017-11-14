@@ -132,7 +132,7 @@ class SLA
     {
         if (!Storage::exists($path)) {
             return false;
-        } 
+        }
 
         if ($width || $height) {
             list($dirname, $basename, $extension, $filename) = array_values(pathinfo($path));
@@ -140,12 +140,11 @@ class SLA
             $width_modifier = empty($width) ? '' : "_$width";
             $height_modifier = empty($height) ? '' : "_$height";
 
-            $new_path = $dirname . DIRECTORY_SEPARATOR . $filename . $width_modifier . $height_modifier . '.' . $extension;
+            $new_path = $dirname.DIRECTORY_SEPARATOR.$filename.$width_modifier.$height_modifier.'.'.$extension;
 
             if (Storage::exists($new_path)) {
                 return Storage::url($new_path);
-            } 
-            else {
+            } else {
                 $image = Image::make(Storage::get($path))
                     ->orientate()
                     ->resize($width, $height, function ($constraint) {
