@@ -60,7 +60,7 @@ class PackageTest extends LaravelAdminTestCase
 
     public function testSLAFacadeHaveStoragePath()
     {
-        $this->assertEquals('/uploads/test.jpg', SLA::getFile('test.jpg'));
+        $this->assertEquals('uploads/test.jpg', SLA::getFile('test.jpg'));
     }
 
     public function testSLAFacadeHaveLocationsCollection()
