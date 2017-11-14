@@ -123,8 +123,8 @@ class SLA
      * Get file from storage(Image, PDF,...).
      *
      * @param string      $filename
-     * @param bool|number $width
-     * @param bool|number $height
+     * @param null|number $width
+     * @param null|number $height
      *
      * @return string
      */
