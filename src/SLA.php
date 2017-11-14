@@ -137,8 +137,8 @@ class SLA
         if ($width || $height) {
             list($dirname, $basename, $extension, $filename) = array_values(pathinfo($path));
 
-            $width_modifier = empty($width) ? '' : "_$width";
-            $height_modifier = empty($height) ? '' : "_$height";
+            $width_modifier = empty($width) ? '' : "_w$width";
+            $height_modifier = empty($height) ? '' : "_h$height";
 
             $new_path = $dirname.DIRECTORY_SEPARATOR.$filename.$width_modifier.$height_modifier.'.'.$extension;
 
