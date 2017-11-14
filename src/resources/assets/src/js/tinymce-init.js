@@ -8,8 +8,8 @@ $(function() {
         toolbar1: "styleselect | fontsizeselect | forecolor bold italic  bullist numlist | alignleft aligncenter alignright alignjustify | link unlink table media image uploadimage | charmap code",
         menubar : false,
         relative_urls : true,
-        convert_urls: false,
-        remove_script_host : false,
+        convert_urls: true,
+        remove_script_host : true,
         document_base_url : _baseUrl+'/',
         setup: function(editor) {
             editor.addButton('uploadimage', {

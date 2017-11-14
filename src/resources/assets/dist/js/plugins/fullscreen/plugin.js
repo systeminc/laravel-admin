@@ -1,299 +1,154 @@
-(function () {
-
-var defs = {}; // id -> {dependencies, definition, instance (possibly undefined)}
-
-// Used when there is no 'main' module.
-// The name is probably (hopefully) unique so minification removes for releases.
-var register_3795 = function (id) {
-  var module = dem(id);
-  var fragments = id.split('.');
-  var target = Function('return this;')();
-  for (var i = 0; i < fragments.length - 1; ++i) {
-    if (target[fragments[i]] === undefined)
-      target[fragments[i]] = {};
-    target = target[fragments[i]];
-  }
-  target[fragments[fragments.length - 1]] = module;
-};
-
-var instantiate = function (id) {
-  var actual = defs[id];
-  var dependencies = actual.deps;
-  var definition = actual.defn;
-  var len = dependencies.length;
-  var instances = new Array(len);
-  for (var i = 0; i < len; ++i)
-    instances[i] = dem(dependencies[i]);
-  var defResult = definition.apply(null, instances);
-  if (defResult === undefined)
-     throw 'module [' + id + '] returned undefined';
-  actual.instance = defResult;
-};
-
-var def = function (id, dependencies, definition) {
-  if (typeof id !== 'string')
-    throw 'module id must be a string';
-  else if (dependencies === undefined)
-    throw 'no dependencies for ' + id;
-  else if (definition === undefined)
-    throw 'no definition function for ' + id;
-  defs[id] = {
-    deps: dependencies,
-    defn: definition,
-    instance: undefined
-  };
-};
-
-var dem = function (id) {
-  var actual = defs[id];
-  if (actual === undefined)
-    throw 'module [' + id + '] was undefined';
-  else if (actual.instance === undefined)
-    instantiate(id);
-  return actual.instance;
-};
-
-var req = function (ids, callback) {
-  var len = ids.length;
-  var instances = new Array(len);
-  for (var i = 0; i < len; ++i)
-    instances.push(dem(ids[i]));
-  callback.apply(null, callback);
-};
-
-var ephox = {};
-
-ephox.bolt = {
-  module: {
-    api: {
-      define: def,
-      require: req,
-      demand: dem
-    }
-  }
-};
-
-var define = def;
-var require = req;
-var demand = dem;
-// this helps with minificiation when using a lot of global references
-var defineGlobal = function (id, ref) {
-  define(id, [], function () { return ref; });
-};
-/*jsc
-["tinymce.plugins.fullscreen.Plugin","tinymce.core.dom.DOMUtils","tinymce.core.PluginManager","global!tinymce.util.Tools.resolve"]
-jsc*/
-defineGlobal("global!tinymce.util.Tools.resolve", tinymce.util.Tools.resolve);
 /**
- * ResolveGlobal.js
+ * plugin.js
  *
  * Released under LGPL License.
- * Copyright (c) 1999-2017 Ephox Corp. All rights reserved
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
  *
  * License: http://www.tinymce.com/license
  * Contributing: http://www.tinymce.com/contributing
  */
 
-define(
-  'tinymce.core.dom.DOMUtils',
-  [
-    'global!tinymce.util.Tools.resolve'
-  ],
-  function (resolve) {
-    return resolve('tinymce.dom.DOMUtils');
-  }
-);
+/*global tinymce:true */
 
-/**
- * ResolveGlobal.js
- *
- * Released under LGPL License.
- * Copyright (c) 1999-2017 Ephox Corp. All rights reserved
- *
- * License: http://www.tinymce.com/license
- * Contributing: http://www.tinymce.com/contributing
- */
+tinymce.PluginManager.add('fullscreen', function(editor) {
+	var fullscreenState = false, DOM = tinymce.DOM, iframeWidth, iframeHeight, resizeHandler;
+	var containerWidth, containerHeight, scrollPos;
 
-define(
-  'tinymce.core.PluginManager',
-  [
-    'global!tinymce.util.Tools.resolve'
-  ],
-  function (resolve) {
-    return resolve('tinymce.PluginManager');
-  }
-);
+	if (editor.settings.inline) {
+		return;
+	}
 
-/**
- * Plugin.js
- *
- * Released under LGPL License.
- * Copyright (c) 1999-2017 Ephox Corp. All rights reserved
- *
- * License: http://www.tinymce.com/license
- * Contributing: http://www.tinymce.com/contributing
- */
+	function getWindowSize() {
+		var w, h, win = window, doc = document;
+		var body = doc.body;
 
-/**
- * This class contains all core logic for the fullscreen plugin.
- *
- * @class tinymce.fullscreen.Plugin
- * @private
- */
-define(
-  'tinymce.plugins.fullscreen.Plugin',
-  [
-    'tinymce.core.dom.DOMUtils',
-    'tinymce.core.PluginManager'
-  ],
-  function (DOMUtils, PluginManager) {
-    var DOM = DOMUtils.DOM;
+		// Old IE
+		if (body.offsetWidth) {
+			w = body.offsetWidth;
+			h = body.offsetHeight;
+		}
 
-    PluginManager.add('fullscreen', function (editor) {
-      var fullscreenState = false, iframeWidth, iframeHeight, resizeHandler;
-      var containerWidth, containerHeight, scrollPos;
+		// Modern browsers
+		if (win.innerWidth && win.innerHeight) {
+			w = win.innerWidth;
+			h = win.innerHeight;
+		}
 
-      if (editor.settings.inline) {
-        return;
-      }
+		return {w: w, h: h};
+	}
 
-      function getWindowSize() {
-        var w, h, win = window, doc = document;
-        var body = doc.body;
+	function getScrollPos() {
+		var vp = tinymce.DOM.getViewPort();
 
-        // Old IE
-        if (body.offsetWidth) {
-          w = body.offsetWidth;
-          h = body.offsetHeight;
-        }
+		return {
+			x: vp.x,
+			y: vp.y
+		};
+	}
 
-        // Modern browsers
-        if (win.innerWidth && win.innerHeight) {
-          w = win.innerWidth;
-          h = win.innerHeight;
-        }
+	function setScrollPos(pos) {
+		scrollTo(pos.x, pos.y);
+	}
 
-        return { w: w, h: h };
-      }
+	function toggleFullscreen() {
+		var body = document.body, documentElement = document.documentElement, editorContainerStyle;
+		var editorContainer, iframe, iframeStyle;
 
-      function getScrollPos() {
-        var vp = DOM.getViewPort();
+		function resize() {
+			DOM.setStyle(iframe, 'height', getWindowSize().h - (editorContainer.clientHeight - iframe.clientHeight));
+		}
 
-        return {
-          x: vp.x,
-          y: vp.y
-        };
-      }
+		fullscreenState = !fullscreenState;
 
-      function setScrollPos(pos) {
-        window.scrollTo(pos.x, pos.y);
-      }
+		editorContainer = editor.getContainer();
+		editorContainerStyle = editorContainer.style;
+		iframe = editor.getContentAreaContainer().firstChild;
+		iframeStyle = iframe.style;
 
-      function toggleFullscreen() {
-        var body = document.body, documentElement = document.documentElement, editorContainerStyle;
-        var editorContainer, iframe, iframeStyle;
+		if (fullscreenState) {
+			scrollPos = getScrollPos();
+			iframeWidth = iframeStyle.width;
+			iframeHeight = iframeStyle.height;
+			iframeStyle.width = iframeStyle.height = '100%';
+			containerWidth = editorContainerStyle.width;
+			containerHeight = editorContainerStyle.height;
+			editorContainerStyle.width = editorContainerStyle.height = '';
 
-        function resize() {
-          DOM.setStyle(iframe, 'height', getWindowSize().h - (editorContainer.clientHeight - iframe.clientHeight));
-        }
+			DOM.addClass(body, 'mce-fullscreen');
+			DOM.addClass(documentElement, 'mce-fullscreen');
+			DOM.addClass(editorContainer, 'mce-fullscreen');
 
-        fullscreenState = !fullscreenState;
+			DOM.bind(window, 'resize', resize);
+			resize();
+			resizeHandler = resize;
+		} else {
+			iframeStyle.width = iframeWidth;
+			iframeStyle.height = iframeHeight;
 
-        editorContainer = editor.getContainer();
-        editorContainerStyle = editorContainer.style;
-        iframe = editor.getContentAreaContainer().firstChild;
-        iframeStyle = iframe.style;
+			if (containerWidth) {
+				editorContainerStyle.width = containerWidth;
+			}
 
-        if (fullscreenState) {
-          scrollPos = getScrollPos();
-          iframeWidth = iframeStyle.width;
-          iframeHeight = iframeStyle.height;
-          iframeStyle.width = iframeStyle.height = '100%';
-          containerWidth = editorContainerStyle.width;
-          containerHeight = editorContainerStyle.height;
-          editorContainerStyle.width = editorContainerStyle.height = '';
+			if (containerHeight) {
+				editorContainerStyle.height = containerHeight;
+			}
 
-          DOM.addClass(body, 'mce-fullscreen');
-          DOM.addClass(documentElement, 'mce-fullscreen');
-          DOM.addClass(editorContainer, 'mce-fullscreen');
+			DOM.removeClass(body, 'mce-fullscreen');
+			DOM.removeClass(documentElement, 'mce-fullscreen');
+			DOM.removeClass(editorContainer, 'mce-fullscreen');
+			DOM.unbind(window, 'resize', resizeHandler);
+			setScrollPos(scrollPos);
+		}
 
-          DOM.bind(window, 'resize', resize);
-          resize();
-          resizeHandler = resize;
-        } else {
-          iframeStyle.width = iframeWidth;
-          iframeStyle.height = iframeHeight;
+		editor.fire('FullscreenStateChanged', {state: fullscreenState});
+	}
 
-          if (containerWidth) {
-            editorContainerStyle.width = containerWidth;
-          }
+	editor.on('init', function() {
+		editor.addShortcut('Ctrl+Shift+F', '', toggleFullscreen);
+	});
 
-          if (containerHeight) {
-            editorContainerStyle.height = containerHeight;
-          }
+	editor.on('remove', function() {
+		if (resizeHandler) {
+			DOM.unbind(window, 'resize', resizeHandler);
+		}
+	});
 
-          DOM.removeClass(body, 'mce-fullscreen');
-          DOM.removeClass(documentElement, 'mce-fullscreen');
-          DOM.removeClass(editorContainer, 'mce-fullscreen');
-          DOM.unbind(window, 'resize', resizeHandler);
-          setScrollPos(scrollPos);
-        }
+	editor.addCommand('mceFullScreen', toggleFullscreen);
 
-        editor.fire('FullscreenStateChanged', { state: fullscreenState });
-      }
+	editor.addMenuItem('fullscreen', {
+		text: 'Fullscreen',
+		shortcut: 'Ctrl+Shift+F',
+		selectable: true,
+		onClick: function() {
+			toggleFullscreen();
+			editor.focus();
+		},
+		onPostRender: function() {
+			var self = this;
 
-      editor.on('init', function () {
-        editor.addShortcut('Ctrl+Shift+F', '', toggleFullscreen);
-      });
+			editor.on('FullscreenStateChanged', function(e) {
+				self.active(e.state);
+			});
+		},
+		context: 'view'
+	});
 
-      editor.on('remove', function () {
-        if (resizeHandler) {
-          DOM.unbind(window, 'resize', resizeHandler);
-        }
-      });
+	editor.addButton('fullscreen', {
+		tooltip: 'Fullscreen',
+		shortcut: 'Ctrl+Shift+F',
+		onClick: toggleFullscreen,
+		onPostRender: function() {
+			var self = this;
 
-      editor.addCommand('mceFullScreen', toggleFullscreen);
+			editor.on('FullscreenStateChanged', function(e) {
+				self.active(e.state);
+			});
+		}
+	});
 
-      editor.addMenuItem('fullscreen', {
-        text: 'Fullscreen',
-        shortcut: 'Ctrl+Shift+F',
-        selectable: true,
-        onClick: function () {
-          toggleFullscreen();
-          editor.focus();
-        },
-        onPostRender: function () {
-          var self = this;
-
-          editor.on('FullscreenStateChanged', function (e) {
-            self.active(e.state);
-          });
-        },
-        context: 'view'
-      });
-
-      editor.addButton('fullscreen', {
-        tooltip: 'Fullscreen',
-        shortcut: 'Ctrl+Shift+F',
-        onClick: toggleFullscreen,
-        onPostRender: function () {
-          var self = this;
-
-          editor.on('FullscreenStateChanged', function (e) {
-            self.active(e.state);
-          });
-        }
-      });
-
-      return {
-        isFullscreen: function () {
-          return fullscreenState;
-        }
-      };
-    });
-
-    return function () { };
-  }
-);
-dem('tinymce.plugins.fullscreen.Plugin')();
-})();
+	return {
+		isFullscreen: function() {
+			return fullscreenState;
+		}
+	};
+});

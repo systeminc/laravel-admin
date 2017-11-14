@@ -1,348 +1,165 @@
-(function () {
-
-var defs = {}; // id -> {dependencies, definition, instance (possibly undefined)}
-
-// Used when there is no 'main' module.
-// The name is probably (hopefully) unique so minification removes for releases.
-var register_3795 = function (id) {
-  var module = dem(id);
-  var fragments = id.split('.');
-  var target = Function('return this;')();
-  for (var i = 0; i < fragments.length - 1; ++i) {
-    if (target[fragments[i]] === undefined)
-      target[fragments[i]] = {};
-    target = target[fragments[i]];
-  }
-  target[fragments[fragments.length - 1]] = module;
-};
-
-var instantiate = function (id) {
-  var actual = defs[id];
-  var dependencies = actual.deps;
-  var definition = actual.defn;
-  var len = dependencies.length;
-  var instances = new Array(len);
-  for (var i = 0; i < len; ++i)
-    instances[i] = dem(dependencies[i]);
-  var defResult = definition.apply(null, instances);
-  if (defResult === undefined)
-     throw 'module [' + id + '] returned undefined';
-  actual.instance = defResult;
-};
-
-var def = function (id, dependencies, definition) {
-  if (typeof id !== 'string')
-    throw 'module id must be a string';
-  else if (dependencies === undefined)
-    throw 'no dependencies for ' + id;
-  else if (definition === undefined)
-    throw 'no definition function for ' + id;
-  defs[id] = {
-    deps: dependencies,
-    defn: definition,
-    instance: undefined
-  };
-};
-
-var dem = function (id) {
-  var actual = defs[id];
-  if (actual === undefined)
-    throw 'module [' + id + '] was undefined';
-  else if (actual.instance === undefined)
-    instantiate(id);
-  return actual.instance;
-};
-
-var req = function (ids, callback) {
-  var len = ids.length;
-  var instances = new Array(len);
-  for (var i = 0; i < len; ++i)
-    instances.push(dem(ids[i]));
-  callback.apply(null, callback);
-};
-
-var ephox = {};
-
-ephox.bolt = {
-  module: {
-    api: {
-      define: def,
-      require: req,
-      demand: dem
-    }
-  }
-};
-
-var define = def;
-var require = req;
-var demand = dem;
-// this helps with minificiation when using a lot of global references
-var defineGlobal = function (id, ref) {
-  define(id, [], function () { return ref; });
-};
-/*jsc
-["tinymce.plugins.autosave.Plugin","tinymce.core.EditorManager","tinymce.core.PluginManager","tinymce.core.util.LocalStorage","tinymce.core.util.Tools","global!window","global!tinymce.util.Tools.resolve"]
-jsc*/
-defineGlobal("global!tinymce.util.Tools.resolve", tinymce.util.Tools.resolve);
 /**
- * ResolveGlobal.js
+ * plugin.js
  *
  * Released under LGPL License.
- * Copyright (c) 1999-2017 Ephox Corp. All rights reserved
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
  *
  * License: http://www.tinymce.com/license
  * Contributing: http://www.tinymce.com/contributing
  */
 
-define(
-  'tinymce.core.EditorManager',
-  [
-    'global!tinymce.util.Tools.resolve'
-  ],
-  function (resolve) {
-    return resolve('tinymce.EditorManager');
-  }
-);
+/*global tinymce:true */
 
-/**
- * ResolveGlobal.js
- *
- * Released under LGPL License.
- * Copyright (c) 1999-2017 Ephox Corp. All rights reserved
- *
- * License: http://www.tinymce.com/license
- * Contributing: http://www.tinymce.com/contributing
- */
+// Internal unload handler will be called before the page is unloaded
+// Needs to be outside the plugin since it would otherwise keep
+// a reference to editor in closue scope
+/*eslint no-func-assign:0 */
+tinymce._beforeUnloadHandler = function() {
+	var msg;
 
-define(
-  'tinymce.core.PluginManager',
-  [
-    'global!tinymce.util.Tools.resolve'
-  ],
-  function (resolve) {
-    return resolve('tinymce.PluginManager');
-  }
-);
+	tinymce.each(tinymce.editors, function(editor) {
+		// Store a draft for each editor instance
+		if (editor.plugins.autosave) {
+			editor.plugins.autosave.storeDraft();
+		}
 
-/**
- * ResolveGlobal.js
- *
- * Released under LGPL License.
- * Copyright (c) 1999-2017 Ephox Corp. All rights reserved
- *
- * License: http://www.tinymce.com/license
- * Contributing: http://www.tinymce.com/contributing
- */
+		// Setup a return message if the editor is dirty
+		if (!msg && editor.isDirty() && editor.getParam("autosave_ask_before_unload", true)) {
+			msg = editor.translate("You have unsaved changes are you sure you want to navigate away?");
+		}
+	});
 
-define(
-  'tinymce.core.util.LocalStorage',
-  [
-    'global!tinymce.util.Tools.resolve'
-  ],
-  function (resolve) {
-    return resolve('tinymce.util.LocalStorage');
-  }
-);
+	return msg;
+};
 
-/**
- * ResolveGlobal.js
- *
- * Released under LGPL License.
- * Copyright (c) 1999-2017 Ephox Corp. All rights reserved
- *
- * License: http://www.tinymce.com/license
- * Contributing: http://www.tinymce.com/contributing
- */
+tinymce.PluginManager.add('autosave', function(editor) {
+	var settings = editor.settings, LocalStorage = tinymce.util.LocalStorage, prefix, started;
 
-define(
-  'tinymce.core.util.Tools',
-  [
-    'global!tinymce.util.Tools.resolve'
-  ],
-  function (resolve) {
-    return resolve('tinymce.util.Tools');
-  }
-);
+	prefix = settings.autosave_prefix || 'tinymce-autosave-{path}{query}-{id}-';
+	prefix = prefix.replace(/\{path\}/g, document.location.pathname);
+	prefix = prefix.replace(/\{query\}/g, document.location.search);
+	prefix = prefix.replace(/\{id\}/g, editor.id);
 
-defineGlobal("global!window", window);
-/**
- * Plugin.js
- *
- * Released under LGPL License.
- * Copyright (c) 1999-2017 Ephox Corp. All rights reserved
- *
- * License: http://www.tinymce.com/license
- * Contributing: http://www.tinymce.com/contributing
- */
+	function parseTime(time, defaultTime) {
+		var multipels = {
+			s: 1000,
+			m: 60000
+		};
 
-/**
- * This class contains all core logic for the autosave plugin.
- *
- * @class tinymce.autosave.Plugin
- * @private
- */
-define(
-  'tinymce.plugins.autosave.Plugin',
-  [
-    'tinymce.core.EditorManager',
-    'tinymce.core.PluginManager',
-    'tinymce.core.util.LocalStorage',
-    'tinymce.core.util.Tools',
-    'global!window'
-  ],
-  function (EditorManager, PluginManager, LocalStorage, Tools, window) {
-    EditorManager._beforeUnloadHandler = function () {
-      var msg;
+		time = /^(\d+)([ms]?)$/.exec('' + (time || defaultTime));
 
-      Tools.each(EditorManager.editors, function (editor) {
-        // Store a draft for each editor instance
-        if (editor.plugins.autosave) {
-          editor.plugins.autosave.storeDraft();
-        }
+		return (time[2] ? multipels[time[2]] : 1) * parseInt(time, 10);
+	}
 
-        // Setup a return message if the editor is dirty
-        if (!msg && editor.isDirty() && editor.getParam("autosave_ask_before_unload", true)) {
-          msg = editor.translate("You have unsaved changes are you sure you want to navigate away?");
-        }
-      });
+	function hasDraft() {
+		var time = parseInt(LocalStorage.getItem(prefix + "time"), 10) || 0;
 
-      return msg;
-    };
+		if (new Date().getTime() - time > settings.autosave_retention) {
+			removeDraft(false);
+			return false;
+		}
 
-    PluginManager.add('autosave', function (editor) {
-      var settings = editor.settings, prefix, started;
+		return true;
+	}
 
-      prefix = settings.autosave_prefix || 'tinymce-autosave-{path}{query}-{id}-';
-      prefix = prefix.replace(/\{path\}/g, document.location.pathname);
-      prefix = prefix.replace(/\{query\}/g, document.location.search);
-      prefix = prefix.replace(/\{id\}/g, editor.id);
+	function removeDraft(fire) {
+		LocalStorage.removeItem(prefix + "draft");
+		LocalStorage.removeItem(prefix + "time");
 
-      function parseTime(time, defaultTime) {
-        var multipels = {
-          s: 1000,
-          m: 60000
-        };
+		if (fire !== false) {
+			editor.fire('RemoveDraft');
+		}
+	}
 
-        time = /^(\d+)([ms]?)$/.exec('' + (time || defaultTime));
+	function storeDraft() {
+		if (!isEmpty() && editor.isDirty()) {
+			LocalStorage.setItem(prefix + "draft", editor.getContent({format: 'raw', no_events: true}));
+			LocalStorage.setItem(prefix + "time", new Date().getTime());
+			editor.fire('StoreDraft');
+		}
+	}
 
-        return (time[2] ? multipels[time[2]] : 1) * parseInt(time, 10);
-      }
+	function restoreDraft() {
+		if (hasDraft()) {
+			editor.setContent(LocalStorage.getItem(prefix + "draft"), {format: 'raw'});
+			editor.fire('RestoreDraft');
+		}
+	}
 
-      function hasDraft() {
-        var time = parseInt(LocalStorage.getItem(prefix + "time"), 10) || 0;
+	function startStoreDraft() {
+		if (!started) {
+			setInterval(function() {
+				if (!editor.removed) {
+					storeDraft();
+				}
+			}, settings.autosave_interval);
 
-        if (new Date().getTime() - time > settings.autosave_retention) {
-          removeDraft(false);
-          return false;
-        }
+			started = true;
+		}
+	}
 
-        return true;
-      }
+	settings.autosave_interval = parseTime(settings.autosave_interval, '30s');
+	settings.autosave_retention = parseTime(settings.autosave_retention, '20m');
 
-      function removeDraft(fire) {
-        LocalStorage.removeItem(prefix + "draft");
-        LocalStorage.removeItem(prefix + "time");
+	function postRender() {
+		var self = this;
 
-        if (fire !== false) {
-          editor.fire('RemoveDraft');
-        }
-      }
+		self.disabled(!hasDraft());
 
-      function storeDraft() {
-        if (!isEmpty() && editor.isDirty()) {
-          LocalStorage.setItem(prefix + "draft", editor.getContent({ format: 'raw', no_events: true }));
-          LocalStorage.setItem(prefix + "time", new Date().getTime());
-          editor.fire('StoreDraft');
-        }
-      }
+		editor.on('StoreDraft RestoreDraft RemoveDraft', function() {
+			self.disabled(!hasDraft());
+		});
 
-      function restoreDraft() {
-        if (hasDraft()) {
-          editor.setContent(LocalStorage.getItem(prefix + "draft"), { format: 'raw' });
-          editor.fire('RestoreDraft');
-        }
-      }
+		startStoreDraft();
+	}
 
-      function startStoreDraft() {
-        if (!started) {
-          setInterval(function () {
-            if (!editor.removed) {
-              storeDraft();
-            }
-          }, settings.autosave_interval);
+	function restoreLastDraft() {
+		editor.undoManager.beforeChange();
+		restoreDraft();
+		removeDraft();
+		editor.undoManager.add();
+	}
 
-          started = true;
-        }
-      }
+	editor.addButton('restoredraft', {
+		title: 'Restore last draft',
+		onclick: restoreLastDraft,
+		onPostRender: postRender
+	});
 
-      settings.autosave_interval = parseTime(settings.autosave_interval, '30s');
-      settings.autosave_retention = parseTime(settings.autosave_retention, '20m');
+	editor.addMenuItem('restoredraft', {
+		text: 'Restore last draft',
+		onclick: restoreLastDraft,
+		onPostRender: postRender,
+		context: 'file'
+	});
 
-      function postRender() {
-        var self = this;
+	function isEmpty(html) {
+		var forcedRootBlockName = editor.settings.forced_root_block;
 
-        self.disabled(!hasDraft());
+		html = tinymce.trim(typeof html == "undefined" ? editor.getBody().innerHTML : html);
 
-        editor.on('StoreDraft RestoreDraft RemoveDraft', function () {
-          self.disabled(!hasDraft());
-        });
+		return html === '' || new RegExp(
+			'^<' + forcedRootBlockName + '[^>]*>((\u00a0|&nbsp;|[ \t]|<br[^>]*>)+?|)<\/' + forcedRootBlockName + '>|<br>$', 'i'
+		).test(html);
+	}
 
-        startStoreDraft();
-      }
+	if (editor.settings.autosave_restore_when_empty !== false) {
+		editor.on('init', function() {
+			if (hasDraft() && isEmpty()) {
+				restoreDraft();
+			}
+		});
 
-      function restoreLastDraft() {
-        editor.undoManager.beforeChange();
-        restoreDraft();
-        removeDraft();
-        editor.undoManager.add();
-      }
+		editor.on('saveContent', function() {
+			removeDraft();
+		});
+	}
 
-      editor.addButton('restoredraft', {
-        title: 'Restore last draft',
-        onclick: restoreLastDraft,
-        onPostRender: postRender
-      });
+	window.onbeforeunload = tinymce._beforeUnloadHandler;
 
-      editor.addMenuItem('restoredraft', {
-        text: 'Restore last draft',
-        onclick: restoreLastDraft,
-        onPostRender: postRender,
-        context: 'file'
-      });
-
-      function isEmpty(html) {
-        var forcedRootBlockName = editor.settings.forced_root_block;
-
-        html = Tools.trim(typeof html == "undefined" ? editor.getBody().innerHTML : html);
-
-        return html === '' || new RegExp(
-          '^<' + forcedRootBlockName + '[^>]*>((\u00a0|&nbsp;|[ \t]|<br[^>]*>)+?|)<\/' + forcedRootBlockName + '>|<br>$', 'i'
-        ).test(html);
-      }
-
-      if (editor.settings.autosave_restore_when_empty !== false) {
-        editor.on('init', function () {
-          if (hasDraft() && isEmpty()) {
-            restoreDraft();
-          }
-        });
-
-        editor.on('saveContent', function () {
-          removeDraft();
-        });
-      }
-
-      window.onbeforeunload = EditorManager._beforeUnloadHandler;
-
-      this.hasDraft = hasDraft;
-      this.storeDraft = storeDraft;
-      this.restoreDraft = restoreDraft;
-      this.removeDraft = removeDraft;
-      this.isEmpty = isEmpty;
-    });
-
-    return function () { };
-  }
-);
-dem('tinymce.plugins.autosave.Plugin')();
-})();
+	this.hasDraft = hasDraft;
+	this.storeDraft = storeDraft;
+	this.restoreDraft = restoreDraft;
+	this.removeDraft = removeDraft;
+	this.isEmpty = isEmpty;
+});
