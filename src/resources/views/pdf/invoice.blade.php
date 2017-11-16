@@ -23,13 +23,13 @@
         <td>
             <hr />
             @if ($type == 'proforma')
-                Proforma invoice number :    T-{{$order->id}}-{{date('Y')}}<br>
-                Date of order:   {{$order->created_at->format('d.m.Y')}}<br>
-                Valid until:   {{$order->valid_until ? $order->valid_until->format('d.m.Y') : $order->created_at->addDays('30')->format('d.m.Y') }}<br>
+                Proforma invoice number :    T-{{ $order->id }}-{{date('Y') }}<br>
+                Date of order:   {{ $order->created_at->format('d.m.Y') }}<br>
+                Valid until:   {{ $order->valid_until ? $order->valid_until->format('d.m.Y') : $order->created_at->addDays('30')->format('d.m.Y') }}<br>
             @else
-                Invoice number :    {{$order->invoice_number}}<br>
-                Date of order:   {{$order->created_at->format('d.m.Y')}}<br>
-                Date of purchase:  {{$order->date_of_purchase ? $order->date_of_purchase->format('d.m.Y') : ''}}<br>
+                Invoice number :    {{ $order->invoice_number }}<br>
+                Date of order:   {{ $order->created_at->format('d.m.Y') }}<br>
+                Date of purchase:  {{ $order->date_of_purchase ? $order->date_of_purchase->format('d.m.Y') : '' }}<br>
             @endif
             <hr />
         </td>
@@ -51,23 +51,23 @@
                     </td>
                     <td style="border: 1px solid black; padding:10px;">
                         <strong>Buyer:</strong> <br />
-                            {{$order->billing_name}}<br>
-                            {{$order->billing_contact_person}}<br>
-                            {{$order->billing_address}}<br>
-                            {{$order->billing_postcode}} {{$order->billing_city}}<br>
-                            {{$order->billing_country}}<br>
-                            {{$order->billing_phone}}<br>
-                            {{$order->billing_email}}<br>        
+                            {{ $order->billing_name }}<br>
+                            {{ $order->billing_contact_person }}<br>
+                            {{ $order->billing_address }}<br>
+                            {{ $order->billing_postcode }} {{ $order->billing_city }}<br>
+                            {{ $order->billing_country }}<br>
+                            {{ $order->billing_phone }}<br>
+                            {{ $order->billing_email }}<br>        
 
                         @if ($order->show_shipping_address)
                             <strong>Shipping to:</strong><br>
-                            {{$order->shipping_name}}<br>
-                            {{$order->shipping_contact_person}}<br>
-                            {{$order->shipping_address}}<br>
-                            {{$order->shipping_postcode}} {{$order->shipping_city}}<br>
-                            {{$order->shipping_country}}<br>
-                            {{$order->shipping_phone}}<br>
-                            {{$order->shipping_email}}<br>        
+                            {{ $order->shipping_name }}<br>
+                            {{ $order->shipping_contact_person }}<br>
+                            {{ $order->shipping_address }}<br>
+                            {{ $order->shipping_postcode }} {{ $order->shipping_city }}<br>
+                            {{ $order->shipping_country }}<br>
+                            {{ $order->shipping_phone }}<br>
+                            {{ $order->shipping_email }}<br>        
                         @endif
                     </td>
                 </tr>
@@ -106,44 +106,44 @@
                             </tr>
                     @endif
                     <tr >
-                        <td style="padding: 0 5px;border: 1px solid black;text-align: center">{{$key+1}}</td>
-                        <td style="padding: 0 5px;border: 1px solid black;width:300px">{{$item->product->title}}</td>
+                        <td style="padding: 0 5px;border: 1px solid black;text-align: center">{{ $key+1 }}</td>
+                        <td style="padding: 0 5px;border: 1px solid black;width:300px">{{ $item->product->title }}</td>
                         <td style="padding: 0 5px;border: 1px solid black;">pcs</td>
-                        <td style="padding: 0 5px;border: 1px solid black;text-align: center">{{$item->quantity}}</td>                            
-                        <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{$item->custom_price ?: $item->product->price}} {{$order->currency}}</td>
-                        <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{$item->discount}} {{$order->currency}}</td>
-                        <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{$item->custom_price ? ($item->custom_price - $item->discount) : ($item->product->price * $item->quantity - $item->discount)}} {{$order->currency}}</td>
+                        <td style="padding: 0 5px;border: 1px solid black;text-align: center">{{ $item->quantity }}</td>                            
+                        <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{ number_format($item->custom_price != 0 ? ($item->custom_price - $item->discount) : ($item->product->price * $item->quantity - $item->discount), 2) }} {{ $order->currency }}</td>
+                        <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{ number_format($item->discount, 2) }} {{ $order->currency }}</td>
+                        <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{ number_format($item->custom_price != 0 ? ($item->custom_price - $item->discount) : ($item->product->price * $item->quantity - $item->discount), 2) }} {{ $order->currency }}</td>
                         <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{ config('laravel-admin.invoice.vat') ?: '0' }}%</td>                            
                     </tr>
                 @endforeach
                 @if ($order->shipment_price)
                      <tr >
-                        <td style="padding: 0 5px;border: 1px solid black;text-align: center">{{$order->items->count()+1}}</td>
+                        <td style="padding: 0 5px;border: 1px solid black;text-align: center">{{ $order->items->count()+1 }}</td>
                         <td style="padding: 0 5px;border: 1px solid black;">Shipping</td>
                         <td style="padding: 0 5px;border: 1px solid black;">pcs</td>
                         <td style="padding: 0 5px;border: 1px solid black;text-align: center">1</td>                            
-                        <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{$order->shipment_price}} {{$order->currency}}</td>
-                        <td style="padding: 0 5px;border: 1px solid black;text-align: right">0 {{$order->currency}}</td>
-                        <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{$order->shipment_price}} {{$order->currency}}</td>
-                        <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{ config('laravel-admin.invoice.vat') ?: '0' }}%</td>                            
+                        <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{ number_format($order->shipment_price, 2) }} {{ $order->currency }}</td>
+                        <td style="padding: 0 5px;border: 1px solid black;text-align: right"></td>
+                        <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{ number_format($order->shipment_price, 2) }} {{ $order->currency }}</td>
+                        <td style="padding: 0 5px;border: 1px solid black;text-align: right"></td>
                     </tr>               
                 @endif
                 <tr>
                     <td colspan="4" style="padding: 0 5px;border: 1px solid black;border: none;"></td>
                     <td colspan="2">Total without VAT</td>
-                    <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{$order->total_price}} {{$order->currency}}</td>
+                    <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{ number_format($order->total_price, 2) }} {{ $order->currency }}</td>
                     <td></td>
                 </tr>
                 <tr>
                     <td colspan="4" style="padding: 0 5px;border: 1px solid black;border: none;"></td>
                     <td colspan="2">VAT amount</td>
-                    <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{ $order->total_price * (empty(config('laravel-admin.invoice.vat')) ? '0' : config('laravel-admin.invoice.vat'))/100 }} {{$order->currency}}</td>
+                    <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{ number_format($order->total_price * (empty(config('laravel-admin.invoice.vat')) ? '0' : config('laravel-admin.invoice.vat')/100), 2) }} {{ $order->currency }}</td>
                     <td></td>
                 </tr>
                 <tr>
                     <td style="padding: 0 5px;border: 1px solid black;border: none;" colspan="4"></td>
                     <td colspan="2"><strong>Total for payment</strong></td>
-                    <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{$order->total_price + $order->total_price * (empty(config('laravel-admin.invoice.vat')) ? '0' : config('laravel-admin.invoice.vat'))/100 }} {{$order->currency}}</td>
+                    <td style="padding: 0 5px;border: 1px solid black;text-align: right">{{ number_format($order->total_price + $order->total_price * (empty(config('laravel-admin.invoice.vat')) ? '0' : config('laravel-admin.invoice.vat')/100), 2) }} {{ $order->currency }}</td>
                     <td></td>
                 </tr>                        
             </table>
