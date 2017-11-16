@@ -3,8 +3,8 @@
 namespace SystemInc\LaravelAdmin\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use File;
+use Illuminate\Http\Request;
 use Mail;
 use PDF;
 use SystemInc\LaravelAdmin\Order;
@@ -241,11 +241,11 @@ class OrdersController extends Controller
         $type = 'proforma';
 
         $pdf_path = storage_path('app/public/invoices/'.$type.'-'.$order_id.'.pdf');
-        
-        if (!File::exists(storage_path('app/public/invoices'))) {    
+
+        if (!File::exists(storage_path('app/public/invoices'))) {
             File::makeDirectory(storage_path('app/public/invoices'), 755, true);
         }
-        
+
         PDF::loadView('admin::pdf.invoice', compact('order', 'type'))->save($pdf_path);
 
         // send email
@@ -280,10 +280,10 @@ class OrdersController extends Controller
 
         $pdf_path = storage_path('app/public/invoices/'.$type.'-'.$order_id.'.pdf');
 
-        if (!File::exists(storage_path('app/public/invoices'))) {    
+        if (!File::exists(storage_path('app/public/invoices'))) {
             File::makeDirectory(storage_path('app/public/invoices'), 755, true);
         }
-        
+
         PDF::loadView('admin::pdf.invoice', compact('order', 'type'))->save($pdf_path);
 
         // send email
