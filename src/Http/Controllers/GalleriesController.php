@@ -309,20 +309,20 @@ class GalleriesController extends Controller
                     $original_image = $this->resizeImage(1920, 1080, 'images/galleries/', 'images/galleries'.$original, $image);
                     $thumb_image = $this->resizeImage(375, 200, 'images/galleries/thumb/', 'images/galleries'.$thumb, $image);
                     $mobile_image = $this->resizeImage(1024, 768, 'images/galleries/mobile/', 'images/galleries'.$mobile, $image);
-                }
 
-                $data = [
-                    'gallery_id'    => $gallery_id,
-                    'source'        => $original_image,
-                    'path_source'   => $original_path,
-                    'thumb_source'  => $thumb_image,
-                    'mobile_source' => $mobile_image,
-                ];
+                    $data = [
+                        'gallery_id'    => $gallery_id,
+                        'source'        => $original_image,
+                        'path_source'   => $original_path,
+                        'thumb_source'  => $thumb_image,
+                        'mobile_source' => $mobile_image,
+                    ];
 
-                if ($image_id) {
-                    GalleryImage::find($image_id)->update($data);
-                } else {
-                    GalleryImage::create($data);
+                    if ($image_id) {
+                        GalleryImage::find($image_id)->update($data);
+                    } else {
+                        GalleryImage::create($data);
+                    }
                 }
             }
 
