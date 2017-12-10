@@ -16,7 +16,7 @@ class SettingsController extends Controller
     public function __construct()
     {
         if (config('laravel-admin.modules.settings') == false) {
-            return redirect(config('laravel-admin.route_prefix'))->with('error', 'This modules is disabled in config/laravel-admin.php')->send();
+            return redirect(config('laravel-admin.route_prefix'))->with('error', 'Settings module is disabled in config/laravel-admin.php')->send();
         }
     }
 
@@ -43,20 +43,19 @@ class SettingsController extends Controller
      */
     public function postUpdate(Request $request)
     {
+        $data = [];
+        $data['title'] = !empty($request->title) ? $request->title : null;
+
         $file = $request->file('logo');
 
         if ($file && $file->isValid()) {
-            $dirname = 'admin-panel/'.$file->getClientOriginalName();
+            $file_path = 'admin-panel/'.$file->getClientOriginalName();
 
             Storage::deleteDirectory('admin-panel');
-            Storage::put($dirname, file_get_contents($file));
+            Storage::put($file_path, file_get_contents($file));
 
-            $source = $dirname;
+            $data['source'] = $file_path;
         }
-        $data = [
-            'title'  => !empty($request->title) ? $request->title : null,
-            'source' => !empty($source) ? $source : null,
-        ];
 
         $setting = Setting::first();
 

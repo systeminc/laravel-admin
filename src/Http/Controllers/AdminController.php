@@ -22,7 +22,7 @@ class AdminController extends Controller
      */
     public function getIndex()
     {
-        return view('admin::index');
+        return redirect(config('laravel-admin.route_prefix').'/'.config('laravel-admin.dashboard_module'));
     }
 
     /**
