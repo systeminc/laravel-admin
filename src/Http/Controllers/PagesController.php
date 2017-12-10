@@ -20,7 +20,7 @@ class PagesController extends Controller
     public function __construct()
     {
         if (config('laravel-admin.modules.pages') == false) {
-            return redirect(config('laravel-admin.route_prefix'))->with('error', 'This module is disabled in config/laravel-admin.php')->send();
+            return redirect(config('laravel-admin.route_prefix'))->with('error', 'Pages module is disabled in config/laravel-admin.php')->send();
         }
     }
 
