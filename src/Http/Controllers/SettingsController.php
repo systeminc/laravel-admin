@@ -16,7 +16,7 @@ class SettingsController extends Controller
     public function __construct()
     {
         if (config('laravel-admin.modules.settings') == false) {
-            return redirect(config('laravel-admin.route_prefix'))->with('error', 'This modules is disabled in config/laravel-admin.php')->send();
+            return redirect(config('laravel-admin.route_prefix'))->with('error', 'This module is disabled in config/laravel-admin.php')->send();
         }
     }
 
