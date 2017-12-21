@@ -3,6 +3,7 @@
 namespace SystemInc\LaravelAdmin\Http\Controllers\Blog;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Storage;
 use SystemInc\LaravelAdmin\BlogCategory;
@@ -72,7 +73,11 @@ class BlogController extends Controller
     public function postSave(Request $request, $post_id)
     {
         $post = BlogPost::find($post_id);
-        $post->update($request->all());
+        $data = $request->all();
+
+        $data['published_at'] = Carbon::createFromFormat('m/d/Y h:i', $request->published_at)->toDateTimeString();
+
+        $post->update($data);
 
         $original_size = is_array($request->original_size) ? $request->original_size : [];
 
@@ -86,6 +91,18 @@ class BlogController extends Controller
             }
 
             $post->thumb = null;
+        }
+
+        if ($request->hasFile('cover')) {
+            $post->cover = $this->saveImage($request->file('cover'), 'blog', in_array('cover', $original_size));
+        }
+
+        if ($request->input('delete_cover')) {
+            if (Storage::exists($post->cover)) {
+                Storage::delete($post->cover);
+            }
+
+            $post->cover = null;
         }
 
         $post->slug = str_slug($request->slug);

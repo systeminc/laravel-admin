@@ -32,5 +32,6 @@ mix.scripts(['resources/assets/src/bower_components/jquery/dist/jquery.js',
     'resources/assets/src/js/admin.js',
     'resources/assets/src/bower_components/tinymce/tinymce.js',
     'resources/assets/src/js/tinymce-init.js',
-    'resources/assets/src/js/global.js'
+    'resources/assets/src/js/global.js',
+    'resources/assets/src/js/timepicker.js'
 ], 'resources/assets/dist/js/admin.js');

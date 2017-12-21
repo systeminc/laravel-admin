@@ -22,6 +22,9 @@
 			<label>Slug</label>
 			<input type="text" name="slug" value="{{$post->slug}}">
 
+			<label>Author</label>
+			<input type="text" name="author" value="{{$post->author}}">
+
 			<label>Excerpt</label>
 			<textarea name="excerpt" rows="5">{{$post->excerpt}}</textarea>
 
@@ -38,6 +41,19 @@
 						@endforeach
 					</select>				
 				</div>
+			</div>
+
+			<label>Cover image</label>
+			<div class="file-input-wrap cf">
+				@if(!empty($post->cover)) 
+					<div class="small-image-preview" style="background-image: url({{ Storage::url($post->cover)}})"></div>
+					<input type="checkbox" name="delete_cover">Delete this file?
+				@else
+					<div class="fileUpload">
+						<span>Choose file</span>
+						<input type="file" name="cover" class="upload" />
+					</div>
+				@endif
 			</div>
 
 			<label>Thumbnail</label>
@@ -62,6 +78,9 @@
 			<label>SEO Keywords</label>
 			<input type="text" name="meta_keywords" value="{{$post->meta_keywords}}">
 
+			<label>Published at</label>
+			<input id="timepicker" type="text" name="published_at" value="{{$post->published_at}}">
+
 			<label>Visible</label>
 			<div class="select-style">
 				<select name="visible">
@@ -82,6 +101,5 @@
 		</form>
 		
 	</div>
-	
 
 @stop

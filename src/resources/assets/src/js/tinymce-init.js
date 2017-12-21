@@ -7,6 +7,11 @@ $(function() {
         fontsize_formats: "8px 10px 12px 13px 14px 15px 16px 18px 24px 36px",
         toolbar1: "styleselect | fontsizeselect | forecolor bold italic  bullist numlist | alignleft aligncenter alignright alignjustify | link unlink table media image uploadimage | charmap code",
         menubar : false,
+        branding: false,
+        mobile: {
+            theme: 'mobile',
+            plugins: [ 'autosave', 'lists', 'autolink', 'image', 'paste', 'textcolor', 'media' ]
+        },        
         relative_urls : true,
         convert_urls: true,
         remove_script_host : true,

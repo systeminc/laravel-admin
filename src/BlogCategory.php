@@ -18,4 +18,9 @@ class BlogCategory extends Model
         'seo_description',
         'seo_keywords',
     ];
+
+    public function posts()
+    {
+        return $this->hasMany('SystemInc\LaravelAdmin\BlogPost');
+    }
 }
