@@ -80,7 +80,7 @@ class BlogController extends Controller
         } catch (\Exception $e) {
             //
         }
-        a
+        
         $post->update($data);
 
         $original_size = is_array($request->original_size) ? $request->original_size : [];
