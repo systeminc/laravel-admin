@@ -17,7 +17,12 @@ class BlogPost extends Model
         'meta_title',
         'meta_description',
         'meta_keywords',
+        'cover',
+        'published_at',
+        'author',
     ];
+
+    protected $dates = ['published_at'];
 
     public function comments()
     {
