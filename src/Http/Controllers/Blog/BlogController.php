@@ -74,13 +74,13 @@ class BlogController extends Controller
     {
         $post = BlogPost::find($post_id);
         $data = $request->all();
-        
+
         try {
             $data['published_at'] = Carbon::createFromFormat('m/d/Y h:i', $request->published_at)->toDateTimeString();
         } catch (\Exception $e) {
             //
         }
-        
+
         $post->update($data);
 
         $original_size = is_array($request->original_size) ? $request->original_size : [];
