@@ -27,7 +27,7 @@
 
 				$(this).fadeOut('fast').fadeIn('fast');
 
-				window.parent.tinyMCE.get("{{$editor_id}}").execCommand('mceInsertContent',false,'<img style="position: relative; float: left;" src="'+$(this).attr("src")+'">');
+				window.parent.tinyMCE.get("{{$editor_id}}").execCommand('mceInsertContent',false,'<img src="'+$(this).attr("src")+'">');
 			});
 		
 			$(".delete-image").click(function(e) {
