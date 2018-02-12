@@ -112,7 +112,7 @@ class SLA
     /**
      * Instance of map.
      *
-     * @return type
+     * @return Map
      */
     public function map($key)
     {
@@ -120,32 +120,48 @@ class SLA
     }
 
     /**
-     * Get file from storage(Image, PDF,...).
+     * Get file from storage
      *
-     * @param string      $filename
-     * @param null|number $width
-     * @param null|number $height
+     * @param string $key
      *
      * @return string
      */
-    public function getFile($path, $width = null, $height = null)
+    public function getFile($key)
     {
-        if (!Storage::exists($path)) {
+        return Storage::exists($key) ? Storage::url($key) : false;
+    }
+
+    /**
+     * Get image from storage. Optionally resized and cached for future use
+     *
+     * @param string $key
+     * @param null|int $width
+     * @param null|int $height
+     *
+     * @return string
+     */
+    public function getImage($key, $width = null, $height = null)
+    {
+        if (!Storage::exists($key)) {
             return false;
         }
 
         if ($width || $height) {
-            list($dirname, $basename, $extension, $filename) = array_values(pathinfo($path));
+            list($dirname, $basename, $extension, $filename) = array_values(pathinfo($key));
+
+            if ($extension === 'svg') {
+                return Storage::url($key);
+            }
 
             $width_modifier = empty($width) ? '' : "_w$width";
             $height_modifier = empty($height) ? '' : "_h$height";
 
-            $new_path = $dirname.DIRECTORY_SEPARATOR.$filename.$width_modifier.$height_modifier.'.'.$extension;
+            $resized_key = $dirname.DIRECTORY_SEPARATOR.$filename.$width_modifier.$height_modifier.'.'.$extension;
 
-            if (Storage::exists($new_path)) {
-                return Storage::url($new_path);
+            if (Storage::exists($resized_key)) {
+                return Storage::url($resized_key);
             } else {
-                $image = Image::make(Storage::get($path))
+                $image = Image::make(Storage::get($key))
                     ->orientate()
                     ->resize($width, $height, function ($constraint) {
                         $constraint->aspectRatio();
@@ -154,12 +170,12 @@ class SLA
                     ->interlace()
                     ->encode();
 
-                Storage::put($new_path, $image);
+                Storage::put($resized_key, $image);
 
-                return Storage::url($new_path);
+                return Storage::url($resized_key);
             }
         }
 
-        return Storage::url($path);
+        return Storage::url($key);
     }
 }
