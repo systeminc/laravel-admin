@@ -67,7 +67,7 @@ class ModelsTest extends LaravelAdminTestCase
     {
         $gallery_image = new GalleryImage();
 
-        $this->assertArraySubset(['gallery_id', 'source', 'path_source', 'thumb_source', 'mobile_source', 'order_number'], $gallery_image->getFillable());
+        $this->assertArraySubset(['gallery_id', 'source', 'order_number'], $gallery_image->getFillable());
     }
 
     public function testFillablefieldsLeadModel()

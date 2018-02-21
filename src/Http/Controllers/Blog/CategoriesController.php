@@ -72,8 +72,6 @@ class CategoriesController extends Controller
             return back()->withInput()->withErrors($validation);
         }
 
-        $original_size = is_array($request->original_size) ? $request->original_size : [];
-
         if ($category_id == 'new') {
             $category = new BlogCategory();
         } else {
@@ -82,7 +80,7 @@ class CategoriesController extends Controller
 
         $category->fill($request->all());
 
-        $category->thumb = $this->saveImage($request->file('thumb'), 'blog', in_array('thumb', $original_size));
+        $category->thumb = $this->saveImageWithRandomName($request->file('thumb'), 'blog');
 
         if ($request->input('delete_thumb')) {
             if (Storage::exists($category->thumb)) {
@@ -91,6 +89,7 @@ class CategoriesController extends Controller
 
             $category->thumb = null;
         }
+
         //REPLACE slug
         $category->slug = str_slug($request->title);
 
