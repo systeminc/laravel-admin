@@ -103,7 +103,7 @@ class AdminController extends Controller
 
         foreach ($request->file('files') as $file) {
             if ($file->isValid() && in_array($file->getClientOriginalExtension(), $allowed) && strpos($directory, 'images/tiny') !== false) {
-                $original = $this->cleanSpecialChars($file->getClientOriginalName());
+                $original = $this->sanitizeFilename($file->getClientOriginalName());
 
                 $original_image = Image::make($file)->interlace()->encode();
 

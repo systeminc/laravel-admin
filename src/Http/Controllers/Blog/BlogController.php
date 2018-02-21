@@ -83,10 +83,8 @@ class BlogController extends Controller
 
         $post->update($data);
 
-        $original_size = is_array($request->original_size) ? $request->original_size : [];
-
         if ($request->hasFile('thumb')) {
-            $post->thumb = $this->saveImage($request->file('thumb'), 'blog', in_array('thumb', $original_size));
+            $post->thumb = $this->saveImageWithRandomName($request->file('thumb'), 'blog');
         }
 
         if ($request->input('delete_thumb')) {
@@ -98,7 +96,7 @@ class BlogController extends Controller
         }
 
         if ($request->hasFile('cover')) {
-            $post->cover = $this->saveImage($request->file('cover'), 'blog', in_array('cover', $original_size));
+            $post->cover = $this->saveImageWithRandomName($request->file('cover'), 'blog');
         }
 
         if ($request->input('delete_cover')) {

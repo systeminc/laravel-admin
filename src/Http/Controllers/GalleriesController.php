@@ -63,7 +63,7 @@ class GalleriesController extends Controller
                 return back()->with(['error' => 'Similar gallery exists, so we can create key('.$key.'), try deferent title']);
             }
 
-            $gallery = Gallery::create([
+            Gallery::create([
                 'title' => $request->title,
                 'key'   => $key,
             ]);
@@ -286,47 +286,37 @@ class GalleriesController extends Controller
         return back();
     }
 
+
     /**
      * Store a created images in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param array $images
+     * @param $gallery_id
+     * @param bool $image_id
      *
-     * @return \Illuminate\Http\Response
+     * @return bool
      */
     private function uploadImages($images, $gallery_id, $image_id = false)
     {
         if (is_array($images)) {
             foreach (array_filter($images) as $image) {
-                if ($image->isValid()) {
-                    $image_name = str_random(5);
+                $storage_key = $this->saveImageWithRandomName($image, 'galleries/'.$gallery_id);
 
-                    $original = '/'.$gallery_id.'-'.$image_name.'.'.$image->getClientOriginalExtension();
-                    $thumb = '/thumb/'.$gallery_id.'-'.$image_name.'.'.$image->getClientOriginalExtension();
-                    $mobile = '/mobile/'.$gallery_id.'-'.$image_name.'.'.$image->getClientOriginalExtension();
+                $data = [
+                    'gallery_id'    => $gallery_id,
+                    'source'        => $storage_key,
+                ];
 
-                    $original_path = storage_path('public/images/galleries'.$original);
-
-                    $original_image = $this->resizeImage(1920, 1080, 'images/galleries/', 'images/galleries'.$original, $image);
-                    $thumb_image = $this->resizeImage(375, 200, 'images/galleries/thumb/', 'images/galleries'.$thumb, $image);
-                    $mobile_image = $this->resizeImage(1024, 768, 'images/galleries/mobile/', 'images/galleries'.$mobile, $image);
-
-                    $data = [
-                        'gallery_id'    => $gallery_id,
-                        'source'        => $original_image,
-                        'path_source'   => $original_path,
-                        'thumb_source'  => $thumb_image,
-                        'mobile_source' => $mobile_image,
-                    ];
-
-                    if ($image_id) {
-                        GalleryImage::find($image_id)->update($data);
-                    } else {
-                        GalleryImage::create($data);
-                    }
+                if ($image_id) {
+                    GalleryImage::find($image_id)->update($data);
+                } else {
+                    GalleryImage::create($data);
                 }
             }
 
             return true;
+        } else  {
+            return false;
         }
     }
 
@@ -335,13 +325,8 @@ class GalleriesController extends Controller
      */
     private function handleFileElement($file)
     {
-        $imagesExtension = ['jpg', 'jpeg', 'gif', 'png'];
-
         if ($file && $file->isValid()) {
-            if (in_array($file->getClientOriginalExtension(), $imagesExtension)) {
-                return $this->resizeImage(1920, 1080, 'images/galleryelements', 'images/galleryelements/'.$this->cleanSpecialChars($file->getClientOriginalName()), $file);
-            }
-            $dirname = 'elements/'.$this->cleanSpecialChars($file->getClientOriginalName());
+            $dirname = 'elements/'.$this->sanitizeFilename($file->getClientOriginalName());
 
             Storage::put($dirname, file_get_contents($file));
 

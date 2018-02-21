@@ -191,7 +191,6 @@ function readImageFromInput(input) {
         	$(input).parent().parent().find('[type=checkbox]').remove();
         	$(input).parent().parent().find('label').remove();
             $(input).parent().parent().append('<div class="small-image-preview" style="background-image: url('+e.target.result+')"></div>');
-            $(input).parent().parent().append('<label>Keep original size: 	<input type="checkbox" name="original_size[]" value="'+$(input).attr('name')+'"></label>');
         }
         
         reader.readAsDataURL(input.files[0]);

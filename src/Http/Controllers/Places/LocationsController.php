@@ -67,11 +67,17 @@ class LocationsController extends Controller
         $location = new Location();
         $location->fill($data);
 
-        $original_size = is_array($request->original_size) ? $request->original_size : [];
+        if ($request->hasFile('image')){
+            $location->image = $this->saveImageWithRandomName($request->file('image'), 'locations');
+        }
 
-        $location->image = $this->saveImage($request->file('image'), 'locations', in_array('image', $original_size));
-        $location->thumb_image = $this->saveImage($request->file('thumb_image'), 'locations/thumb', in_array('thumb_image', $original_size));
-        $location->marker_image = $this->saveImage($request->file('marker_image'), 'locations/marker', in_array('marker_image', $original_size));
+        if ($request->hasFile('thumb_image')){
+            $location->thumb_image = $this->saveImageWithRandomName($request->file('thumb_image'), 'locations/thumb');
+        }
+
+        if ($request->hasFile('marker_image')){
+            $location->marker_image = $this->saveImageWithRandomName($request->file('marker_image'), 'locations/marker');
+        }
 
         if ($request->map_id == 0) {
             $location->map_id = null;
@@ -123,11 +129,17 @@ class LocationsController extends Controller
 
         $this->deleteImage($request, $location);
 
-        $original_size = is_array($request->original_size) ? $request->original_size : [];
+        if ($request->hasFile('image')) {
+            $location->image = $this->updateImage($location->image, $request->file('image'));
+        }
 
-        $location->image = $request->hasFile('image') ? $this->saveImage($request->file('image'), 'locations', in_array('image', $original_size)) : $location->image;
-        $location->thumb_image = $request->hasFile('thumb_image') ? $this->saveImage($request->file('thumb_image'), 'locations/thumb', in_array('thumb_image', $original_size)) : $location->thumb_image;
-        $location->marker_image = $request->hasFile('marker_image') ? $this->saveImage($request->file('marker_image'), 'locations/marker', in_array('marker_image', $original_size)) : $location->marker_image;
+        if ($request->file('thumb_image')) {
+            $location->thumb_image = $this->updateImage($location->thumb_image, $request->file('thumb_image'));
+        }
+
+        if ($request->file('marker_image')) {
+            $location->marker_image = $this->updateImage($location->marker_image, $request->file('marker_image'));
+        }
 
         $location->map_id = $request->map_id == 0 ? null : $request->map_id;
         $location->key = str_slug($request->key);

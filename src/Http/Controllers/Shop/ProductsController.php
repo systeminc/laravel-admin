@@ -78,21 +78,19 @@ class ProductsController extends Controller
             return back()->withInput()->withErrors($validation);
         }
 
-        $original_size = is_array($request->original_size) ? $request->original_size : [];
-
         $product = Product::find($product_id);
 
         $product->update($request->all());
 
         if ($request->hasFile('pdf')) {
-            $product->pdf = $this->uploadPdf($request->file('pdf'), 'products');
+            $product->pdf = $this->savePdf($request->file('pdf'), 'products');
         }
 
         if ($request->hasFile('thumb')) {
-            $product->thumb = $this->saveImage($request->file('thumb'), 'products', in_array('thumb', $original_size));
+            $product->thumb = $this->saveImageWithRandomName($request->file('thumb'), 'products');
         }
         if ($request->hasFile('image')) {
-            $product->image = $this->saveImage($request->file('image'), 'products', in_array('image', $original_size));
+            $product->image = $this->saveImageWithRandomName($request->file('image'), 'products');
         }
 
         if (!empty($request->delete_thumb)) {
@@ -112,10 +110,10 @@ class ProductsController extends Controller
         }
 
         if ($request->hasFile('thumb_hover')) {
-            $product->thumb_hover = $this->saveImage($request->file('thumb_hover'), 'products', in_array('thumb_hover', $original_size));
+            $product->thumb_hover = $this->saveImageWithRandomName($request->file('thumb_hover'), 'products');
         }
         if ($request->hasFile('image_hover')) {
-            $product->image_hover = $this->saveImage($request->file('image_hover'), 'products', in_array('image_hover', $original_size));
+            $product->image_hover = $this->saveImageWithRandomName($request->file('image_hover'), 'products');
         }
 
         if (!empty($request->delete_thumb_hover)) {
@@ -135,7 +133,11 @@ class ProductsController extends Controller
         }
 
         if (!empty($request->delete_pdf)) {
-            $product->pdf = $this->removePdf($product->pdf);
+            if (Storage::exists($product->pdf)) {
+                Storage::delete($product->pdf);
+            }
+
+            $product->pdf = null;
         }
 
         $product->slug = str_slug($request->slug);
@@ -183,7 +185,7 @@ class ProductsController extends Controller
      * Add similar product.
      *
      * @param Request $request
-     * @param int     $product_id
+     * @param int $product_id
      *
      * @return type
      */
@@ -265,10 +267,8 @@ class ProductsController extends Controller
 
         $variation->fill($request->all());
 
-        $original_size = is_array($request->original_size) ? $request->original_size : [];
-
         if ($request->hasFile('image')) {
-            $variation->image = $this->saveImage($request->file('image'), 'products', in_array('image', $original_size));
+            $variation->image = $this->saveImageWithRandomName($request->file('image'), 'products');
         }
 
         $variation->price = !empty($request->price) ? $request->price : 0;
@@ -297,10 +297,8 @@ class ProductsController extends Controller
         $variation = ProductVariation::find($variation_id);
         $variation->update($request->all());
 
-        $original_size = is_array($request->original_size) ? $request->original_size : [];
-
         if ($request->hasFile('image')) {
-            $variation->image = $this->saveImage($request->file('image'), 'products', in_array('image', $original_size));
+            $variation->image = $this->saveImageWithRandomName($request->file('image'), 'products');
         }
 
         if (!empty($request->delete_image)) {

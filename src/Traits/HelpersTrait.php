@@ -16,7 +16,7 @@ trait HelpersTrait
     }
 
     /**
-     * Generate nasted page list.
+     * Generate nested page list.
      */
     protected function generateNestedPageList($pages, $navigation = '')
     {
@@ -39,79 +39,101 @@ trait HelpersTrait
     }
 
     /**
-     * Save image.
+     * Save uploaded image. Overwrites existing.
+     * Prepends 'images/' to storage key by default if it doesn't exists already
+     *
+     * @param \Symfony\Component\HttpFoundation\File $image
+     * @param string $storage_key
+     *
+     * @throws \Exception
+     *
+     * @return string
      */
-    protected function saveImage($image, $path, $keepOriginal = false)
+    protected function saveImage($image, $storage_key = '')
     {
-        if ($image && $image->isValid()) {
-            $image_name = str_random(5);
-
-            $original = '/'.$image_name.'.'.$image->getClientOriginalExtension();
-            $storage_key = 'images/'.$path.$original;
-
-            if ($image->getClientOriginalExtension() === 'svg') {
-                Storage::put($storage_key, file_get_contents($image));
-            } elseif ($keepOriginal) {
-                $original_image = Image::make($image)->orientate()->interlace()->encode();
-
-                Storage::put($storage_key, $original_image);
-            } else {
-                $original_image = Image::make($image)->orientate()->interlace()
-                    ->fit(1920, 1080, function ($constraint) {
-                        $constraint->upsize();
-                    })->encode();
-
-                Storage::put($storage_key, $original_image);
-            }
-
-            return $storage_key;
+        if (!$image || !$image->isValid()) {
+            throw new \Exception('Missing or invalid image');
         }
 
-        return false;
+        if (!in_array($image->getClientOriginalExtension(), ['jpg', 'jpeg', 'gif', 'png', 'svg'])) {
+            throw new \Exception('Image extension not allowed');
+        }
+
+        $storage_key = trim($storage_key);
+
+        if (ends_with($storage_key, '/')){
+            $directory = $storage_key;
+            $filename = $this->sanitizeFilename($file->getClientOriginalName();
+        }
+        else{
+            $directory = dirname($storage_key);
+            $filename = basename($storage_key);
+        }
+
+        if (!starts_with($directory, 'images')) {
+            $directory = 'images/' . $directory;
+        }
+
+
+        if (!Storage::isDirectory($directory)) {
+            Storage::makeDirectory($directory, 0755, true);
+        }
+
+        Storage::put($directory.DIRECTORY_SEPARATOR.$filename, file_get_contents($image));
+
+        return $storage_key;
     }
 
     /**
-     * Handle image upload and resize.
+     * Save uploaded image with randomly generated name
+     *
+     * @param \Symfony\Component\HttpFoundation\File $image
+     * @param string $directory
+     *
+     * @return string
      */
-    protected function resizeImage($width, $height, $path, $output_path, $image)
+    protected function saveImageWithRandomName($image, $directory)
     {
-        if (!Storage::files($path)) {
-            Storage::makeDirectory($path, 493, true);
-        }
-
-        if ($image->getClientOriginalExtension() === 'svg') {
-            Storage::put($output_path, file_get_contents($image));
-        } else {
-            $image = Image::make($image)->orientate()
-                ->resize($width, $height, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                })->interlace()->encode();
-            Storage::put($output_path, $image);
-        }
-
-        return $output_path;
+        $storage_key = $directory.'/'.str_random(5).'.'.$image->getClientOriginalExtension();
+        return $this->saveImage($image, $storage_key);
     }
 
     /**
-     * Upload pdf.
+     * Update existing image. Delete previous version
      *
-     * @param pdf $file
-     * @param string|path  'pdf/'.$storage_path
+     * @param string $storage_key
+     * @param \Symfony\Component\HttpFoundation\File $image
      *
-     * @return type
+     * @return string
      */
-    public static function uploadPdf($file, $storage_path)
+    protected function updateImage($storage_key, $image)
+    {
+        if (!$image || !$image->isValid()) {
+            return false;
+        }
+
+        if (Storage::exists($storage_key)) {
+            Storage::delete($storage_key);
+        }
+
+        return $this->saveImage($image, $storage_key);
+    }
+
+    /**
+     * Upload PDF
+     *
+     * @param \Symfony\Component\HttpFoundation\File $file
+     * @param string $storage_path
+     *
+     * @return string|false
+     */
+    public static function savePdf($file, $storage_dir)
     {
         if ($file && $file->isValid()) {
-            $dirname = 'pdf/'.$storage_path.'/'.$file->getClientOriginalName();
+            $dirname = 'pdf/'.$storage_dir.'/'.$file->getClientOriginalName();
 
-            if (!Storage::exists('pdf')) {
-                Storage::makeDirectory('pdf');
-            }
-
-            if (!Storage::exists('pdf/'.$storage_path)) {
-                Storage::makeDirectory('pdf/'.$storage_path);
+            if (!Storage::exists('pdf/'.$storage_dir)) {
+                Storage::makeDirectory('pdf/'.$storage_dir, 0755, true);
             }
 
             Storage::put($dirname, file_get_contents($file));
@@ -123,25 +145,11 @@ trait HelpersTrait
     }
 
     /**
-     * Remove pdf.
+     * Sanitize slug leave "/".
      *
-     * @param source $file
+     * @param string $slug
      *
-     * @return type
-     */
-    public static function removePdf($file)
-    {
-        if (Storage::exists($file)) {
-            Storage::delete($file);
-
-            return;
-        }
-
-        return $file;
-    }
-
-    /**
-     *  Sanitize slug leave "/".
+     * @return string
      */
     public function sanitizeSlug($slug)
     {
@@ -180,18 +188,7 @@ trait HelpersTrait
         $this->line('');
     }
 
-    public function cleanSpecialChars($string)
-    {
-        return strtolower(
-            preg_replace(
-                ['#[\\s-]+#', '#[^A-Za-z0-9\. -]+#'],
-                ['-', ''],
-                $this->cleanString(urldecode($string))
-            )
-        );
-    }
-
-    private function cleanString($text)
+    public function sanitizeFilename($string)
     {
         $utf8 = [
             '/[áàâãªä]/u' => 'a',
@@ -214,6 +211,11 @@ trait HelpersTrait
             '/ /'         => ' ', // nonbreaking space (equiv. to 0x160)
         ];
 
-        return preg_replace(array_keys($utf8), array_values($utf8), $text);
+        $string = urldecode($string);
+        $string = strtolower($string);
+        $string = preg_replace(array_keys($utf8), array_values($utf8), $string);
+        $string = preg_replace(['#[\\s-]+#', '#[^a-z0-9\. -]+#'], ['-', ''], $string);
+
+        return $string;
     }
 }
