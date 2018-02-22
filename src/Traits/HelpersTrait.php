@@ -40,10 +40,10 @@ trait HelpersTrait
 
     /**
      * Save uploaded image. Overwrites existing.
-     * Prepends 'images/' to storage key by default if it doesn't exists already
+     * Prepends 'images/' to storage key by default if it doesn't exists already.
      *
      * @param \Symfony\Component\HttpFoundation\File $image
-     * @param string $storage_key
+     * @param string                                 $storage_key
      *
      * @throws \Exception
      *
@@ -61,19 +61,17 @@ trait HelpersTrait
 
         $storage_key = trim($storage_key);
 
-        if (ends_with($storage_key, '/')){
+        if (ends_with($storage_key, '/')) {
             $directory = $storage_key;
             $filename = $this->sanitizeFilename($image->getClientOriginalName());
-        }
-        else{
+        } else {
             $directory = dirname($storage_key);
             $filename = basename($storage_key);
         }
 
         if (!starts_with($directory, 'images')) {
-            $directory = 'images/' . $directory;
+            $directory = 'images/'.$directory;
         }
-
 
         if (!Storage::isDirectory($directory)) {
             Storage::makeDirectory($directory, 0755, true);
@@ -85,23 +83,24 @@ trait HelpersTrait
     }
 
     /**
-     * Save uploaded image with randomly generated name
+     * Save uploaded image with randomly generated name.
      *
      * @param \Symfony\Component\HttpFoundation\File $image
-     * @param string $directory
+     * @param string                                 $directory
      *
      * @return string
      */
     protected function saveImageWithRandomName($image, $directory)
     {
         $storage_key = $directory.'/'.str_random(5).'.'.$image->getClientOriginalExtension();
+
         return $this->saveImage($image, $storage_key);
     }
 
     /**
-     * Update existing image. Delete previous version
+     * Update existing image. Delete previous version.
      *
-     * @param string $storage_key
+     * @param string                                 $storage_key
      * @param \Symfony\Component\HttpFoundation\File $image
      *
      * @return string
@@ -120,10 +119,10 @@ trait HelpersTrait
     }
 
     /**
-     * Upload PDF
+     * Upload PDF.
      *
      * @param \Symfony\Component\HttpFoundation\File $file
-     * @param string $storage_path
+     * @param string                                 $storage_path
      *
      * @return string|false
      */
