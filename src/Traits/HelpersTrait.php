@@ -63,7 +63,7 @@ trait HelpersTrait
 
         if (ends_with($storage_key, '/')){
             $directory = $storage_key;
-            $filename = $this->sanitizeFilename($file->getClientOriginalName();
+            $filename = $this->sanitizeFilename($image->getClientOriginalName());
         }
         else{
             $directory = dirname($storage_key);
