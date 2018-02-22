@@ -67,15 +67,15 @@ class LocationsController extends Controller
         $location = new Location();
         $location->fill($data);
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $location->image = $this->saveImageWithRandomName($request->file('image'), 'locations');
         }
 
-        if ($request->hasFile('thumb_image')){
+        if ($request->hasFile('thumb_image')) {
             $location->thumb_image = $this->saveImageWithRandomName($request->file('thumb_image'), 'locations/thumb');
         }
 
-        if ($request->hasFile('marker_image')){
+        if ($request->hasFile('marker_image')) {
             $location->marker_image = $this->saveImageWithRandomName($request->file('marker_image'), 'locations/marker');
         }
 

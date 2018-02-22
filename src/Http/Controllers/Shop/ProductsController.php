@@ -185,7 +185,7 @@ class ProductsController extends Controller
      * Add similar product.
      *
      * @param Request $request
-     * @param int $product_id
+     * @param int     $product_id
      *
      * @return type
      */
