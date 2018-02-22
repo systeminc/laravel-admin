@@ -120,7 +120,7 @@ class SLA
     }
 
     /**
-     * Get file from storage
+     * Get file from storage.
      *
      * @param string $key
      *
@@ -132,9 +132,9 @@ class SLA
     }
 
     /**
-     * Get image from storage. Optionally resized and cached for future use
+     * Get image from storage. Optionally resized and cached for future use.
      *
-     * @param string $key
+     * @param string   $key
      * @param null|int $width
      * @param null|int $height
      *
