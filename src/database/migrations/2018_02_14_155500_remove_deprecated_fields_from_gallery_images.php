@@ -14,9 +14,9 @@ class removeDeprecatedFieldsFromGalleryImages extends Migration
     public function up()
     {
         Schema::table('gallery_images', function (Blueprint $table) {
-            $table->drop('path_source');
-            $table->drop('thumb_source');
-            $table->drop('mobile_source');
+            $table->dropColumn('path_source');
+            $table->dropColumn('thumb_source');
+            $table->dropColumn('mobile_source');
         });
     }
 
