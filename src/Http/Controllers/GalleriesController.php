@@ -286,7 +286,6 @@ class GalleriesController extends Controller
         return back();
     }
 
-
     /**
      * Store a created images in storage.
      *
@@ -315,7 +314,7 @@ class GalleriesController extends Controller
             }
 
             return true;
-        } else  {
+        } else {
             return false;
         }
     }
