@@ -129,7 +129,7 @@ class GalleriesController extends Controller
         }
 
         foreach ($gallery->images as $image) {
-            Storage::delete($image->source, $image->thumb_source, $image->mobile_source);
+            Storage::delete($image->source);
 
             $image->delete();
         }
@@ -191,7 +191,7 @@ class GalleriesController extends Controller
         $element->create([
             'key'                  => $this->sanitizeElements($request->title),
             'title'                => $request->title,
-            'content'              => $request->page_element_type_id == 3 ? $this->handleFileElement($request->file('content')) : $request->content,
+            'content'              => $request->page_element_type_id == 3 ? $this->handleFileElement($request->file('content')) : $request->input('content'),
             'image_id'             => $image_id,
             'page_element_type_id' => $request->page_element_type_id,
         ]);
@@ -238,7 +238,7 @@ class GalleriesController extends Controller
         $element->update([
             'key'     => $this->sanitizeElements($request->key),
             'title'   => $request->title,
-            'content' => $request->hasFile('content') ? $this->handleFileElement($request->file('content')) : $request->content,
+            'content' => $request->hasFile('content') ? $this->handleFileElement($request->file('content')) : $request->input('content'),
         ]);
 
         return redirect($request->segment(1).'/galleries/image/'.$image->gallery_id.'/'.$image->id)->with('success', 'Element updated');

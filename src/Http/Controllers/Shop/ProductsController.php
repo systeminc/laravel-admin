@@ -160,11 +160,9 @@ class ProductsController extends Controller
         $gallery = Gallery::whereTitle($product->gallery->title)->first();
 
         foreach ($gallery->images as $image) {
-            Storage::delete(
-                Storage::exists($image->source) ? $image->source : '',
-                Storage::exists($image->thumb_source) ? $image->thumb_source : '',
-                Storage::exists($image->mobile_source) ? $image->mobile_source : ''
-            );
+            if (Storage::exists($image->source)) {
+                Storage::delete( $image->source);
+            }
 
             $image->delete();
         }
