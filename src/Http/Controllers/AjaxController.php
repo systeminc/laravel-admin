@@ -51,7 +51,9 @@ class AjaxController extends Controller
     {
         $image = GalleryImage::find($id);
 
-        Storage::delete($image->source, $image->thumb_source, $image->mobile_source);
+        if (Storage::exists($image->source)) {
+            Storage::delete($image->source);
+        }
 
         $image->delete();
 
