@@ -73,7 +73,7 @@ trait HelpersTrait
             $directory = 'images/'.$directory;
         }
 
-        if (!Storage::isDirectory($directory)) {
+        if (!Storage::exists($directory)) {
             Storage::makeDirectory($directory, 0755, true);
         }
 
