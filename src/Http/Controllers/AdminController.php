@@ -81,7 +81,7 @@ class AdminController extends Controller
         $directory = 'images/tiny/'.$page_name.'/'.$page_id;
 
         if (!Storage::exists($directory)) {
-            Storage::createDir($directory);
+            Storage::makeDirectory($directory);
         }
         $images = Storage::files($directory);
 
