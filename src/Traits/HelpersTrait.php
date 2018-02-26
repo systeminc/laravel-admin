@@ -77,7 +77,9 @@ trait HelpersTrait
             Storage::makeDirectory($directory, 0755, true);
         }
 
-        Storage::put($directory.DIRECTORY_SEPARATOR.$filename, file_get_contents($image));
+        $storage_key = $directory.DIRECTORY_SEPARATOR.$filename;
+
+        Storage::put($storage_key, file_get_contents($image));
 
         return $storage_key;
     }
