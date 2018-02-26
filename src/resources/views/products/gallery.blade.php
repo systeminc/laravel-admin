@@ -18,8 +18,8 @@
 						<div class="buttons">
 							<div onclick="ajaxDeleteGalleryImage('ajax/{{ $product->gallery->title }}/delete-gallery-images/{{ $image->id }}', '{{$image->id}}')" class="button remove-image delete">Delete</div>
 						</div>
-						<a href="galleries/image/{{ $product->gallery->id }}/{{ $image->id }}">
-							<img src="{{ Storage::url($image->source)}}" />
+						<a href="galleries/image/{{ $product->gallery->id }}/{{ $image->id }}"
+							style="background-image: url('{{ Storage::url($image->source)}}')">
 						</a>					
 					</li>
 				@endforeach
