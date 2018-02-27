@@ -183,7 +183,7 @@ class LocationsController extends Controller
     private function deleteImage($request, $location)
     {
         if ($request->input('delete_image')) {
-            if(Storage::exists($location->image)) {
+            if (Storage::exists($location->image)) {
                 Storage::delete($location->image);
             }
 
@@ -191,7 +191,7 @@ class LocationsController extends Controller
         }
 
         if ($request->input('delete_thumb_image')) {
-            if(Storage::exists($location->thumb_image)) {
+            if (Storage::exists($location->thumb_image)) {
                 Storage::delete($location->thumb_image);
             }
 
@@ -199,7 +199,7 @@ class LocationsController extends Controller
         }
 
         if ($request->input('delete_marker_image')) {
-            if(Storage::exists($location->marker_image)) {
+            if (Storage::exists($location->marker_image)) {
                 Storage::delete($location->marker_image);
             }
 

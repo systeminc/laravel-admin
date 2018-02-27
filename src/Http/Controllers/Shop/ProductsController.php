@@ -161,7 +161,7 @@ class ProductsController extends Controller
 
         foreach ($gallery->images as $image) {
             if (Storage::exists($image->source)) {
-                Storage::delete( $image->source);
+                Storage::delete($image->source);
             }
 
             $image->delete();
