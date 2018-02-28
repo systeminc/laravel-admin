@@ -84,7 +84,8 @@ body{
 	&.remove-item{
 		display: inline-block;
 		text-align: left;
-		width: 100%; max-width: 290px;
+		width: 100%;
+		max-width: 200px;
 		color: @white;
 		box-sizing: border-box;
 		padding: 16px;
@@ -127,7 +128,7 @@ body{
 
 	&.save-item{
 		text-align: left;
-		width: 100%; max-width: 290px;
+		width: 100%; max-width: 200px;
 		color: @white;
 		box-sizing: border-box;
 		padding: 16px;
@@ -1393,7 +1394,7 @@ header{
 	overflow: hidden;
 	background-color: @white;
 	margin-bottom: 10px;
-	background: @defaultTextColor url("../images/arrow-down.png") no-repeat 95% 50%;
+	background: lighten(@defaultTextColor, 30%) url("../images/arrow-down.png") no-repeat 95% 50%;
 	float: left;
 	cursor: pointer;
 	margin-bottom: 20px;
