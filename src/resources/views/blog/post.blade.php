@@ -79,7 +79,7 @@
 			<input type="text" name="meta_keywords" value="{{$post->meta_keywords}}">
 
 			<label>Published at</label>
-			<input id="timepicker" type="text" name="published_at" value="{{$post->published_at}}">
+			<input id="timepicker" type="text" name="published_at" value="{{ \Carbon\Carbon::parse($post->published_at)->format('m/d/Y H:i') }}">
 
 			<label>Visible</label>
 			<div class="select-style">

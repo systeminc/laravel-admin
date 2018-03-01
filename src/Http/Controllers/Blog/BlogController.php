@@ -75,10 +75,8 @@ class BlogController extends Controller
         $post = BlogPost::find($post_id);
         $data = $request->all();
 
-        try {
-            $data['published_at'] = Carbon::createFromFormat('m/d/Y h:i', $request->published_at)->toDateTimeString();
-        } catch (\Exception $e) {
-            //
+        if ($request->published_at) {
+            $data['published_at'] = Carbon::createFromFormat('m/d/Y H:i', $request->published_at)->toDateTimeString();
         }
 
         $post->update($data);
