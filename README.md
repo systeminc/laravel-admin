@@ -43,12 +43,12 @@ If you want to use this package as a facade, add this line to the `$aliases` arr
 'SLA' => SystemInc\LaravelAdmin\Facades\SLA::class,
 ```
 
-Start package installation by running instal command below:
+Start package installation by running install command below:
 
 ```
-$ php artisan laravel-admin:instal
+$ php artisan laravel-admin:install
 ```
-If you want to instal package again from scratch, just delete the `config/laravel-admin.php` file and drop database, then run install command again.
+If you want to install package again from scratch, just delete the `config/laravel-admin.php` file and drop database, then run install command again.
 
 If our package update throws composer error, try updating dependencies manually with commend below:
 
@@ -58,7 +58,7 @@ $ php artisan laravel-admin:update
 
 Note that this installation uses migrations, so you must run it from machine that has access to your database. 
 
-For instance, if you use Vagrant, you will have to do `vagrant ssh` first, go to your project directory, and run this instal command. The same way you run your standard Laravel's migration command. 
+For instance, if you use Vagrant, you will have to do `vagrant ssh` first, go to your project directory, and run this install command. The same way you run your standard Laravel's migration command. 
 
 
 ## Extends

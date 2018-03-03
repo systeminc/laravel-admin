@@ -45,9 +45,9 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->singleton('sla', 'SystemInc\LaravelAdmin\SLA');
 
         $this->app->singleton(
-            'command.laravel-admin.instal',
+            'command.laravel-admin.install',
             function () {
-                return new Console\InstalCommand();
+                return new Console\InstallCommand();
             }
         );
 
@@ -72,7 +72,7 @@ class AdminServiceProvider extends ServiceProvider
             }
         );
 
-        $this->commands(['command.laravel-admin.instal']);
+        $this->commands(['command.laravel-admin.install']);
         $this->commands(['command.laravel-admin.update']);
         $this->commands(['command.laravel-admin.dump']);
         $this->commands(['command.laravel-admin.restore']);

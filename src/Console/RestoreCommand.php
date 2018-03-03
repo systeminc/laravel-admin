@@ -23,7 +23,7 @@ class RestoreCommand extends Command
     public function handle()
     {
         if (empty(config('laravel-admin'))) {
-            $this->error('First instal Laravel Admin with laravel-admin:instal');
+            $this->error('First install Laravel Admin with laravel-admin:install');
 
             return false;
         }

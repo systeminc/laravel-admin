@@ -96,7 +96,7 @@ class PackageTest extends LaravelAdminTestCase
     public function testServiceProvider()
     {
         $this->assertTrue($this->app->bound('sla'));
-        $this->assertTrue($this->app->bound('command.laravel-admin.instal'));
+        $this->assertTrue($this->app->bound('command.laravel-admin.install'));
         $this->assertTrue($this->app->bound('command.laravel-admin.update'));
     }
 

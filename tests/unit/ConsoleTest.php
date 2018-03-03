@@ -13,6 +13,6 @@ class ConsoleTest extends LaravelAdminTestCase
 
     public function testInstall()
     {
-        $this->assertTrue(0 < $this->artisan('laravel-admin:instal', ['prefix' => 'administration', 'admin' => 'admin', 'email' => 'admin@example.com', 'password' => '123']));
+        $this->assertTrue(0 < $this->artisan('laravel-admin:install', ['prefix' => 'administration', 'admin' => 'admin', 'email' => 'admin@example.com', 'password' => '123']));
     }
 }
