@@ -10,19 +10,19 @@ use SystemInc\LaravelAdmin\Admin;
 use SystemInc\LaravelAdmin\Database\Seeds\DatabaseSeeder as DatabaseSeeder;
 use SystemInc\LaravelAdmin\Traits\HelpersTrait;
 
-class InstalCommand extends Command
+class InstallCommand extends Command
 {
     use HelpersTrait;
 
-    protected $name = 'laravel-admin:instal';
-    protected $description = 'Instal Laravel Administration Essentials';
+    protected $name = 'laravel-admin:install';
+    protected $description = 'Install Laravel Administration Essentials';
 
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'laravel-admin:instal {prefix?} {admin?} {email?} {password?}';
+    protected $signature = 'laravel-admin:install {prefix?} {admin?} {email?} {password?}';
 
     public function handle()
     {
