@@ -81,11 +81,13 @@ $ php artisan laravel-admin:dump-database
 
 Your will be prompted to `Enter password:` for mysql user specified in `.env`. File will be saved in `/database/sla_dumps`.
 
-To restore database on another mashine use:
+To restore database on another machine use:
 
 ```
 $ php artisan laravel-admin:restore-database
 ```
+
+**NOTICE*** Always do migration first and be carefull that new import is compatable with tour migration status. You can check that with Artisan command `php artisan migrate:status` before dumoing the export file, and before importing the same on another machine.
 
 **WARNING** that this will be **DROP** table and restore latest migration in `database/sla_dumps` folder.
 Your will be prompted to proceed twice with droping database. Mysql will ask several times to `Enter password:` for mysql user specified in `.env`. 
