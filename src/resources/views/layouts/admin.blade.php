@@ -19,53 +19,56 @@
 		</div>
 
 		<div class="header-menu cf">
-			<ul class="cf">
-				@if (config('laravel-admin.modules.pages'))
-					<li><a href="pages">Pages</a></li>
-				@endif
-				@if (config('laravel-admin.modules.galleries'))
-					<li>
-						<a href="galleries">Galleries</a>
-					</li>
-				@endif
-				@if (config('laravel-admin.modules.blog'))
-					<li {{ Request::is('blog') ? 'class="active"' : ''}}>
-						<a href="blog">Blog</a>
-						<div class="icon-menu"><div class="center cf"></div></div>
-						<ul class="submenu">
-							<li><a href="blog/categories">Categories</a></li>
-						</ul>
-					</li>
-				@endif
-				@if (config('laravel-admin.modules.places'))
-					<li {{ Request::is('places') ? 'class="active"' : ''}}>
-						<div class="icon-menu"><div class="center cf"></div></div>
-						<a href="places">Places</a>
-						<ul class="submenu">
-							<li><a href="places/locations">Locations</a></li>
-							<li><a href="places/maps">Maps</a></li>
-						</ul>
-					</li>
-				@endif
-				@if (config('laravel-admin.modules.leads'))
-					<li><a href="leads">Leads</a></li>
-				@endif
-				@if (config('laravel-admin.modules.shop'))
-					<li class="last">
-						<div class="icon-menu"><div class="center cf"></div></div>
-						<a href="shop">Shop</a>
-						<ul class="submenu">
-							<li><a href="shop/categories">Categories</a></li>
-							<li><a href="shop/products">Products</a></li>
-							<li><a href="shop/comments">Products Comments</a></li>
-							<li><a href="shop/orders">Orders</a></li>
-							<li><a href="shop/stock">Stock</a></li>
-						</ul>
-					</li>
-				@endif	
-			</ul>
 			
-			@includeIf('sla.layout.navigation')
+			@if (view()->exists('sla.layout.navigation')) 
+				@includeIf('sla.layout.navigation')
+			@else
+				<ul class="cf">
+					@if (config('laravel-admin.modules.pages'))
+						<li><a href="pages">Pages</a></li>
+					@endif
+					@if (config('laravel-admin.modules.galleries'))
+						<li>
+							<a href="galleries">Galleries</a>
+						</li>
+					@endif
+					@if (config('laravel-admin.modules.blog'))
+						<li {{ Request::is('blog') ? 'class="active"' : ''}}>
+							<a href="blog">Blog</a>
+							<div class="icon-menu"><div class="center cf"></div></div>
+							<ul class="submenu">
+								<li><a href="blog/categories">Categories</a></li>
+							</ul>
+						</li>
+					@endif
+					@if (config('laravel-admin.modules.places'))
+						<li {{ Request::is('places') ? 'class="active"' : ''}}>
+							<div class="icon-menu"><div class="center cf"></div></div>
+							<a href="places">Places</a>
+							<ul class="submenu">
+								<li><a href="places/locations">Locations</a></li>
+								<li><a href="places/maps">Maps</a></li>
+							</ul>
+						</li>
+					@endif
+					@if (config('laravel-admin.modules.leads'))
+						<li><a href="leads">Leads</a></li>
+					@endif
+					@if (config('laravel-admin.modules.shop'))
+						<li class="last">
+							<div class="icon-menu"><div class="center cf"></div></div>
+							<a href="shop">Shop</a>
+							<ul class="submenu">
+								<li><a href="shop/categories">Categories</a></li>
+								<li><a href="shop/products">Products</a></li>
+								<li><a href="shop/comments">Products Comments</a></li>
+								<li><a href="shop/orders">Orders</a></li>
+								<li><a href="shop/stock">Stock</a></li>
+							</ul>
+						</li>
+					@endif	
+				</ul>
+			@endif
 			
 			<ul class="account cf">
 				@if (config('laravel-admin.modules.settings'))
