@@ -20,8 +20,8 @@
 
 		<div class="header-menu cf">
 			
-			@if (view()->exists('sla.layout.navigation')) 
-				@includeIf('sla.layout.navigation')
+			@if (View::exists('sla.layout.navigation')) 
+				@include('sla.layout.navigation')
 			@else
 				<ul class="cf">
 					@if (config('laravel-admin.modules.pages'))
