@@ -13,9 +13,9 @@ class Subscribe
      *
      * @return bool
      */
-    public function subscribe(Request $request)
+    public function subscribe($data)
     {
-        $subscriber = Lead::create(['data' => json_encode($request->except(['_token']))]);
+        $subscriber = Lead::create(['data' => json_encode(array_except($data, ['_token', 'submit']))]);
 
         return true;
     }
