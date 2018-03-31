@@ -32,7 +32,7 @@ class PageElement extends Model
 
     public function __toString()
     {
-        return $this->content;
+        return (string) $this->content;
     }
 
     public function page()
