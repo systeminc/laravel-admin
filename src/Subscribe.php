@@ -2,8 +2,6 @@
 
 namespace SystemInc\LaravelAdmin;
 
-use Illuminate\Http\Request;
-
 class Subscribe
 {
     /**
