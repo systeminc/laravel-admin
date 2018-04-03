@@ -63,7 +63,7 @@ class SLA
     public function gallery($key = false)
     {
         if ($key) {
-            return Gallery::where(['key' => $key])->first();
+            return Gallery::where(['key' => $key])->with('images')->first();
         }
 
         return new Gallery();
