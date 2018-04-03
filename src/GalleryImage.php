@@ -35,6 +35,11 @@ class GalleryImage extends Model
     {
         return $this->hasMany(GalleryElement::class, 'image_id');
     }
+    
+    public function elements()
+    {
+        return $this->getAllElements();
+    }
 
     public function gallery()
     {
