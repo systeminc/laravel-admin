@@ -35,9 +35,9 @@ class SLA
     public function page($page_query = null)
     {
         if (is_string($page_query)) {
-            return Page::where(['slug' => $page_query])->first();
+            return Page::where(['slug' => $page_query])->with('elements')->first();
         } elseif (is_int($page_query)) {
-            return Page::where(['id' => $page_query])->first();
+            return Page::where(['id' => $page_query])->with('elements')->first();
         }
 
         return new Page();
@@ -63,7 +63,7 @@ class SLA
     public function gallery($key = false)
     {
         if ($key) {
-            return Gallery::where(['key' => $key])->first();
+            return Gallery::where(['key' => $key])->with('images')->first();
         }
 
         return new Gallery();
