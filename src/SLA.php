@@ -142,6 +142,8 @@ class SLA
      */
     public function getImage($key, $width = null, $height = null)
     {
+        $key = str_replace(Storage::url(''), '', (string) $key);
+
         if (!Storage::exists($key)) {
             return false;
         }
