@@ -148,7 +148,7 @@
 				<ul class="sortable elements-list cf" data-link="ajax/{{ $page->id }}/change-subpages-order">
 					@foreach ($page->subpages() as $key => $child)
 						<li class="items-order" data-id="{{$child['id']}}">
-							<a href="pages/edit/{{$child['id']}}"><b>{{ ucfirst($child['title']) }} - {{$child['slug']}}</a>
+							<a href="pages/edit/{{$child['id']}}"><b>{{ ucfirst($child['title']) }} - {{$child['slug']}}</b></a>
 							<a href="pages/delete/{{ $child['id'] }}" class="button remove-item file delete list">Delete</a>
 						</li>
 					@endforeach
