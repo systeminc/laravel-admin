@@ -225,6 +225,7 @@ class ProductsController extends Controller
         $product = new Product();
         $product->title = 'New product';
         $product->slug = 'new-product-'.time();
+        $product->visible = 0;
         $product->save();
 
         return $product;
