@@ -86,4 +86,9 @@ class Product extends Model
     {
         return $this->hasMany('SystemInc\LaravelAdmin\ProductVariation')->whereGroup($group)->get();
     }
+
+    public function scopeVisible($query)
+    {
+        return $query->whereVisible(1);
+    }
 }
