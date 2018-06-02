@@ -44,6 +44,15 @@
 			<label>Slug</label>
 			<input type="text" name="slug" value="{{$category->slug or old('slug')}}">
 
+			<label>Parent Category</label>
+			<select name="parent_id">
+				<option value="">None</option>
+				
+				@foreach (\SystemInc\LaravelAdmin\ProductCategory::whereNotIn('id', $category->children->pluck('id')->push($category->id))->get() as $category_option)
+					<option value="{{$category_option->id}}" {{$category_option->id==$category->parent_id ? 'selected' : ''}}>{{$category_option->title}}</option>
+				@endforeach
+			</select>
+
 			<label>Excerpt</label>
 			<textarea name="excerpt" class="htmlEditorTools" rows="5">{{$category->excerpt or old('excerpt')}}</textarea>
 

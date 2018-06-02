@@ -19,6 +19,7 @@ class ProductCategory extends Model
         'description',
         'order_number',
         'slug',
+        'parent_id',
         'seo_title',
         'seo_description',
         'seo_keywords',
@@ -39,5 +40,15 @@ class ProductCategory extends Model
     public function products()
     {
         return $this->hasMany('SystemInc\LaravelAdmin\Product');
+    }
+
+    public function children()
+    {
+        return $this->hasMany('SystemInc\LaravelAdmin\ProductCategory','parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo('SystemInc\LaravelAdmin\ProductCategory', 'parent_id', 'id');
     }
 }
