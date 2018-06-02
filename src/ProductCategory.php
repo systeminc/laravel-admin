@@ -44,7 +44,7 @@ class ProductCategory extends Model
 
     public function children()
     {
-        return $this->hasMany('SystemInc\LaravelAdmin\ProductCategory','parent_id');
+        return $this->hasMany('SystemInc\LaravelAdmin\ProductCategory', 'parent_id');
     }
 
     public function parent()
