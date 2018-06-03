@@ -47,10 +47,15 @@
 			<label>Parent Category</label>
 			<select name="parent_id">
 				<option value="">None</option>
-				
-				@foreach (\SystemInc\LaravelAdmin\ProductCategory::whereNotIn('id', $category->children->pluck('id')->push($category->id))->get() as $category_option)
-					<option value="{{$category_option->id}}" {{$category_option->id==$category->parent_id ? 'selected' : ''}}>{{$category_option->title}}</option>
-				@endforeach
+				@if ($category->id)
+					@foreach (\SystemInc\LaravelAdmin\ProductCategory::whereNotIn('id', $category->children->pluck('id')->push($category->id))->get() as $category_option)
+						<option value="{{$category_option->id}}" {{$category_option->id==$category->parent_id ? 'selected' : ''}}>{{$category_option->title}}</option>
+					@endforeach
+				@else
+					@foreach (\SystemInc\LaravelAdmin\ProductCategory::all() as $category_option)
+						<option value="{{$category_option->id}}">{{$category_option->title}}</option>
+					@endforeach
+				@endif
 			</select>
 
 			<label>Excerpt</label>
