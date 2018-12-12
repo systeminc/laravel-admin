@@ -5,6 +5,7 @@ namespace SystemInc\LaravelAdmin\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Storage;
 use SystemInc\LaravelAdmin\Admin;
 use SystemInc\LaravelAdmin\Setting;
