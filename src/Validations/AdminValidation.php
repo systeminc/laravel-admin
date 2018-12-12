@@ -13,7 +13,7 @@ class AdminValidation
     {
         return [
             'name'     => 'required',
-            'email'    => 'required|email|unique:pages,email,'.$admin_id,
+            'email'    => 'required|email|unique:admins,email,'.$admin_id,
             'password' => 'required',
         ];
     }
