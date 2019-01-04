@@ -80,7 +80,9 @@ class CategoriesController extends Controller
 
         $category->fill($request->all());
 
-        $category->thumb = $this->saveImageWithRandomName($request->file('thumb'), 'blog');
+        if ($request->has('thumb')) {
+            $category->thumb = $this->saveImageWithRandomName($request->file('thumb'), 'blog');
+        }
 
         if ($request->input('delete_thumb')) {
             if (Storage::exists($category->thumb)) {
