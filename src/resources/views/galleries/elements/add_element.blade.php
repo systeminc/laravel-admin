@@ -11,7 +11,7 @@
 		<form action="galleries/images/add-element/{{ $image_id }}" method="post" enctype="multipart/form-data">
 			{{ csrf_field() }}
 
-			<input type="hidden" name="page_element_type_id" value="{{ $page_element_type_id or old('page_element_type_id') }}">
+			<input type="hidden" name="page_element_type_id" value="{{ $page_element_type_id ?? old('page_element_type_id') }}">
 		
 			@if ($errors->first('title'))
 			    <div class="alert alert-error no-hide">

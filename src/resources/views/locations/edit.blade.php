@@ -27,7 +27,7 @@
 			@endif 
 
 			<label>Title</label>
-			<input type="text" name="title" placeholder="Location title" value="{{ $location->title or old('title') }}">
+			<input type="text" name="title" placeholder="Location title" value="{{ $location->title ?? old('title') }}">
 
 			@if ($errors->first('url'))
 			    <div class="alert alert-error no-hide">
@@ -38,7 +38,7 @@
 			@endif 
 
 			<label>Url</label>
-			<input type="text" name="url" placeholder="Url" value="{{ $location->url or old('url') }}">
+			<input type="text" name="url" placeholder="Url" value="{{ $location->url ?? old('url') }}">
 
 			@if ($errors->first('key'))
 			    <div class="alert alert-error no-hide">
@@ -49,10 +49,10 @@
 			@endif 
 
 			<label>Key</label>
-			<input type="text" name="key" placeholder="Location key" value="{{ $location->key or old('key') }}">
+			<input type="text" name="key" placeholder="Location key" value="{{ $location->key ?? old('key') }}">
 
 			<label for="description">Description:</label>
-			<textarea name="description" class="htmlEditor" rows="15" data-page-name="description" data-page-id="new" id="editor-1">{{ $location->description or old('description') }}</textarea>
+			<textarea name="description" class="htmlEditor" rows="15" data-page-name="description" data-page-id="new" id="editor-1">{{ $location->description ?? old('description') }}</textarea>
 			
 			<div class="input-wrap">
 				<label>Adress:</label>

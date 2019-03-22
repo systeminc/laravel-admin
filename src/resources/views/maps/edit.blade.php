@@ -27,7 +27,7 @@
 			@endif 
 
 			<label>Title</label>
-			<input type="text" name="title" placeholder="Location title" value="{{ $map->title or old('title') }}">
+			<input type="text" name="title" placeholder="Location title" value="{{ $map->title ?? old('title') }}">
 
 			@if ($errors->first('key'))
 			    <div class="alert alert-error no-hide">
@@ -38,10 +38,10 @@
 			@endif 
 
 			<label>Key</label>
-			<input type="text" name="key" placeholder="Location key" value="{{ $map->key or old('key') }}">
+			<input type="text" name="key" placeholder="Location key" value="{{ $map->key ?? old('key') }}">
 
 			<label for="description">Description:</label>
-			<textarea name="description" class="htmlEditor" rows="15" data-page-name="description" data-page-id="new" id="editor-1">{{ $map->description or old('description') }}</textarea>
+			<textarea name="description" class="htmlEditor" rows="15" data-page-name="description" data-page-id="new" id="editor-1">{{ $map->description ?? old('description') }}</textarea>
 			
 			<div class="input-wrap">
 				<label>Adress:</label>
