@@ -11,8 +11,8 @@
 		<form action="pages/add-element/{{ $page->id }}" method="post" enctype="multipart/form-data">
 			{{ csrf_field() }}
 
-			<input type="hidden" name="elements_prefix" value="{{ $page->elements_prefix or old('title') }}">
-			<input type="hidden" name="page_element_type_id" value="{{ $page_element_type_id or old('page_element_type_id') }}">
+			<input type="hidden" name="elements_prefix" value="{{ $page->elements_prefix ?? old('title') }}">
+			<input type="hidden" name="page_element_type_id" value="{{ $page_element_type_id ?? old('page_element_type_id') }}">
 		
 			@if ($errors->first('title'))
 			    <div class="alert alert-error no-hide">

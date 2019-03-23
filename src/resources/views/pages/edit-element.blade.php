@@ -32,7 +32,7 @@
 
 		
 			<label>Title</label>
-			<input type="text" name="title" placeholder="Element title" value="{{ $element->title or old('title') }}">
+			<input type="text" name="title" placeholder="Element title" value="{{ $element->title ?? old('title') }}">
 
 			@if ($errors->first('content'))
 			    <div class="alert alert-error no-hide">
@@ -45,12 +45,12 @@
 			@if ($element->page_element_type_id == 1 || old('page_element_type_id') == 1)
 
 				<label>Content</label>
-				<textarea name="content" rows="5" placeholder="Content">{{ $element->content or old('content') }}</textarea>
+				<textarea name="content" rows="5" placeholder="Content">{{ $element->content ?? old('content') }}</textarea>
 				
 			@elseif ($element->page_element_type_id == 2 || old('page_element_type_id') == 2)
 
 				<label>Content</label>
-				<textarea name="content" class="htmlEditor" data-page-name="page_element" data-page-id="{{ $element->id }}" id="editor-{{ $element->id }}"  rows="5" placeholder="Content">{{ $element->content or old('content') }}</textarea>
+				<textarea name="content" class="htmlEditor" data-page-name="page_element" data-page-id="{{ $element->id }}" id="editor-{{ $element->id }}"  rows="5" placeholder="Content">{{ $element->content ?? old('content') }}</textarea>
 
 			@elseif ($element->page_element_type_id == 3 || old('page_element_type_id') == 3)
 
