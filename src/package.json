@@ -20,10 +20,12 @@
     "css-loader": "^0.28.9",
     "jquery": "^3.3.1",
     "laravel-mix": "0.*",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.11",
     "swiper": "^3.4.2"
   },
   "author": "Mladen Janjetovic, Nemanja Maric",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "timepicker": "^1.11.14"
+  }
 }
