@@ -11,7 +11,7 @@
 	</div>
 
 	<div class="admin-content">
-		<form action="blog/categories/save/{{ $category->id or 'new'}}" method="post" enctype="multipart/form-data">
+		<form action="blog/categories/save/{{ $category->id ?? 'new'}}" method="post" enctype="multipart/form-data">
 			{{ csrf_field() }}
 
 				@if ($errors->first('title'))
