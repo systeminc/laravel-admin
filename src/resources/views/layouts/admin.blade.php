@@ -8,7 +8,7 @@
 
 @section('scripts')
 	@parent
-	<script src="scripts/admin.js?v={{ File::lastModified(base_path('vendor/systeminc/laravel-admin/src/resources/assets/dist/js/admin.js'))}} "></script>
+	<script src="scripts/admin.js?v={{ File::lastModified(base_path('vendor/systeminc/laravel-admin/src/resources/assets/dist/js/admin.js'))}}" type="text/javascript"></script>
 	@yield('custom-script')
 @append
 
