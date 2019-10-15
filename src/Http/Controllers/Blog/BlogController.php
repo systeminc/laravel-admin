@@ -159,7 +159,7 @@ class BlogController extends Controller
     private function addNewBlogPost()
     {
         $post = new BlogPost();
-        $post->title = 'New Article';
+        $post->title = 'New Article ' . date("Y-m-d H:i:s");
         $post->slug = 'new-post-'.time();
         $post->save();
 
