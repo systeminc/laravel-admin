@@ -254,6 +254,7 @@ class OrdersController extends Controller
         });
 
         $order->order_status_id = 2;
+        
         $order->save();
 
         return back()->with('success', 'Invoice sent');
