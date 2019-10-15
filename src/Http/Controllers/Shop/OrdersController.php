@@ -71,7 +71,7 @@ class OrdersController extends Controller
                         $query->where('order_status_id', $filter_value);
 
                     default:
-                        continue;
+                        continue 2;
                         break;
                 }
             }
