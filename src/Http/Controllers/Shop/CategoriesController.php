@@ -119,6 +119,7 @@ class CategoriesController extends Controller
 
             $category->image_hover = null;
         }
+
         //REPLACE slug
         $category->slug = str_slug($request->title);
 
