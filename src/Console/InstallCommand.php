@@ -27,7 +27,7 @@ class InstallCommand extends Command
     public function handle()
     {
         if (!empty(config('laravel-admin'))) {
-            $this->error('Laravel Admin already installed');
+            $this->error('Laravel Admin is already installed on this project');
 
             return false;
         }
