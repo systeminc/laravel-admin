@@ -54,8 +54,9 @@ class Order extends Model
         $this->total_price = 0;
 
         foreach ($this->items as $item) {
-            $this->total_price += $item->custom_price != 0.0 ? $item->custom_price - $item->discount : ($item->product->price - $item->discount) * $item->quantity;
+            $this->total_price += $item->custom_price != 0.0 ? $item->custom_price : ($item->product->price * $item->quantity - $item->discount);
         }
+        
         $this->total_price += $this->shipment_price;
 
         return $this->total_price;
