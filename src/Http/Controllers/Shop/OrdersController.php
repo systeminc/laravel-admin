@@ -69,10 +69,10 @@ class OrdersController extends Controller
 
                     case 'order_status_id':
                         $query->where('order_status_id', $filter_value);
+                        break;
 
                     default:
-                        continue;
-                        break;
+                        continue 2;
                 }
             }
         }
@@ -320,7 +320,7 @@ class OrdersController extends Controller
      */
     private function removeFromStock($order)
     {
-        if ($order->order_status_id == 5 && $order->order_status_id != $old_order_status_id) {
+        if ($order->order_status_id == 5) {
             foreach ($order->items as $item) {
                 $item->product->stock--;
                 $item->product->save();
