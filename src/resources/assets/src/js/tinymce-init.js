@@ -3,9 +3,9 @@ $(function() {
     tinymce.init({
         oninit : "setPlainText",
         selector:'.htmlEditor',
-        plugins: ["link charmap code media table image paste textcolor"],
+        plugins: ["lists link charmap code media table image paste textcolor"],
         fontsize_formats: "8px 10px 12px 13px 14px 15px 16px 18px 24px 36px",
-        toolbar1: "styleselect | fontsizeselect | forecolor bold italic  bullist numlist | alignleft aligncenter alignright alignjustify | link unlink table media image uploadimage | charmap code",
+        toolbar1: "styleselect | fontsizeselect | forecolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link unlink table media image uploadimage | charmap code",
         menubar : false,
         branding: false,
         mobile: {

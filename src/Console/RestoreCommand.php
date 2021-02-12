@@ -37,93 +37,99 @@ class RestoreCommand extends Command
         });
 
         if (count($migrations) == 0) {
-            $this->error('No database dumps in: '.$path);
-
+            $this->error('No database dumps in: ' . $path);
             $this->consoleLastLine();
         } else {
             $latest_migration = end($migrations);
 
-            $this->info('Latest database dump is: '.$latest_migration->getFilename());
+            $this->info('Latest database dump is: ' . $latest_migration->getFilename());
 
             $proceed = $this->ask('Database will be droped! Do you want to proceed?', 'No');
-            $this->isInArray($proceed);
+            $this->exitIfRejected($proceed);
 
             $drop = $this->ask('Drop database and restore latest database dump?', 'No');
-            $this->isInArray($drop);
+            $this->exitIfRejected($drop);
 
             $this->info('You will be prompted for MySQL database password for three actions.');
-
-            $db_table = env('DB_DATABASE');
-
-            $this->line('Collecting tables...');
             $this->line('');
-            exec('mysql -u '.env('DB_USERNAME').' -p --silent --skip-column-names -e "SHOW TABLES" '.$db_table, $tables, $response);
 
-            if ($response != 0) {
-                $this->error('Mysql Error');
+            $tables = $this->collectTables();
 
-                $this->consoleLastLine();
-            }
+            $this->dropTables($tables);
 
-            $this->line('');
-            $this->line('Collecting tables done');
-
-            $query = '';
-
-            foreach ($tables as $key => $value) {
-                $query .= 'SET FOREIGN_KEY_CHECKS = 0; DROP TABLE `'.$value.'`; SET FOREIGN_KEY_CHECKS = 1;';
-            }
-
-            $this->line('');
-            $this->line('Dropping...');
-            $this->line('');
-            exec('mysql -u '.env('DB_USERNAME').' -p -v '.$db_table." -e '".$query."'", $output, $response2);
-
-            if ($response2 != 0) {
-                $this->error('Mysql Error');
-
-                $this->consoleLastLine();
-            }
-
-            $this->line('');
-            $this->line('Dropping done');
-
-            $this->line('');
-            $this->line('Restoring database...');
-            $this->line('');
-            exec('mysql -u '.env('DB_USERNAME').' -p '.$db_table.' < '.$latest_migration->getRealPath(), $output, $response3);
-
-            if ($response3 != 0) {
-                $this->error('Mysql Error');
-
-                $this->consoleLastLine();
-            }
-
-            $this->line('');
-            $this->line('Restored');
+            $this->restoreTables($latest_migration);
 
             $this->consoleLastLine();
         }
-    }
-
-    private function consoleLastLine()
-    {
-        $this->line('');
-        $this->line('***');
-        $this->line('');
-        $this->info('Done!');
-        $this->line(' _________________________________________________________________________________________________ ');
 
         exit;
     }
 
-    private function isInArray($value)
+    private function collectTables()
+    {
+        $this->line('Collecting tables...');
+
+        exec('mysql -u ' . env('DB_USERNAME') . ' -p' . env('DB_PASSWORD') . ' --silent --skip-column-names -e "SHOW TABLES" ' . env('DB_DATABASE') . " 2>/dev/null", $tables, $response);
+
+        if ($response != 0) {
+            $this->error('Mysql Error');
+            $this->consoleLastLine();
+        }
+
+        $this->line('Collecting tables done');
+        $this->line('');
+
+        return $tables;
+    }
+
+    private function dropTables($tables)
+    {
+        $this->line('Dropping...');
+
+        $query = [];
+
+        foreach ($tables as $key => $value) {
+            $query[] = 'SET FOREIGN_KEY_CHECKS = 0; DROP TABLE `' . $value . '`; SET FOREIGN_KEY_CHECKS = 1;';
+        }
+
+        exec('mysql -u ' . env('DB_USERNAME') . ' -p' . env('DB_PASSWORD') . ' -v ' . env('DB_DATABASE') . " -e '" . implode('', $query) . "' 2>/dev/null", $output, $response);
+
+        if ($response != 0) {
+            $this->error('Mysql Error');
+            $this->consoleLastLine();
+        }
+
+        $this->line('Dropping done');
+        $this->line('');
+    }
+
+    private function restoreTables($migration)
+    {
+        $this->line('Restoring database...');
+
+        exec('mysql -u ' . env('DB_USERNAME') . ' -p' . env('DB_PASSWORD') . ' ' . env('DB_DATABASE') . ' < ' . $migration->getRealPath() . ' 2>/dev/null', $output, $response);
+
+        if ($response != 0) {
+            $this->error('Mysql Error');
+            $this->consoleLastLine();
+        }
+
+        $this->line('Restored');
+        $this->line('');
+    }
+
+    private function consoleLastLine()
+    {
+        $this->info('Done!');
+        $this->line('');
+    }
+
+    private function exitIfRejected($value)
     {
         $needle = in_array(strtolower($value), ['y', 'yes']);
 
         if (!$needle) {
             $this->consoleLastLine();
-
             exit;
         }
     }

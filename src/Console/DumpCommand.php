@@ -32,8 +32,7 @@ class DumpCommand extends Command
 
         $this->line('Dumpping...');
         $this->line('');
-
-        $migration = 'sla_'.gmdate('Y_m_d_His').'.sql';
+        $migration = 'sla_' . gmdate('Y_m_d_His') . '.sql';
 
         $path = app_path('../database/sla_dumps');
 
@@ -41,11 +40,12 @@ class DumpCommand extends Command
             File::makeDirectory($path, 493, true);
         }
 
-        $dumpMigration = $path.'/'.$migration;
+        $dumpMigration = $path . '/' . $migration;
 
-        $this->info('Output path will be: '.$dumpMigration);
-        $this->line('');
-        exec('mysqldump -u '.env('DB_USERNAME').' -p '.env('DB_DATABASE').' -r '.$dumpMigration, $output, $return_var);
+        $this->info('Output path will be: ' . $dumpMigration);
+
+        exec('mysqldump -u ' . env('DB_USERNAME') . ' -p' . env('DB_PASSWORD') . ' ' . env('DB_DATABASE') . ' -r ' . $dumpMigration . ' 2>/dev/null', $output, $return_var);
+
         $this->line('');
 
         if ($return_var != 0) {
@@ -53,13 +53,9 @@ class DumpCommand extends Command
 
             $this->error('Dumpping error!');
         } else {
-            $this->line('Dumpping Done!');
+            $this->info('Dumpping Done!');
         }
 
         $this->line('');
-        $this->line('***');
-        $this->line('');
-        $this->info('Done!');
-        $this->line(' _________________________________________________________________________________________________ ');
     }
 }
