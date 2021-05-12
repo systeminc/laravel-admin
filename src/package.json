@@ -21,7 +21,7 @@
     "jquery": "^3.3.1",
     "laravel-mix": "0.*",
     "lodash": "^4.17.11",
-    "swiper": "^3.4.2"
+    "swiper": "^6.5.1"
   },
   "author": "Mladen Janjetovic, Nemanja Maric",
   "license": "ISC",
