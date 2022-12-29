@@ -17,9 +17,9 @@
     "axios": "^0.15.3",
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^3.2.3",
-    "css-loader": "^0.28.9",
+    "css-loader": "^6.7.3",
     "jquery": "^3.3.1",
-    "laravel-mix": "0.*",
+    "laravel-mix": "6.*",
     "lodash": "^4.17.11",
     "swiper": "^3.4.2"
   },
